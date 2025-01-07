@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import java.util.Arrays;
 import java.util.Objects;
 import lombok.Getter;
@@ -22,17 +23,75 @@ public class Prodotto {
   @Column(nullable = false, length = 256)
   private String nome;
   @Column(nullable = false, length = 1024)
-  private String desc;
+  private String descrizione;
   @Column(nullable = false)
   private byte[] img;
   @Column(nullable = false, length = 7, precision = 2)
   private float prezzo;
   @Column(nullable = false)
   private int quantita;
+  @ManyToOne
+  private Categoria categoria;
 
-  public Prodotto(String nome, String desc, byte[] img, float prezzo, int quantita) {
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public String getNome() {
+    return nome;
+  }
+
+  public void setNome(String nome) {
     this.nome = nome;
-    this.desc = desc;
+  }
+
+  public String getDescrizione() {
+    return descrizione;
+  }
+
+  public void setDescrizione(String descrizione) {
+    this.descrizione = descrizione;
+  }
+
+  public byte[] getImg() {
+    return img;
+  }
+
+  public void setImg(byte[] img) {
+    this.img = img;
+  }
+
+  public float getPrezzo() {
+    return prezzo;
+  }
+
+  public void setPrezzo(float prezzo) {
+    this.prezzo = prezzo;
+  }
+
+  public int getQuantita() {
+    return quantita;
+  }
+
+  public void setQuantita(int quantita) {
+    this.quantita = quantita;
+  }
+
+  public Categoria getCategoria() {
+    return categoria;
+  }
+
+  public void setCategoria(Categoria categoria) {
+    this.categoria = categoria;
+  }
+
+  public Prodotto(String nome, String descrizione, byte[] img, float prezzo, int quantita) {
+    this.nome = nome;
+    this.descrizione = descrizione;
     this.img = img;
     this.prezzo = prezzo;
     this.quantita = quantita;
@@ -57,7 +116,7 @@ public class Prodotto {
     return "Prodotto{"
         + "id=" + id
         + ", nome='" + nome + '\''
-        + ", desc='" + desc + '\''
+        + ", descrizione='" + descrizione + '\''
         + ", img=" + Arrays.toString(img)
         + ", prezzo=" + prezzo
         + ", quantita=" + quantita
