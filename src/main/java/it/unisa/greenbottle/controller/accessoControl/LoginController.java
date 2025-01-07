@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/login")
 public class LoginController {
 
-  private static final String loginView = "/login";
+  private static final String loginView = "/AccessoView/Login";
 
   @Autowired
   private ClienteDao clienteDao;
@@ -32,19 +32,17 @@ public class LoginController {
   @GetMapping
   public String get(@ModelAttribute LoginForm loginForm, Model model) {
     model.addAttribute("nameLogin", "/login");
-    // System.out.println(JasyptUtil.encrypt("asdfAsdf123@"));
+    // DEBUG: System.out.println(JasyptUtil.encrypt("asdfAsdf123@"));
     return loginView;
   }
 
 
   @PostMapping
-  @ResponseBody
   public String post(@ModelAttribute @Valid LoginForm loginForm,
                      BindingResult bindingResult, Model model) {
     model.addAttribute("nameLogin", "/login");
     if (bindingResult.hasErrors()) {
-      // return loginView;
-      return "binding error: " + bindingResult.getAllErrors();
+      return loginView;
     }
 
     String email = loginForm.getEmail();
@@ -54,20 +52,19 @@ public class LoginController {
     boolean existsEmail = c.isPresent();
     model.addAttribute("existsEmail", existsEmail);
     if (!existsEmail) {
-      // return loginView;
-      return "email not found";
+      return loginView;
     }
 
     String encryptedPassword = JasyptUtil.encrypt(password);
     if (!c.get().getPassword().equals(encryptedPassword)) {
       model.addAttribute("correctPassword", false);
-      // return loginView;
-      return "wrong password";
+      return loginView;
     }
     model.addAttribute("correctPassword", true);
 
 
     sessionCliente.setCliente(c.get());
-    return c.toString();
+    return "/home";
+
   }
 }
