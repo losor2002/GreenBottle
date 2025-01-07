@@ -1,5 +1,7 @@
 package it.unisa.greenbottle.storage.ordineStorage.entity;
 
+import it.unisa.greenbottle.storage.accessoStorage.entity.Admin;
+import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -7,6 +9,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import java.util.Objects;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,16 +35,22 @@ public class Ordine {
   @Column(nullable = false)
   private boolean isSupporto;
   @Column(nullable = false, length = 300)
-  private String desc;
+  private String descrizione;
+  @ManyToOne
+  private Admin admin;
+  @ManyToOne
+  private Corriere corriere;
+  @ManyToOne
+  private Cliente cliente;
 
   public Ordine(float prezzo, StatoSpedizione stato, boolean isRitiro, String carta,
-                boolean isSupporto, String desc) {
+                boolean isSupporto, String descrizione) {
     this.prezzo = prezzo;
     this.stato = stato;
     this.isRitiro = isRitiro;
     this.carta = carta;
     this.isSupporto = isSupporto;
-    this.desc = desc;
+    this.descrizione = descrizione;
   }
 
   @Override
@@ -67,7 +76,7 @@ public class Ordine {
         + ", isRitiro=" + isRitiro
         + ", carta='" + carta + '\''
         + ", isSupporto=" + isSupporto
-        + ", desc='" + desc + '\''
+        + ", desc='" + descrizione + '\''
         + '}';
   }
 

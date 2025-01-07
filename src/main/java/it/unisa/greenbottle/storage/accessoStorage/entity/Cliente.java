@@ -149,17 +149,17 @@ public class Cliente {
 
   @Override
   public String toString() {
-    return "Cliente{" +
-        "id=" + id +
-        ", email='" + email + '\'' +
-        ", password='" + password + '\'' +
-        ", nome='" + nome + '\'' +
-        ", cognome='" + cognome + '\'' +
-        ", bottiglie=" + bottiglie +
-        ", risparmio=" + risparmio +
-        ", img=" + Arrays.toString(img) +
-        ", sottoscrizione=" + sottoscrizione +
-        ", abbonamento=" + abbonamento +
-        '}';
+    return "Cliente{"
+        + "id=" + id
+        + ", email='" + email + '\''
+        + ", password='" + password + '\''
+        + ", nome='" + nome + '\''
+        + ", cognome='" + cognome + '\''
+        + ", bottiglie=" + bottiglie
+        + ", risparmio=" + risparmio
+        + ", img=" + Arrays.toString(img)
+        + ", sottoscrizione=" + sottoscrizione
+        + ", abbonamento=" + abbonamento
+        + '}';
   }
 }

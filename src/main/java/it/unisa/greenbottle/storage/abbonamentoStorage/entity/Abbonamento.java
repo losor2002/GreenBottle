@@ -42,15 +42,49 @@ public class Abbonamento {
     this.frequenza = frequenza;
   }
 
-  @SuppressWarnings("checkstyle:OperatorWrap")
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public TipoAbbonamento getTipo() {
+    return tipo;
+  }
+
+  public void setTipo(
+      TipoAbbonamento tipo) {
+    this.tipo = tipo;
+  }
+
+  public RinnovoAbbonamento getRinnovo() {
+    return rinnovo;
+  }
+
+  public void setRinnovo(
+      RinnovoAbbonamento rinnovo) {
+    this.rinnovo = rinnovo;
+  }
+
+  public FrequenzaAbbonamento getFrequenza() {
+    return frequenza;
+  }
+
+  public void setFrequenza(
+      FrequenzaAbbonamento frequenza) {
+    this.frequenza = frequenza;
+  }
+
   @Override
   public String toString() {
-    return "Abbonamento{" +
-        "id=" + id +
-        ", tipo=" + tipo +
-        ", rinnovo=" + rinnovo +
-        ", frequenza=" + frequenza +
-        '}';
+    return "Abbonamento{"
+        + "id=" + id
+        + ", tipo=" + tipo
+        + ", rinnovo=" + rinnovo
+        + ", frequenza=" + frequenza
+        + '}';
   }
 
   public enum TipoAbbonamento {
