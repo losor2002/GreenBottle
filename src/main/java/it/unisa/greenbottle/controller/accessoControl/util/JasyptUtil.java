@@ -6,26 +6,26 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 public class JasyptUtil {
-/*
-  private static final String ENCRYPTION_KEY = "tua-chiave-segreta";
+  /*
+    private static final String ENCRYPTION_KEY = "tua-chiave-segreta";
 
-  public static String encrypt(String text) {
-    StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
-    encryptor.setPassword(ENCRYPTION_KEY); // Chiave segreta
-    encryptor.setAlgorithm("PBEWithMD5AndDES"); // Algoritmo deterministico
-    encryptor.setIvGenerator(new NoIvGenerator()); // Rimuove l'uso dell'IV
-    return encryptor.encrypt(text);
-  }
+    public static String encrypt(String text) {
+      StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
+      encryptor.setPassword(ENCRYPTION_KEY); // Chiave segreta
+      encryptor.setAlgorithm("PBEWithMD5AndDES"); // Algoritmo deterministico
+      encryptor.setIvGenerator(new NoIvGenerator()); // Rimuove l'uso dell'IV
+      return encryptor.encrypt(text);
+    }
 
-  public static String decrypt(String encryptedText) {
-    StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
-    encryptor.setPassword(ENCRYPTION_KEY); // Chiave segreta
-    encryptor.setAlgorithm("PBEWithMD5AndDES"); // Algoritmo deterministico
-    encryptor.setIvGenerator(new NoIvGenerator()); // Rimuove l'uso dell'IV
-    return encryptor.decrypt(encryptedText);
+    public static String decrypt(String encryptedText) {
+      StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
+      encryptor.setPassword(ENCRYPTION_KEY); // Chiave segreta
+      encryptor.setAlgorithm("PBEWithMD5AndDES"); // Algoritmo deterministico
+      encryptor.setIvGenerator(new NoIvGenerator()); // Rimuove l'uso dell'IV
+      return encryptor.decrypt(encryptedText);
+    }
   }
-}
- */
+   */
 
   private static final String ALGORITHM = "AES";
   private static final String ENCRYPTION_KEY = "1234567890123456";
