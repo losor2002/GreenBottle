@@ -7,32 +7,34 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.util.Arrays;
 import java.util.Objects;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-public class Prodotto {
+public final class Prodotto {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   @Column(nullable = false, length = 256)
   private String nome;
   @Column(nullable = false, length = 1024)
-  private String desc;
+  private String descrizione;
   @Column(nullable = false)
   private byte[] img;
-  @Column(nullable = false, length = 7, precision = 2)
+  @Column(nullable = false)
   private float prezzo;
   @Column(nullable = false)
-  private int quantita;
+  private int quantita = 0;
 
-  public Prodotto(String nome, String desc, byte[] img, float prezzo, int quantita) {
+  public Prodotto(String nome, String descrizione, byte[] img, float prezzo, int quantita) {
     this.nome = nome;
-    this.desc = desc;
+    this.descrizione = descrizione;
     this.img = img;
     this.prezzo = prezzo;
     this.quantita = quantita;
@@ -57,7 +59,7 @@ public class Prodotto {
     return "Prodotto{"
         + "id=" + id
         + ", nome='" + nome + '\''
-        + ", desc='" + desc + '\''
+        + ", descrizione='" + descrizione + '\''
         + ", img=" + Arrays.toString(img)
         + ", prezzo=" + prezzo
         + ", quantita=" + quantita
