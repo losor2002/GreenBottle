@@ -10,14 +10,12 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 
 @Entity
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 public class Abbonamento {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,6 +40,17 @@ public class Abbonamento {
     this.tipo = tipo;
     this.rinnovo = rinnovo;
     this.frequenza = frequenza;
+  }
+
+  @SuppressWarnings("checkstyle:OperatorWrap")
+  @Override
+  public String toString() {
+    return "Abbonamento{" +
+        "id=" + id +
+        ", tipo=" + tipo +
+        ", rinnovo=" + rinnovo +
+        ", frequenza=" + frequenza +
+        '}';
   }
 
   public enum TipoAbbonamento {
