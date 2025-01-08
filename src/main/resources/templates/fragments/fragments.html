@@ -14,7 +14,7 @@
 <body>
 <!-- Header Fragment -->
 <header class="all-headerbody" id="header" th:fragment="header">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
 
             <!-- Logo sulla sinistra -->
@@ -52,8 +52,10 @@
         </div>
     </nav>
 </header>
-<footer th:fragment="footer">
-    <p>&copy; 2025 I diritti della pagina sono di chi la creata</p>
+<footer th:fragment="footer" class="footer fixed-bottom text-white py-3 mt-auto">
+    <div class="container text-center">
+        <p>&copy; 2025 I diritti della pagina sono di chi la creata</p>
+    </div>
 </footer>
 </body>
 </html>
