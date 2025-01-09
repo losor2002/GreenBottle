@@ -1,0 +1,73 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.subscription-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.subscription-card {
+    width: 200px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+}
+
+.subscription-card img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.subscription-card button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.subscription-card button:hover {
+    background-color: #45a049;
+}
+
+.details-container {
+    margin: 20px auto;
+    width: 50%;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: none;
+    background-color: #f9f9f9;
+}
+
+.details-container.active {
+    display: block;
+}
+
+.details-container h3 {
+    text-align: center;
+}
+
+.details-container button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.details-container button:hover {
+    background-color: #d32f2f;
+}
+
+.details-container h3 {
+    text-align: center;
+}
