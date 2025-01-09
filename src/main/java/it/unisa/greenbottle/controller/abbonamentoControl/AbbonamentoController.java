@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/abbonamento")
+@RequestMapping("/abbonamenti")
 public class AbbonamentoController {
-  private static final String abbonamentoView = "/abbonamento";
+  private static final String abbonamentoView = "/abbonamenti";
 
   @Autowired
   private AbbonamentoDao abbonamentoDao;
@@ -36,9 +36,9 @@ public class AbbonamentoController {
     Optional<List<Abbonamento>> abbonamenti = Optional.of(abbonamentoDao.findAll());
     List<Abbonamento> abbonamentiList = abbonamenti.get();
     model.addAttribute("abbonamentiList", abbonamentiList);
-    return abbonamentoView;
+    model.addAttribute("message", "Test messaggio");
+    return "redirect:" + abbonamentoView;
   }
-
 
 
   @PostMapping
