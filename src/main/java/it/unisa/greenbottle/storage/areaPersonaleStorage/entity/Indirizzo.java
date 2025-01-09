@@ -1,12 +1,10 @@
 package it.unisa.greenbottle.storage.areaPersonaleStorage.entity;
 
-import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,8 +29,6 @@ public class Indirizzo {
   private String provincia;
   @Column(nullable = false, length = 5)
   private String cap;
-  @ManyToOne
-  private Cliente cliente;
 
   public Indirizzo(Long id, String via, int civico, String citta, String provincia, String cap) {
     this.id = id;

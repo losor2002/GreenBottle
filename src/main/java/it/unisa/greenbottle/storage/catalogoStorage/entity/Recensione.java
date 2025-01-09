@@ -1,6 +1,5 @@
 package it.unisa.greenbottle.storage.catalogoStorage.entity;
 
-import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -8,7 +7,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,10 +24,6 @@ public class Recensione {
   @Column(nullable = false)
   @Enumerated(EnumType.ORDINAL)
   private VotoRecensione voto;
-  @ManyToOne
-  private Prodotto prodotto;
-  @ManyToOne
-  private Cliente cliente;
 
   public Recensione(String descrizione, VotoRecensione voto) {
     this.descrizione = descrizione;
