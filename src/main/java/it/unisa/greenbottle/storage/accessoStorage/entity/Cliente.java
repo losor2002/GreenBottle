@@ -1,10 +1,12 @@
 package it.unisa.greenbottle.storage.accessoStorage.entity;
 
+import it.unisa.greenbottle.storage.abbonamentoStorage.entity.Abbonamento;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import java.sql.Timestamp;
 import java.util.Objects;
 import lombok.AllArgsConstructor;
@@ -30,6 +32,8 @@ public class Cliente {
   private float risparmio;
   private byte[] img; // spring-content-jpa se vogliamo usare BLOB (sicuramente no)
   private Timestamp sottoscrizione;
+  @ManyToOne
+  private Abbonamento abbonamento;
 
   public Cliente() {
   }
@@ -117,6 +121,16 @@ public class Cliente {
   public void setSottoscrizione(Timestamp sottoscrizione) {
     this.sottoscrizione = sottoscrizione;
   }
+
+  public Abbonamento getAbbonamento() {
+    return abbonamento;
+  }
+
+  public void setAbbonamento(
+      Abbonamento abbonamento) {
+    this.abbonamento = abbonamento;
+  }
+
 
   @Override
   public boolean equals(Object o) {
