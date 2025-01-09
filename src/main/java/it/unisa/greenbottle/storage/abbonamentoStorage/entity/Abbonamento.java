@@ -10,14 +10,12 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 
 @Entity
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 public class Abbonamento {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,6 +40,51 @@ public class Abbonamento {
     this.tipo = tipo;
     this.rinnovo = rinnovo;
     this.frequenza = frequenza;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public TipoAbbonamento getTipo() {
+    return tipo;
+  }
+
+  public void setTipo(
+      TipoAbbonamento tipo) {
+    this.tipo = tipo;
+  }
+
+  public RinnovoAbbonamento getRinnovo() {
+    return rinnovo;
+  }
+
+  public void setRinnovo(
+      RinnovoAbbonamento rinnovo) {
+    this.rinnovo = rinnovo;
+  }
+
+  public FrequenzaAbbonamento getFrequenza() {
+    return frequenza;
+  }
+
+  public void setFrequenza(
+      FrequenzaAbbonamento frequenza) {
+    this.frequenza = frequenza;
+  }
+
+  @Override
+  public String toString() {
+    return "Abbonamento{"
+        + "id=" + id
+        + ", tipo=" + tipo
+        + ", rinnovo=" + rinnovo
+        + ", frequenza=" + frequenza
+        + '}';
   }
 
   public enum TipoAbbonamento {

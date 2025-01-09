@@ -1,18 +1,25 @@
 package it.unisa.greenbottle.storage.accessoStorage.entity;
 
+import it.unisa.greenbottle.storage.abbonamentoStorage.entity.Abbonamento;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.Objects;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 public class Cliente {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,9 +37,8 @@ public class Cliente {
   private float risparmio;
   private byte[] img; // spring-content-jpa se vogliamo usare BLOB (sicuramente no)
   private Timestamp sottoscrizione;
-
-  public Cliente() {
-  }
+  @ManyToOne
+  private Abbonamento abbonamento;
 
   public Cliente(String email, String password, String nome, String cognome, int bottiglie,
                  float risparmio, byte[] img, Timestamp sottoscrizione) {
@@ -118,6 +124,15 @@ public class Cliente {
     this.sottoscrizione = sottoscrizione;
   }
 
+  public Abbonamento getAbbonamento() {
+    return abbonamento;
+  }
+
+  public void setAbbonamento(
+      Abbonamento abbonamento) {
+    this.abbonamento = abbonamento;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (o == null || getClass() != o.getClass()) {
@@ -142,7 +157,9 @@ public class Cliente {
         + ", cognome='" + cognome + '\''
         + ", bottiglie=" + bottiglie
         + ", risparmio=" + risparmio
+        + ", img=" + Arrays.toString(img)
         + ", sottoscrizione=" + sottoscrizione
+        + ", abbonamento=" + abbonamento
         + '}';
   }
 }
