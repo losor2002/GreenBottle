@@ -23,3 +23,18 @@
 #navbar-logo {
     color: #E5D9B6;
 }
+
+.nav-item .nav-link {
+    transition: transform 0.3s ease, color 0.3s ease;
+    transform-origin: center;
+}
+
+@media (max-width: 991px) {
+    .nav-item .nav-link {
+        transform-origin: left center;
+    }
+}
+
+.nav-item .nav-link:hover {
+    transform: scale(1.1);
+}

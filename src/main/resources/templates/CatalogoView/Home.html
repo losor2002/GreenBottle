@@ -13,21 +13,21 @@
 </head>
 <body>
 <div th:replace="~{fragments/fragments.html :: header}"></div>
-<div class="container py-5">
-    <div class="row justify-content-center rounded shadow-lg p-4" id="presentation">
-        <!-- Immagine -->
-        <div class="col-md-4 d-flex align-items-center justify-content-center" id="hero">
-            <img th:src="@{/img/Logo.png}" alt="Hero Background" class="img-fluid" style="max-width: 80%;">
-        </div>
+<div class="container-fluid py-5">
+        <div class="row justify-content-center shadow-lg py-4" id="presentation">
+            <!-- Immagine -->
+            <div class="col-md-4 d-flex align-items-center justify-content-center" id="hero">
+                <img th:src="@{/img/Logo.png}" alt="Hero Background" class="img-fluid" style="max-width: 80%;">
+            </div>
 
-        <!-- Titolo -->
-        <div class="col-md-8 d-flex align-items-center justify-content-center text-center text-md-start">
-            <h1 class="display-4 fw-bold" id="logo"><< Logo Green Bottle >></h1>
+            <!-- Titolo -->
+            <div class="col-md-8 d-flex align-items-center justify-content-center text-center text-md-start">
+                <h1 class="display-4 fw-bold" id="logo"><< Logo Green Bottle >></h1>
+            </div>
         </div>
-    </div>
 
     <!-- Sezione di Descrizione del sito -->
-    <div class="row justify-content-center mt-5">
+    <div class="row justify-content-center mt-5 px-30">
         <p class="text-center px-4 pb-4 fs-5">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
             dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
