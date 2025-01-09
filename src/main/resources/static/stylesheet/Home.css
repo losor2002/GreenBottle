@@ -1,27 +1,16 @@
-.hero {
-    background: #e8f5e9;
-    height: 300px;
-    position: relative;
-    text-align: center;
+body {
+    color: #285430;
 }
 
-.hero img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
+.img-fluid {
+    max-width: 70%;
+    height: auto;
 }
 
-.hero h1 {
-    position: relative;
-    z-index: 2;
-    color: #555;
+#presentation {
+    background-color: #A4BE7B;
 }
 
-.hero small {
-    display: block;
-    font-size: 14px;
-    margin-top: 5px;
+#logo {
+    color: #285430;
 }
