@@ -1,45 +1,4 @@
-.registration-container {
-    background-color: #d6d6d6;
-    border-radius: 10px;
-    padding: 30px;
-    max-width: 700px;
-    margin: 50px auto;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.form-row {
-    display: flex;
-    gap: 15px;
-    justify-content: space-around;
-}
-
-.form-row > div {
-    flex: 1;
-}
-
-.form-label {
-    display: flex;
-    justify-content: center;
-}
-
-/*.form-control {
-    border: 3px solid #000000;
-    border-radius: 5px;
-}
-
-.form-control:focus {
-    border-color: #80bdff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
-}*/
-
-.btn-register {
-    background-color: #6c757d;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 10px;
-}
-
-.btn-register:hover {
-    background-color: #5a6268;
+#card-header {
+    background-color: #5F8D4E;
+    color: #E5D9B6;
 }
