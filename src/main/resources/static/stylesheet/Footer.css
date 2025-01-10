@@ -2,6 +2,7 @@
 footer {
     background-color: #31511E; /* Colore di sfondo scuro per il footer */
     color: #F6FCDF; /* Colore del testo del footer */
+    margin-top: auto;
 }
 
 @media (max-width: 992px) {

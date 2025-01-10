@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GreenBottle - Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/img/Logo.png" rel="shortcut icon"/>
+    <link th:href="@{/img/Logo.png}" rel="shortcut icon"/>
     <link th:href="@{/stylesheet/Head.css}" rel="stylesheet">
     <link th:href="@{/stylesheet/Footer.css}" rel="stylesheet">
     <link th:href="@{/stylesheet/Common.css}" rel="stylesheet">
@@ -22,6 +22,12 @@
                     <h3>Login</h3>
                 </div>
                 <div class="card-body">
+                    <div class="text-center">
+                        <p class="my-2">
+                            Non hai un account?
+                            <a href="registrazione" class="text-primary font-weight-bold" id="redirect">Registrati!</a>
+                        </p>
+                    </div>
                     <!--/*@thymesVar id="loginForm" type="it.unisa.greenbottle.controller.accessoControl.form.LoginForm"*/-->
                     <form th:action="@{/login}" th:object="${loginForm}" method="post">
                         <!-- Campo Email -->

@@ -14,7 +14,7 @@
 <body>
 <div th:replace="~{fragments/fragments.html :: header}"></div>
 <div class="container-fluid py-5">
-    <div class="row justify-content-center shadow-lg py-4" id="presentation">
+    <div class="row justify-content-center py-4" id="presentation">
         <!-- Immagine -->
         <div class="col-md-4 d-flex align-items-center justify-content-center" id="hero">
             <img th:src="@{/img/Logo.png}" alt="Hero Background" class="img-fluid" style="max-width: 80%;">
@@ -28,12 +28,48 @@
 
     <!-- Sezione di Descrizione del sito -->
     <div class="row justify-content-center mt-5 px-30">
-        <p class="text-center px-4 pb-4 fs-5">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea
-            commodo consequat.
-        </p>
+        <div class="col-lg-8 col-md-6">
+            <div class="card shadow-lg m-5">
+                <div class="card-body">
+                    <p class="text-center fs-5">
+
+
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sagittis tristique arcu id laoreet.
+                        Donec euismod elit eu sodales rhoncus. Mauris non varius nibh. Suspendisse magna massa, lacinia
+                        nec ante vitae, interdum hendrerit quam. Integer a rhoncus purus. Etiam vel tellus lorem. Nullam
+                        fringilla eu odio a malesuada. Fusce diam leo, congue in congue at, lobortis et nunc. Integer
+                        eget varius metus. Sed et dolor nec mauris bibendum efficitur. Mauris hendrerit varius sem vel
+                        consectetur. Sed ornare ipsum eget lorem suscipit, sed sagittis augue porta.
+
+                        Praesent faucibus ultricies viverra. Etiam iaculis, augue eu varius pulvinar, purus mi feugiat
+                        ipsum, eget imperdiet sapien risus at eros. Phasellus vel est id massa rhoncus mollis. Maecenas
+                        condimentum massa vitae eleifend rutrum. Donec id ante a ante euismod posuere. Nulla malesuada
+                        porttitor dui quis efficitur. Vestibulum a neque auctor tellus finibus ornare. Mauris et diam
+                        sed mauris varius mattis eu id eros. Nulla facilisi. Nam sed augue vestibulum, tempus nisl
+                        eleifend, posuere mi. Nullam sem massa, molestie ut nisl at, euismod dapibus felis. Suspendisse
+                        dapibus efficitur lorem, sed malesuada tellus viverra non. Nullam vel sodales dolor, in
+                        fermentum leo. Donec ornare, nisl ut interdum bibendum, tortor neque ultricies ligula, quis
+                        feugiat metus velit in est. Proin sed ornare velit, porttitor ultrices nisl.
+
+                        Fusce eleifend libero ac leo tempus volutpat. Nullam vitae nisl non leo malesuada lacinia.
+                        Suspendisse justo mi, finibus ac elit a, bibendum pellentesque purus. Lorem ipsum dolor sit
+                        amet, consectetur adipiscing elit. Nullam augue turpis, porta non egestas rutrum, congue id
+                        orci. Phasellus dapibus ac lorem vitae auctor. Nunc at ex at sapien placerat rutrum non at enim.
+                        Fusce in ligula iaculis, tincidunt tortor vitae, venenatis ligula.
+
+                        Sed in gravida dui, vel placerat sapien. Sed convallis lorem ut urna congue, eu ultrices neque
+                        gravida. In hac habitasse platea dictumst. In hac habitasse platea dictumst. Cras quis gravida
+                        mi. Nulla nec accumsan eros. Vestibulum efficitur maximus lacus quis tempus.
+
+                        Sed a tristique magna, hendrerit lobortis orci. Aenean vulputate urna a bibendum sodales.
+                        Quisque lectus velit, tempor eget lobortis non, malesuada ut diam. Donec eros massa,
+                        sollicitudin a lobortis fermentum, malesuada a est. Etiam a quam eu enim scelerisque tempus ac
+                        semper lorem. Cras semper erat vitae aliquet placerat. Cras nisi dolor, commodo et tellus non,
+                        euismod mattis urna.
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <footer th:replace="~{fragments/fragments :: footer}"></footer>
