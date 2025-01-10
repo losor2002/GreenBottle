@@ -29,7 +29,8 @@
                             <label for="nome" class="form-label">Nome</label>
                             <input type="text" class="form-control" id="nome" name="nome" th:field="*{nome}"
                                    placeholder="Inserisci il tuo nome..." required>
-                            <div class="text-danger" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
+                            <div class="text-danger px-2" th:if="${#fields.hasErrors('nome')}"
+                                 th:errors="*{nome}"></div>
                         </div>
 
                         <!-- Campo Cognome -->
@@ -37,7 +38,7 @@
                             <label for="cognome" class="form-label">Cognome</label>
                             <input type="text" class="form-control" id="cognome" name="cognome" th:field="*{cognome}"
                                    placeholder="Inserisci il tuo cognome..." required>
-                            <div class="text-danger" th:if="${#fields.hasErrors('cognome')}"
+                            <div class="text-danger px-2" th:if="${#fields.hasErrors('cognome')}"
                                  th:errors="*{cognome}"></div>
                         </div>
 
@@ -46,7 +47,8 @@
                             <label for="email" class="form-label">Email</label>
                             <input type="email" class="form-control" id="email" name="email" th:field="*{email}"
                                    placeholder="Inserisci la tua email..." required>
-                            <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                            <div class="text-danger px-2" th:if="${#fields.hasErrors('email')}"
+                                 th:errors="*{email}"></div>
                         </div>
 
                         <!-- Campo Password -->
@@ -54,7 +56,7 @@
                             <label for="password" class="form-label">Password</label>
                             <input type="password" class="form-control" id="password" name="password"
                                    th:field="*{password}" placeholder="Crea una password..." required>
-                            <div class="text-danger" th:if="${#fields.hasErrors('password')}"
+                            <div class="text-danger px-2" th:if="${#fields.hasErrors('password')}"
                                  th:errors="*{password}"></div>
                         </div>
 
