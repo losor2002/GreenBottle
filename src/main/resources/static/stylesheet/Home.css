@@ -1,5 +1,6 @@
 body {
     color: #1A1A19;
+    background: url("/img/Banner.png") no-repeat center center / cover;
 }
 
 .img-fluid {
@@ -7,10 +8,11 @@ body {
     height: auto;
 }
 
-#presentation {
-    background: url("/img/Banner.png") no-repeat center center / cover;
-}
-
 #logo {
     color: #F6FCDF;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+#logo:hover {
+    transform: scale(1.1);
 }
