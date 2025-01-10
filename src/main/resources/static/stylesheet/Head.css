@@ -1,6 +1,7 @@
 /* Header Navbar */
 .navbar {
-    background-color: #5F8D4E; /*Colore di sfondo verde chiaro per la navbar #16e37a*/
+    background-color: #859F3D;
+    /*Colore di sfondo verde chiaro per la navbar*/
 }
 
 .navbar .navbar-brand {
@@ -12,7 +13,7 @@
 }
 
 .navbar-nav .nav-link {
-    color: #E5D9B6;
+    color: #F6FCDF;
     opacity: 0.7; /*Il colore del testo delle voci sarà nero*/
 }
 
@@ -21,7 +22,7 @@
 }
 
 #navbar-logo {
-    color: #E5D9B6;
+    color: #F6FCDF;
 }
 
 .nav-item .nav-link {

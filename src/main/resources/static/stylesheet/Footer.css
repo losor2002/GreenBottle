@@ -1,7 +1,7 @@
 /* Footer pagina */
 footer {
-    background-color: #285430; /* Colore di sfondo scuro per il footer */
-    color: #E5D9B6; /* Colore del testo del footer */
+    background-color: #31511E; /* Colore di sfondo scuro per il footer */
+    color: #F6FCDF; /* Colore del testo del footer */
 }
 
 @media (max-width: 992px) {
