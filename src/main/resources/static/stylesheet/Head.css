@@ -23,6 +23,8 @@
 
 #navbar-logo {
     color: #F6FCDF;
+    transition: transform 0.3s ease, color 0.3s ease;
+    transform-origin: left center;
 }
 
 .nav-item .nav-link {
@@ -36,6 +38,6 @@
     }
 }
 
-.nav-item .nav-link:hover {
+.nav-item .nav-link:hover, #navbar-logo:hover {
     transform: scale(1.1);
 }

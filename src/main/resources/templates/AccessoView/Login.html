@@ -12,7 +12,7 @@
     <link th:href="@{/stylesheet/Login.css}" rel="stylesheet">
 </head>
 
-<body>
+<body> <!-- onLoad="hideAlert()" -->
 <div th:replace="~{fragments/fragments :: header}"></div>
 <div class="container mt-5">
     <div class="row justify-content-center">
@@ -29,7 +29,8 @@
                             <label for="email" class="form-label">Email</label>
                             <input type="email" id="email" name="email" class="form-control" th:field="*{email}"
                                    placeholder="Inserisci la tua email...">
-                            <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                            <div class="text-danger px-2" th:if="${#fields.hasErrors('email')}"
+                                 th:errors="*{email}"></div>
                         </div>
                         <!-- Campo Password -->
                         <div class="mb-3">
@@ -37,7 +38,7 @@
                             <input type="password" id="password" name="password" class="form-control"
                                    th:field="*{password}"
                                    placeholder="Inserisci la tua password...">
-                            <div class="text-danger" th:if="${#fields.hasErrors('password')}"
+                            <div class="text-danger px-2" th:if="${#fields.hasErrors('password')}"
                                  th:errors="*{password}"></div>
                         </div>
                         <!-- Tasto Inoltro -->
@@ -59,6 +60,20 @@
         </div>
     </div>
 </div>
+<!-- <script>
+    function hideAlert() {
+        const loginAlert = document.getElementById("loginAlert");
+
+        if(loginAlert) {
+            setTimeout(() => {
+                loginAlert.style.display = "none";
+            }, 3000);
+        }
+    }
+</script>
+<div id="loginAlert" class="alert alert-success" th:if="${#}">
+    <h4>Login avvenuto con successo...</h4>
+</div> -->
 <div th:replace="~{fragments/fragments :: footer}"></div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
