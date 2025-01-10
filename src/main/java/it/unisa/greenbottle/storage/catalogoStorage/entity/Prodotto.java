@@ -29,8 +29,11 @@ public final class Prodotto {
   private float prezzo;
   @Column(nullable = false)
   private int quantita = 0;
+  @Column(nullable = false)
+  private float mediaVoti = 0.0f; //nuovo attributo ridondante
   @ManyToOne
   private Categoria categoria;
+
 
   public Prodotto(String nome, String descrizione, byte[] img, float prezzo, int quantita,
                   Categoria categoria) {
