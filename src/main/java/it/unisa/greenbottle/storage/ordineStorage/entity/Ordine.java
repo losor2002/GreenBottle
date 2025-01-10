@@ -32,16 +32,16 @@ public class Ordine {
   @Column(nullable = false)
   private boolean isSupporto;
   @Column(nullable = false, length = 300)
-  private String desc;
+  private String descrizione;
 
   public Ordine(float prezzo, StatoSpedizione stato, boolean isRitiro, String carta,
-                boolean isSupporto, String desc) {
+                boolean isSupporto, String descrizione) {
     this.prezzo = prezzo;
     this.stato = stato;
     this.isRitiro = isRitiro;
     this.carta = carta;
     this.isSupporto = isSupporto;
-    this.desc = desc;
+    this.descrizione = descrizione;
   }
 
   @Override
@@ -67,7 +67,7 @@ public class Ordine {
         + ", isRitiro=" + isRitiro
         + ", carta='" + carta + '\''
         + ", isSupporto=" + isSupporto
-        + ", desc='" + desc + '\''
+        + ", descrizione='" + descrizione + '\''
         + '}';
   }
 

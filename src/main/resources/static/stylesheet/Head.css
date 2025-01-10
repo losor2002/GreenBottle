@@ -1,0 +1,43 @@
+/* Header Navbar */
+.navbar {
+    background-color: #859F3D;
+    /*Colore di sfondo verde chiaro per la navbar*/
+}
+
+.navbar .navbar-brand {
+    font-weight: bold;
+}
+
+.navbar-nav {
+    margin-left: auto; /*Le voci del menù saranno posizionate a destra*/
+}
+
+.navbar-nav .nav-link {
+    color: #F6FCDF;
+    opacity: 0.7; /*Il colore del testo delle voci sarà nero*/
+}
+
+.navbar-nav .nav-link:hover {
+    opacity: 1; /*Il colore al passaggio del mouse sulle voci sarà grigio scuro*/
+}
+
+#navbar-logo {
+    color: #F6FCDF;
+    transition: transform 0.3s ease, color 0.3s ease;
+    transform-origin: left center;
+}
+
+.nav-item .nav-link {
+    transition: transform 0.3s ease, color 0.3s ease;
+    transform-origin: center;
+}
+
+@media (max-width: 991px) {
+    .nav-item .nav-link {
+        transform-origin: left center;
+    }
+}
+
+.nav-item .nav-link:hover, #navbar-logo:hover {
+    transform: scale(1.1);
+}

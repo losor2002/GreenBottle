@@ -1,22 +1,20 @@
 package it.unisa.greenbottle.storage.accessoStorage.entity;
 
+import it.unisa.greenbottle.storage.abbonamentoStorage.entity.Abbonamento;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import java.sql.Timestamp;
 import java.util.Objects;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Data
 public class Cliente {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +32,11 @@ public class Cliente {
   private float risparmio;
   private byte[] img; // spring-content-jpa se vogliamo usare BLOB (sicuramente no)
   private Timestamp sottoscrizione;
+  @ManyToOne
+  private Abbonamento abbonamento;
+
+  public Cliente() {
+  }
 
   public Cliente(String email, String password, String nome, String cognome, int bottiglie,
                  float risparmio, byte[] img, Timestamp sottoscrizione) {
@@ -46,6 +49,88 @@ public class Cliente {
     this.img = img;
     this.sottoscrizione = sottoscrizione;
   }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public String getNome() {
+    return nome;
+  }
+
+  public void setNome(String nome) {
+    this.nome = nome;
+  }
+
+  public String getCognome() {
+    return cognome;
+  }
+
+  public void setCognome(String cognome) {
+    this.cognome = cognome;
+  }
+
+  public int getBottiglie() {
+    return bottiglie;
+  }
+
+  public void setBottiglie(int bottiglie) {
+    this.bottiglie = bottiglie;
+  }
+
+  public float getRisparmio() {
+    return risparmio;
+  }
+
+  public void setRisparmio(float risparmio) {
+    this.risparmio = risparmio;
+  }
+
+  public byte[] getImg() {
+    return img;
+  }
+
+  public void setImg(byte[] img) {
+    this.img = img;
+  }
+
+  public Timestamp getSottoscrizione() {
+    return sottoscrizione;
+  }
+
+  public void setSottoscrizione(Timestamp sottoscrizione) {
+    this.sottoscrizione = sottoscrizione;
+  }
+
+  public Abbonamento getAbbonamento() {
+    return abbonamento;
+  }
+
+  public void setAbbonamento(
+      Abbonamento abbonamento) {
+    this.abbonamento = abbonamento;
+  }
+
 
   @Override
   public boolean equals(Object o) {

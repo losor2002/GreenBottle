@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenBottle - Registrazione</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/img/Logo.png}" rel="shortcut icon"/>
+    <link th:href="@{/stylesheet/Head.css}" rel="stylesheet">
+    <link th:href="@{/stylesheet/Footer.css}" rel="stylesheet">
+    <link th:href="@{/stylesheet/Common.css}" rel="stylesheet">
+    <link th:href="@{/stylesheet/Registrazione.css}" rel="stylesheet">
+</head>
+<body>
+<!-- Registration Form -->
+<div th:replace="~{fragments/fragments :: header}"></div>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-header text-center" id="card-header">
+                    <h3>Registrazione</h3>
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+                        <p class="my-2">
+                            Hai già un account?
+                            <a href="login" class="text-primary font-weight-bold" id="redirect">Accedi!</a>
+                        </p>
+                    </div>
+                    <!--/*@thymesVar id="registrazioneForm" type="it.unisa.greenbottle.controller.accessoControl.form.RegistrazioneForm"*/-->
+                    <form th:action="@{/registrazione}" method="post" th:object="${registrazioneForm}">
+                        <!-- Campo Nome -->
+                        <div class="mb-3">
+                            <label for="nome" class="form-label">Nome</label>
+                            <input type="text" class="form-control" id="nome" name="nome" th:field="*{nome}"
+                                   placeholder="Inserisci il tuo nome..." required>
+                            <div class="text-danger px-2" th:if="${#fields.hasErrors('nome')}"
+                                 th:errors="*{nome}"></div>
+                        </div>
+
+                        <!-- Campo Cognome -->
+                        <div class="mb-3">
+                            <label for="cognome" class="form-label">Cognome</label>
+                            <input type="text" class="form-control" id="cognome" name="cognome" th:field="*{cognome}"
+                                   placeholder="Inserisci il tuo cognome..." required>
+                            <div class="text-danger px-2" th:if="${#fields.hasErrors('cognome')}"
+                                 th:errors="*{cognome}"></div>
+                        </div>
+
+                        <!-- Campo Email -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" th:field="*{email}"
+                                   placeholder="Inserisci la tua email..." required>
+                            <div class="text-danger px-2" th:if="${#fields.hasErrors('email')}"
+                                 th:errors="*{email}"></div>
+                        </div>
+
+                        <!-- Campo Password -->
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password"
+                                   th:field="*{password}" placeholder="Crea una password..." required>
+                            <div class="text-danger px-2" th:if="${#fields.hasErrors('password')}"
+                                 th:errors="*{password}"></div>
+                        </div>
+
+                        <!-- Messaggio di errore (email già registrata) -->
+                        <div class="text-danger" th:if="${errore}">
+                            <p th:text="${errore}"></p>
+                        </div>
+
+                        <!-- Tasto Registrazione -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary" id="btn">Registrati</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{fragments/fragments :: footer}"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
