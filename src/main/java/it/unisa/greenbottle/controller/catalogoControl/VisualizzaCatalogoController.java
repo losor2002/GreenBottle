@@ -12,15 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/catalogo")
 public class VisualizzaCatalogoController {
 
-  // TODO: set catalogoView
   private String catalogoView = "catalogoView";
 
   @Autowired
@@ -33,15 +30,7 @@ public class VisualizzaCatalogoController {
   private RecensioneDao recensioneDao;
 
   @GetMapping
-  @ResponseBody
-  public String get() {
-    // model.addAttribute("catalogo", prodottoDao.findAll());
-    // return catalogoView;
-    return prodottoDao.findAll().toString();
-  }
-
-  @PostMapping
-  public String post(@ModelAttribute FiltroForm filterForm, Model model) {
+  public String get(@ModelAttribute FiltroForm filterForm, Model model) {
     Specification<Prodotto> spec = Specification.where(null);
 
     if (filterForm.getNome() != null && !filterForm.getNome().isEmpty()) {
@@ -84,16 +73,6 @@ public class VisualizzaCatalogoController {
     prodottoDao.save(fanta);
     Prodotto pepsi = new Prodotto("Pepsi", "pepsi", null, 1.5f, 100, bevande);
     prodottoDao.save(pepsi);
-
-
-
-    @RequestParam(required = false) Optional<String> nome,
-      @RequestParam(required = false) Optional<String> categoria,
-      @RequestParam(required = false) Optional<String> prezzoMin,
-      @RequestParam(required = false) Optional<String> prezzoMax,
-      @RequestParam(required = false) Optional<String> voto
-
-
      */
 
 

@@ -28,9 +28,9 @@ public final class Prodotto {
   @Column(nullable = false)
   private float prezzo;
   @Column(nullable = false)
-  private int quantita = 0;
-  @Column(nullable = false)
-  private float mediaVoti = 0.0f; //nuovo attributo ridondante
+  private int quantita;
+  @Column()
+  private float mediaVoti; //nuovo attributo ridondante
   @ManyToOne
   private Categoria categoria;
 
