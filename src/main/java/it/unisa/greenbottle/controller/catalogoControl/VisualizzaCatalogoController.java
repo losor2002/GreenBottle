@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/catalogo")
 public class VisualizzaCatalogoController {
 
-  private String catalogoView = "/catalogoView/Catalogo";
+  private final String catalogoView = "/CatalogoView/Catalogo";
 
   @Autowired
   private ProdottoDao prodottoDao;
@@ -31,49 +31,49 @@ public class VisualizzaCatalogoController {
 
   @GetMapping
   public String get(@ModelAttribute FiltroForm filterForm, Model model) {
+
+
     Specification<Prodotto> spec = Specification.where(null);
 
     if (filterForm.getNome() != null && !filterForm.getNome().isEmpty()) {
       spec = spec.and((root, query, criteriaBuilder) ->
-          criteriaBuilder.like(root.get("nome"), "%" + filterForm.getNome() + "%"));
+          criteriaBuilder.like(
+              criteriaBuilder.lower(root.get("nome")),
+              "%" + filterForm.getNome().toLowerCase() + "%"
+          )
+      );
     }
     if (filterForm.getCategoria() != null && !filterForm.getCategoria().isEmpty()) {
       spec = spec.and((root, query, criteriaBuilder) ->
-          criteriaBuilder.equal(root.get("categoria").get("nome"), filterForm.getCategoria()));
+          criteriaBuilder.equal(
+              criteriaBuilder.lower(root.get("categoria").get("nome")),
+              filterForm.getCategoria().toLowerCase()
+          )
+      );
     }
     if (filterForm.getPrezzoMin() != null) {
       spec = spec.and((root, query, criteriaBuilder) ->
-          criteriaBuilder.greaterThanOrEqualTo(root.get("prezzo"), filterForm.getPrezzoMin()));
+          criteriaBuilder.greaterThanOrEqualTo(root.get("prezzo"), filterForm.getPrezzoMin())
+      );
     }
     if (filterForm.getPrezzoMax() != null) {
       spec = spec.and((root, query, criteriaBuilder) ->
-          criteriaBuilder.lessThanOrEqualTo(root.get("prezzo"), filterForm.getPrezzoMax()));
+          criteriaBuilder.lessThanOrEqualTo(root.get("prezzo"), filterForm.getPrezzoMax())
+      );
     }
     if (filterForm.getVoto() != null) {
       spec = spec.and((root, query, criteriaBuilder) ->
-          criteriaBuilder.greaterThanOrEqualTo(root.get("votoMedio"), filterForm.getVoto()));
+          criteriaBuilder.greaterThanOrEqualTo(root.get("votoMedio"), filterForm.getVoto())
+      );
     }
 
+    System.out.println(filterForm.getCategoria());
     List<Prodotto> prodotti = prodottoDao.findAll(spec);
-
-
+    System.out.println(prodotti);
     model.addAttribute("prodotti", prodotti);
     model.addAttribute("filterForm", filterForm);
-    return prodotti.toString();
-
+    return catalogoView;
   }
-
-    /* **** CREA PRODOTTI ****
-    Categoria bevande = new Categoria("Bevande Gassate");
-    categoriaDao.save(bevande);
-
-    Prodotto cocaCola = new Prodotto("Coca Cola", "cocacola", null, 1.5f, 100, bevande);
-    prodottoDao.save(cocaCola);
-    Prodotto fanta = new Prodotto("Fanta", "fanta", null, 1.5f, 100, bevande);
-    prodottoDao.save(fanta);
-    Prodotto pepsi = new Prodotto("Pepsi", "pepsi", null, 1.5f, 100, bevande);
-    prodottoDao.save(pepsi);
-     */
 
 
 }
