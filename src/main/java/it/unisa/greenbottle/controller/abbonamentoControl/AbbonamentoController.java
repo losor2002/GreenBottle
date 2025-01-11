@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.swing.text.html.Option;
+
 @Controller
 @RequestMapping("/abbonamento")
 public class AbbonamentoController {
@@ -33,9 +35,20 @@ public class AbbonamentoController {
   @GetMapping
   public String get(@ModelAttribute AbbonamentoForm abbonamentoForm, Model model) {
 
-    Optional<List<Abbonamento>> abbonamenti = Optional.of(abbonamentoDao.findAll());
-    List<Abbonamento> abbonamentiList = abbonamenti.get();
+    if (!model.containsAttribute("abbonamento")) {
+      Optional<Cliente> clienteOpt = sessionCliente.getCliente();
+
+      clienteOpt.ifPresent(cliente -> {
+        Abbonamento abbonamento = cliente.getAbbonamento();
+
+        Optional.ofNullable(abbonamento).ifPresent(a -> model.addAttribute("abbonamento", a.getId()));
+      });
+    }
+
+
+    List<Abbonamento> abbonamentiList = abbonamentoDao.findAll();
     model.addAttribute("abbonamentiList", abbonamentiList);
+
     return abbonamentoView;
   }
 
@@ -45,18 +58,34 @@ public class AbbonamentoController {
   public String post(@ModelAttribute @Valid AbbonamentoForm abbonamentoForm,
                      BindingResult bindingResult, Model model) {
 
-    Long id = abbonamentoForm.getId();
-    Optional<Abbonamento> abbonamentoOptional = abbonamentoDao.findAbbonamentoById(id);
-    if (abbonamentoOptional.isPresent()) {
-      Abbonamento abbonamento = abbonamentoOptional.get();
-      Optional<Cliente> clienteOptional = sessionCliente.getCliente();
-      if (clienteOptional.isPresent()) {
-        Cliente cliente = clienteOptional.get();
-        cliente.setAbbonamento(abbonamento);
-        cliente.setSottoscrizione(new Timestamp(System.currentTimeMillis()));
-      }
+
+    Optional<Cliente> clienteOpt = sessionCliente.getCliente();
+    if (clienteOpt.isEmpty()) {
+      return "redirect:/login";
     }
 
-    return abbonamentoView;
+
+    Long idAbbonamento = abbonamentoForm.getId();
+    Optional<Abbonamento> abbonamentoOptional = abbonamentoDao.findAbbonamentoById(idAbbonamento);
+    if (abbonamentoOptional.isEmpty()) {
+      return "redirect:/error";
+    }
+
+
+    Abbonamento abbonamento = abbonamentoOptional.get();
+    Cliente cliente = clienteOpt.get();
+
+
+    cliente.setAbbonamento(abbonamento);
+    cliente.setSottoscrizione(new Timestamp(System.currentTimeMillis()));
+
+    model.addAttribute("abbonamento", abbonamento.getId());
+
+
+    if (model.containsAttribute("abbonamento")) {
+      return abbonamentoView;
+    } else {
+      return "errore";
+    }
   }
 }
