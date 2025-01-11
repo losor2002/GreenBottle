@@ -7,41 +7,218 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link th:href="@{/img/Logo.png}" rel="shortcut icon"/>
     <link th:href="@{/stylesheet/Common.css}" rel="stylesheet">
-    <link th:href="@{/stylesheet/Header.css}" rel="stylesheet">
+    <link th:href="@{/stylesheet/Head.css}" rel="stylesheet">
     <link th:href="@{/stylesheet/Footer.css}" rel="stylesheet">
     <link th:href="@{/stylesheet/Catalogo.css}" rel="stylesheet">
 </head>
 <body>
-<div th:replace="~{fragments/fragments.html :: header}"></div>
-<main class="container my-4">
+<div th:replace="~{fragments/fragments :: header}"></div>
+<main class="container-fluid my-4">
     <div class="row">
         <!-- Filtro -->
-        <aside class="col-md-3">
-            <div class="filter-section">
-                <h5>Filtri</h5>
-                <div class="mb-3">
-                    <h6>Categoria</h6>
-                    <button class="btn btn-secondary w-100 mb-2">Acqua</button>
-                    <button class="btn btn-secondary w-100 mb-2">Succo di frutta</button>
-                    <button class="btn btn-secondary w-100">Bevanda gassata</button>
-                </div>
-                <div class="mb-3">
-                    <h6>Prezzo</h6>
-                    <input type="range" class="form-range" min="1" max="100" step="1" id="priceRange">
-                </div>
-                <div class="mb-3">
-                    <h6>Recensione</h6>
-                    <div class="d-flex align-items-center">
-                        <span class="text-warning">&#9733;&#9733;&#9733;&#9733;</span>
-                        <span class="ms-2">e più</span>
+        <aside class="col-md-4 col-lg-3">
+            <form class="filter-section p-4 sticky-top" id="filter-card" method="get">
+                <h5 class="text-center mb-4">Filtri</h5>
+
+                <!-- Categoria -->
+                <div class="mb-4">
+                    <h6 class="text">Categoria</h6>
+                    <div class="d-flex flex-column">
+                        <input type="radio" class="btn-check" name="category" id="acqua" value="Acqua">
+                        <label class="btn my-1" for="acqua">Acqua</label>
+
+                        <input type="radio" class="btn-check" name="category" id="succo" value="Succo di frutta">
+                        <label class="btn my-1" for="succo">Succo di frutta</label>
+
+                        <input type="radio" class="btn-check" name="category" id="bevanda" value="Bevanda gassata">
+                        <label class="btn my-1" for="bevanda">Bevanda gassata</label>
                     </div>
                 </div>
-                <button class="btn btn-primary w-100">Applica</button>
-            </div>
+
+                <!-- Prezzo -->
+                <div class="mb-4">
+                    <h6 class="text">Prezzo</h6>
+                    <div class="d-flex justify-content-between">
+                        <input type="number" class="form-control" id="minPrice" name="minPrice" placeholder="€ Min"
+                               min="1" value="1">
+                        <span class="mx-2">-</span>
+                        <input type="number" class="form-control" id="maxPrice" name="maxPrice" placeholder="€ Max"
+                               max="100" value="100">
+                    </div>
+                </div>
+
+                <!-- Recensione -->
+                <div class="mb-4">
+                    <h6 class="text">Recensione</h6>
+                    <div class="d-flex">
+                        <input type="radio" class="btn-check" name="review" id="star1" value="1">
+                        <label class="btn my-1" for="star1">☆</label>
+
+                        <input type="radio" class="btn-check" name="review" id="star2" value="2">
+                        <label class="btn my-1" for="star2">☆</label>
+
+                        <input type="radio" class="btn-check" name="review" id="star3" value="3">
+                        <label class="btn my-1" for="star3">☆</label>
+
+                        <input type="radio" class="btn-check" name="review" id="star4" value="4">
+                        <label class="btn my-1" for="star4">☆</label>
+
+                        <input type="radio" class="btn-check" name="review" id="star5" value="5">
+                        <label class="btn my-1" for="star5">☆</label>
+                    </div>
+                </div>
+
+                <!-- Applica Button -->
+                <button class="btn btn-primary w-100" type="submit" id="submit">Applica Filtri</button>
+            </form>
         </aside>
 
         <!-- Prodotti -->
-        <section class="col-md-9">
+        <section class="col-md-8">
+            <p>
+
+
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tempus a eros sed commodo. Nulla eget
+                elementum metus. Nam iaculis maximus purus, eu vestibulum erat laoreet imperdiet. Cras dolor sapien,
+                sollicitudin in maximus tempor, fringilla vel tortor. Vivamus varius tellus mattis ipsum ultrices
+                facilisis. Maecenas sed ante tortor. Curabitur sodales pharetra enim scelerisque interdum. Nulla
+                condimentum, ipsum ac facilisis viverra, turpis ligula blandit lorem, et ornare nibh diam congue neque.
+
+                Fusce sed dolor dictum, ultrices ligula id, vestibulum lacus. In tempor mauris eget lorem tempus iaculis
+                eget nec augue. Morbi venenatis, urna ac venenatis ullamcorper, leo nisl accumsan elit, vitae rutrum
+                tortor erat non orci. Donec vel commodo ex, porttitor laoreet nisl. Integer quis luctus magna, nec
+                interdum odio. Sed dapibus, ex a porta rutrum, ante ante porttitor elit, vel condimentum tellus est vel
+                nibh. Cras porta nunc et consectetur laoreet.
+
+                Nulla dapibus interdum massa, vel condimentum leo vehicula sed. Suspendisse dapibus nisi in felis
+                viverra accumsan. Nulla et pellentesque sem. Phasellus ipsum erat, aliquet sed sodales aliquet, gravida
+                eu nisi. In orci turpis, dapibus quis vestibulum in, vestibulum ac mi. Ut in viverra orci, et gravida
+                enim. Maecenas diam elit, blandit vel mi eu, laoreet tempor libero. Nullam id quam lacus. Aliquam
+                fringilla lorem a nisl bibendum dignissim. Morbi orci tellus, vestibulum ut sapien sit amet, sodales
+                iaculis augue.
+
+                Sed ut maximus lectus. Integer varius id risus eget dictum. Vivamus vehicula at sem sit amet sagittis.
+                Aliquam ut sapien sit amet ante consectetur sollicitudin. Phasellus vel mauris bibendum, ornare ligula
+                sit amet, aliquet enim. Quisque volutpat mi et purus pellentesque malesuada. Aliquam lacinia consectetur
+                sem in efficitur.
+
+                Integer vel sem lectus. Nullam risus tortor, scelerisque eu laoreet scelerisque, lacinia ac mi. Sed in
+                dui metus. Cras a vestibulum lacus, ut venenatis lacus. Phasellus scelerisque placerat elit, at posuere
+                ligula sodales vitae. Donec ultricies dolor a iaculis luctus. Suspendisse ac erat tempor, luctus quam
+                vel, congue neque. Sed tempor lobortis mi at dictum. Mauris in velit et velit consectetur porttitor id
+                vitae nisi.
+
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eleifend pharetra pulvinar. Vivamus ac
+                rhoncus odio. Etiam pharetra vehicula elit, vitae eleifend massa ornare et. Mauris quis odio ac ligula
+                volutpat imperdiet eget nec dui. Integer finibus blandit erat sed pharetra. Mauris et varius nisl. Donec
+                consequat fringilla velit at efficitur. Sed nec molestie odio, nec tristique nunc. Suspendisse a sapien
+                feugiat, luctus velit id, porta metus. Morbi nisl nisl, venenatis id risus et, porttitor maximus quam.
+
+                Nulla congue, lacus ac eleifend eleifend, magna ipsum egestas tortor, a laoreet ante tellus sit amet
+                arcu. Nam tincidunt felis velit, eu fringilla nunc consequat at. Donec fermentum est consectetur erat
+                sagittis semper. Curabitur laoreet tellus vitae lorem posuere imperdiet. Integer rhoncus elementum
+                tortor vitae vehicula. Ut tellus orci, vulputate et mauris vel, bibendum vestibulum nisl. Donec dictum
+                nulla id orci porttitor accumsan. In elementum interdum velit, in lacinia enim rhoncus vel.
+
+                Aenean a ornare mi. Praesent sed arcu sit amet quam porttitor euismod vel quis eros. Phasellus a tellus
+                id nibh lacinia aliquam nec et lacus. Mauris ullamcorper pulvinar sodales. Quisque at mauris laoreet,
+                euismod libero et, blandit sem. Vivamus vel porttitor justo. Nunc dapibus justo lectus, a interdum est
+                mattis et. In volutpat posuere nisi placerat eleifend.
+
+                Sed nec odio orci. Nam lobortis nisi nec ornare sagittis. Phasellus posuere sapien eget nibh vehicula,
+                in eleifend nisi feugiat. Ut eu convallis massa. Quisque semper molestie magna, ut convallis ipsum
+                congue sed. In hac habitasse platea dictumst. Fusce imperdiet neque quis tortor commodo, et scelerisque
+                ligula congue. Curabitur eu elit eu purus tincidunt maximus a sit amet sem. Suspendisse nunc sapien,
+                ornare sed vestibulum at, auctor nec risus. Suspendisse placerat nibh non libero eleifend, quis gravida
+                orci congue. Nulla nec dignissim justo, a hendrerit dui.
+
+                In tincidunt velit quis nisl semper feugiat. In hac habitasse platea dictumst. In placerat eros eu
+                aliquam accumsan. Phasellus iaculis varius augue quis ornare. Phasellus eu pulvinar metus. Praesent
+                vehicula, arcu aliquet luctus rutrum, nisi ante porttitor velit, vitae consectetur lacus nunc at justo.
+                Fusce sed aliquam eros. Donec quis mi egestas, faucibus risus vel, dignissim dui. Proin ultricies velit
+                vitae diam hendrerit, quis lobortis augue interdum. Maecenas odio lacus, semper sit amet semper ut,
+                aliquet at massa. Proin dictum scelerisque pulvinar. Donec ultricies feugiat lectus.
+
+                Donec ultricies ex eget odio fringilla sagittis. Fusce suscipit, neque in ultrices aliquam, elit tortor
+                interdum nisi, sit amet condimentum dolor dui quis lectus. Sed mauris sem, dignissim vel orci in,
+                pellentesque venenatis neque. Suspendisse ac lacinia purus. Nulla fermentum vehicula nunc, in elementum
+                dolor euismod a. Donec vitae mauris dapibus, pellentesque quam quis, mollis arcu. Integer facilisis eros
+                justo, at pulvinar sapien condimentum ut. Mauris odio erat, tempus pharetra blandit at, posuere eget
+                magna. Mauris rutrum efficitur nulla et pellentesque. Pellentesque malesuada nisi vitae metus tempor, eu
+                tristique ante efficitur.
+
+                Vestibulum posuere pulvinar pellentesque. Morbi dictum eget tortor ac imperdiet. Pellentesque sodales
+                viverra sagittis. Aenean est erat, tincidunt quis consequat a, laoreet eu sapien. Aenean lacus ipsum,
+                aliquet ut bibendum vitae, porttitor et erat. Maecenas venenatis cursus ligula quis fermentum. Sed et
+                massa sit amet arcu pellentesque sollicitudin in vel magna.
+
+                Proin dignissim elit at faucibus feugiat. Nulla sit amet lobortis tellus. Proin sapien quam, vehicula id
+                velit finibus, feugiat accumsan erat. Fusce id nulla egestas, facilisis libero et, molestie tellus.
+                Nulla hendrerit rhoncus arcu quis congue. Mauris scelerisque elit nec lectus facilisis semper.
+                Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam
+                neque magna, sollicitudin sed est sit amet, tincidunt eleifend felis. Praesent a augue nec odio porta
+                imperdiet in eu mauris. Sed rhoncus neque eu efficitur rutrum. Maecenas hendrerit quam odio, ac aliquet
+                neque ullamcorper eget.
+
+                Nulla tristique orci id mattis rhoncus. Fusce sed dolor odio. Maecenas eu tortor vel sapien tristique
+                rutrum quis id tortor. Fusce efficitur a lacus luctus pellentesque. Curabitur dapibus ligula suscipit,
+                tristique dolor ac, accumsan lectus. Suspendisse potenti. Nunc porttitor urna sed dapibus pellentesque.
+                Nullam vulputate nunc risus, vel aliquet velit convallis in. Etiam dignissim, nibh in mollis egestas,
+                urna mi vulputate mi, in pellentesque velit neque eu lacus. Aliquam venenatis massa lectus, consectetur
+                rutrum erat mollis non.
+
+                Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec quis vestibulum magna. Vivamus id
+                fermentum mi. Suspendisse potenti. Sed consectetur feugiat massa, vel egestas libero. Fusce luctus
+                blandit tellus, eget faucibus massa auctor eget. Curabitur libero lorem, bibendum id molestie nec,
+                tempor a risus. Quisque in leo sed turpis maximus pulvinar. Nam at placerat quam, a interdum quam. Cras
+                viverra porttitor tellus a maximus. Praesent varius euismod magna, non pharetra massa porta ac. Donec
+                viverra est tortor, dignissim dapibus mi laoreet id. Donec vestibulum vel arcu at elementum. Aliquam
+                cursus euismod tincidunt. Sed non purus volutpat, venenatis sem mollis, finibus erat.
+
+                Phasellus et elit finibus, iaculis nibh nec, accumsan ante. Sed viverra posuere arcu vitae efficitur.
+                Fusce id diam pellentesque, molestie orci non, consequat neque. Vivamus gravida odio et lorem ultricies
+                blandit. Curabitur volutpat vitae ipsum eget commodo. Curabitur imperdiet vitae quam id tristique.
+                Suspendisse iaculis interdum semper. Praesent nulla ex, dictum lacinia nisl eu, interdum porttitor eros.
+                Etiam eleifend commodo justo, non consequat diam consequat nec. Nunc volutpat orci sed mauris
+                sollicitudin ultrices. In tempus eu turpis nec tincidunt. Aenean bibendum, sem at porta tincidunt, erat
+                urna volutpat mi, ut pellentesque dolor sem ut ipsum. Integer mollis volutpat interdum. Aliquam erat
+                volutpat.
+
+                Nunc efficitur nulla vitae molestie congue. Etiam venenatis non nunc vitae interdum. Cras odio dolor,
+                accumsan tempus magna ut, pulvinar finibus urna. Cras non euismod arcu, vel volutpat tortor. Sed dictum
+                diam vel finibus condimentum. Integer at velit et tortor tristique lacinia. Nam est lectus, tempor in
+                rutrum eget, pretium vitae mi. Aenean consequat pulvinar ipsum et fringilla. Aenean vestibulum leo sem,
+                quis blandit nulla sagittis non.
+
+                Donec augue nisl, convallis non odio ac, consequat rutrum nulla. Quisque porttitor ipsum at quam porta,
+                eu fringilla sem facilisis. Praesent nulla ligula, volutpat non dignissim in, ullamcorper non est. Etiam
+                urna diam, congue nec ante vel, luctus lacinia justo. Vestibulum dignissim magna dolor, nec gravida
+                metus aliquam eu. Aliquam ipsum lectus, facilisis lacinia massa vel, eleifend placerat nibh. Morbi
+                hendrerit eros condimentum consequat commodo. Nam cursus lacus id mauris ultricies, feugiat auctor erat
+                mollis. Nullam eros lorem, accumsan a ultricies ut, ornare eget justo. Integer nec dui congue,
+                vestibulum lorem et, blandit massa. Pellentesque leo metus, interdum id imperdiet nec, tincidunt et
+                orci. Sed metus justo, tristique eget quam at, porttitor rhoncus mauris. Aenean bibendum ex eu orci
+                lobortis accumsan. Sed facilisis ante nibh, quis pretium purus vulputate eget. Cras sollicitudin magna
+                et sodales facilisis. Sed nec arcu ac lacus cursus viverra non sit amet eros.
+
+                Pellentesque sit amet mattis est. In dui lorem, viverra in magna nec, feugiat tempor ex. Sed congue
+                tortor mauris, vitae mollis dolor pharetra tristique. Phasellus tincidunt consectetur dolor, elementum
+                pulvinar lectus convallis vitae. Phasellus venenatis libero vitae neque pellentesque, sit amet
+                pellentesque elit auctor. Curabitur euismod malesuada rhoncus. Curabitur ut tempus urna. Nam tincidunt
+                cursus diam quis mollis. Duis non neque cursus, malesuada nisl at, euismod sapien. Morbi fringilla
+                rutrum diam vel posuere. Nunc ac lectus eu ipsum egestas pellentesque at at neque. Proin tempus
+                venenatis ex in dapibus. Etiam rutrum, diam in finibus finibus, nunc sem fringilla massa, at consectetur
+                felis risus at ligula. Nullam metus elit, euismod in tellus at, facilisis vehicula metus.
+
+                Cras nisl erat, viverra et justo in, finibus cursus felis. Nunc vitae tempus sem. Duis sodales ac nibh
+                vitae molestie. Maecenas condimentum dolor leo, non laoreet purus dapibus sit amet. Quisque fringilla,
+                purus in convallis porta, purus velit placerat sapien, at volutpat ligula purus sed arcu. Nulla
+                elementum, risus et luctus egestas, elit lectus semper dui, quis iaculis sem risus eu dolor. Fusce
+                facilisis molestie elit ut ornare. Praesent quis viverra quam, quis accumsan magna. Integer blandit, mi
+                sit amet scelerisque auctor, enim magna sodales orci, semper scelerisque massa metus quis nulla. Nam
+                nisi tellus, bibendum ac dolor ac, faucibus dictum nisl. Sed sodales tristique erat, quis consequat
+                metus iaculis ac.
+            </p>
             <div class="row">
                 <div class="col-md-4 mb-4" th:each="prodotto : ${prodotti}">
                     <div class="product-card">
@@ -60,5 +237,22 @@
 </main>
 <footer th:replace="~{fragments/fragments :: footer}"></footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const stars = document.querySelectorAll('input[name="review"]');
+    stars.forEach(star => {
+        star.addEventListener('mouseenter', () => {
+            const value = star.value;
+            stars.forEach(star => {
+                star.nextElementSibling.style.color = star.value <= value ? '#ffcc00' : '#ddd';
+            });
+        });
+
+        star.addEventListener('mouseleave', () => {
+            stars.forEach(star => {
+                star.nextElementSibling.style.color = star.checked ? '#ffcc00' : '#ddd';
+            });
+        });
+    });
+</script>
 </body>
 </html>
