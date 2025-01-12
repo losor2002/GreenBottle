@@ -78,11 +78,7 @@
             <div class="row">
                 <!-- <div class="col-md-4 mb-4" th:each="prodotto : ${prodotti}"> -->
                 <div class="product-card col-md-4 mx-2 my-2 rounded">
-                    <!-- TODO: Creare una servlet per renderizzare l'immagine
-                     perché in backend abbiamo byte[] e non una stringa, non si puo usare <img src="">
-                    <img th:src="@{${prodotto.immagine}}" class="img-fluid w-100 d-block" alt="Immagine prodotto">
-                     -->
-
+                    <!-- TODO: per renderizzare le immagini usare come src del tag img /productImg?id=xxx -->
 
                     <img th:src="@{/img/Banner.png}" class="img-fluid w-100 d-block" alt="Immagine prodotto">
                     <h3 class="mt-3" th:text="test"></h3>

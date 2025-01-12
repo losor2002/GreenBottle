@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,6 +25,7 @@ public final class Prodotto {
   private String nome;
   @Column(nullable = false, length = 1024)
   private String descrizione;
+  @Lob
   private byte[] img;
   @Column(nullable = false)
   private float prezzo;
