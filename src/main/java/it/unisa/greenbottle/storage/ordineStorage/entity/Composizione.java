@@ -1,7 +1,13 @@
 package it.unisa.greenbottle.storage.ordineStorage.entity;
 
 import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,10 +40,12 @@ public class Composizione {
 
   @Override
   public String toString() {
-    return "Composizione{"
-        + "id=" + id
-        + ", quantita=" + quantita
-        + '}';
+    return "Composizione{" +
+        "id=" + id +
+        ", ordineId=" + (ordine != null ? ordine.getId() : "null") +
+        ", prodotto=" + (prodotto != null ? prodotto.getNome() : "null") +
+        ", quantita=" + quantita +
+        '}';
   }
-
 }
+

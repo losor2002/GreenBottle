@@ -5,18 +5,18 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.util.Arrays;
-import java.util.Objects;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Data
+@ToString(exclude = "img")
 public final class Prodotto {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,44 +25,26 @@ public final class Prodotto {
   private String nome;
   @Column(nullable = false, length = 1024)
   private String descrizione;
-  @Column(nullable = false)
+  @Lob
   private byte[] img;
   @Column(nullable = false)
   private float prezzo;
   @Column(nullable = false)
-  private int quantita = 0;
+  private int quantita;
+  @Column()
+  private float mediaVoti; //nuovo attributo ridondante
+  @ManyToOne
+  private Categoria categoria;
 
-  public Prodotto(String nome, String descrizione, byte[] img, float prezzo, int quantita) {
+
+  public Prodotto(String nome, String descrizione, byte[] img, float prezzo, int quantita,
+                  Categoria categoria) {
     this.nome = nome;
     this.descrizione = descrizione;
     this.img = img;
     this.prezzo = prezzo;
     this.quantita = quantita;
+    this.categoria = categoria;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Prodotto prodotto = (Prodotto) o;
-    return Objects.equals(id, prodotto.id);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hashCode(id);
-  }
-
-  @Override
-  public String toString() {
-    return "Prodotto{"
-        + "id=" + id
-        + ", nome='" + nome + '\''
-        + ", descrizione='" + descrizione + '\''
-        + ", img=" + Arrays.toString(img)
-        + ", prezzo=" + prezzo
-        + ", quantita=" + quantita
-        + '}';
-  }
 }
