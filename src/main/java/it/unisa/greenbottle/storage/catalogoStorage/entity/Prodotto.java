@@ -16,7 +16,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@ToString
+@ToString(exclude = "img")
 public final class Prodotto {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
