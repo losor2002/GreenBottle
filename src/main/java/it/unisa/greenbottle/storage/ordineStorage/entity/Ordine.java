@@ -1,19 +1,21 @@
 package it.unisa.greenbottle.storage.ordineStorage.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import it.unisa.greenbottle.storage.areaPersonaleStorage.entity.Indirizzo;
+import jakarta.persistence.*;
+
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class Ordine {
@@ -33,6 +35,26 @@ public class Ordine {
   private boolean isSupporto;
   @Column(nullable = false, length = 300)
   private String descrizione;
+
+  @OneToMany(mappedBy = "ordine", cascade = CascadeType.ALL, orphanRemoval = true)
+  private Set<Composizione> composizioni = new HashSet<>();
+
+  @ManyToOne
+  @JoinColumn(name = "indirizzo_id", nullable = false)
+  private Indirizzo indirizzo;
+
+
+  protected Ordine(OrdineBuilder builder) {
+    this.prezzo = builder.getPrezzo();
+    this.stato = builder.getStato();
+    this.isRitiro = builder.isRitiro();
+    this.carta = builder.getCarta();
+    this.isSupporto = builder.isSupporto();
+    this.descrizione = builder.getDescrizione();
+    this.composizioni = builder.getComposizioni() != null ? builder.getComposizioni() : new HashSet<>();
+    this.indirizzo = builder.getIndirizzo();
+  }
+
 
   public Ordine(float prezzo, StatoSpedizione stato, boolean isRitiro, String carta,
                 boolean isSupporto, String descrizione) {
@@ -79,3 +101,4 @@ public class Ordine {
     CONSEGNATO
   }
 }
+
