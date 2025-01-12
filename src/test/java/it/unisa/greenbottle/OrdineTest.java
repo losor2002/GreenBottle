@@ -22,7 +22,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class TestOrdine {
+public class OrdineTest {
 
   @Autowired
   private OrdineDao ordineDao;
