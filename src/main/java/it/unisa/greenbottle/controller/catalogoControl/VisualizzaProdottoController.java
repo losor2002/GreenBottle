@@ -24,7 +24,7 @@ public class VisualizzaProdottoController {
   public String get(@RequestParam Long id, Model model) {
     Optional<Prodotto> prodotto = prodottoDao.findById(id);
     if (prodotto.isEmpty()) {
-      return "/errore";
+      return "/error";
     }
     model.addAttribute("prodotto", prodotto.get());
     return prodottoView;

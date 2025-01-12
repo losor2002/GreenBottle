@@ -1,6 +1,8 @@
 package it.unisa.greenbottle.controller.catalogoControl;
 
 import it.unisa.greenbottle.storage.catalogoStorage.dao.ProdottoDao;
+import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,7 +20,13 @@ public class RenderImg {
 
   @GetMapping("/productImg")
   public ResponseEntity<byte[]> getImage(@RequestParam("id") Long id) {
-    byte[] image = prodottoDao.findById(id).get().getImg();
+    Optional<Prodotto> opPro = prodottoDao.findById(id);
+    if (opPro.isEmpty()) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    Prodotto p = opPro.get();
+    byte[] image = p.getImg();
     HttpHeaders headers = new HttpHeaders();
     headers.add("Content-Type", "image/jpeg");
     headers.add("Content-Length", String.valueOf(image.length));
