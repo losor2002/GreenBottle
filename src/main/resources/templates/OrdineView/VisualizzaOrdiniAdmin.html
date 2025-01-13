@@ -26,10 +26,10 @@
             <p><strong>Indirizzo:</strong> <span th:text="${ordine.getIndirizzo()}"></span></p>
             <form class="card-button d-flex gap-2" th:action="@{/admin/visualizzaOrdini}" method="post">
                 <input type="hidden" name="ordineId" th:value="${ordine.getId()}"/>
-                <button type="submit" class="btn btn-primary btn-acc" name="newState"
+                <button type="submit" class="btn btn-primary btn-acc col-6 col-md-2" name="newState"
                         th:value="${StatoSpedizione.ACCETTATO}">Accetta
                 </button>
-                <button type="submit" class="btn btn-primary btn-rif" name="newState"
+                <button type="submit" class="btn btn-danger btn-rif col-6 col-md-2" name="newState"
                         th:value="${StatoSpedizione.RIFIUTATO}">Rifiuta
                 </button>
             </form>
