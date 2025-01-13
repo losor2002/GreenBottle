@@ -7,14 +7,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
+@Data
 @NoArgsConstructor
-@Getter
-@Setter
 public class Composizione {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,15 +24,10 @@ public class Composizione {
   @ManyToOne
   private Prodotto prodotto;
 
-  public Composizione(int quantita) {
+  public Composizione(int quantita, Ordine ordine, Prodotto prodotto) {
     this.quantita = quantita;
+    this.ordine = ordine;
+    this.prodotto = prodotto;
   }
 
-  @Override
-  public String toString() {
-    return "Composizione{"
-        + "id=" + id
-        + ", quantita=" + quantita
-        + '}';
-  }
 }
