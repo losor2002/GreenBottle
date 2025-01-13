@@ -4,14 +4,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
-//MOMENTANEO: Mi serviva solo per visualizzare la homepage dal web per verificare l'adeguatezza di css
-
 @Controller
 public class HomeController {
+  private String homeView = "/CatalogoView/Home";
 
-  @GetMapping("/home")
+  @GetMapping(value = {"/", "/home"})
   public String home() {
-
-    return "/CatalogoView/Home";
+    return homeView;
   }
 }

@@ -1,0 +1,93 @@
+@media (max-width: 992px) {
+    aside {
+        position: static;
+        margin-bottom: 20px;
+    }
+}
+
+.filter-section {
+    position: sticky;
+    top: 80px;
+    z-index: 5;
+}
+
+.row {
+    min-height: calc(100vh - 120vh);
+}
+
+.text-center, .text, .btn, small, span {
+    color: #1A1A19;
+}
+
+.btn-check:checked + .btn {
+    opacity: 1;
+    background-color: #859F3D;
+    color: #F6FCDF;
+}
+
+.btn-check:checked + .btn:hover {
+    opacity: 1;
+    background-color: #859F3D;
+    border-color: #859F3D;
+    color: #F6FCDF;
+    cursor: pointer;
+}
+
+.btn {
+    opacity: 0.7;
+    border-color: #859F3D;
+}
+
+.btn:hover {
+    opacity: 1;
+    background-color: #859F3D;
+    border-color: #859F3D;
+    color: #F6FCDF;
+}
+
+#submit {
+    background-color: #859F3D;
+    border-color: #859F3D;
+    color: #F6FCDF;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+#star1 + label, #star2 + label, #star3 + label, #star4 + label, #star5 + label {
+    font-size: 20px;
+    color: #666666;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    background-color: white;
+    outline: none;
+    border-color: white;
+}
+
+#star1:checked + label,
+#star2:checked + label,
+#star3:checked + label,
+#star4:checked + label,
+#star5:checked + label {
+    color: #ffcc00;
+    background-color: white;
+    outline: none;
+    border-color: white;
+}
+
+#star1:hover + label,
+#star2:hover + label,
+#star3:hover + label,
+#star4:hover + label,
+#star5:hover + label {
+    color: #ffcc00;
+}
+
+#star1:checked:hover + label,
+#star2:checked:hover + label,
+#star3:checked:hover + label,
+#star4:checked:hover + label,
+#star5:checked:hover + label {
+    color: #ffcc00;
+}

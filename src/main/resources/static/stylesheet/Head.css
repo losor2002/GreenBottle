@@ -1,4 +1,9 @@
-/* Header Navbar */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
 .navbar {
     background-color: #859F3D;
     /*Colore di sfondo verde chiaro per la navbar*/
