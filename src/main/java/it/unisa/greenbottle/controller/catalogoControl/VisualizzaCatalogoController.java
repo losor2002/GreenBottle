@@ -67,13 +67,10 @@ public class VisualizzaCatalogoController {
       );
     }
 
-    System.out.println(filterForm.getCategoria());
     List<Prodotto> prodotti = prodottoDao.findAll(spec);
-    System.out.println(prodotti);
     model.addAttribute("prodotti", prodotti);
     model.addAttribute("filterForm", filterForm);
     return catalogoView;
   }
-
 
 }
