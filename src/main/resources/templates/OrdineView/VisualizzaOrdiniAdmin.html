@@ -14,15 +14,24 @@
 <body>
 <div th:replace="~{fragments/adminFragments :: header}"></div>
 <div class="container my-5">
-    <!--/*@thymesVar id="ordini" type="it.unisa.greenbottle.storage.ordineStorage.entity.Ordine"*/-->
-    <!--/*@thymesVar id="stato" type="it.unisa.greenbottle.storage.ordineStorage.entity.Ordine.StatoSpedizione"*/-->
-    <div class="row" th:each="ordine : ${ordini}" th:if="${ordine.stato.equals(StatoSpedizione.ELABORAZIONE)}">
+    <!--/*@thymesVar id="StatoSpedizione" type="it.unisa.greenbottle.storage.ordineStorage.entity.Ordine.StatoSpedizione"*/-->
+    <div class="row" th:each="ordine : ${ordini}" th:if="${ordine.getStato().equals(StatoSpedizione.ELABORAZIONE)}">
         <div class="card shadow-lg p-3 mb-3">
-            <h4 class="text" th:text="${ordine.descrizione}"></h4>
-            <form class="card-button d-flex gap-2" th:action="@{/AccettaOrdiniAdmin}" method="post">
-                <input type="hidden" name="ordineId" th:value="${ordine.id}"/>
-                <button type="submit" class="btn btn-primary btn-acc" name="newState" value="ACCETTATO">Accetta</button>
-                <button type="submit" class="btn btn-primary btn-rif" name="newState" value="RIFIUTATO">Rifiuta</button>
+            <h4 class="text" th:text="${ordine.getDescrizione()}"></h4>
+            <p><strong>Prezzo:</strong> <span th:text="${ordine.getPrezzo()}"></span>€</p>
+            <p><strong>Cliente:</strong> <span
+                    th:text="${ordine.getNomeCliente()} + ' ' + ${ordine.getCognomeCliente()}"></span>
+            </p>
+            <p><strong>Email:</strong> <span th:text="${ordine.getEmailCliente()}"></span></p>
+            <p><strong>Indirizzo:</strong> <span th:text="${ordine.getIndirizzo()}"></span></p>
+            <form class="card-button d-flex gap-2" th:action="@{/admin/visualizzaOrdini}" method="post">
+                <input type="hidden" name="ordineId" th:value="${ordine.getId()}"/>
+                <button type="submit" class="btn btn-primary btn-acc" name="newState"
+                        th:value="${StatoSpedizione.ACCETTATO}">Accetta
+                </button>
+                <button type="submit" class="btn btn-primary btn-rif" name="newState"
+                        th:value="${StatoSpedizione.RIFIUTATO}">Rifiuta
+                </button>
             </form>
         </div>
     </div>
@@ -37,13 +46,13 @@
             const rejectButton = card.querySelector(".btn-rif");
 
             acceptButton.addEventListener("click", () => {
-                const cardButtons = card.querySelector(".card-buttons");
-                cardButtons.innerHTML = `<span class="text-success fw-bold">Accepted</span>`;
+                const cardButtons = card.querySelector(".card-button");
+                cardButtons.innerHTML = `<span class="text-success fw-bold">Accettato</span>`;
             });
 
             rejectButton.addEventListener("click", () => {
-                const cardButtons = card.querySelector(".card-buttons");
-                cardButtons.innerHTML = `<span class="text-danger fw-bold">Rejected</span>`;
+                const cardButtons = card.querySelector(".card-button");
+                cardButtons.innerHTML = `<span class="text-danger fw-bold">Rifiutato</span>`;
             });
         });
     });
