@@ -17,17 +17,36 @@
     <!--/*@thymesVar id="ordini" type="it.unisa.greenbottle.storage.ordineStorage.entity.Ordine"*/-->
     <!--/*@thymesVar id="stato" type="it.unisa.greenbottle.storage.ordineStorage.entity.Ordine.StatoSpedizione"*/-->
     <div class="row" th:each="ordine : ${ordini}" th:if="${ordine.stato.equals(StatoSpedizione.ELABORAZIONE)}">
-        <div class="card shadow-lg">
+        <div class="card shadow-lg p-3 mb-3">
             <h4 class="text" th:text="${ordine.descrizione}"></h4>
-            <div class="d-grid">
-                <button class="btn btn-primary" id="btn-acc">Accetta</button>
-            </div>
-            <div class="d-grid">
-                <button class="btn btn-primary" id="btn-rif">Rifiuta</button>
-            </div>
+            <form class="card-button d-flex gap-2" th:action="@{/AccettaOrdiniAdmin}" method="post">
+                <input type="hidden" name="ordineId" th:value="${ordine.id}"/>
+                <button type="submit" class="btn btn-primary btn-acc" name="newState" value="ACCETTATO">Accetta</button>
+                <button type="submit" class="btn btn-primary btn-rif" name="newState" value="RIFIUTATO">Rifiuta</button>
+            </form>
         </div>
     </div>
 </div>
 <div th:replace="~{fragments/fragments :: footer}"></div>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const cards = document.querySelectorAll(".card");
+
+        cards.forEach(card => {
+            const acceptButton = card.querySelector(".btn-acc");
+            const rejectButton = card.querySelector(".btn-rif");
+
+            acceptButton.addEventListener("click", () => {
+                const cardButtons = card.querySelector(".card-buttons");
+                cardButtons.innerHTML = `<span class="text-success fw-bold">Accepted</span>`;
+            });
+
+            rejectButton.addEventListener("click", () => {
+                const cardButtons = card.querySelector(".card-buttons");
+                cardButtons.innerHTML = `<span class="text-danger fw-bold">Rejected</span>`;
+            });
+        });
+    });
+</script>
 </body>
 </html>
