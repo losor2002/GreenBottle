@@ -6,19 +6,22 @@ import it.unisa.greenbottle.controller.ordineControl.form.ProdottoForm;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
 import it.unisa.greenbottle.storage.areaPersonaleStorage.dao.IndirizzoDao;
 import it.unisa.greenbottle.storage.areaPersonaleStorage.entity.Indirizzo;
+import it.unisa.greenbottle.storage.catalogoStorage.dao.ProdottoDao;
 import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
 import it.unisa.greenbottle.storage.ordineStorage.dao.OrdineDao;
 import it.unisa.greenbottle.storage.ordineStorage.entity.Composizione;
 import it.unisa.greenbottle.storage.ordineStorage.entity.Ordine;
-import it.unisa.greenbottle.storage.ordineStorage.entity.OrdineBuilder;
 import it.unisa.greenbottle.storage.ordineStorage.entity.OrdineDirector;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
-import java.util.*;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,100 +29,123 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/ordina")
+
 public class CreazioneOrdineController {
 
-    private static final String ordineView = "OrdineView/Ordine";
+  private static final String ordineView = "OrdineView/Ordine";
 
-    @Autowired
-    private OrdineDao ordineDao;
+  @Autowired
+  private OrdineDao ordineDao;
 
-    @Autowired
-    private IndirizzoDao indirizzoDao;
+  @Autowired
+  private ProdottoDao prodottoDao;
 
-    @Autowired
-    private SessionCliente sessionCliente;
+  @Autowired
+  private IndirizzoDao indirizzoDao;
 
-    @GetMapping
-    public String get(@ModelAttribute ProdottoForm prodottiForm, Model model) {
+  @Autowired
+  private SessionCliente sessionCliente;
 
-        Optional<Cliente> clienteOptional = sessionCliente.getCliente();
+  @GetMapping
+  public String get(@ModelAttribute ProdottoForm prodottiForm, Model model) {
 
-        if(clienteOptional.isEmpty()){
-            //invalida la sessione.
-            return "redirect:/login";
-        }
+    Optional<Cliente> clienteOptional = sessionCliente.getCliente();
 
-        return ordineView;
+    if (clienteOptional.isEmpty()) {
+      //TODO: invalida la sessione.
+      return "redirect:/login";
     }
 
-    @PostMapping
-    public String post(@ModelAttribute @Valid OrdineForm ordineForm, Model model) {
+    return ordineView;
+  }
 
-        Optional<Cliente> clienteOptional = sessionCliente.getCliente();
+  @PostMapping
+  @Transactional
+  public String post(@ModelAttribute @Valid OrdineForm ordineForm, Model model) {
 
-        if(clienteOptional.isEmpty()){
-            return "redirect:/login";
-        }
+    Optional<Cliente> clienteOptional = sessionCliente.getCliente();
 
-        Optional<Map<Prodotto, Integer>> prodottiOptional = sessionCliente.getCarrello();
-
-        if(prodottiOptional.isEmpty()) {
-           return "redirect:/error";
-        }
-
-        Map<Prodotto, Integer> prodotti = prodottiOptional.get();
-
-        float prezzoTotale = (float) prodotti.entrySet().stream()
-                .mapToDouble(entry -> entry.getKey().getPrezzo() * entry.getValue())
-                .sum();
-
-        String numeroCarta = ordineForm.getNumeroCarta();
-        String dataScadenza = ordineForm.getDataScadenza();
-        String nomeTitolare = ordineForm.getNomeTitolare();
-        String riassuntoCarta = nomeTitolare + "/" + dataScadenza +"/" +  numeroCarta.substring(numeroCarta.length() - 4);
-        
-        boolean isSupporto = ordineForm.isSupporto();
-        String descrizioneSupporto = ordineForm.getDescrizioneSupporto();
-        boolean isRitiro = ordineForm.isRitiro();
-
-
-        if(isSupporto && descrizioneSupporto.isBlank()){
-            model.addAttribute("errore", "Descrizione supporto non inserita.");
-            return "redirect:/carrello";
-        } else if(!(isSupporto || descrizioneSupporto.isBlank())){ //perle di De Morgan
-            model.addAttribute("warning", "Errata selezione dell’opzione di richiesta supporto aggiuntivo");
-
-        }
-
-        Long idIndirizzo = ordineForm.getIndirizzo();
-        Optional<Indirizzo> indirizzoOpt = indirizzoDao.findById(idIndirizzo);
-
-        if(indirizzoOpt.isEmpty()){
-            model.addAttribute("errore", "Indirizzo non trovato.");
-            return "redirect:/carrello";
-        }
-        Indirizzo indirizzo = indirizzoOpt.get();
-
-        Set<Composizione> composizioni = new HashSet<>();
-        for (Map.Entry<Prodotto, Integer> entry : prodotti.entrySet()) {
-            Prodotto prodotto = entry.getKey();
-            int quantita = entry.getValue();
-            composizioni.add(new Composizione(prodotto, quantita));
-        }
-
-        Ordine ordine;
-        if(isSupporto) {
-            ordine = OrdineDirector.createOrdineConSupporto(prezzoTotale, isRitiro, riassuntoCarta, descrizioneSupporto, indirizzo, composizioni);
-        } else {
-            ordine = OrdineDirector.createOrdine(prezzoTotale, isRitiro, riassuntoCarta, indirizzo, composizioni);
-        }
-
-        ordineDao.save(ordine);
-        model.addAttribute("successo", "Ordine creato con successo.");
-        sessionCliente.emptyCarrello();
-
-        return ordineView;
+    if (clienteOptional.isEmpty()) {
+      return "redirect:/login";
     }
+    Optional<Map<Long, Integer>> prodottiOptional = sessionCliente.getCarrello();
+    if (prodottiOptional.isEmpty()) {
+      return "redirect:/error";
+    }
+
+    Map<Long, Integer> prodottiUnparsed = prodottiOptional.get();
+    Map<Prodotto, Integer> prodotti = new HashMap<>();
+
+    for (Map.Entry<Long, Integer> entry : prodottiUnparsed.entrySet()) {
+      Optional<Prodotto> prodottoOpt = prodottoDao.findById(entry.getKey());
+      if (prodottoOpt.isPresent()) {
+
+        Prodotto p = prodottoOpt.get();
+
+        int quantita = entry.getValue();
+
+        if (quantita > p.getQuantita()) {
+          model.addAttribute("errore",
+              "Prodotto: " + p.getNome() + " non disponibile in quantità richiesta.");
+          return "redirect:/carrello";
+        }
+        prodotti.put(p, quantita);
+      }
+    }
+
+    final float prezzoTotale = (float) prodotti.entrySet().stream()
+        .mapToDouble(entry -> entry.getKey().getPrezzo() * entry.getValue())
+        .sum();
+    String numeroCarta = ordineForm.getNumeroCarta();
+    String dataScadenza = ordineForm.getDataScadenza();
+    String nomeTitolare = ordineForm.getNomeTitolare();
+    final String riassuntoCarta = nomeTitolare + "/" + dataScadenza + "/" + numeroCarta.substring(
+        numeroCarta.length() - 4); //TODO: Decidere cosa salvare in riassuntoCarta.
+    boolean isSupporto = ordineForm.isSupporto();
+    String descrizioneSupporto = ordineForm.getDescrizioneSupporto();
+    final boolean isRitiro = ordineForm.isRitiro();
+
+
+    if (isSupporto && descrizioneSupporto.isBlank()) {
+      model.addAttribute("errore", "Descrizione supporto non inserita.");
+      return "redirect:/carrello";
+    } else if (!(isSupporto || descrizioneSupporto.isBlank())) { //De Morgan
+      model.addAttribute("warning",
+          "Errata selezione dell’opzione di richiesta supporto aggiuntivo");
+
+    }
+
+    Long idIndirizzo = ordineForm.getIndirizzo();
+    Optional<Indirizzo> indirizzoOpt = indirizzoDao.findById(idIndirizzo);
+
+    if (indirizzoOpt.isEmpty()) {
+      model.addAttribute("errore", "Indirizzo non trovato.");
+      return "redirect:/carrello";
+    }
+    Indirizzo indirizzo = indirizzoOpt.get();
+
+    Set<Composizione> composizioni = new HashSet<>();
+    for (Map.Entry<Prodotto, Integer> entry : prodotti.entrySet()) {
+      Prodotto prod = entry.getKey();
+      int quantita = entry.getValue();
+      composizioni.add(new Composizione(prod, quantita));
+    }
+
+    Ordine ordine;
+    if (isSupporto) {
+      ordine = OrdineDirector.createOrdineConSupporto(prezzoTotale, isRitiro, riassuntoCarta,
+          descrizioneSupporto, indirizzo, composizioni);
+    } else {
+      ordine = OrdineDirector.createOrdine(prezzoTotale, isRitiro, riassuntoCarta, indirizzo,
+          composizioni);
+    }
+
+    ordineDao.save(ordine);
+    model.addAttribute("successo", "Ordine inserito con successo.");
+    sessionCliente.emptyCarrello();
+
+    return ordineView;
+  }
 
 
 }

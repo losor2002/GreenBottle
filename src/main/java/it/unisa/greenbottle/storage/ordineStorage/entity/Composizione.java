@@ -8,6 +8,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,6 +34,13 @@ public class Composizione {
   @Column(nullable = false)
   private int quantita;
 
+  @PrePersist
+  @PreUpdate
+  public void updateQuantitaProdotto() {
+    if (prodotto != null) {
+      prodotto.setQuantita(prodotto.getQuantita() - quantita);
+    }
+  }
 
   public Composizione(Prodotto prodotto, int quantita) {
     this.prodotto = prodotto;
@@ -40,12 +49,13 @@ public class Composizione {
 
   @Override
   public String toString() {
-    return "Composizione{" +
-        "id=" + id +
-        ", ordineId=" + (ordine != null ? ordine.getId() : "null") +
-        ", prodotto=" + (prodotto != null ? prodotto.getNome() : "null") +
-        ", quantita=" + quantita +
-        '}';
+    return "Composizione{"
+        +
+        "id=" + id
+        + ", ordineId=" + (ordine != null ? ordine.getId() : "null")
+        + ", prodotto=" + (prodotto != null ? prodotto.getNome() : "null")
+        + ", quantita=" + quantita
+        + '}';
   }
 }
 

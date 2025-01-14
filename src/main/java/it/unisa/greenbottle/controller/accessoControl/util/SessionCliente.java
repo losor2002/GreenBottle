@@ -2,13 +2,10 @@ package it.unisa.greenbottle.controller.accessoControl.util;
 
 import it.unisa.greenbottle.storage.accessoStorage.dao.ClienteDao;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
-
-import java.util.Map;
-import java.util.Optional;
-
 import it.unisa.greenbottle.storage.catalogoStorage.dao.ProdottoDao;
 import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
-import lombok.Getter;
+import java.util.Map;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
@@ -18,15 +15,14 @@ import org.springframework.web.context.annotation.SessionScope;
 public class SessionCliente {
 
   private Long idCliente;
-  @Getter
-  private Map<Prodotto, Integer> Carrello;
+
+  private Map<Long, Integer> carrello;
 
   @Autowired
   private ClienteDao clienteDao;
 
   @Autowired
   private ProdottoDao prodottoDao;
-
 
 
   public Optional<Cliente> getCliente() {
@@ -44,28 +40,54 @@ public class SessionCliente {
     }
   }
 
-  public Optional<Map<Prodotto, Integer>> getCarrello() {
+  public Optional<Map<Long, Integer>> getCarrello() {
     if (idCliente != null) {
-      return Optional.ofNullable(Carrello);
+      return Optional.ofNullable(carrello);
     }
     return Optional.empty();
   }
 
-  public void setCarrello(Map<Prodotto, Integer> carrello) {
-    if (idCliente != null) {Carrello = carrello;}
+  public void setCarrello(Map<Long, Integer> carrello) {
+    if (idCliente != null) {
+      this.carrello = carrello;
+    }
   }
 
-  public void addToCarrello(Prodotto prodotto, Integer quantita) {
+  public void addToCarrello(Long prodotto, Integer quantita) {
+    if (idCliente != null) {
+      Optional<Prodotto> prod = prodottoDao.findById(prodotto);
+      if (prod.isPresent()) {
+        if (carrello.containsKey(prodotto)) {
+          carrello.put(prodotto, carrello.get(prodotto) + quantita);
+        } else {
+          carrello.put(prodotto, quantita);
+        }
+      }
+    }
 
-    if (idCliente != null) {Carrello.put(prodotto, quantita);}
   }
 
-  public void removeFromCarrello(Prodotto prodotto) {
-    if (idCliente != null) {Carrello.remove(prodotto);}
+  public void removeAllFromCarrello(Long idProdotto) {
+    if (idCliente != null) {
+      carrello.remove(idProdotto);
+    }
+  }
+
+  public void removeOneFromCarrello(Long idProdotto) {
+    if (idCliente != null) {
+      if (carrello.containsKey(idProdotto)) {
+        carrello.put(idProdotto, carrello.get(idProdotto) - 1);
+        if (carrello.get(idProdotto) == 0) {
+          carrello.remove(idProdotto);
+        }
+      }
+    }
   }
 
   public void emptyCarrello() {
-    if (idCliente != null) {Carrello.clear();}
+    if (idCliente != null) {
+      carrello.clear();
+    }
   }
 
 

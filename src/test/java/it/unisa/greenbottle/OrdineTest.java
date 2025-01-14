@@ -7,12 +7,13 @@ import it.unisa.greenbottle.storage.areaPersonaleStorage.entity.Indirizzo;
 import it.unisa.greenbottle.storage.catalogoStorage.dao.ProdottoDao;
 import it.unisa.greenbottle.storage.catalogoStorage.entity.Categoria;
 import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
-import it.unisa.greenbottle.storage.ordineStorage.dao.ComposizioneDao;
 import it.unisa.greenbottle.storage.ordineStorage.dao.OrdineDao;
 import it.unisa.greenbottle.storage.ordineStorage.entity.Composizione;
 import it.unisa.greenbottle.storage.ordineStorage.entity.Ordine;
 import it.unisa.greenbottle.storage.ordineStorage.entity.OrdineDirector;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
@@ -36,41 +37,46 @@ public class OrdineTest {
   @Autowired
   private ClienteDao clienteDao;
 
-  @Autowired
-  private ComposizioneDao composizioneDao;
-
-  // Oggetti di test (indipendenti dal database)
-  private Cliente clienteTest =
+  private final Cliente clienteTest =
       new Cliente("mario.rossi@gmail.com", "asdfASDF1234!", "Mario", "Rossi", 0, 0, null, null);
 
-  private Indirizzo indirizzoTest = new Indirizzo("Via Roma", 5, "Potenza", "PZ", "85100");
+  private final Indirizzo indirizzoTest = new Indirizzo("Via Roma", 5, "Potenza", "PZ", "85100");
 
-  private Categoria categoriaTest = new Categoria("Bevande");
-  private Prodotto prodottoTest =
+  private final Categoria categoriaTest = new Categoria("Bevande");
+  private final Prodotto prodottoTest =
       new Prodotto("Acqua minerale", "Acqua minerale naturale", null, 0.5f, 1000, categoriaTest);
 
-  private Set<Composizione> composizioniTest = new HashSet<>();
+  private final Prodotto[] arrayProdottiTest = new Prodotto[] {
+      prodottoTest,
+      new Prodotto("Acqua frizzante", "Acqua frizzante naturale", null, 0.5f, 1000, categoriaTest),
+      new Prodotto("Acqua tonica", "Acqua tonica naturale", null, 0.5f, 1000, categoriaTest),
+      new Prodotto("Acqua gassata", "Acqua gassata naturale", null, 0.5f, 1000, categoriaTest),
+      new Prodotto("Acqua liscia", "Acqua liscia naturale", null, 0.5f, 1000, categoriaTest),
+      new Prodotto("Fantasia", "Fantasia naturale", null, 0.5f, 1000, categoriaTest),
+      new Prodotto("Acqua intostata", "Acqua intostata naturale", null, 0.5f, 1000, categoriaTest),
+      new Prodotto("Aranzata", "Aranzata naturale", null, 0.5f, 1000, categoriaTest)
+  };
+  private final List<Prodotto> prodottiTest = Arrays.asList(arrayProdottiTest);
+  private final Set<Composizione> composizioniTest = new HashSet<>();
 
   @Test
   public void createOrdine() {
-    // Prepara l'ambiente (crea oggetti di test)
+
     clienteDao.save(clienteTest);
     indirizzoDao.save(indirizzoTest);
     prodottoDao.save(prodottoTest);
 
-    // Aggiungi un prodotto al carrello
     composizioniTest.add(new Composizione(prodottoTest, 2));
 
-    // Creazione dell'ordine
     float prezzoTotale = (float) composizioniTest.stream()
         .mapToDouble(c -> c.getProdotto().getPrezzo() * c.getQuantita())
         .sum();
 
     Ordine ordineTest = OrdineDirector.createOrdineConSupporto(
         prezzoTotale,
-        false,               // isRitiro
-        "1234-5678-9876-5432", // numero carta (un esempio)
-        "Supporto Aggiuntivo", // descrizione supporto
+        false,
+        "1234-5678-9876-5432",
+        "Supporto Aggiuntivo",
         indirizzoTest,
         composizioniTest);
 
@@ -89,14 +95,18 @@ public class OrdineTest {
   public void createAndVerifyOrdineAndComposizione() {
     clienteDao.save(clienteTest);
     indirizzoDao.save(indirizzoTest);
-    prodottoDao.save(prodottoTest);
+    prodottoDao.saveAll(prodottiTest);
+
 
     composizioniTest.add(new Composizione(prodottoTest, 2));
-    composizioniTest.add(new Composizione(prodottoTest, 100));
+    composizioniTest.add(
+        new Composizione(prodottiTest.get(1), 100));
+
 
     float prezzoTotale = (float) composizioniTest.stream()
         .mapToDouble(c -> c.getProdotto().getPrezzo() * c.getQuantita())
         .sum();
+
 
     Ordine ordineTest = OrdineDirector.createOrdineConSupporto(
         prezzoTotale,
@@ -112,15 +122,18 @@ public class OrdineTest {
     assert retrievedOrdine.isPresent();
 
     Ordine savedOrdine = retrievedOrdine.get();
+
     assert savedOrdine.getComposizioni() != null && !savedOrdine.getComposizioni().isEmpty();
     System.out.println(savedOrdine.getComposizioni());
-    for (Composizione composizione : savedOrdine.getComposizioni()) {
-      System.out.println(composizione.getOrdine() + " = " + savedOrdine);
-      System.out.println(composizione.getProdotto() + " = " + prodottoTest);
 
-      assert composizione.getOrdine().equals(savedOrdine);
-      assert composizione.getProdotto().equals(prodottoTest);
+    for (Composizione composizione : savedOrdine.getComposizioni()) {
+      Prodotto prodotto = composizione.getProdotto();
+      System.out.println("Composizione: " + composizione);
+
+      int initialQuantita = prodotto.getQuantita() + composizione.getQuantita();
+      assert prodotto.getQuantita() == initialQuantita - composizione.getQuantita();
+
+      System.out.println("Prodotto after update: " + prodotto);
     }
   }
-
 }

@@ -32,6 +32,7 @@ public class OrdineDirector {
         .build();
     for (Composizione composizione : composizioni) {
       composizione.setOrdine(ordine);
+
     }
     ordine.setComposizioni(composizioni);
     return ordine;
