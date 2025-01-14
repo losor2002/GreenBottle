@@ -64,8 +64,5 @@ public class CatalogoTest {
 
     List<Prodotto> recuperato = prodottoDao.findAll(spec);
     System.out.println(recuperato);
-
   }
-
-
 }
