@@ -78,17 +78,16 @@ public class OrdineTest {
         "1234-5678-9876-5432",
         "Supporto Aggiuntivo",
         indirizzoTest,
+        clienteTest,
         composizioniTest);
 
     ordineDao.save(ordineTest);
 
-    System.out.println("Ordine test: " + ordineTest);
-
-
     Optional<Ordine> o2 = ordineDao.findById(ordineTest.getId());
 
-    System.out.println(o2.isPresent() ? o2.get().toString() : "Not found");
     assert o2.isPresent() && ordineTest.equals(o2.get());
+
+    System.out.println("Saved Ordine: " + o2.get());
   }
 
   @Test
@@ -97,16 +96,12 @@ public class OrdineTest {
     indirizzoDao.save(indirizzoTest);
     prodottoDao.saveAll(prodottiTest);
 
-
     composizioniTest.add(new Composizione(prodottoTest, 2));
-    composizioniTest.add(
-        new Composizione(prodottiTest.get(1), 100));
-
+    composizioniTest.add(new Composizione(prodottiTest.get(1), 100));
 
     float prezzoTotale = (float) composizioniTest.stream()
         .mapToDouble(c -> c.getProdotto().getPrezzo() * c.getQuantita())
         .sum();
-
 
     Ordine ordineTest = OrdineDirector.createOrdineConSupporto(
         prezzoTotale,
@@ -114,6 +109,7 @@ public class OrdineTest {
         "1234-5678-9876-5432",
         "Supporto Aggiuntivo",
         indirizzoTest,
+        clienteTest,
         composizioniTest);
 
     ordineDao.save(ordineTest);
@@ -124,16 +120,14 @@ public class OrdineTest {
     Ordine savedOrdine = retrievedOrdine.get();
 
     assert savedOrdine.getComposizioni() != null && !savedOrdine.getComposizioni().isEmpty();
-    System.out.println(savedOrdine.getComposizioni());
+    System.out.println("Retrieved Composizioni: " + savedOrdine.getComposizioni());
 
     for (Composizione composizione : savedOrdine.getComposizioni()) {
       Prodotto prodotto = composizione.getProdotto();
+      assert prodottiTest.contains(prodotto);
+
       System.out.println("Composizione: " + composizione);
-
-      int initialQuantita = prodotto.getQuantita() + composizione.getQuantita();
-      assert prodotto.getQuantita() == initialQuantita - composizione.getQuantita();
-
-      System.out.println("Prodotto after update: " + prodotto);
+      System.out.println("Product in Composizione: " + prodotto);
     }
   }
 }

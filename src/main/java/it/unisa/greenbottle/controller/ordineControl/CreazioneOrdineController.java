@@ -29,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/ordina")
-
 public class CreazioneOrdineController {
 
   private static final String ordineView = "OrdineView/Ordine";
@@ -48,11 +47,10 @@ public class CreazioneOrdineController {
 
   @GetMapping
   public String get(@ModelAttribute ProdottoForm prodottiForm, Model model) {
-
     Optional<Cliente> clienteOptional = sessionCliente.getCliente();
 
     if (clienteOptional.isEmpty()) {
-      //TODO: invalida la sessione.
+      // TODO: Invalidate the session if necessary.
       return "redirect:/login";
     }
 
@@ -62,12 +60,14 @@ public class CreazioneOrdineController {
   @PostMapping
   @Transactional
   public String post(@ModelAttribute @Valid OrdineForm ordineForm, Model model) {
-
     Optional<Cliente> clienteOptional = sessionCliente.getCliente();
 
     if (clienteOptional.isEmpty()) {
       return "redirect:/login";
     }
+
+    final Cliente cliente = clienteOptional.get();
+
     Optional<Map<Long, Integer>> prodottiOptional = sessionCliente.getCarrello();
     if (prodottiOptional.isEmpty()) {
       return "redirect:/error";
@@ -79,9 +79,7 @@ public class CreazioneOrdineController {
     for (Map.Entry<Long, Integer> entry : prodottiUnparsed.entrySet()) {
       Optional<Prodotto> prodottoOpt = prodottoDao.findById(entry.getKey());
       if (prodottoOpt.isPresent()) {
-
         Prodotto p = prodottoOpt.get();
-
         int quantita = entry.getValue();
 
         if (quantita > p.getQuantita()) {
@@ -100,19 +98,17 @@ public class CreazioneOrdineController {
     String dataScadenza = ordineForm.getDataScadenza();
     String nomeTitolare = ordineForm.getNomeTitolare();
     final String riassuntoCarta = nomeTitolare + "/" + dataScadenza + "/" + numeroCarta.substring(
-        numeroCarta.length() - 4); //TODO: Decidere cosa salvare in riassuntoCarta.
+        numeroCarta.length() - 4);
     boolean isSupporto = ordineForm.isSupporto();
     String descrizioneSupporto = ordineForm.getDescrizioneSupporto();
     final boolean isRitiro = ordineForm.isRitiro();
 
-
     if (isSupporto && descrizioneSupporto.isBlank()) {
       model.addAttribute("errore", "Descrizione supporto non inserita.");
       return "redirect:/carrello";
-    } else if (!(isSupporto || descrizioneSupporto.isBlank())) { //De Morgan
+    } else if (!(isSupporto || descrizioneSupporto.isBlank())) { // De Morgan
       model.addAttribute("warning",
           "Errata selezione dell’opzione di richiesta supporto aggiuntivo");
-
     }
 
     Long idIndirizzo = ordineForm.getIndirizzo();
@@ -134,10 +130,10 @@ public class CreazioneOrdineController {
     Ordine ordine;
     if (isSupporto) {
       ordine = OrdineDirector.createOrdineConSupporto(prezzoTotale, isRitiro, riassuntoCarta,
-          descrizioneSupporto, indirizzo, composizioni);
+          descrizioneSupporto, indirizzo, cliente, composizioni);
     } else {
       ordine = OrdineDirector.createOrdine(prezzoTotale, isRitiro, riassuntoCarta, indirizzo,
-          composizioni);
+          cliente, composizioni);
     }
 
     ordineDao.save(ordine);
@@ -146,6 +142,4 @@ public class CreazioneOrdineController {
 
     return ordineView;
   }
-
-
 }

@@ -32,12 +32,16 @@ public class SessionCliente {
     return Optional.empty();
   }
 
-  public void setCliente(Cliente cliente) {
+  public void setCliente(Cliente cliente) { //Pericoloso
     if (cliente == null) {
       this.idCliente = null;
     } else {
       this.idCliente = cliente.getId();
     }
+  }
+
+  public void setCliente(Long idCliente) {
+    this.idCliente = idCliente;
   }
 
   public Optional<Map<Long, Integer>> getCarrello() {
