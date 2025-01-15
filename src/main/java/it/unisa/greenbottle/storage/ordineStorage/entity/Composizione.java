@@ -9,7 +9,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -35,14 +34,17 @@ public class Composizione {
   private int quantita;
 
   @PrePersist
-  @PreUpdate
   public void updateQuantitaProdotto() {
-    if (prodotto != null) {
-      prodotto.setQuantita(prodotto.getQuantita() - quantita);
+    if (prodotto.getQuantita() < quantita) {
+      throw new IllegalArgumentException(
+          "Quantità richiesta per " + prodotto.getNome() + " non disponibile."
+      );
     }
+    prodotto.setQuantita(prodotto.getQuantita() - quantita);
+
   }
 
-  public Composizione(Prodotto prodotto, int quantita) {
+  public Composizione(Prodotto prodotto, int quantita) { //TODO: Aggiungere Ordine.
     this.prodotto = prodotto;
     this.quantita = quantita;
   }
