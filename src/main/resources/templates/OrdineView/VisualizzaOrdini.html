@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenBottle - I tuoi ordini</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/img/Logo.png}" rel="shortcut icon"/>
+    <link th:href="@{/stylesheet/Common.css}" rel="stylesheet">
+    <link th:href="@{/stylesheet/Head.css}" rel="stylesheet">
+    <link th:href="@{/stylesheet/Footer.css}" rel="stylesheet">
+</head>
+<body>
+
+<!-- Header -->
+<div th:replace="~{fragments/fragments.html :: header}"></div>
+
+<div class="container mt-4">
+    <div class="row">
+
+        <!-- Sezione "I tuoi ordini" -->
+        <div class="col-md-6">
+            <h3>I tuoi ordini:</h3>
+            <div class="list-group overflow-auto" style="max-height: 400px;">
+                <div th:each="ordine : ${ordini}" class="list-group-item">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            Ordine effettuato il <span th:text="${ordine.data}"></span>
+                            <span class="d-block">Stato: <span th:text="${ordine.stato}"></span></span>
+                        </div>
+                        <button type="button" class="btn btn-primary btn-sm"
+                                th:onclick="'loadOrderDetails(' + ${ordine.id} + ')'">Visualizza
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezione "Dettagli Ordine Selezionato" -->
+        <div class="col-md-6">
+            <h3>Dettagli Ordine Selezionato:</h3>
+            <div class="overflow-auto border rounded p-3" style="max-height: 400px; background-color: #f8f9fa;">
+                <div th:if="${ordineSelezionato != null}" th:each="prodotto : ${ordineSelezionato.prodotti}">
+                    <p>
+                        <span th:text="${prodotto.nome}"></span>:
+                        Quantità = <span th:text="${prodotto.quantita}"></span>
+                        &euro;<span th:text="${prodotto.prezzo * prodotto.quantita}"></span>
+                    </p>
+                </div>
+                <div th:if="${ordineSelezionato == null}">
+                    <p>Seleziona un ordine per visualizzare i dettagli.</p>
+                </div>
+                <h5 class="mt-3">Totale: &euro;<span th:text="${ordineSelezionato.totale}"></span></h5>
+            </div>
+
+            <!-- Pulsante Annulla -->
+            <button type="button" class="btn btn-warning mt-3"
+                    th:if="${ordineSelezionato != null && Ordine.StatoSpedizione == 'ELABORAZIONE'}"
+                    th:onclick="'annullaOrdine(' + ${ordineSelezionato.id} + ')'">
+                ANNULLA
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer th:replace="~{fragments/fragments :: footer}"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+
+</script>
+
+</body>
+</html>
