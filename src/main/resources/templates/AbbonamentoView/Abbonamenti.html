@@ -61,30 +61,22 @@
 </div>
 <section class="col-md-8">
     <div class="row">
-        <h2>La nostra selezione</h2>
-        <div class="col-md-4 mb-4" th:each="prodotto : ${prodotti}">
-            <div class="product-card col-md-4 mx-2 my-2 rounded">
-                <img th:src="@{/productImg(id=${prodotto.id})}" class="img-fluid w-100 d-block"
-                     alt="Immagine prodotto">
-                <h3 class="mt-3" th:text="${prodotto.nome}"></h3>
-                <button class="btn btn-info btn-sm my-4"
-                        th:onclick="|location.href='catalogo/prodotto?id=${prodotto.id}'|">
-                    Informazioni Prodotto
-                </button>
+        <h2>La nostra selezione:</h2>
+        <div class="col-md-4 mb-4" th:each="abbonamento : ${abbonamenti}">
+            <div class="d-flex justify-content-between" th:each="prodotto : ${prodotti}">
             </div>
-        </div>
-        <div class="d-flex justify-content-between">
-            <p class="my-4" th:text="${abbonamento.rinnovo}"></p>
-        </div>
-        <div class="d-flex justify-content-between">
-            <p class="my-4" th:text="${abbonamento.frequenza}"></p>
+            <div class="d-flex justify-content-between">
+                <p class="my-4" th:text="${abbonamento.frequenza}"></p>
+            </div>
+            <div class="d-flex justify-content-between">
+                <p class="my-4" th:text="${abbonamento.rinnovo}"></p>
+            </div>
         </div>
     </div>
     <!--<div class="text-center text-muted" th:if="${#lists.isEmpty(products)}">
         <p>Nessun prodotto trovato con i filtri selezionati.</p>
     </div>-->
 </section>
-
 <script>
     // Add custom color styles for the headers if needed
     document.querySelector('.bg-bronze').style.backgroundColor = '#cd7f32'; // Bronze
