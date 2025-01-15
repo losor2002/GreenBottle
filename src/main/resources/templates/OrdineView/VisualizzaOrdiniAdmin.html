@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizza Ordini Admin - GreenBottle</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link th:href="@{/img/Logo.png}" rel="shortcut icon"/>
+    <link th:href="@{/stylesheet/Common.css}" rel="stylesheet">
+    <link th:href="@{/stylesheet/Head.css}" rel="stylesheet">
+    <link th:href="@{/stylesheet/Footer.css}" rel="stylesheet">
+    <link th:href="@{/stylesheet/VisualizzaOrdiniAdmin.css}" rel="stylesheet">
+</head>
+<body>
+<div th:replace="~{fragments/adminFragments :: header}"></div>
+<div class="container my-5">
+    <!--/*@thymesVar id="StatoSpedizione" type="it.unisa.greenbottle.storage.ordineStorage.entity.Ordine.StatoSpedizione"*/-->
+    <div class="row" th:each="ordine : ${ordini}">
+        <div class="card shadow-lg p-3 mb-3" th:data-ordine-id="${ordine.getId()}">
+            <h4 class="text" th:text="${ordine.getDescrizione()}"></h4>
+            <p><strong>Prezzo:</strong> <span th:text="${ordine.getPrezzo()}"></span>€</p>
+            <p><strong>Cliente:</strong> <span
+                    th:text="${ordine.getNomeCliente()} + ' ' + ${ordine.getCognomeCliente()}"></span></p>
+            <p><strong>Email:</strong> <span th:text="${ordine.getEmailCliente()}"></span></p>
+            <p><strong>Indirizzo:</strong> <span th:text="${ordine.getIndirizzo()}"></span></p>
+            <div class="card-button d-flex gap-2">
+                <button type="button" class="btn btn-primary btn-acc col-6 col-md-2">Accetta</button>
+                <button type="button" class="btn btn-danger btn-rif col-6 col-md-2">Rifiuta</button>
+            </div>
+            <div class="status-message mt-2"></div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{fragments/fragments :: footer}"></div>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const ordersContainer = document.querySelector(".container");
+
+        ordersContainer.addEventListener("click", (event) => {
+            const target = event.target;
+
+            // Verifica se il pulsante cliccato è "Accetta" o "Rifiuta"
+            if (target.classList.contains("btn-acc") || target.classList.contains("btn-rif")) {
+                const card = target.closest(".card");
+                const ordineId = card.getAttribute("data-ordine-id");
+                const newState = target.classList.contains("btn-acc") ? "ACCETTATO" : "RIFIUTATO";
+
+                // Invia la richiesta POST
+                sendPostRequest(ordineId, newState, card);
+            }
+        });
+
+        function sendPostRequest(ordineId, newState, card) {
+            fetch('/admin/visualizzaOrdini', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    'ordineId': ordineId,
+                    'newState': newState
+                }).toString()  // Assicurati che i parametri siano correttamente encoded
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();  // La risposta è il messaggio di successo
+                    } else {
+                        throw new Error('Errore nella richiesta: ' + response.statusText);
+                    }
+                })
+                .then(data => {
+                    // Gestisce la risposta, mostrando il messaggio di successo
+                    const statusMessage = card.querySelector(".status-message");
+                    if (newState === "ACCETTATO") {
+                        statusMessage.innerHTML = `<span class="text-success fw-bold">Ordine Accettato</span>`;
+                    } else if (newState === "RIFIUTATO") {
+                        statusMessage.innerHTML = `<span class="text-danger fw-bold">Ordine Rifiutato</span>`;
+                    }
+
+                    // Disabilita i pulsanti e mostra solo il messaggio
+                    card.querySelectorAll(".btn-acc, .btn-rif").forEach(button => button.style.display = 'none');
+                })
+                .catch(error => {
+                    console.error('Errore:', error);
+                });
+        }
+    });
+</script>
+</body>
+</html>
