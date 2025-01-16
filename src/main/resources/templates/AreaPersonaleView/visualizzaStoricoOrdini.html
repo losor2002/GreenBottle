@@ -67,7 +67,7 @@
 
                 // Elimina l'ordine dal database tramite chiamata diretta a una funzione server-side
                 if (ordineId) {
-                    fetch(`/visualizzaOrdine/${ordineId}`, {
+                    fetch(`/areaPersonale/visualizzaStoricoOrdini/${ordineId}`, {
                         method: 'DELETE'
                     })
                         .then(response => {
