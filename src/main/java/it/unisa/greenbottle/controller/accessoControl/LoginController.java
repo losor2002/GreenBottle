@@ -15,13 +15,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/login")
 public class LoginController {
 
   private static final String loginView = "/AccessoView/Login";
+  private static final String homeView = "/";
+
 
   @Autowired
   private ClienteDao clienteDao;
@@ -64,7 +65,7 @@ public class LoginController {
 
 
     sessionCliente.setCliente(c.get());
-    return "/home";
+    return "redirect:" + homeView;
 
   }
 }

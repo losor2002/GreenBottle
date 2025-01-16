@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -49,6 +50,9 @@ public class Ordine {
   @Column(nullable = false, length = 300)
   private String descrizione;
 
+  @Column(nullable = false)
+  private Timestamp data;
+
   @OneToMany(mappedBy = "ordine", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<Composizione> composizioni = new HashSet<>();
 
@@ -72,13 +76,15 @@ public class Ordine {
   }
 
   public Ordine(float prezzo, StatoSpedizione stato, boolean isRitiro, String carta,
-                boolean isSupporto, String descrizione, Cliente cliente) { // Updated
+                boolean isSupporto, String descrizione, Timestamp data,
+                Cliente cliente) { // Updated
     this.prezzo = prezzo;
     this.stato = stato;
     this.isRitiro = isRitiro;
     this.carta = carta;
     this.isSupporto = isSupporto;
     this.descrizione = descrizione;
+    this.data = data;
     this.cliente = cliente; // Updated
   }
 
@@ -106,6 +112,7 @@ public class Ordine {
         + ", carta='" + carta + '\''
         + ", isSupporto=" + isSupporto
         + ", descrizione='" + descrizione + '\''
+        + ", data=" + data
         + ", cliente=" + cliente
         + '}';
   }

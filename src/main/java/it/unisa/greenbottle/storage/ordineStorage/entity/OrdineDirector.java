@@ -2,6 +2,7 @@ package it.unisa.greenbottle.storage.ordineStorage.entity;
 
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
 import it.unisa.greenbottle.storage.areaPersonaleStorage.entity.Indirizzo;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +16,7 @@ public class OrdineDirector {
         .carta("0000-0000-0000-0000")
         .isSupporto(false)
         .descrizione("Default description")
+        .data(new Timestamp(System.currentTimeMillis()))
         .indirizzo(indirizzo)
         .cliente(cliente)
         .composizioni(new HashSet<>())
@@ -22,7 +24,8 @@ public class OrdineDirector {
   }
 
   public static Ordine createOrdineConSupporto(float prezzoTotale, boolean isRitiro, String carta,
-                                               String descrizione, Indirizzo indirizzo,
+                                               String descrizione,
+                                               Indirizzo indirizzo,
                                                Cliente cliente,
                                                Set<Composizione> composizioni) {
     Ordine ordine = new OrdineBuilder()
@@ -31,6 +34,7 @@ public class OrdineDirector {
         .carta(carta)
         .isSupporto(true)
         .descrizione(descrizione)
+        .data(new Timestamp(System.currentTimeMillis()))
         .indirizzo(indirizzo)
         .cliente(cliente)
         .build();
@@ -51,6 +55,7 @@ public class OrdineDirector {
         .carta(carta)
         .isSupporto(false)
         .descrizione("Default description")
+        .data(new Timestamp(System.currentTimeMillis()))
         .indirizzo(indirizzo)
         .cliente(cliente)
         .build();

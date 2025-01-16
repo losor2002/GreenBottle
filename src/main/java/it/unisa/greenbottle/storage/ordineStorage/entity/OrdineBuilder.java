@@ -3,6 +3,7 @@ package it.unisa.greenbottle.storage.ordineStorage.entity;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
 import it.unisa.greenbottle.storage.areaPersonaleStorage.entity.Indirizzo;
 import it.unisa.greenbottle.storage.ordineStorage.entity.Ordine.StatoSpedizione;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.Getter;
@@ -17,6 +18,7 @@ public class OrdineBuilder {
   private String carta;
   private boolean isSupporto;
   private String descrizione;
+  private Timestamp data;
   private Set<Composizione> composizioni = new HashSet<>();
   private Indirizzo indirizzo;
   private Cliente cliente;
@@ -54,6 +56,11 @@ public class OrdineBuilder {
     return this;
   }
 
+  public OrdineBuilder data(Timestamp data) {
+    this.data = data;
+    return this;
+  }
+
   public OrdineBuilder composizione(Composizione composizione) {
     this.composizioni.add(composizione);
     return this;
@@ -82,6 +89,7 @@ public class OrdineBuilder {
     ordine.setCarta(carta);
     ordine.setSupporto(isSupporto);
     ordine.setDescrizione(descrizione);
+    ordine.setData(data);
     ordine.setComposizioni(composizioni);
     ordine.setIndirizzo(indirizzo);
     ordine.setCliente(cliente);

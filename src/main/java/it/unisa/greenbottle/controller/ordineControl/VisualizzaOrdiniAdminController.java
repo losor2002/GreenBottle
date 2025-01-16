@@ -40,7 +40,6 @@ public class VisualizzaOrdiniAdminController {
       ordiniFinale.add(new OrdineWrapper(ordine, composizione));
     }
 
-    // System.out.println(ordiniFinale);
     model.addAttribute("ordini", ordiniFinale);
     model.addAttribute("StatoSpedizione", Ordine.StatoSpedizione.class);
 
