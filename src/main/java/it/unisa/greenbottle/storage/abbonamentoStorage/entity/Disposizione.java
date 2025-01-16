@@ -1,7 +1,12 @@
 package it.unisa.greenbottle.storage.abbonamentoStorage.entity;
 
 import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,4 +33,9 @@ public class Disposizione {
     this.quantita = quantita;
   }
 
+  public Disposizione(int quantita, Prodotto prodotto, Abbonamento abbonamento) {
+    this.quantita = quantita;
+    this.prodotto = prodotto;
+    this.abbonamento = abbonamento;
+  }
 }
