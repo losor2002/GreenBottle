@@ -1,4 +1,4 @@
-package it.unisa.greenbottle;
+package it.unisa.greenbottle.DataJPATests;
 
 import it.unisa.greenbottle.storage.abbonamentoStorage.dao.AbbonamentoDao;
 import it.unisa.greenbottle.storage.abbonamentoStorage.dao.DisposizioneDao;

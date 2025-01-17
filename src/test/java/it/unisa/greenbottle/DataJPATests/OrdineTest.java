@@ -1,4 +1,4 @@
-package it.unisa.greenbottle;
+package it.unisa.greenbottle.DataJPATests;
 
 import it.unisa.greenbottle.storage.accessoStorage.dao.ClienteDao;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
