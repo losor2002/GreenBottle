@@ -15,39 +15,50 @@
 <div th:replace="~{fragments/fragments.html :: header}"></div>
 <h1 style="text-align: center;">Il tuo Carrello</h1>
 <main class="container my-4">
-    <div class="row">
-        <section class="col-md-9">
-            <div class="row">
-                <div class="col-md-4 mb-4" th:each="prodotto : ${prodotti}">
-                    <div class="product-card">
-                        <!-- Nome e descrizione -->
-                        <img th:src="@{${prodotto.immagine}}" alt="Immagine prodotto">
-                        <h5 class="mt-3" th:text="${prodotto.nome}"></h5>
-                        <p class="text-muted" th:text="${prodotto.descrizione}"></p>
-                        <!-- Bottoni e quantità -->
-                        <button class="btn btn-info btn-sm">+</button>
-                        <p class="text-muted" th:text="${composto.quantita}"></p>
-                        <button class="btn btn-info btn-sm">-</button>
-                        <!-- Prezzo del prodotto e bottone per rimuovere -->
-                        <p class="text-muted" th:text="'€ ' + ${prodotto.prezzo}"></p>
-                        <button class="btn btn-info btn-sm">Rimuovi</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section>
-            <div class="row">
-                <!-- SubTotale a sx e i due bottoni a dx -->
-                <h4 class="mt-3">SubTotale:</h4>
-                <!-- logica per il calcolo da inserire -->
-                <button class="btn btn-info btn-sm">
-                    <a href="catalogo" class="text-primary" id="redirect">Torna al catalogo</a>
-                </button>
-                <button class="btn btn-success btn-sm mt-2">
-                    <i class="bi bi-cart"></i> Checkout
-                </button>
-            </div>
-        </section>
+    <div class="container">
+        <table>
+            <thead>
+            <tr>
+                <th>Immagine</th>
+                <th>Nome Prodotto</th>
+                <th>Quantità</th>
+                <th>Prezzo</th>
+                <th>Rimuovi</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${session.cartProducts}">
+                <td>
+                    <img th:src="${product.image}" alt="Immagine prodotto" width="50">
+                </td>
+                <td>
+                    <strong th:text="${product.name}">Nome Prodotto</strong><br>
+                    <small th:text="${product.description}">Descrizione prodotto</small>
+                </td>
+                <td class="actions">
+                    <button th:onclick="'/cart/increment/' + ${product.id}">+</button>
+                    <span th:text="${product.quantity}">1</span>
+                    <button th:onclick="'/cart/decrement/' + ${product.id}">-</button>
+                </td>
+                <td th:text="${product.price}">Prezzo</td>
+                <td>
+                    <button th:onclick="'/cart/remove/' + ${product.id}">X</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="total">
+            <p>Costi di spedizione: <span th:text="${shippingCost}">€0.00</span></p>
+            <h3>SubTotale: <span th:text="${subtotal}">€0.00</span></h3>
+        </div>
+        <div class="buttons">
+            <a href="/catalogo">
+                <button>Torna al Catalogo</button>
+            </a>
+            <a href="/checkout">
+                <button>Checkout</button>
+            </a>
+        </div>
     </div>
 </main>
 <footer th:replace="~{fragments/fragments :: footer}"></footer>
