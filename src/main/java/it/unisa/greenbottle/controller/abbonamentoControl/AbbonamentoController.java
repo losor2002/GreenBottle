@@ -1,6 +1,7 @@
 package it.unisa.greenbottle.controller.abbonamentoControl;
 
 import it.unisa.greenbottle.controller.abbonamentoControl.form.AbbonamentoForm;
+import it.unisa.greenbottle.controller.abbonamentoControl.util.AbbonamentoWrapper;
 import it.unisa.greenbottle.controller.accessoControl.util.SessionCliente;
 import it.unisa.greenbottle.storage.abbonamentoStorage.dao.AbbonamentoDao;
 import it.unisa.greenbottle.storage.abbonamentoStorage.dao.DisposizioneDao;
@@ -9,10 +10,8 @@ import it.unisa.greenbottle.storage.abbonamentoStorage.entity.Disposizione;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
 import jakarta.validation.Valid;
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,17 +62,14 @@ public class AbbonamentoController {
       Abbonamento.TipoAbbonamento tipoAbbonamento =
           Abbonamento.TipoAbbonamento.valueOf(tipo.toUpperCase());
       List<Abbonamento> abbonamenti = abbonamentoDao.findAbbonamentoByTipo(tipoAbbonamento);
-      HashMap<Abbonamento, List<Disposizione>> disposizione =
-          new HashMap<Abbonamento, List<Disposizione>>();
+      List<AbbonamentoWrapper> abbonamentiFinale = new ArrayList<>();
       for (Abbonamento abbonamento : abbonamenti) {
-        disposizione.put(abbonamento, disposizioneDao.findByAbbonamento(abbonamento));
+        abbonamentiFinale.add(new AbbonamentoWrapper(abbonamento, disposizioneDao.findDisposizioneByAbbonamento(abbonamento)));
       }
 
       model.addAttribute("abbonamenti", abbonamenti);
-      model.addAttribute("disposizione", disposizione);
     } else {
       model.addAttribute("abbonamenti", List.of());
-      model.addAttribute("disposizione", Map.of());
     }
 
     return abbonamentoView;

@@ -8,7 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DisposizioneDao extends JpaRepository<Disposizione, Long> {
 
-  Integer findQuantitaByProdotto(Prodotto prodotto);
-
-  List<Disposizione> findByAbbonamento(Abbonamento abbonamento);
+  List<Disposizione> findDisposizioneByAbbonamento(Abbonamento abbonamento);
 }

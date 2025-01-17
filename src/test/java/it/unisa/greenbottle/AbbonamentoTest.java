@@ -60,7 +60,7 @@ public class AbbonamentoTest {
     HashMap<Abbonamento, List<Disposizione>> disposizione =
         new HashMap<Abbonamento, List<Disposizione>>();
     for (Abbonamento abbonamento : abbonamenti) {
-      disposizione.put(abbonamento, disposizioneDao.findByAbbonamento(abbonamento));
+      disposizione.put(abbonamento, disposizioneDao.findDisposizioneByAbbonamento(abbonamento));
     }
 
     System.out.println(disposizione);
