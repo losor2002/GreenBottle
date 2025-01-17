@@ -18,6 +18,7 @@
     <div class="row" th:each="ordine : ${ordini}">
         <div class="card shadow-lg p-3 mb-3" th:data-ordine-id="${ordine.getId()}">
             <h4 class="text" th:text="${ordine.getDescrizione()}"></h4>
+            <h6 class="text" th:text="${ordine.getData()}"></h6>
             <p><strong>Prezzo:</strong> <span th:text="${ordine.getPrezzo()}"></span>€</p>
             <p><strong>Cliente:</strong> <span
                     th:text="${ordine.getNomeCliente()} + ' ' + ${ordine.getCognomeCliente()}"></span></p>

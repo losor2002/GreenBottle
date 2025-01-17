@@ -1,12 +1,7 @@
 package it.unisa.greenbottle.storage.abbonamentoStorage.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,17 +19,14 @@ public class Abbonamento {
   private Long id;
   @Column()
   @Enumerated(EnumType.STRING)
-
   private TipoAbbonamento tipo;
 
   @Column()
   @Enumerated(EnumType.STRING)
-
   private RinnovoAbbonamento rinnovo;
 
   @Enumerated(EnumType.STRING)
   @Column()
-
   private FrequenzaAbbonamento frequenza;
 
   public Abbonamento(TipoAbbonamento tipo, RinnovoAbbonamento rinnovo,

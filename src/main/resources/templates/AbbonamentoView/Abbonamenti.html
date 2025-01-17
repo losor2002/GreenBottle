@@ -6,6 +6,7 @@
     <title>Abbonamenti - GreenBottle</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link th:href="@{/img/Logo.png}" rel="shortcut icon"/>
+    <link th:href="@{/stylesheet/Common.css}" rel="stylesheet">
     <link th:href="@{/stylesheet/Head.css}" rel="stylesheet">
     <link th:href="@{/stylesheet/Footer.css}" rel="stylesheet">
     <link th:href="@{/stylesheet/Abbonamenti.css}" rel="stylesheet">
@@ -14,88 +15,73 @@
 <div th:replace="~{fragments/fragments.html :: header}"></div>
 <h1 style="text-align: center;">I nostri abbonamenti</h1>
 <div class="container mt-5">
-    <div class="row justify-content-center">
-        <!-- Bronze Card -->
-        <div class="col-md-4">
-            <div class="card text-center">
-                <div class="card-header bg-bronze text-white">
-                    Bronze
+    <form class="filter-section p-4 sticky-top" id="tier-card" method="get" th:object="${abbonamentoForm}">
+        <div class="row justify-content-center">
+            <!-- Bronze Card -->
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-header bg-bronze text-white">
+                        Bronze
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Bronze Plan</h5>
+                        <p class="card-text">Scopri i nostri piani base.</p>
+                        <button type="submit" class="btn btn-primary" name="abbonamento" value="Bronze">Mostra</button>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title">Bronze Plan</h5>
-                    <p class="card-text">Scopri i nostri piani base.</p>
-                    <button class="btn btn-primary show-details"
-                            th:onclick="fetchDetails('Bronze')">Mostra
-                    </button>
+            </div>
+            <!-- Silver Card -->
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-header bg-silver text-white">
+                        Silver
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Silver Plan</h5>
+                        <p class="card-text">Ottieni di più con i nostri piani silver.</p>
+                        <button type="submit" class="btn btn-primary" name="abbonamento" value="Silver">Mostra</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Gold Card -->
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-header bg-gold text-white">
+                        Gold
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Gold Plan</h5>
+                        <p class="card-text">Ottieni il meglio con i nostri piani gold.</p>
+                        <button type="submit" class="btn btn-primary" name="abbonamento" value="Gold">Mostra</button>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- Silver Card -->
-        <div class="col-md-4">
-            <div class="card text-center">
-                <div class="card-header bg-silver text-white">
-                    Silver
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Silver Plan</h5>
-                    <p class="card-text">Ottieni di più con i nostri piani silver.</p>
-                    <button class="btn btn-primary show-details"
-                            th:onclick="fetchDetails('Silver')">Mostra
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- Gold Card -->
-        <div class="col-md-4">
-            <div class="card text-center">
-                <div class="card-header bg-gold text-white">
-                    Gold
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Gold Plan</h5>
-                    <p class="card-text">Ottieni il meglio con i nostri piani gold.</p>
-                    <button class="btn btn-primary show-details"
-                            th:onclick="fetchDetails('Gold')">Mostra
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="details-section" class="mt-4 text-center" style="display: none;">
-        <h3>La nostra selezione</h3>
-        <p id="details-text"></p>
-    </div>
+    </form>
 </div>
+<section class="col-md-8">
+    <div class="row">
+        <h2>La nostra selezione:</h2>
+        <div class="col-md-4 mb-4" th:each="abbonamento : ${abbonamenti}">
+            <div class="d-flex justify-content-between" th:each="prodotto : ${prodotti}">
+            </div>
+            <div class="d-flex justify-content-between">
+                <p class="my-4" th:text="${abbonamento.frequenza}"></p>
+            </div>
+            <div class="d-flex justify-content-between">
+                <p class="my-4" th:text="${abbonamento.rinnovo}"></p>
+            </div>
+        </div>
+    </div>
+    <!--<div class="text-center text-muted" th:if="${#lists.isEmpty(products)}">
+        <p>Nessun prodotto trovato con i filtri selezionati.</p>
+    </div>-->
+</section>
 <script>
     // Add custom color styles for the headers if needed
     document.querySelector('.bg-bronze').style.backgroundColor = '#cd7f32'; // Bronze
     document.querySelector('.bg-silver').style.backgroundColor = '#c0c0c0'; // Silver
     document.querySelector('.bg-gold').style.backgroundColor = '#ffd700';   // Gold
-
-    function fetchDetails(tier) {
-        fetch(`/abbonamento/${tipo}`) // Adjust the URL to match your controller's mapping
-            .then(response => response.json())
-            .then(data => {
-                // Clear previous details
-                const detailsSection = document.getElementById('details-text');
-                detailsSection.innerHTML = '';
-                // Populate with new details
-                if (data && data.length > 0) {
-                    data.forEach(sub => {
-                        const detail = document.createElement('p');
-                        detail.textContent = `Tipo: ${sub.tipo}, Rinnovo: ${sub.rinnovo}, Frequenza Consegne: ${sub.frequenza}`;
-                        detailsSection.appendChild(detail);
-                    });
-                } else {
-                    detailsSection.textContent = 'Non sono presenti abbonamenti.';
-                }
-                // Make the details section visible
-                document.getElementById('details-section').style.display = 'block';
-            })
-            .catch(error => {
-                console.error('Errore durante la fetch:', error);
-            });
-    }
 </script>
 <div th:replace="~{fragments/fragments :: footer}"></div>
 <script th:src="@{/js/Abbonamenti.js}"></script>

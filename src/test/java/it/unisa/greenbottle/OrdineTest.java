@@ -1,75 +1,134 @@
 package it.unisa.greenbottle;
 
+import it.unisa.greenbottle.storage.accessoStorage.dao.ClienteDao;
+import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
+import it.unisa.greenbottle.storage.areaPersonaleStorage.dao.IndirizzoDao;
+import it.unisa.greenbottle.storage.areaPersonaleStorage.entity.Indirizzo;
+import it.unisa.greenbottle.storage.catalogoStorage.dao.ProdottoDao;
+import it.unisa.greenbottle.storage.catalogoStorage.entity.Categoria;
+import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
+import it.unisa.greenbottle.storage.ordineStorage.dao.OrdineDao;
+import it.unisa.greenbottle.storage.ordineStorage.entity.Composizione;
+import it.unisa.greenbottle.storage.ordineStorage.entity.Ordine;
+import it.unisa.greenbottle.storage.ordineStorage.entity.OrdineDirector;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+//TODO: aggiustare i path per i test di entità.
 public class OrdineTest {
+
+  @Autowired
+  private OrdineDao ordineDao;
+
+  @Autowired
+  private IndirizzoDao indirizzoDao;
+
+  @Autowired
+  private ProdottoDao prodottoDao;
+
+  @Autowired
+  private ClienteDao clienteDao;
+
+  private final Cliente clienteTest =
+      new Cliente("mario.rossi@gmail.com", "asdfASDF1234!", "Mario", "Rossi", 0, 0, null, null);
+
+  private final Indirizzo indirizzoTest = new Indirizzo("Via Roma", 5, "Potenza", "PZ", "85100");
+
+  private final Categoria categoriaTest = new Categoria("Bevande");
+  private final Prodotto prodottoTest =
+      new Prodotto("Acqua minerale", "Acqua minerale naturale", null, 0.5f, 1000, categoriaTest);
+
+  private final Prodotto[] arrayProdottiTest = new Prodotto[] {
+      prodottoTest,
+      new Prodotto("Acqua frizzante", "Acqua frizzante naturale", null, 0.5f, 1000, categoriaTest),
+      new Prodotto("Acqua tonica", "Acqua tonica naturale", null, 0.5f, 1000, categoriaTest),
+      new Prodotto("Acqua gassata", "Acqua gassata naturale", null, 0.5f, 1000, categoriaTest),
+      new Prodotto("Acqua liscia", "Acqua liscia naturale", null, 0.5f, 1000, categoriaTest),
+      new Prodotto("Fantasia", "Fantasia naturale", null, 0.5f, 1000, categoriaTest),
+      new Prodotto("Acqua intostata", "Acqua intostata naturale", null, 0.5f, 1000, categoriaTest),
+      new Prodotto("Aranzata", "Aranzata naturale", null, 0.5f, 1000, categoriaTest)
+  };
+  private final List<Prodotto> prodottiTest = Arrays.asList(arrayProdottiTest);
+  private final Set<Composizione> composizioniTest = new HashSet<>();
+
   @Test
-  public void creaOrdine() {
+  public void createOrdine() {
 
-    //try {
-    // Creazione dell'ordine
-    /*
-    Ordine ordine = new Ordine();
-    ordine.setDescrizione("descrizione aiuto");
-    ordine.setPrezzo(10.68f);
-    ordine.setStato(Ordine.StatoSpedizione.ELABORAZIONE);
-    ordine.setCarta("1234567890123456");
-    ordine.setRitiro(true);
-    ordine.setSupporto(true);
+    clienteDao.save(clienteTest);
+    indirizzoDao.save(indirizzoTest);
+    prodottoDao.save(prodottoTest);
 
-    // Associare cliente e indirizzo
-    ordine.setCliente(clienteDao.findById(1L).orElseThrow(() ->
-        new IllegalArgumentException("Cliente non trovato")));
-    ordine.setIndirizzo(indirizzoDao.findById(1L).orElseThrow(() ->
-        new IllegalArgumentException("Indirizzo non trovato")));
+    composizioniTest.add(new Composizione(prodottoTest, 2));
 
-    // Salvare l'ordine
-    ordineDao.save(ordine);
+    float prezzoTotale = (float) composizioniTest.stream()
+        .mapToDouble(c -> c.getProdotto().getPrezzo() * c.getQuantita())
+        .sum();
 
-    // Creazione di una composizione
-    Composizione composizione = new Composizione();
-    composizione.setQuantita(2);
-    composizione.setOrdine(ordine);
-    composizione.setProdotto(prodottoDao.findById(1L).orElseThrow(() ->
-        new IllegalArgumentException("Prodotto non trovato")));
+    Ordine ordineTest = OrdineDirector.createOrdineConSupporto(
+        prezzoTotale,
+        false,
+        "1234-5678-9876-5432",
+        "Supporto Aggiuntivo",
+        indirizzoTest,
+        clienteTest,
+        composizioniTest);
 
-    // Salvare la composizione
-    composizioneDao.save(composizione);
+    ordineDao.save(ordineTest);
 
-    // Recupero delle composizioni associate all'ordine
-    List<Composizione> composizioni = composizioneDao.findAllByOrdine(ordine);
+    Optional<Ordine> o2 = ordineDao.findById(ordineTest.getId());
 
-    // Creazione della stringa di output
-    StringBuilder output = new StringBuilder();
-    output.append("Dettagli Ordine:\n");
-    output.append("ID Ordine: ").append(ordine.getId()).append("\n");
-    output.append("Descrizione: ").append(ordine.getDescrizione()).append("\n");
-    output.append("Prezzo: ").append(ordine.getPrezzo()).append(" €\n");
-    output.append("Stato: ").append(ordine.getStato()).append("\n");
-    output.append("Cliente: ").append(ordine.getCliente().getNome()).append(" ")
-        .append(ordine.getCliente().getCognome()).append("\n");
-    output.append("Indirizzo: ").append(ordine.getIndirizzo().getVia()).append(", ")
-        .append(ordine.getIndirizzo().getCitta()).append("\n");
-    output.append("Ritiro: ").append(ordine.isRitiro() ? "Sì" : "No").append("\n");
-    output.append("Supporto: ").append(ordine.isSupporto() ? "Sì" : "No").append("\n\n");
+    assert o2.isPresent() && ordineTest.equals(o2.get());
 
-    output.append("Composizioni:\n");
-    for (Composizione comp : composizioni) {
-      output.append("- Prodotto: ").append(comp.getProdotto().getNome()).append("\n");
-      output.append("  Quantità: ").append(comp.getQuantita()).append("\n");
-      output.append("  Prezzo unitario: ").append(comp.getProdotto().getPrezzo()).append(" €\n");
+    System.out.println("Saved Ordine: " + o2.get());
+  }
+
+  @Test
+  public void createAndVerifyOrdineAndComposizione() {
+    clienteDao.save(clienteTest);
+    indirizzoDao.save(indirizzoTest);
+    prodottoDao.saveAll(prodottiTest);
+
+    composizioniTest.add(new Composizione(prodottoTest, 2));
+    composizioniTest.add(new Composizione(prodottiTest.get(1), 100));
+
+    float prezzoTotale = (float) composizioniTest.stream()
+        .mapToDouble(c -> c.getProdotto().getPrezzo() * c.getQuantita())
+        .sum();
+
+    Ordine ordineTest = OrdineDirector.createOrdineConSupporto(
+        prezzoTotale,
+        false,
+        "1234-5678-9876-5432",
+        "Supporto Aggiuntivo",
+        indirizzoTest,
+        clienteTest,
+        composizioniTest);
+
+    ordineDao.save(ordineTest);
+
+    Optional<Ordine> retrievedOrdine = ordineDao.findById(ordineTest.getId());
+    assert retrievedOrdine.isPresent();
+
+    Ordine savedOrdine = retrievedOrdine.get();
+
+    assert savedOrdine.getComposizioni() != null && !savedOrdine.getComposizioni().isEmpty();
+    System.out.println("Retrieved Composizioni: " + savedOrdine.getComposizioni());
+
+    for (Composizione composizione : savedOrdine.getComposizioni()) {
+      Prodotto prodotto = composizione.getProdotto();
+      assert prodottiTest.contains(prodotto);
+
+      System.out.println("Composizione: " + composizione);
+      System.out.println("Product in Composizione: " + prodotto);
     }
-
-    return output.toString();
-  } catch (Exception e) {
-    // In caso di errore, restituisci il messaggio dell'eccezione
-    return "Errore durante la creazione dell'ordine: " + e.getMessage();
   }
-     */
-  }
-
 }

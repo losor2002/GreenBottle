@@ -6,7 +6,8 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AbbonamentoDao extends JpaRepository<Abbonamento, Long> {
-  Optional<Abbonamento> findAbbonamentoById(Long id);
+    Optional<Abbonamento> findAbbonamentoById(Long id);
 
-  List<Abbonamento> findAll();
+    List<Abbonamento> findAll();
+    List<Abbonamento> findAbbonamentoByTipo(Abbonamento.TipoAbbonamento tipoAbbonamento);
 }

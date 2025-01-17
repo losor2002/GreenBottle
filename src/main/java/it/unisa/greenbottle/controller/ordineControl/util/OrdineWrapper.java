@@ -5,6 +5,7 @@ import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
 import it.unisa.greenbottle.storage.ordineStorage.entity.Composizione;
 import it.unisa.greenbottle.storage.ordineStorage.entity.Ordine;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 
@@ -53,6 +54,10 @@ public class OrdineWrapper implements Serializable {
 
   public String getEmailCliente() {
     return o.getCliente().getEmail();
+  }
+
+  public Timestamp getData() {
+    return o.getData();
   }
 
   public String getIndirizzo() {

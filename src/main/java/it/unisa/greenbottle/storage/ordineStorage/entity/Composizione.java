@@ -6,28 +6,58 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.Data;
+import jakarta.persistence.PrePersist;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
 @NoArgsConstructor
+@Getter
+@Setter
 public class Composizione {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-  @Column(nullable = false)
-  private int quantita;
+
   @ManyToOne
+  @JoinColumn(name = "ordine_id", nullable = false)
   private Ordine ordine;
+
   @ManyToOne
+  @JoinColumn(name = "prodotto_id", nullable = false)
   private Prodotto prodotto;
 
-  public Composizione(int quantita, Ordine ordine, Prodotto prodotto) {
-    this.quantita = quantita;
-    this.ordine = ordine;
-    this.prodotto = prodotto;
+  @Column(nullable = false)
+  private int quantita;
+
+  @PrePersist
+  public void updateQuantitaProdotto() {
+    if (prodotto.getQuantita() < quantita) {
+      throw new IllegalArgumentException(
+          "Quantità richiesta per " + prodotto.getNome() + " non disponibile."
+      );
+    }
+    prodotto.setQuantita(prodotto.getQuantita() - quantita);
+
   }
 
+  public Composizione(Prodotto prodotto, int quantita) { //TODO: Aggiungere Ordine.
+    this.prodotto = prodotto;
+    this.quantita = quantita;
+  }
+
+  @Override
+  public String toString() {
+    return "Composizione{"
+        +
+        "id=" + id
+        + ", ordineId=" + (ordine != null ? ordine.getId() : "null")
+        + ", prodotto=" + (prodotto != null ? prodotto.getNome() : "null")
+        + ", quantita=" + quantita
+        + '}';
+  }
 }
+
