@@ -10,34 +10,75 @@
     <link th:href="@{/stylesheet/Head.css}" rel="stylesheet">
     <link th:href="@{/stylesheet/Footer.css}" rel="stylesheet">
     <link th:href="@{/stylesheet/Checkout.css}" rel="stylesheet">
+    <style>
+        aside {
+            float: right;
+        }
+    </style>
+
 </head>
 <body>
 <div th:replace="~{fragments/fragments.html :: header}"></div>
 <h1 style="text-align: center;">Riepilogo Ordine</h1>
 <main class="container my-4">
-    <form th:action="@{/catalogo}" th:object="${ordineForm}" method="post">
-        <!-- Scelta dell'indirizzo -->
-        <h2 style="text-align: center;">Indirizzo di spedizione</h2>
-
-        <!-- Dati di pagamento -->
-        <h2 style="text-align: center;">Dati di pagamento</h2>
-        <div class="mb-3">
-            <label class="form-label">Nome del titolare della carta</label>
-            <input type="text" id="nome" name="nome" class="form-control">
-		</div>
-        <div class="mb-3">
-            <label class="form-label">Numero della carta</label>
-            <input type="text" id="numero" name="numero" class="form-control">
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Data di scadenza</label>
-            <input type="text" id="data" name="data" class="form-control">
-        </div>
-        <div class="mb-3">
-            <label class="form-label">CVV</label>
-            <input type="text" id="cvv" name="cvv" class="form-control">
-        </div>
-    </form>
+    <div class="row">
+        <section>
+            <form th:action="@{/catalogo}" th:object="${ordineForm}" method="post">
+                <!-- Scelta dell'indirizzo -->
+                <h2 style="text-align: center;">Indirizzo di spedizione</h2>
+                <ul>
+                    <li>
+                        <input type="radio" id="address" name="address" value="address">
+                        <label for="address">Indirizzo</label>
+                    </li>
+                </ul>
+                <!-- Dati di pagamento -->
+                <div class="payment-details">
+                    <h2 style="text-align: center;">Dati di pagamento</h2>
+                    <div class="mb-3">
+                        <label class="form-label">Nome del titolare della carta</label>
+                        <input type="text" id="nome" name="nome" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Numero della carta</label>
+                        <input type="text" id="numero" name="numero" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Data di scadenza</label>
+                        <input type="text" id="data" name="data" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">CVV</label>
+                        <input type="text" id="cvv" name="cvv" class="form-control">
+                    </div>
+                    <div>
+                        <input type="checkbox" id="ritiro-service" name="ritiro-service">
+                        <label for="ritiro-service">Desidero usufruire del servizio di ritiro bottiglie.</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="supporto-service" name="supporto-service" checked>
+                        <label for="supporto-service">Desidero usufruire del servizio di supporto aggiuntivo alla
+                            consegna
+                            di questo ordine.</label>
+                    </div>
+                    <textarea placeholder="Note aggiuntive"></textarea>
+                </div>
+                <aside class="col-md-4 col-lg-3">
+                    <section>
+                        <h2>Sommmario</h2>
+                        <p th:each="prodotto : ${prodottiList}">
+                            <span th:text="${prodotto.nome}"></span> - <span th:text="${prodotto.prezzo}"></span>
+                        </p>
+                        <p>Importo Totale: <span th:text="${prodotto.totale}"></span></p>
+                        <div class="buttons">
+                            <button th:onclick="goBack()">Torna Indietro</button>
+                            <button th:onclick="confirmOrder()">Conferma</button>
+                        </div>
+                    </section>
+                </aside>
+            </form>
+        </section>
+    </div>
 </main>
 <footer th:replace="~{fragments/fragments :: footer}"></footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

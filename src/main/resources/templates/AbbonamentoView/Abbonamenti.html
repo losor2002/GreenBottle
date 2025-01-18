@@ -26,7 +26,9 @@
                     <div class="card-body">
                         <h5 class="card-title">Bronze Plan</h5>
                         <p class="card-text">Scopri i nostri piani base.</p>
-                        <button type="submit" class="btn btn-primary" name="abbonamento" value="Bronze">Mostra</button>
+                        <button type="submit" class="btn btn-primary" name="abbonamento" value="Bronze"
+                                onclick="showSection()">Mostra
+                        </button>
                     </div>
                 </div>
             </div>
@@ -39,7 +41,9 @@
                     <div class="card-body">
                         <h5 class="card-title">Silver Plan</h5>
                         <p class="card-text">Ottieni di più con i nostri piani silver.</p>
-                        <button type="submit" class="btn btn-primary" name="abbonamento" value="Silver">Mostra</button>
+                        <button type="submit" class="btn btn-primary" name="abbonamento" value="Silver"
+                                onclick="showSection()">Mostra
+                        </button>
                     </div>
                 </div>
             </div>
@@ -52,7 +56,9 @@
                     <div class="card-body">
                         <h5 class="card-title">Gold Plan</h5>
                         <p class="card-text">Ottieni il meglio con i nostri piani gold.</p>
-                        <button type="submit" class="btn btn-primary" name="abbonamento" value="Gold">Mostra</button>
+                        <button type="submit" class="btn btn-primary" name="abbonamento" value="Gold"
+                                onclick="showSection()">Mostra
+                        </button>
                     </div>
                 </div>
             </div>
@@ -63,13 +69,22 @@
     <div class="row">
         <h2>La nostra selezione:</h2>
         <div class="col-md-4 mb-4" th:each="abbonamento : ${abbonamenti}">
-            <div class="d-flex justify-content-between" th:each="prodotto : ${prodotti}">
+            <!-- Product List -->
+            <div class="product-list" th:each="prodotto : ${prodotti}">
+                <ul>
+                    <li th:text="${prodotto.key}">key</li>
+                    <li th:text="${prodotto.value}">value</li>
+                </ul>
             </div>
-            <div class="d-flex justify-content-between">
-                <p class="my-4" th:text="${abbonamento.frequenza}"></p>
+            <!-- Subscription Options -->
+            <div class="subscription-options">
+                <p th:text="${abbonamento.frequenza}"></p>
+                <p th:text="${abbonamento.rinnovo}"></p>
             </div>
-            <div class="d-flex justify-content-between">
-                <p class="my-4" th:text="${abbonamento.rinnovo}"></p>
+            <!-- Price Section -->
+            <div class="price-section">
+                <p th:text="${prezzo}">Prezzo</p>
+                <button class="btn btn-primary w-20">Compra ora</button>
             </div>
         </div>
     </div>
@@ -78,10 +93,13 @@
     </div>-->
 </section>
 <script>
-    // Add custom color styles for the headers if needed
     document.querySelector('.bg-bronze').style.backgroundColor = '#cd7f32'; // Bronze
     document.querySelector('.bg-silver').style.backgroundColor = '#c0c0c0'; // Silver
     document.querySelector('.bg-gold').style.backgroundColor = '#ffd700';   // Gold
+
+    function showSection() {
+        document.querySelector('section').style.display = 'flex';
+    }
 </script>
 <div th:replace="~{fragments/fragments :: footer}"></div>
 <script th:src="@{/js/Abbonamenti.js}"></script>
