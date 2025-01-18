@@ -37,7 +37,7 @@ public class RegistrazioneController {
                      BindingResult bindingResult, Model model) {
 
     if (bindingResult.hasErrors()) {
-      model.addAttribute("errore", "errore di formato.");
+      model.addAttribute("errore", "Errore di formato.");
       return registrazioneView;
     }
 

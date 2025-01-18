@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @Data
 public class LoginForm {
 
-  @NotBlank(message = "email vuota")
-  @Email(message = "formato email errato")
+  @NotBlank(message = "Email vuota")
+  @Email(message = "Formato email errato")
   @Size(min = 6, max = 319, message = "dimensione email errata")
   private String email;
 

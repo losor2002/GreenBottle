@@ -88,6 +88,7 @@ public class OrdineWrapper implements Serializable {
         + ", nomeCliente='" + getNomeCliente() + '\''
         + ", cognomeCliente='" + getCognomeCliente() + '\''
         + ", emailCliente='" + getEmailCliente() + '\''
+        + ", data=" + getData() + '\''
         + ", indirizzo='" + getIndirizzo() + '\''
         + ", prodottiOrdine=" + getProdottiOrdine()
         + '}';

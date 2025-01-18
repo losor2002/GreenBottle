@@ -18,7 +18,7 @@ public class RegistrazioneForm {
   @Pattern(
       regexp = "^[a-zA-Z]{0,30}$",
       message =
-          "Nel campo Nome non e' rispettato il formato."
+          "Nome non e' rispettato il formato."
   )
   private String nome;
 
@@ -28,7 +28,7 @@ public class RegistrazioneForm {
   @Pattern(
       regexp = "^[a-zA-Z]{0,30}$",
       message =
-          "Nel campo Cognome non e' rispettato il formato."
+          "Cognome non e' rispettato il formato."
   )
   private String cognome;
 
