@@ -20,6 +20,7 @@ public class OrdineDirector {
         .indirizzo(indirizzo)
         .cliente(cliente)
         .composizioni(new HashSet<>())
+        .admin(null)
         .build();
   }
 
@@ -37,6 +38,7 @@ public class OrdineDirector {
         .data(new Timestamp(System.currentTimeMillis()))
         .indirizzo(indirizzo)
         .cliente(cliente)
+        .admin(null)
         .build();
     for (Composizione composizione : composizioni) {
       composizione.setOrdine(ordine);
@@ -50,14 +52,15 @@ public class OrdineDirector {
                                     Set<Composizione> composizioni) {
     Ordine ordine = new OrdineBuilder()
         .prezzo(prezzo)
-        .stato(Ordine.StatoSpedizione.ACCETTATO)
+        .stato(Ordine.StatoSpedizione.ELABORAZIONE)
         .isRitiro(isRitiro)
         .carta(carta)
         .isSupporto(false)
-        .descrizione("Default description")
+        .descrizione(null)
         .data(new Timestamp(System.currentTimeMillis()))
         .indirizzo(indirizzo)
         .cliente(cliente)
+        .admin(null)
         .build();
     for (Composizione composizione : composizioni) {
       composizione.setOrdine(ordine);

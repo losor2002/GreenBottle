@@ -41,7 +41,6 @@ public class VisualizzaStoricoOrdiniController {
 
   @GetMapping
   public String get(@ModelAttribute DataForm dataForm, BindingResult bindingResult, Model model) {
-    System.out.println(dataForm);
     if (bindingResult.hasErrors()) {
       return visualizzaStoricoOrdiniView;
     }

@@ -6,12 +6,12 @@ import it.unisa.greenbottle.controller.accessoControl.util.SessionCliente;
 import it.unisa.greenbottle.storage.abbonamentoStorage.dao.AbbonamentoDao;
 import it.unisa.greenbottle.storage.abbonamentoStorage.dao.DisposizioneDao;
 import it.unisa.greenbottle.storage.abbonamentoStorage.entity.Abbonamento;
-import it.unisa.greenbottle.storage.abbonamentoStorage.entity.Disposizione;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
 import jakarta.validation.Valid;
 import java.sql.Timestamp;
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -64,10 +64,11 @@ public class AbbonamentoController {
       List<Abbonamento> abbonamenti = abbonamentoDao.findAbbonamentoByTipo(tipoAbbonamento);
       List<AbbonamentoWrapper> abbonamentiFinale = new ArrayList<>();
       for (Abbonamento abbonamento : abbonamenti) {
-        abbonamentiFinale.add(new AbbonamentoWrapper(abbonamento, disposizioneDao.findDisposizioneByAbbonamento(abbonamento)));
+        abbonamentiFinale.add(new AbbonamentoWrapper(abbonamento,
+            disposizioneDao.findDisposizioneByAbbonamento(abbonamento)));
       }
 
-      model.addAttribute("abbonamenti", abbonamenti);
+      model.addAttribute("abbonamenti", abbonamentiFinale);
     } else {
       model.addAttribute("abbonamenti", List.of());
     }

@@ -1,5 +1,6 @@
 package it.unisa.greenbottle.controller.ordineControl;
 
+import it.unisa.greenbottle.controller.accessoControl.util.SessionAdmin;
 import it.unisa.greenbottle.controller.ordineControl.util.OrdineWrapper;
 import it.unisa.greenbottle.storage.ordineStorage.dao.ComposizioneDao;
 import it.unisa.greenbottle.storage.ordineStorage.dao.OrdineDao;
@@ -29,6 +30,9 @@ public class VisualizzaOrdiniAdminController {
 
   @Autowired
   private OrdineDao ordineDao;
+
+  @Autowired
+  private SessionAdmin sessionAdmin;
 
 
   @GetMapping
@@ -60,6 +64,7 @@ public class VisualizzaOrdiniAdminController {
 
     Ordine ordine = optOrdine.get();
     ordine.setStato(Ordine.StatoSpedizione.valueOf(statoSpedizione));
+    ordine.setAdmin(sessionAdmin.getAdmin().get());
     ordineDao.save(ordine);
 
     // Risponde con un messaggio di successo

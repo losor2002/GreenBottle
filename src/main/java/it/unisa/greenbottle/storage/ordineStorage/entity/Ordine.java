@@ -1,5 +1,6 @@
 package it.unisa.greenbottle.storage.ordineStorage.entity;
 
+import it.unisa.greenbottle.storage.accessoStorage.entity.Admin;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
 import it.unisa.greenbottle.storage.areaPersonaleStorage.entity.Indirizzo;
 import jakarta.persistence.CascadeType;
@@ -62,6 +63,9 @@ public class Ordine {
   @ManyToOne
   private Indirizzo indirizzo;
 
+  @ManyToOne
+  private Admin admin;
+
   protected Ordine(OrdineBuilder builder) {
     this.prezzo = builder.getPrezzo();
     this.stato = builder.getStato();
@@ -72,12 +76,13 @@ public class Ordine {
     this.composizioni =
         builder.getComposizioni() != null ? builder.getComposizioni() : new HashSet<>();
     this.indirizzo = builder.getIndirizzo();
-    this.cliente = builder.getCliente(); // Updated
+    this.cliente = builder.getCliente();
+    this.admin = builder.getAdmin();
   }
 
   public Ordine(float prezzo, StatoSpedizione stato, boolean isRitiro, String carta,
                 boolean isSupporto, String descrizione, Timestamp data,
-                Cliente cliente) { // Updated
+                Cliente cliente, Admin admin) {
     this.prezzo = prezzo;
     this.stato = stato;
     this.isRitiro = isRitiro;
@@ -85,7 +90,8 @@ public class Ordine {
     this.isSupporto = isSupporto;
     this.descrizione = descrizione;
     this.data = data;
-    this.cliente = cliente; // Updated
+    this.cliente = cliente;
+    this.admin = admin;
   }
 
   @Override

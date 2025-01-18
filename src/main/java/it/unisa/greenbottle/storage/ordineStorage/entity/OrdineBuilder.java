@@ -1,5 +1,6 @@
 package it.unisa.greenbottle.storage.ordineStorage.entity;
 
+import it.unisa.greenbottle.storage.accessoStorage.entity.Admin;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
 import it.unisa.greenbottle.storage.areaPersonaleStorage.entity.Indirizzo;
 import it.unisa.greenbottle.storage.ordineStorage.entity.Ordine.StatoSpedizione;
@@ -22,6 +23,7 @@ public class OrdineBuilder {
   private Set<Composizione> composizioni = new HashSet<>();
   private Indirizzo indirizzo;
   private Cliente cliente;
+  private Admin admin;
 
   public OrdineBuilder() {
   }
@@ -81,6 +83,11 @@ public class OrdineBuilder {
     return this;
   }
 
+  public OrdineBuilder admin(Admin admin) {
+    this.admin = admin;
+    return this;
+  }
+
   public Ordine build() {
     Ordine ordine = new Ordine();
     ordine.setPrezzo(prezzo);
@@ -93,6 +100,7 @@ public class OrdineBuilder {
     ordine.setComposizioni(composizioni);
     ordine.setIndirizzo(indirizzo);
     ordine.setCliente(cliente);
+    ordine.setAdmin(admin);
     return ordine;
   }
 }

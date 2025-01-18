@@ -1,5 +1,6 @@
 package it.unisa.greenbottle.controller.ordineControl.util;
 
+import it.unisa.greenbottle.storage.accessoStorage.entity.Admin;
 import it.unisa.greenbottle.storage.areaPersonaleStorage.entity.Indirizzo;
 import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
 import it.unisa.greenbottle.storage.ordineStorage.entity.Composizione;
@@ -58,6 +59,10 @@ public class OrdineWrapper implements Serializable {
 
   public Timestamp getData() {
     return o.getData();
+  }
+
+  public Admin getAdmin() {
+    return o.getAdmin();
   }
 
   public String getIndirizzo() {
