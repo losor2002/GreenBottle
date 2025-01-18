@@ -26,28 +26,25 @@
                     <h3>Filtra per data</h3>
                 </div>
                 <div class="card-body">
+                    <!--/*@thymesVar id="dataForm" type="it.unisa.greenbottle.controller.areaPersonaleControl.form.DataForm"*/-->
                     <form class="filter-section p-4 sticky-top" id="filter-card" method="get"
-                          th:object="${storicoOrdiniForm}">
-
-                        <!-- FORMATO:
-                        ^2\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$
-                        (YYYY-MM-DD) -->
+                          th:object="${dataForm}">
 
                         <!-- Data Min -->
-                        <!-- <div class="mb-3">
+                        <div class="mb-3">
                             <label for="startDate" class="form-label">Inizio</label>
                             <input type="date" id="startDate" name="startDate" class="form-control"
                                    th:field="*{startDate}">
                             <div class="text-danger px-2" th:if="${#fields.hasErrors('startDate')}"
                                  th:errors="*{startDate}"></div>
-                        </div> -->
+                        </div>
                         <!-- Data Max -->
-                        <!-- <div class="mb-3">
+                        <div class="mb-3">
                             <label for="endDate" class="form-label">Fine</label>
                             <input type="date" id="endDate" name="endDate" class="form-control" th:field="*{endDate}">
                             <div class="text-danger px-2" th:if="${#fields.hasErrors('endDate')}"
                                  th:errors="*{endDate}"></div>
-                        </div> -->
+                        </div>
 
                         <!-- Applica Button -->
                         <div class="d-grid">
@@ -62,37 +59,19 @@
         i suoi ordini sommariamente (data, costo). -->
 
         <!-- Ordini -->
-        <table>
-            <thead>
-            <tr>
-                <th>Id:</th>
-                <th>Data:</th>
-                <th>Prezzo</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="ordine : ${ordini}">
-                <td th:text="${ordine.getId()}"></td>
-                <td th:text="${ordine.getData()}"></td>
-                <td th:text="${ordine.getPrezzo()}"></td>
-            </tr>
-            </tbody>
-        </table>
-
-        <!-- Ordini -->
         <section class="col-md-8">
             <div class="row">
                 <div class="col-md-4 mb-4" th:each="ordine : ${ordini}">
                     <div class="order-card col-md-4 mx-2 my-2 rounded">
                         <div class="order-details">
-                            <h3 class="mt-3" th:text="${ordine.getId()}"></h3>
-                            <h2 class="mt-3" th:text="${ordine.getData()}"></h2>
+                            <h3 class="mt-3">Ordine ID: <span th:text="${ordine.id}"></span></h3>
+                            <h4 class="mt-3">Data: <span th:text="${ordine.data}"></span></h4>
                         </div>
                         <div class="order-price">
-                            <h2 class="mt-3" th:text="${ordine.getPrezzo()}"></h2>
+                            <h4 class="mt-3">Prezzo: €<span th:text="${ordine.prezzo}"></span></h4>
                         </div>
                         <button class="btn btn-info btn-sm my-4"
-                                th:onclick="|location.href='/areaPersonale/visualizzaStatoOrdine?id=${ordine.getId()}'|">
+                                th:onclick="|location.href='/areaPersonale/visualizzaStatoOrdine?id=${ordine.id}'|">
                             Informazioni Aggiuntive
                         </button>
                     </div>
