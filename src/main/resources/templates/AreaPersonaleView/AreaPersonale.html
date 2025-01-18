@@ -19,24 +19,29 @@
             <h3>Area Personale</h3>
         </div>
         <div class="card-body">
-            <h4 class="text-center">Benvenuto,
-                <span class="fw-bold"
-                      th:text="${sessionCliente.cliente.get().getNome()} ${sessionCliente.cliente.get().getCognome()}"></span>!
-            </h4>
+            <div class="d-flex flex-column justify-content-center align-items-center">
+                <h1 th:text="'Ciao ' + ${cliente.nome} + ' ' + ${cliente.cognome} + '!'"></h1>
+                <div class="mb-4">
+                    <img th:src="@{/userImg(id=${cliente.id})}"
+                         alt="Immagine profilo"
+                         class="rounded-circle"
+                         style="width: 150px; height: 150px; object-fit: cover;">
+                </div>
+            </div>
             <div class="row mt-4">
                 <div class="col-md-6">
                     <p>
-                        <strong>Email:</strong> <span th:text="${sessionCliente.cliente.get().getEmail()}"></span><br>
+                        <strong>Email:</strong> <span th:text="${cliente.getEmail()}"></span><br>
                         <strong>Bottiglie Salvate:</strong> <span
-                            th:text="${sessionCliente.cliente.get().getBottiglie()}"></span><br>
+                            th:text="${cliente.getBottiglie()}"></span><br>
                     </p>
                 </div>
                 <div class="col-md-6">
                     <p>
                         <strong>Risparmio Totale:</strong> €<span
-                            th:text="${sessionCliente.cliente.get().getRisparmio()}"></span><br>
-                        <strong>Data di Iscrizione:</strong> <span
-                            th:text="${sessionCliente.cliente.get().getSottoscrizione()}"></span>
+                            th:text="${cliente.getRisparmio()}"></span><br>
+                        <strong>Data della sottoscrizione all'abbonamento:</strong> <span
+                            th:text="${cliente.getSottoscrizione()}"></span>
                     </p>
                 </div>
             </div>

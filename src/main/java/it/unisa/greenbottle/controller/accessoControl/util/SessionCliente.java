@@ -32,7 +32,7 @@ public class SessionCliente {
     return Optional.empty();
   }
 
-  public void setCliente(Cliente cliente) { //Pericoloso
+  public void setCliente(Cliente cliente) {
     if (cliente == null) {
       this.idCliente = null;
     } else {

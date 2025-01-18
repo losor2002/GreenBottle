@@ -21,7 +21,7 @@
     <div class="row justify-content-center">
         <!-- Filtro -->
         <aside class="col-md-6">
-            <div class="card">
+            <div class="card shadow">
                 <div class="card-header text-center" id="card-header">
                     <h3>Filtra per data</h3>
                 </div>
@@ -61,9 +61,9 @@
         <!-- Ordini -->
         <section class="col-md-8">
             <div class="row">
-                <div class="col-md-4 mb-4" th:each="ordine : ${ordini}">
-                    <div class="order-card col-md-4 mx-2 my-2 rounded">
-                        <div class="order-details">
+                <div class="d-flex justify-content-center align-items-center my-4" th:each="ordine : ${ordini}">
+                    <div class="order-card bg-light rounded shadow p-4 w-75">
+                        <div class="order-details d-flex justify-content-between align-items-center">
                             <h3 class="mt-3">Ordine ID: <span th:text="${ordine.id}"></span></h3>
                             <h4 class="mt-3">Data: <span th:text="${ordine.data}"></span></h4>
                         </div>

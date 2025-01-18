@@ -1,0 +1,10 @@
+.order-card {
+    border: 2px solid black;
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.order-card-highlight {
+    background-color: #b3ff99;
+}

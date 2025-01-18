@@ -3,15 +3,12 @@ package it.unisa.greenbottle.controller.areaPersonaleControl;
 import it.unisa.greenbottle.controller.accessoControl.util.SessionCliente;
 import it.unisa.greenbottle.controller.areaPersonaleControl.form.DataForm;
 import it.unisa.greenbottle.controller.ordineControl.util.OrdineWrapper;
-import it.unisa.greenbottle.storage.accessoStorage.dao.ClienteDao;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
-import it.unisa.greenbottle.storage.ordineStorage.dao.ComposizioneDao;
 import it.unisa.greenbottle.storage.ordineStorage.dao.OrdineDao;
 import it.unisa.greenbottle.storage.ordineStorage.entity.Ordine;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,13 +28,7 @@ public class VisualizzaStoricoOrdiniController {
   private OrdineDao ordineDao;
 
   @Autowired
-  private ComposizioneDao composizioneDao;
-
-  @Autowired
   private SessionCliente sessionCliente;
-
-  @Autowired
-  private ClienteDao clienteDao;
 
   @GetMapping
   public String get(@ModelAttribute DataForm dataForm, BindingResult bindingResult, Model model) {
@@ -45,20 +36,15 @@ public class VisualizzaStoricoOrdiniController {
       return visualizzaStoricoOrdiniView;
     }
 
-    // TODO: rimuovi questo controllo quando saranno implementati i filtri
-    Optional<Cliente> optCliente = sessionCliente.getCliente();
-    if (optCliente.isEmpty()) {
-      return "redirect:" + homeView;
-    }
-    Cliente cliente = optCliente.get();
+    Cliente cliente = sessionCliente.getCliente().get();
 
-    String startDateStr = "1970-01-01";
-    String endDateStr = LocalDate.ofEpochDay(System.currentTimeMillis() / 86_400_000).toString();
 
-    if (dataForm.getStartDate() != null && dataForm.getEndDate() != null) {
-      startDateStr = dataForm.getStartDate();
-      endDateStr = dataForm.getEndDate();
-    }
+    // se non è stata inserita una data di inizio, la data di inizio è 2023-01-01
+    String startDateStr =
+        !dataForm.getStartDate().isEmpty() ? dataForm.getStartDate() : "2023-01-01";
+    // se non è stata inserita una data di fine, la data di fine è la data attuale
+    String endDateStr = !dataForm.getEndDate().isEmpty() ? dataForm.getEndDate() :
+        LocalDate.ofEpochDay(System.currentTimeMillis() / 86_400_000).toString();
 
     LocalDate startDate = LocalDate.parse(startDateStr);
     LocalDate endDate = LocalDate.parse(endDateStr);

@@ -6,9 +6,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import java.sql.Timestamp;
-import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -30,7 +30,8 @@ public class Cliente {
   private int bottiglie;
   @Column(nullable = false, precision = 2)
   private float risparmio;
-  private byte[] img; // spring-content-jpa se vogliamo usare BLOB (sicuramente no)
+  @Lob
+  private byte[] img;
   private Timestamp sottoscrizione;
   @ManyToOne
   private Abbonamento abbonamento;
@@ -50,101 +51,6 @@ public class Cliente {
     this.sottoscrizione = sottoscrizione;
   }
 
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  public String getNome() {
-    return nome;
-  }
-
-  public void setNome(String nome) {
-    this.nome = nome;
-  }
-
-  public String getCognome() {
-    return cognome;
-  }
-
-  public void setCognome(String cognome) {
-    this.cognome = cognome;
-  }
-
-  public int getBottiglie() {
-    return bottiglie;
-  }
-
-  public void setBottiglie(int bottiglie) {
-    this.bottiglie = bottiglie;
-  }
-
-  public float getRisparmio() {
-    return risparmio;
-  }
-
-  public void setRisparmio(float risparmio) {
-    this.risparmio = risparmio;
-  }
-
-  public byte[] getImg() {
-    return img;
-  }
-
-  public void setImg(byte[] img) {
-    this.img = img;
-  }
-
-  public Timestamp getSottoscrizione() {
-    return sottoscrizione;
-  }
-
-  public void setSottoscrizione(Timestamp sottoscrizione) {
-    this.sottoscrizione = sottoscrizione;
-  }
-
-  public Abbonamento getAbbonamento() {
-    return abbonamento;
-  }
-
-  public void setAbbonamento(
-      Abbonamento abbonamento) {
-    this.abbonamento = abbonamento;
-  }
-
-
-  @Override
-  public boolean equals(Object o) {
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Cliente cliente = (Cliente) o;
-    return Objects.equals(id, cliente.id);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hashCode(id);
-  }
 
   @Override
   public String toString() {

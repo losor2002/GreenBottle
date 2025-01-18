@@ -15,8 +15,13 @@ public class SessionAdmin {
   @Autowired
   private AdminDao adminDao;
 
-  @Autowired
-
+  public void setAdmin(Admin admin) {
+    if (admin == null) {
+      this.idAdmin = null;
+    } else {
+      this.idAdmin = admin.getId();
+    }
+  }
 
   public Optional<Admin> getAdmin() {
     if (idAdmin != null) {

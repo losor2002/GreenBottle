@@ -2,9 +2,9 @@ package it.unisa.greenbottle.controller.accessoControl;
 
 import it.unisa.greenbottle.controller.accessoControl.form.LoginForm;
 import it.unisa.greenbottle.controller.accessoControl.util.JasyptUtil;
-import it.unisa.greenbottle.controller.accessoControl.util.SessionCliente;
-import it.unisa.greenbottle.storage.accessoStorage.dao.ClienteDao;
-import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
+import it.unisa.greenbottle.controller.accessoControl.util.SessionAdmin;
+import it.unisa.greenbottle.storage.accessoStorage.dao.AdminDao;
+import it.unisa.greenbottle.storage.accessoStorage.entity.Admin;
 import jakarta.validation.Valid;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,22 +17,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/login")
-public class LoginController {
+@RequestMapping("/loginAdmin")
+public class LoginAdminController {
 
-  private static final String loginView = "/AccessoView/Login";
+  private static final String loginView = "/AccessoView/LoginAdmin";
   private static final String homeView = "/";
 
 
   @Autowired
-  private ClienteDao clienteDao;
+  private AdminDao adminDao;
 
   @Autowired
-  private SessionCliente sessionCliente;
+  private SessionAdmin sessionAdmin;
 
   @GetMapping
   public String get(@ModelAttribute LoginForm loginForm, Model model) {
-    model.addAttribute("nameLogin", "/login");
+    model.addAttribute("nameLogin", "/loginAdmin");
     // DEBUG: System.out.println(JasyptUtil.encrypt("asdfAsdf123@")); ===>  1FU7WYQZftZbHQuBb3M5Tw==
     return loginView;
   }
@@ -41,7 +41,7 @@ public class LoginController {
   @PostMapping
   public String post(@ModelAttribute @Valid LoginForm loginForm,
                      BindingResult bindingResult, Model model) {
-    model.addAttribute("nameLogin", "/login");
+    model.addAttribute("nameLogin", "/loginAdmin");
     if (bindingResult.hasErrors()) {
       return loginView;
     }
@@ -49,23 +49,23 @@ public class LoginController {
     String email = loginForm.getEmail();
     String password = loginForm.getPassword();
 
-    Optional<Cliente> c = clienteDao.findClienteByEmail(email);
-    boolean existsEmail = c.isPresent();
+    Optional<Admin> a = adminDao.findAdminByEmail(email);
+    boolean existsEmail = a.isPresent();
     model.addAttribute("existsEmail", existsEmail);
     if (!existsEmail) {
       return loginView;
     }
 
     String encryptedPassword = JasyptUtil.encrypt(password);
-    if (!c.get().getPassword().equals(encryptedPassword)) {
+    if (!a.get().getPassword().equals(encryptedPassword)) {
       model.addAttribute("correctPassword", false);
       return loginView;
     }
     model.addAttribute("correctPassword", true);
 
 
-    sessionCliente.setCliente(c.get());
-    return "redirect:" + "/areaPersonale";
-
+    sessionAdmin.setAdmin(a.get());
+    return "redirect:" + "/admin";
   }
+
 }
