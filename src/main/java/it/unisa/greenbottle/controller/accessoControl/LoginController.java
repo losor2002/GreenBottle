@@ -33,7 +33,7 @@ public class LoginController {
   @GetMapping
   public String get(@ModelAttribute LoginForm loginForm, Model model) {
     model.addAttribute("nameLogin", "/login");
-    // DEBUG: System.out.println(JasyptUtil.encrypt("asdfAsdf123@"));
+    // DEBUG: System.out.println(JasyptUtil.encrypt("asdfAsdf123@")); ===>  1FU7WYQZftZbHQuBb3M5Tw==
     return loginView;
   }
 

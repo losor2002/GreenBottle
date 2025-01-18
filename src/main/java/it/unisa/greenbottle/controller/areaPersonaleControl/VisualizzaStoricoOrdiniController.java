@@ -8,7 +8,6 @@ import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
 import it.unisa.greenbottle.storage.ordineStorage.dao.ComposizioneDao;
 import it.unisa.greenbottle.storage.ordineStorage.dao.OrdineDao;
 import it.unisa.greenbottle.storage.ordineStorage.entity.Ordine;
-
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,7 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -43,6 +41,10 @@ public class VisualizzaStoricoOrdiniController {
 
   @GetMapping
   public String get(@ModelAttribute DataForm dataForm, BindingResult bindingResult, Model model) {
+    System.out.println(dataForm);
+    if (bindingResult.hasErrors()) {
+      return visualizzaStoricoOrdiniView;
+    }
 
     // TODO: rimuovi questo controllo quando saranno implementati i filtri
     Optional<Cliente> optCliente = sessionCliente.getCliente();
@@ -51,8 +53,13 @@ public class VisualizzaStoricoOrdiniController {
     }
     Cliente cliente = optCliente.get();
 
-    String startDateStr = dataForm.getStartDate();
-    String endDateStr = dataForm.getEndDate();
+    String startDateStr = "1970-01-01";
+    String endDateStr = LocalDate.ofEpochDay(System.currentTimeMillis() / 86_400_000).toString();
+
+    if (dataForm.getStartDate() != null && dataForm.getEndDate() != null) {
+      startDateStr = dataForm.getStartDate();
+      endDateStr = dataForm.getEndDate();
+    }
 
     LocalDate startDate = LocalDate.parse(startDateStr);
     LocalDate endDate = LocalDate.parse(endDateStr);
@@ -62,7 +69,7 @@ public class VisualizzaStoricoOrdiniController {
 
     for (Ordine ordine : ordiniCliente) {
       LocalDate dataOrdine = ordine.getData().toLocalDateTime().toLocalDate();
-      if(dataOrdine.isAfter(startDate) && dataOrdine.isBefore(endDate)) {
+      if (dataOrdine.isAfter(startDate) && dataOrdine.isBefore(endDate)) {
         ordiniFinale.add(new OrdineWrapper(ordine, ordine.getComposizioni().stream().toList()));
       }
     }
