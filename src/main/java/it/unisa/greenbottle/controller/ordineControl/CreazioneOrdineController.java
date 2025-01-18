@@ -77,7 +77,7 @@ public class CreazioneOrdineController {
     Map<Prodotto, Integer> prodotti = new HashMap<>();
 
     for (Map.Entry<Long, Integer> entry : prodottiUnparsed.entrySet()) {
-      Optional<Prodotto> prodottoOpt = prodottoDao.findById(entry.getKey());
+      Optional<Prodotto> prodottoOpt = prodottoDao.findProdottoById(entry.getKey());
       if (prodottoOpt.isPresent()) {
         Prodotto p = prodottoOpt.get();
         int quantita = entry.getValue();
@@ -112,7 +112,7 @@ public class CreazioneOrdineController {
     }
 
     Long idIndirizzo = ordineForm.getIndirizzo();
-    Optional<Indirizzo> indirizzoOpt = indirizzoDao.findById(idIndirizzo);
+    Optional<Indirizzo> indirizzoOpt = indirizzoDao.findIndirizzoById(idIndirizzo);
 
     if (indirizzoOpt.isEmpty()) {
       model.addAttribute("errore", "Indirizzo non trovato.");

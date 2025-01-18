@@ -27,7 +27,7 @@ public class SessionCliente {
 
   public Optional<Cliente> getCliente() {
     if (idCliente != null) {
-      return clienteDao.findById(idCliente);
+      return clienteDao.findClienteById(idCliente);
     }
     return Optional.empty();
   }
@@ -59,7 +59,7 @@ public class SessionCliente {
 
   public void addToCarrello(Long prodotto, Integer quantita) {
     if (idCliente != null) {
-      Optional<Prodotto> prod = prodottoDao.findById(prodotto);
+      Optional<Prodotto> prod = prodottoDao.findProdottoById(prodotto);
       if (prod.isPresent()) {
         if (carrello.containsKey(prodotto)) {
           carrello.put(prodotto, carrello.get(prodotto) + quantita);

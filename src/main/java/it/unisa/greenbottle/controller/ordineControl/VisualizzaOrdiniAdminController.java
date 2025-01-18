@@ -34,9 +34,10 @@ public class VisualizzaOrdiniAdminController {
   @GetMapping
   public String get(Model model) {
     List<OrdineWrapper> ordiniFinale = new LinkedList<>();
-    List<Ordine> ordiniDaElaborare = ordineDao.findByStato(Ordine.StatoSpedizione.ELABORAZIONE);
+    List<Ordine> ordiniDaElaborare =
+        ordineDao.findOrdineByStato(Ordine.StatoSpedizione.ELABORAZIONE);
     for (Ordine ordine : ordiniDaElaborare) {
-      List<Composizione> composizione = composizioneDao.findByOrdine(ordine);
+      List<Composizione> composizione = composizioneDao.findComposizioneByOrdine(ordine);
       ordiniFinale.add(new OrdineWrapper(ordine, composizione));
     }
 
@@ -51,7 +52,7 @@ public class VisualizzaOrdiniAdminController {
   public ResponseEntity<?> post(@RequestParam("ordineId") String id,
                                 @RequestParam("newState") String statoSpedizione) {
     Long veroId = Long.valueOf(id);
-    Optional<Ordine> optOrdine = ordineDao.findById(veroId);
+    Optional<Ordine> optOrdine = ordineDao.findOrdineById(veroId);
     if (optOrdine.isEmpty()) {
       // Risponde con un errore se l'ordine non esiste
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ordine non trovato.");
