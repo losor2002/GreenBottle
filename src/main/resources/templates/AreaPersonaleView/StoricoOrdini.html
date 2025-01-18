@@ -14,9 +14,13 @@
 <body>
 <div th:replace="~{fragments/fragments :: header}"></div>
 <main class="container-fluid my-4">
+    <div th:if="${ordineCancellato}" class="alert alert-success text-center" role="alert">
+        Ordine cancellato con successo
+    </div>
+
     <div class="row justify-content-center">
         <!-- Filtro -->
-        <div class="col-md-6">
+        <aside class="col-md-6">
             <div class="card">
                 <div class="card-header text-center" id="card-header">
                     <h3>Filtra per data</h3>
@@ -27,21 +31,21 @@
 
                         <!-- FORMATO:
                         ^2\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$
-                        (YYYY-MM-DD)
+                        (YYYY-MM-DD) -->
 
-                        Data Min
-                        <div class="mb-3">
+                        <!-- Data Min -->
+                        <!-- <div class="mb-3">
                             <label for="startDate" class="form-label">Inizio</label>
                             <input type="date" id="startDate" name="startDate" class="form-control"
                                    th:field="*{startDate}">
                             <div class="text-danger px-2" th:if="${#fields.hasErrors('startDate')}"
                                  th:errors="*{startDate}"></div>
-                        </div>
-                        Data Max
-                        <div class="mb-3">
+                        </div> -->
+                        <!-- Data Max -->
+                        <!-- <div class="mb-3">
                             <label for="endDate" class="form-label">Fine</label>
                             <input type="date" id="endDate" name="endDate" class="form-control" th:field="*{endDate}">
-                            <div class="text-danger px-2" th:if="${#fields.hasErrors('startDate')}"
+                            <div class="text-danger px-2" th:if="${#fields.hasErrors('endDate')}"
                                  th:errors="*{endDate}"></div>
                         </div> -->
 
@@ -52,29 +56,50 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </aside>
 
         <!-- Il Sistema mostra al Cliente, in ordine cronologico,
-        i suoi ordini sommariamente (data, costo).
-        Il Cliente può entrare nel dettaglio dei singoli ordini
-        tramite una tabella mostrante (Prodotti acquistati, quantità, indirizzo).-->
+        i suoi ordini sommariamente (data, costo). -->
+
+        <!-- Ordini -->
+        <table>
+            <thead>
+            <tr>
+                <th>Id:</th>
+                <th>Data:</th>
+                <th>Prezzo</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="ordine : ${ordini}">
+                <td th:text="${ordine.getId()}"></td>
+                <td th:text="${ordine.getData()}"></td>
+                <td th:text="${ordine.getPrezzo()}"></td>
+            </tr>
+            </tbody>
+        </table>
 
         <!-- Ordini -->
         <section class="col-md-8">
             <div class="row">
                 <div class="col-md-4 mb-4" th:each="ordine : ${ordini}">
-                    <div class="product-card col-md-4 mx-2 my-2 rounded">
-                        <!-- non so come prendere la data -->
-                        <h3 class="mt-3" th:text="${ordine.prezzo}"></h3>
+                    <div class="order-card col-md-4 mx-2 my-2 rounded">
+                        <div class="order-details">
+                            <h3 class="mt-3" th:text="${ordine.getId()}"></h3>
+                            <h2 class="mt-3" th:text="${ordine.getData()}"></h2>
+                        </div>
+                        <div class="order-price">
+                            <h2 class="mt-3" th:text="${ordine.getPrezzo()}"></h2>
+                        </div>
                         <button class="btn btn-info btn-sm my-4"
-                                th:onclick="|location.href='catalogo/prodotto?id=${prodotto.id}'|">
-                            Informazioni Ordine
+                                th:onclick="|location.href='/areaPersonale/visualizzaStatoOrdine?id=${ordine.getId()}'|">
+                            Informazioni Aggiuntive
                         </button>
                     </div>
                 </div>
             </div>
-            <div class="text-center text-muted" th:if="${#lists.isEmpty(products)}">
-                <p>Nessun prodotto trovato con i filtri selezionati.</p>
+            <div class="text-center text-muted" th:if="${#lists.isEmpty(ordini)}">
+                <p>Nessun ordine trovato con i filtri selezionati.</p>
             </div>
         </section>
     </div>

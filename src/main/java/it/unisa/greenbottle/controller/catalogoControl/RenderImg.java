@@ -20,7 +20,7 @@ public class RenderImg {
 
   @GetMapping("/productImg")
   public ResponseEntity<byte[]> getImage(@RequestParam("id") Long id) {
-    Optional<Prodotto> opPro = prodottoDao.findById(id);
+    Optional<Prodotto> opPro = prodottoDao.findProdottoById(id);
     if (opPro.isEmpty() || opPro.get().getImg() == null) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

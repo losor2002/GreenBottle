@@ -22,7 +22,7 @@ public class VisualizzaProdottoController {
 
   @GetMapping
   public String get(@RequestParam Long id, Model model) {
-    Optional<Prodotto> prodotto = prodottoDao.findById(id);
+    Optional<Prodotto> prodotto = prodottoDao.findProdottoById(id);
     if (prodotto.isEmpty()) {
       return "/error";
     }

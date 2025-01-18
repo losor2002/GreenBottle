@@ -26,7 +26,7 @@ public class AggiungiAlCarrelloController {
   @PostMapping
   public String post(@ModelAttribute @Valid ProdottoForm prodottoForm, Model model) {
 
-    Optional<Prodotto> prodottoOpt = prodottoDao.findById(prodottoForm.getIdProdotto());
+    Optional<Prodotto> prodottoOpt = prodottoDao.findProdottoById(prodottoForm.getIdProdotto());
     Integer quantita = prodottoForm.getQuantita();
 
     if (prodottoOpt.isPresent()) {

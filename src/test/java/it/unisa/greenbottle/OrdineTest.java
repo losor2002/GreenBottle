@@ -84,7 +84,7 @@ public class OrdineTest {
 
     ordineDao.save(ordineTest);
 
-    Optional<Ordine> o2 = ordineDao.findById(ordineTest.getId());
+    Optional<Ordine> o2 = ordineDao.findOrdineById(ordineTest.getId());
 
     assert o2.isPresent() && ordineTest.equals(o2.get());
 
@@ -115,7 +115,7 @@ public class OrdineTest {
 
     ordineDao.save(ordineTest);
 
-    Optional<Ordine> retrievedOrdine = ordineDao.findById(ordineTest.getId());
+    Optional<Ordine> retrievedOrdine = ordineDao.findOrdineById(ordineTest.getId());
     assert retrievedOrdine.isPresent();
 
     Ordine savedOrdine = retrievedOrdine.get();
