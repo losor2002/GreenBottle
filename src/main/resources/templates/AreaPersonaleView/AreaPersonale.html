@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Area Personale - GreenBottle</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link th:href="@{/img/Logo.png}" rel="shortcut icon"/>
+    <link th:href="@{/stylesheet/Common.css}" rel="stylesheet">
+    <link th:href="@{/stylesheet/Head.css}" rel="stylesheet">
+    <link th:href="@{/stylesheet/Footer.css}" rel="stylesheet">
+    <link th:href="@{/stylesheet/AreaPersonale.css}" rel="stylesheet">
+</head>
+<body>
+<div th:replace="~{fragments/fragments :: header}"></div>
+<div class="container my-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white text-center">
+            <h3>Area Personale</h3>
+        </div>
+        <div class="card-body">
+            <h4 class="text-center">Benvenuto,
+                <span class="fw-bold"
+                      th:text="${sessionCliente.cliente.get().getNome()} ${sessionCliente.cliente.get().getCognome()}"></span>!
+            </h4>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <p>
+                        <strong>Email:</strong> <span th:text="${sessionCliente.cliente.get().getEmail()}"></span><br>
+                        <strong>Bottiglie Salvate:</strong> <span
+                            th:text="${sessionCliente.cliente.get().getBottiglie()}"></span><br>
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <p>
+                        <strong>Risparmio Totale:</strong> €<span
+                            th:text="${sessionCliente.cliente.get().getRisparmio()}"></span><br>
+                        <strong>Data di Iscrizione:</strong> <span
+                            th:text="${sessionCliente.cliente.get().getSottoscrizione()}"></span>
+                    </p>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <a href="areaPersonale/visualizzaStoricoOrdini" class="btn btn-primary w-50 w-sm-100">Visualizza Storico
+                    Ordini</a>
+            </div>
+            <!-- <div class="text-center mt-4">
+                <a href="areaPersonale/visualizzaStoricoOrdini" class="btn btn-primary w-50 w-sm-100">Visualizza
+                    Indirizzi</a>
+            </div> -->
+        </div>
+    </div>
+</div>
+<footer th:replace="~{fragments/fragments :: footer}"></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

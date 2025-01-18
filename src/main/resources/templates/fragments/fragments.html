@@ -33,10 +33,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Abbonamenti</a>
                     </li>
-                    <li class="nav-item">
+                    <!--/*@thymesVar id="sessionCliente" type="it.unisa.greenbottle.controller.accessoControl.util.SessionCliente"*/-->
+                    <li class="nav-item" th:if="${sessionCliente != null and !sessionCliente.getCliente().isEmpty()}">
                         <a class="nav-link" href="#">Area Personale</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item"
+                        th:unless="${sessionCliente != null and !sessionCliente.getCliente().isEmpty()}">
+                        <a class="nav-link" href="login">Accedi</a>
+                    </li>
+                    <li class="nav-item" th:if="${sessionCliente != null and !sessionCliente.getCliente().isEmpty()}">
                         <a class="nav-link" href="#">Carrello</a>
                     </li>
                 </ul>
