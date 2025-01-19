@@ -4,15 +4,17 @@ import it.unisa.greenbottle.storage.catalogoStorage.dao.ProdottoDao;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
 @Component
 @SessionScope
+@Setter
 public class SessionCarrello {
 
-  private final Map<Long, Integer> carrello = new HashMap<>();
+  private Map<Long, Integer> carrello = new HashMap<>();
 
   @Autowired
   private ProdottoDao prodottoDao;
@@ -45,4 +47,5 @@ public class SessionCarrello {
     }
     return false;
   }
+
 }

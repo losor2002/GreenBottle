@@ -6,14 +6,12 @@ import it.unisa.greenbottle.controller.ordineControl.util.OrdineWrapper;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
 import it.unisa.greenbottle.storage.ordineStorage.dao.OrdineDao;
 import it.unisa.greenbottle.storage.ordineStorage.entity.Ordine;
-
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
-
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +19,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.client.HttpClientErrorException;
 
 @Controller
 @RequestMapping("areaPersonale/visualizzaStoricoOrdini")
@@ -37,7 +34,8 @@ public class VisualizzaStoricoOrdiniController {
   private SessionCliente sessionCliente;
 
   @GetMapping
-  public String get(@ModelAttribute DataForm dataForm, BindingResult bindingResult, Model model, HttpServletResponse httpServletResponse) throws IOException {
+  public String get(@ModelAttribute DataForm dataForm, BindingResult bindingResult, Model model,
+                    HttpServletResponse httpServletResponse) throws IOException {
     if (bindingResult.hasErrors()) {
       return visualizzaStoricoOrdiniView;
     }
@@ -54,13 +52,13 @@ public class VisualizzaStoricoOrdiniController {
     LocalDate startDate = null;
     LocalDate endDate = null;
 
-  try {
-    startDate = LocalDate.parse(startDateStr);
-    endDate = LocalDate.parse(endDateStr);
-  } catch (DateTimeException e) {
+    try {
+      startDate = LocalDate.parse(startDateStr);
+      endDate = LocalDate.parse(endDateStr);
+    } catch (DateTimeException e) {
       httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Data non valida");
       return visualizzaStoricoOrdiniView;
-  }
+    }
 
     List<OrdineWrapper> ordiniFinale = new LinkedList<>();
     List<Ordine> ordiniCliente = ordineDao.findOrdineByCliente(cliente);

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenBottle - Carrello</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/img/Logo.png}" rel="shortcut icon"/>
+    <link th:href="@{/stylesheet/Common.css}" rel="stylesheet">
+    <link th:href="@{/stylesheet/Head.css}" rel="stylesheet">
+    <link th:href="@{/stylesheet/Footer.css}" rel="stylesheet">
+    <link th:href="@{/stylesheet/Carrello.css}" rel="stylesheet">
+</head>
+<body>
+<div th:replace="~{fragments/fragments.html :: header}"></div>
+<h1 class="text-center">Il tuo Carrello</h1>
+<main class="container my-4">
+    <div id="carrello-container" class="container">
+        <!-- Placeholder di caricamento -->
+        <p id="loading-message" class="text-center">Caricamento del carrello...</p>
+    </div>
+</main>
+<footer th:replace="~{fragments/fragments :: footer}"></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const container = document.getElementById("carrello-container");
+        const loadingMessage = document.getElementById("loading-message");
+
+        // Fetch dei dati del carrello da CarrelloController.
+        fetch("/getProdotti")
+            .then(response => response.json())
+            .then(data => {
+                loadingMessage.style.display = "none";
+                if (data.message) {
+
+                    container.innerHTML = `
+                        <p class="text-center">${data.message} <a href="/catalogo">Torna al catalogo</a></p>`;
+                } else {
+
+                    let cartHTML = `
+                        <table class="table table-bordered text-center">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Immagine</th>
+                                    <th>Nome Prodotto</th>
+                                    <th>Quantità</th>
+                                    <th>Prezzo</th>
+                                    <th>Rimuovi</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+                    for (const [productId, details] of Object.entries(data)) {
+                        cartHTML += `
+                            <tr>
+                                <td>
+                                    <img src="data:image/png;base64,${details.immagine}" alt="Immagine prodotto" width="50">
+                                </td>
+                                <td>
+                                    <strong>${details.nome}</strong><br>
+                                    <small>${details.descrizione}</small>
+                                </td>
+                                <td class="actions">
+                                    <button class="btn btn-sm btn-success" onclick="updateCart(${productId}, 'add')">+</button>
+                                    <span>${details.quantita}</span>
+                                    <button class="btn btn-sm btn-danger" onclick="updateCart(${productId}, 'remove')">-</button>
+                                </td>
+                                <td>€${(details.prezzo * details.quantita).toFixed(2)}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-danger" onclick="updateCart(${productId}, 'removeAll')">X</button>
+                                </td>
+                            </tr>`;
+                    }
+                    cartHTML += `
+                            </tbody>
+                        </table>
+                        <div class="buttons d-flex justify-content-between mt-4">
+                            <a href="/catalogo" class="btn btn-outline-primary">Torna al Catalogo</a>
+                            <a href="/checkout" class="btn btn-primary">Checkout</a>
+                        </div>`;
+                    container.innerHTML = cartHTML;
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching cart data:", error);
+                container.innerHTML = `<p class="text-center text-danger">Errore nel caricamento del carrello. Riprova più tardi.</p>`;
+            });
+    });
+
+    function updateCart(productId, action) {
+        fetch(`/cart/${action}/${productId}`, {method: "POST"})
+            .then(() => location.reload())
+            .catch(error => console.error("Error updating cart:", error));
+    }
+</script>
+</body>
+</html>
