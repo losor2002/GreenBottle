@@ -30,12 +30,12 @@ public class AbbonamentoTest {
   @Test
   public void abbonamentiTier() {
     Abbonamento abbonamento1 = new Abbonamento(Abbonamento.TipoAbbonamento.BRONZE,
-        Abbonamento.RinnovoAbbonamento.SEMESTRALE, Abbonamento.FrequenzaAbbonamento.MENSILE);
+        Abbonamento.RinnovoAbbonamento.SEMESTRALE, Abbonamento.FrequenzaAbbonamento.MENSILE, 100f);
     Abbonamento abbonamento2 = new Abbonamento(Abbonamento.TipoAbbonamento.SILVER,
-        Abbonamento.RinnovoAbbonamento.BIMESTRALE, Abbonamento.FrequenzaAbbonamento.SETTIMANALE);
+        Abbonamento.RinnovoAbbonamento.BIMESTRALE, Abbonamento.FrequenzaAbbonamento.SETTIMANALE, 20f);
     Abbonamento abbonamento3 =
         new Abbonamento(Abbonamento.TipoAbbonamento.GOLD, Abbonamento.RinnovoAbbonamento.MENSILE,
-            Abbonamento.FrequenzaAbbonamento.GIORNALIERO);
+            Abbonamento.FrequenzaAbbonamento.GIORNALIERO, 5f);
     abbonamentoDao.save(abbonamento1);
     abbonamentoDao.save(abbonamento2);
     abbonamentoDao.save(abbonamento3);

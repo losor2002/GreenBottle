@@ -30,6 +30,8 @@ public class AbbonamentoWrapper implements Serializable {
 
     public Abbonamento.RinnovoAbbonamento getRinnovo() { return a.getRinnovo();}
 
+    public float getPrezzo() { return a.getPrezzo();}
+
     public HashMap<Prodotto, Integer> getProdottiAbbonamento() {
         HashMap<Prodotto, Integer> mappa = new HashMap<>();
         for (Disposizione disposizione : d) {
