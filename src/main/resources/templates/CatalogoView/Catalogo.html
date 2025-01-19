@@ -96,9 +96,6 @@
                     </div>
                 </div>
             </div>
-            <!--<div class="text-center text-muted" th:if="${#lists.isEmpty(products)}">
-                <p>Nessun prodotto trovato con i filtri selezionati.</p>
-            </div>-->
         </section>
     </div>
 
@@ -121,6 +118,34 @@
             });
         });
     });
+</script>
+<script>
+    function addToCart(productId) {
+        fetch(`/getProdotti/add/${productId}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error("Errore durante l'aggiunta del prodotto al carrello.");
+                }
+            })
+            .then(data => {
+
+                console.log(data.message);
+                alert(data.message);
+                location.reload();
+            })
+            .catch(error => {
+
+                console.error("Errore nell'aggiunta del prodotto al carrello:", error);
+                alert("Si è verificato un errore durante l'aggiunta del prodotto al carrello.");
+            });
+    }
 </script>
 </body>
 </html>
