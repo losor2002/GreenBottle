@@ -1,0 +1,38 @@
+#btn {
+    background-color: #859F3D;
+    color: #F6FCDF;
+    border-color: #859F3D;
+    opacity: 0.7;
+}
+
+#btn:hover {
+    opacity: 1;
+}
+
+body {
+    background: url("/img/Banner.png") no-repeat center center / cover;
+}
+
+.password-wrapper {
+    display: flex;
+    align-items: center;
+    border: none;
+    padding: 5px;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+#password {
+    float: left;
+    flex: 95%;
+}
+
+.password-eye {
+    position: relative;
+    align-self: center;
+    flex: 5%;
+    margin-left: 4px;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+}
