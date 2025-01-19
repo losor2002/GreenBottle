@@ -17,6 +17,7 @@ public class Abbonamento {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
+
   @Column()
   @Enumerated(EnumType.STRING)
   private TipoAbbonamento tipo;
@@ -29,11 +30,15 @@ public class Abbonamento {
   @Column()
   private FrequenzaAbbonamento frequenza;
 
+  @Column()
+  private float prezzo;
+
   public Abbonamento(TipoAbbonamento tipo, RinnovoAbbonamento rinnovo,
-                     FrequenzaAbbonamento frequenza) {
+                     FrequenzaAbbonamento frequenza, float prezzo) {
     this.tipo = tipo;
     this.rinnovo = rinnovo;
     this.frequenza = frequenza;
+    this.prezzo = prezzo;
   }
 
   public enum TipoAbbonamento {
