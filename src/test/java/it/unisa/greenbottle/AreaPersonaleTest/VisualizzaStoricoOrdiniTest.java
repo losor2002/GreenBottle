@@ -49,7 +49,7 @@ public class VisualizzaStoricoOrdiniTest {
 
     @Test
     public void dateRispettaIlFormato() throws Exception {
-        test("2024-01-12", "2025-01-12", status().is(200));
+        test("2024-01-12", "2025-01-12", status().isOk());
     }
 
     private void test(String startDate, String endDate, ResultMatcher resultMatcher) throws Exception {
