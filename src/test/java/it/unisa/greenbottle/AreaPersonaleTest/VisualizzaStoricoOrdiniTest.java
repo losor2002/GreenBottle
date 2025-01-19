@@ -18,6 +18,7 @@ import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -48,7 +49,7 @@ public class VisualizzaStoricoOrdiniTest {
 
     @Test
     public void dateRispettaIlFormato() throws Exception {
-        test("2024-01-12", "2025-01-12", status().isOk());
+        test("2024-01-12", "2025-01-12", status().is(200));
     }
 
     private void test(String startDate, String endDate, ResultMatcher resultMatcher) throws Exception {
@@ -59,6 +60,6 @@ public class VisualizzaStoricoOrdiniTest {
         when(ordineDao.findById(any())).thenReturn(Optional.of(ordine));
         when(sessionCliente.getCliente()).thenReturn(Optional.of(cliente));
 
-        mockMvc.perform(post("/StoricoOrdini").param("startDate", startDate).param("endDate", endDate)).andExpect(resultMatcher);
+        mockMvc.perform(get("/areaPersonale/visualizzaStoricoOrdini").param("startDate", startDate).param("endDate", endDate)).andExpect(resultMatcher);
     }
 }
