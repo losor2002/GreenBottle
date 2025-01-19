@@ -21,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.client.HttpClientErrorException;
 
 @Controller
 @RequestMapping("areaPersonale/visualizzaStoricoOrdini")
@@ -57,7 +58,8 @@ public class VisualizzaStoricoOrdiniController {
     startDate = LocalDate.parse(startDateStr);
     endDate = LocalDate.parse(endDateStr);
   } catch (DateTimeException e) {
-      httpServletResponse.sendError(400, "Data non valida");
+      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Data non valida");
+      return visualizzaStoricoOrdiniView;
   }
 
     List<OrdineWrapper> ordiniFinale = new LinkedList<>();

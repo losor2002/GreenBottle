@@ -1,7 +1,6 @@
 package it.unisa.greenbottle.AreaPersonaleTest;
 
 import it.unisa.greenbottle.controller.accessoControl.util.SessionCliente;
-import it.unisa.greenbottle.storage.accessoStorage.dao.ClienteDao;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
 import it.unisa.greenbottle.storage.ordineStorage.dao.OrdineDao;
 import it.unisa.greenbottle.storage.ordineStorage.entity.Ordine;
@@ -19,7 +18,6 @@ import java.util.Optional;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -34,8 +32,6 @@ public class VisualizzaStoricoOrdiniTest {
     @MockitoBean
     private OrdineDao ordineDao;
 
-    @MockitoBean
-    private ClienteDao clienteDao;
 
     @Test
     public void startDateNonRispettaIlFormato() throws Exception {
