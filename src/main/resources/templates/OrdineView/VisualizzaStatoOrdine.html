@@ -50,10 +50,6 @@
 
         <div class="d-flex justify-content-between mt-3">
             <span th:text="'Totale: €' + ${ordine.getPrezzo()}" class="fw-bold"></span>
-            <form th:action="@{/ordine/cancella}" method="post" th:if="${ordine.getStato()} == 'ELABORAZIONE'">
-                <input type="hidden" th:name="orderId" th:value="${ordine.getId()}"/>
-                <button type="submit" id="cancel-order-button" class="btn btn-warning">Annulla</button>
-            </form>
         </div>
     </div>
 </main>
