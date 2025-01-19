@@ -2,6 +2,7 @@ package it.unisa.greenbottle.controller.ordineControl;
 
 import it.unisa.greenbottle.controller.accessoControl.util.SessionCliente;
 import it.unisa.greenbottle.controller.ordineControl.form.ProdottoForm;
+import it.unisa.greenbottle.controller.ordineControl.util.SessionCarrello;
 import it.unisa.greenbottle.storage.catalogoStorage.dao.ProdottoDao;
 import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
 import jakarta.validation.Valid;
@@ -23,6 +24,9 @@ public class AggiungiAlCarrelloController {
   @Autowired
   private ProdottoDao prodottoDao;
 
+  @Autowired
+  private SessionCarrello sessionCarrello;
+
   @PostMapping
   public String post(@ModelAttribute @Valid ProdottoForm prodottoForm, Model model) {
 
@@ -37,7 +41,7 @@ public class AggiungiAlCarrelloController {
             "Quantità richiesta per " + prodotto.getNome() + " non disponibile");
         return "redirect:/catalogo";
       }
-      sessionCliente.addToCarrello(prodotto.getId(), quantita);
+      sessionCarrello.addToCarrello(prodotto.getId(), quantita);
       model.addAttribute("successo", "Il prodotto è stato inserito con successo");
     } else {
       model.addAttribute("errore", "\"Il prodotto selezionato non esiste\".");

@@ -3,6 +3,7 @@ package it.unisa.greenbottle.controller.ordineControl;
 import it.unisa.greenbottle.controller.accessoControl.util.SessionCliente;
 import it.unisa.greenbottle.controller.ordineControl.form.OrdineForm;
 import it.unisa.greenbottle.controller.ordineControl.form.ProdottoForm;
+import it.unisa.greenbottle.controller.ordineControl.util.SessionCarrello;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
 import it.unisa.greenbottle.storage.areaPersonaleStorage.dao.IndirizzoDao;
 import it.unisa.greenbottle.storage.areaPersonaleStorage.entity.Indirizzo;
@@ -45,6 +46,9 @@ public class CreazioneOrdineController {
   @Autowired
   private SessionCliente sessionCliente;
 
+  @Autowired
+  private SessionCarrello sessionCarrello;
+
   @GetMapping
   public String get(@ModelAttribute ProdottoForm prodottiForm, Model model) {
     Optional<Cliente> clienteOptional = sessionCliente.getCliente();
@@ -68,7 +72,7 @@ public class CreazioneOrdineController {
 
     final Cliente cliente = clienteOptional.get();
 
-    Optional<Map<Long, Integer>> prodottiOptional = sessionCliente.getCarrello();
+    Optional<Map<Long, Integer>> prodottiOptional = sessionCarrello.getCarrello();
     if (prodottiOptional.isEmpty()) {
       return "redirect:/error";
     }
@@ -138,7 +142,7 @@ public class CreazioneOrdineController {
 
     ordineDao.save(ordine);
     model.addAttribute("successo", "Ordine inserito con successo.");
-    sessionCliente.emptyCarrello();
+    sessionCarrello.clearCarrello();
 
     return ordineView;
   }

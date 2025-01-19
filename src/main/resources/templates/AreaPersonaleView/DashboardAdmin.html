@@ -10,11 +10,12 @@
     <link th:href="@{/stylesheet/Footer.css}" rel="stylesheet">
     <link th:href="@{/stylesheet/DashboardAdmin.css}" rel="stylesheet">
 </head>
-<div th:replace="~{fragments/fragments :: header}"></div>
-<body>
+<div th:replace="~{fragments/adminFragments :: header}"></div>
+<body th:with="admin=${@sessionAdmin.getAdmin().get()}">
 <main class="container my-4">
     <div class="text-center">
-        <h1 th:text="'Ciao Admin!'"></h1>
+        <h1 th:text="'Dashboard Admin'"></h1>
+        <p th:text="${admin.getEmail()}"></p>
     </div>
     <div class="d-grid gap-4 my-4">
         <a href="admin/visualizzaOrdini" class="btn btn-primary py-3 w-100">Visualizza Ordini</a>

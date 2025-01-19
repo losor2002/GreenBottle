@@ -11,7 +11,7 @@
     <link th:href="@{/stylesheet/Footer.css}" rel="stylesheet">
     <link th:href="@{/stylesheet/AreaPersonale.css}" rel="stylesheet">
 </head>
-<body>
+<body th:with="cliente=${@sessionCliente.getCliente().get()}">
 <div th:replace="~{fragments/fragments :: header}"></div>
 <div class="container my-4">
     <div class="card">
