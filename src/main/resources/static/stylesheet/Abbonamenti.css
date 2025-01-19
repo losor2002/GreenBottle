@@ -1,3 +1,7 @@
+section {
+    padding-left: 150px;
+}
+
 .subscription-container {
     display: flex;
     justify-content: center;
@@ -78,8 +82,4 @@
 
 .price-section {
     text-align: center;
-}
-
-section {
-    display: none
 }
