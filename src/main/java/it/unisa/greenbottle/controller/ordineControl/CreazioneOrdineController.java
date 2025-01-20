@@ -71,13 +71,9 @@ public class CreazioneOrdineController {
     }
 
     final Cliente cliente = clienteOptional.get();
+    
 
-    Optional<Map<Long, Integer>> prodottiOptional = sessionCarrello.getCarrello();
-    if (prodottiOptional.isEmpty()) {
-      return "redirect:/error";
-    }
-
-    Map<Long, Integer> prodottiUnparsed = prodottiOptional.get();
+    Map<Long, Integer> prodottiUnparsed = sessionCarrello.getCarrello();
     Map<Prodotto, Integer> prodotti = new HashMap<>();
 
     for (Map.Entry<Long, Integer> entry : prodottiUnparsed.entrySet()) {

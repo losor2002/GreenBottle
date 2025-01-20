@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/prodotto")
-public class VisualizzaProdottoController {
+public class ProdottoController {
 
   @Autowired
   private ProdottoDao prodottoDao;

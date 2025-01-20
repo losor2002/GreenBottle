@@ -1,10 +1,12 @@
 package it.unisa.greenbottle.storage.areaPersonaleStorage.entity;
 
+import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +16,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(callSuper = true)
+@ToString(callSuper = true, exclude = {"cliente"})
 public class Indirizzo {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,32 +32,28 @@ public class Indirizzo {
   @Column(nullable = false, length = 5)
   private String cap;
 
-  public Indirizzo(Long id, String via, int civico, String citta, String provincia, String cap) {
+  @ManyToOne
+  private Cliente cliente;
+
+  public Indirizzo(Long id, String via, int civico, String citta, String provincia, String cap,
+                   Cliente cliente) {
     this.id = id;
     this.via = via;
     this.civico = civico;
     this.citta = citta;
     this.provincia = provincia;
     this.cap = cap;
+    this.cliente = cliente;
   }
 
-  public Indirizzo(String via, int civico, String citta, String provincia, String cap) {
+  public Indirizzo(String via, int civico, String citta, String provincia, String cap,
+                   Cliente cliente) {
     this.via = via;
     this.civico = civico;
     this.citta = citta;
     this.provincia = provincia;
     this.cap = cap;
+    this.cliente = cliente;
   }
 
-  @Override
-  public String toString() {
-    return "Indirizzo{"
-        + "id=" + id
-        + ", via='" + via + '\''
-        + ", civico=" + civico
-        + ", citta='" + citta + '\''
-        + ", provincia='" + provincia + '\''
-        + ", cap='" + cap + '\''
-        + '}';
-  }
 }

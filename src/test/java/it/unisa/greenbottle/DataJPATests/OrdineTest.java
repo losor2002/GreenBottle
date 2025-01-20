@@ -41,7 +41,8 @@ public class OrdineTest {
   private final Cliente clienteTest =
       new Cliente("mario.rossi@gmail.com", "asdfASDF1234!", "Mario", "Rossi", 0, 0, null, null);
 
-  private final Indirizzo indirizzoTest = new Indirizzo("Via Roma", 5, "Potenza", "PZ", "85100");
+  private final Indirizzo indirizzoTest =
+      new Indirizzo("Via Roma", 5, "Potenza", "PZ", "85100", clienteTest);
 
   private final Categoria categoriaTest = new Categoria("Bevande");
   private final Prodotto prodottoTest =

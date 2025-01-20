@@ -16,10 +16,10 @@
 <h1 class="text-center">Il tuo Carrello</h1>
 <main class="container my-4">
     <div class="container">
-        <div th:if="${@sessionCarrello.getCarrello() == null || @sessionCarrello.getCarrello().isEmpty()}">
+        <div th:if="${carrello == null || carrello.isEmpty()}">
             <p class="text-center">Il tuo carrello è vuoto. <a href="/catalogo">Torna al catalogo</a></p>
         </div>
-        <div th:if="${@sessionCarrello.getCarrello() != null && !@sessionCarrello.getCarrello().isEmpty()}">
+        <div th:if="${carrello != null && !carrello.isEmpty()}">
             <table class="table table-bordered text-center">
                 <thead class="table-light">
                 <tr>
@@ -31,8 +31,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <!--/*@thymesVar id="prodotti" type="it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto"*/-->
-                <tr th:each="entry : ${prodotti.entrySet()}">
+                <tr th:each="entry : ${carrello.entrySet()}">
                     <td>
                         <img th:src="'data:image/png;base64,' + ${#strings.bytesToBase64(entry.key.img)}"
                              alt="Immagine prodotto" width="50">
@@ -42,19 +41,25 @@
                         <small th:text="${entry.key.descrizione}">Descrizione prodotto</small>
                     </td>
                     <td class="actions">
-                        <button class="btn btn-sm btn-success"
-                                th:onclick="'location.href=\'/cart/add/' + ${entry.key.id} + '\''">+
-                        </button>
+                        <!-- Form for adding quantity -->
+                        <form action="/aggiungi-al-carrello" method="post" class="d-inline">
+                            <input type="hidden" name="id" th:value="${entry.key.id}">
+                            <button type="submit" class="btn btn-sm btn-success">+</button>
+                        </form>
                         <span th:text="${entry.value}">1</span>
-                        <button class="btn btn-sm btn-danger"
-                                th:onclick="'location.href=\'/cart/remove/' + ${entry.key.id} + '\''">-
-                        </button>
+                        <!-- Form for removing quantity -->
+                        <form action="/cart/remove" method="post" class="d-inline">
+                            <input type="hidden" name="id" th:value="${entry.key.id}">
+                            <button type="submit" class="btn btn-sm btn-danger">-</button>
+                        </form>
                     </td>
                     <td id="price" th:text="${entry.key.prezzo * entry.value}">€0.00</td>
                     <td>
-                        <button class="btn btn-sm btn-outline-danger"
-                                th:onclick="'location.href=\'/cart/remove/' + ${entry.key.id} + '\''">X
-                        </button>
+                        <!-- Form for removing all items of a product -->
+                        <form action="/cart/removeAll" method="post" class="d-inline">
+                            <input type="hidden" name="id" th:value="${entry.key.id}">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">X</button>
+                        </form>
                     </td>
                 </tr>
                 </tbody>
