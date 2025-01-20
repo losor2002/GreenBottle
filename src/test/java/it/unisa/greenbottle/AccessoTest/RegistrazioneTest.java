@@ -29,7 +29,6 @@ public class RegistrazioneTest {
         status().isBadRequest());
   }
 
-
   @Test
   public void formatoCognomeErrato() throws Exception {
     testRegistrazione("Giancarlo", "Toron@!@to", ("a").repeat(320), "ciao",
