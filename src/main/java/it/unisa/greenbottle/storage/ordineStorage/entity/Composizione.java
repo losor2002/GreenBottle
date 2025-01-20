@@ -1,5 +1,6 @@
 package it.unisa.greenbottle.storage.ordineStorage.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,7 +23,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@ToString
+@ToString(exclude = "ordine")
 public class Composizione {
 
   @Id
@@ -31,6 +32,7 @@ public class Composizione {
 
   @ManyToOne
   @JoinColumn(name = "ordine_id", nullable = false)
+  @JsonIgnore
   private Ordine ordine; // Ordine a cui è associata questa composizione
 
   @ManyToOne
@@ -79,4 +81,22 @@ public class Composizione {
     this.quantita = quantita;
     this.ordine = ordine;
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Composizione that = (Composizione) o;
+    return id != null && id.equals(that.id); // Confronta per ID
+  }
+
+  @Override
+  public int hashCode() {
+    return id != null ? id.hashCode() : 0; // Usa l'ID come base per hashCode
+  }
+
 }

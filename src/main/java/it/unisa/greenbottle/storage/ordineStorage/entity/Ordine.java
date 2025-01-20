@@ -1,5 +1,6 @@
 package it.unisa.greenbottle.storage.ordineStorage.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Admin;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
 import it.unisa.greenbottle.storage.areaPersonaleStorage.entity.Indirizzo;
@@ -29,7 +30,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@ToString
+@ToString(exclude = "composizioni")
 public class Ordine {
 
   @Id
@@ -59,6 +60,7 @@ public class Ordine {
   private Timestamp data; // Data e ora di creazione dell'ordine
 
   @OneToMany(mappedBy = "ordine", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonIgnore
   // Lista di composizioni (prodotti) nell'ordine
   private Set<Composizione> composizioni = new HashSet<>();
 
@@ -96,6 +98,23 @@ public class Ordine {
     this.data = data;
     this.cliente = cliente;
     this.admin = admin;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Ordine ordine = (Ordine) o;
+    return id != null && id.equals(ordine.id); // Confronta per ID
+  }
+
+  @Override
+  public int hashCode() {
+    return id != null ? id.hashCode() : 0; // Usa l'ID come base per hashCode
   }
 
   /**
