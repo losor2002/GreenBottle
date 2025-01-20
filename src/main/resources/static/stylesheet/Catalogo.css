@@ -1,4 +1,9 @@
-@media (max-width: 992px) {
+body {
+    color: #1A1A19;
+    background: url("/img/Banner.png") no-repeat center center / cover;
+}
+
+@media (max-width: 991px) {
     aside {
         position: static;
         margin-bottom: 20px;
@@ -15,9 +20,6 @@
     min-height: calc(100vh - 120vh);
 }
 
-.text-center, .text, .btn, small, span {
-    color: #1A1A19;
-}
 
 .btn-check:checked + .btn {
     opacity: 1;

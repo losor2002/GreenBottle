@@ -1,6 +1,5 @@
 package it.unisa.greenbottle.CatalogoTest;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -25,18 +24,14 @@ public class FiltraProdottiTest {
   private MockMvc mockMvc;
 
   @Test
-  public void idCategoriaNonValido() {
-    assertThatThrownBy(
-        () -> testFiltraProdotti("-1", null, null, null, null)
-    ).isInstanceOf(IllegalArgumentException.class).hasMessage("id_Categoria non esiste");
+  public void idCategoriaNonValido() throws Exception {
+    testFiltraProdotti("-1", null, null, null, status().isBadRequest());
   }
 
   @Test
-  public void idCategoriaNonEsiste() {
+  public void idCategoriaNonEsiste() throws Exception {
     when(categoriaDao.existsById(3L)).thenReturn(false);
-    assertThatThrownBy(
-        () -> testFiltraProdotti("3", null, null, null, null)
-    ).isInstanceOf(IllegalArgumentException.class).hasMessage("id_Categoria non esiste");
+    testFiltraProdotti("3", null, null, null, status().isBadRequest());
   }
 
   @Test
@@ -46,10 +41,8 @@ public class FiltraProdottiTest {
   }
 
   @Test
-  public void prezzoMinimoNonValido() {
-    assertThatThrownBy(
-        () -> testFiltraProdotti(null, "-5", null, null, null)
-    ).isInstanceOf(IllegalArgumentException.class).hasMessage("Limite minimo di PrezzoMin violato");
+  public void prezzoMinimoNonValido() throws Exception {
+    testFiltraProdotti(null, "-5", null, null, status().isBadRequest());
   }
 
   @Test
@@ -58,11 +51,8 @@ public class FiltraProdottiTest {
   }
 
   @Test
-  public void prezzoMassimoMinoreDiPrezzoMinimo() {
-    assertThatThrownBy(
-        () -> testFiltraProdotti(null, "10", "8.5", null, null)
-    ).isInstanceOf(IllegalArgumentException.class)
-        .hasMessage("PrezzoMax è minore rispetto a PrezzoMin");
+  public void prezzoMassimoMinoreDiPrezzoMinimo() throws Exception {
+    testFiltraProdotti(null, "10", "8.5", null, status().isBadRequest());
   }
 
   @Test
@@ -71,10 +61,8 @@ public class FiltraProdottiTest {
   }
 
   @Test
-  public void mediaMinimaNonValida() {
-    assertThatThrownBy(
-        () -> testFiltraProdotti(null, null, null, "-3", null)
-    ).isInstanceOf(IllegalArgumentException.class).hasMessage("Limite di Media violato");
+  public void mediaMinimaNonValida() throws Exception {
+    testFiltraProdotti(null, null, null, "-3", status().isBadRequest());
   }
 
   @Test
@@ -86,37 +74,6 @@ public class FiltraProdottiTest {
                                   String media,
                                   ResultMatcher resultMatcher)
       throws Exception {
-    if (idCategoria != null) {
-      long id = Long.parseLong(idCategoria);
-
-      if (!categoriaDao.existsById(id) || id <= 0) {
-        throw new IllegalArgumentException("id_Categoria non esiste");
-      }
-    }
-
-    if (prezzoMin != null) {
-      float prezzoMinFloat = Float.parseFloat(prezzoMin);
-
-      if (prezzoMinFloat <= 0) {
-        throw new IllegalArgumentException("Limite minimo di PrezzoMin violato");
-      }
-
-      if (prezzoMax != null) {
-        float prezzoMaxFloat = Float.parseFloat(prezzoMax);
-
-        if (prezzoMaxFloat < prezzoMinFloat) {
-          throw new IllegalArgumentException("PrezzoMax è minore rispetto a PrezzoMin");
-        }
-      }
-    }
-
-    if (media != null) {
-      int mediaInt = Integer.parseInt(media);
-
-      if (mediaInt < 1 || mediaInt > 5) {
-        throw new IllegalArgumentException("Limite di Media violato");
-      }
-    }
 
     mockMvc.perform(get("/catalogo")
             .param("categoria", idCategoria == null ? "" : idCategoria)
