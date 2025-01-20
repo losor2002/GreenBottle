@@ -17,21 +17,22 @@
     <div class="row">
         <!-- Filtro -->
         <aside class="col-md-6 col-lg-3">
+            <!--/*@thymesVar id="filtroForm" type="it.unisa.greenbottle.controller.catalogoControl.form.FiltroForm"*/-->
             <form class="filter-section p-4 sticky-top shadow-lg bg-light rounded border" id="filter-card" method="get"
-                  th:object="${filterForm}">
+                  th:object="${filtroForm}">
                 <h5 class="text-center mb-4">Filtri</h5>
 
                 <!-- Categoria -->
                 <div class="mb-4">
                     <h6 class="text">Categoria</h6>
                     <div class="d-flex flex-column">
-                        <input type="radio" class="btn-check" name="categoria" id="acqua" value="Acqua">
+                        <input type="radio" class="btn-check" name="categoria" id="acqua" value="1">
                         <label class="btn my-1" for="acqua">Acqua</label>
 
-                        <input type="radio" class="btn-check" name="categoria" id="succo" value="Succo di frutta">
+                        <input type="radio" class="btn-check" name="categoria" id="succo" value="2">
                         <label class="btn my-1" for="succo">Succo di frutta</label>
 
-                        <input type="radio" class="btn-check" name="categoria" id="bevanda" value="Bevanda gassata">
+                        <input type="radio" class="btn-check" name="categoria" id="bevanda" value="3">
                         <label class="btn my-1" for="bevanda">Bevanda gassata</label>
                     </div>
                 </div>

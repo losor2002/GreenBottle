@@ -5,6 +5,9 @@ import it.unisa.greenbottle.storage.catalogoStorage.dao.CategoriaDao;
 import it.unisa.greenbottle.storage.catalogoStorage.dao.ProdottoDao;
 import it.unisa.greenbottle.storage.catalogoStorage.dao.RecensioneDao;
 import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -30,46 +33,54 @@ public class VisualizzaCatalogoController {
   private RecensioneDao recensioneDao;
 
   @GetMapping
-  public String get(@ModelAttribute FiltroForm filterForm, Model model) {
-
+  public String get(@ModelAttribute @Valid FiltroForm filtroForm,
+                    Model model,
+                    HttpServletResponse httpServletResponse)
+      throws IOException {
 
     Specification<Prodotto> spec = Specification.where(null);
 
-    if (filterForm.getNome() != null && !filterForm.getNome().isEmpty()) {
+    //CONTROLLO CATEGORIA
+    if (filtroForm.getIdCategoria() != null) {
+      if (filtroForm.getIdCategoria().compareTo(0L) < 0) {
+        httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Id non valido");
+        return null;
+      }
+
+      if (categoriaDao.findCategoriaById(filtroForm.getIdCategoria()).isEmpty()) {
+        httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND, "Categoria non presente");
+        return null;
+      }
+
       spec = spec.and((root, query, criteriaBuilder) ->
-          criteriaBuilder.like(
-              criteriaBuilder.lower(root.get("nome")),
-              "%" + filterForm.getNome().toLowerCase() + "%"
-          )
+          criteriaBuilder.equal(root.get("categoria"),
+              categoriaDao.findCategoriaById(filtroForm.getIdCategoria()).get()));
+    }
+
+    //CONTROLLO PREZZOMIN
+    if (filtroForm.getPrezzoMin() != null) {
+      spec = spec.and((root, query, criteriaBuilder) ->
+          criteriaBuilder.greaterThanOrEqualTo(root.get("prezzo"), filtroForm.getPrezzoMin())
       );
     }
-    if (filterForm.getCategoria() != null && !filterForm.getCategoria().isEmpty()) {
+
+    //CONTROLLO PREZZOMAX
+    if (filtroForm.getPrezzoMax() != null) {
       spec = spec.and((root, query, criteriaBuilder) ->
-          criteriaBuilder.equal(
-              criteriaBuilder.lower(root.get("categoria").get("nome")),
-              filterForm.getCategoria().toLowerCase()
-          )
+          criteriaBuilder.lessThanOrEqualTo(root.get("prezzo"), filtroForm.getPrezzoMax())
       );
     }
-    if (filterForm.getPrezzoMin() != null) {
+
+    //CONTROLLO MEDIA
+    if (filtroForm.getMedia() != null) {
       spec = spec.and((root, query, criteriaBuilder) ->
-          criteriaBuilder.greaterThanOrEqualTo(root.get("prezzo"), filterForm.getPrezzoMin())
-      );
-    }
-    if (filterForm.getPrezzoMax() != null) {
-      spec = spec.and((root, query, criteriaBuilder) ->
-          criteriaBuilder.lessThanOrEqualTo(root.get("prezzo"), filterForm.getPrezzoMax())
-      );
-    }
-    if (filterForm.getVoto() != null) {
-      spec = spec.and((root, query, criteriaBuilder) ->
-          criteriaBuilder.greaterThanOrEqualTo(root.get("votoMedio"), filterForm.getVoto())
+          criteriaBuilder.greaterThanOrEqualTo(root.get("mediaVoti"), filtroForm.getMedia())
       );
     }
 
     List<Prodotto> prodotti = prodottoDao.findAll(spec);
     model.addAttribute("prodotti", prodotti);
-    model.addAttribute("filterForm", filterForm);
+    model.addAttribute("filterForm", filtroForm);
     return catalogoView;
   }
 
