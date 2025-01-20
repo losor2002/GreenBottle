@@ -10,74 +10,81 @@
     <link th:href="@{/stylesheet/Head.css}" rel="stylesheet">
     <link th:href="@{/stylesheet/Footer.css}" rel="stylesheet">
     <link th:href="@{/stylesheet/Checkout.css}" rel="stylesheet">
-    <style>
-        aside {
-            float: right;
-        }
-    </style>
-
 </head>
 <body>
 <div th:replace="~{fragments/fragments.html :: header}"></div>
 <h1 style="text-align: center;">Riepilogo Ordine</h1>
 <main class="container my-4">
     <div class="row">
-        <section>
-            <form th:action="@{/catalogo}" th:object="${ordineForm}" method="post">
-                <!-- Scelta dell'indirizzo -->
-                <h2 style="text-align: center;">Indirizzo di spedizione</h2>
-                <ul>
-                    <li>
-                        <input type="radio" id="address" name="address" value="address">
-                        <label for="address">Indirizzo</label>
-                    </li>
-                </ul>
-                <!-- Dati di pagamento -->
-                <div class="payment-details">
-                    <h2 style="text-align: center;">Dati di pagamento</h2>
-                    <div class="mb-3">
-                        <label class="form-label">Nome del titolare della carta</label>
-                        <input type="text" id="nome" name="nome" class="form-control">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Numero della carta</label>
-                        <input type="text" id="numero" name="numero" class="form-control">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Data di scadenza</label>
-                        <input type="text" id="data" name="data" class="form-control">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">CVV</label>
-                        <input type="text" id="cvv" name="cvv" class="form-control">
-                    </div>
-                    <div>
-                        <input type="checkbox" id="ritiro-service" name="ritiro-service">
-                        <label for="ritiro-service">Desidero usufruire del servizio di ritiro bottiglie.</label>
-                    </div>
-                    <div>
-                        <input type="checkbox" id="supporto-service" name="supporto-service" checked>
-                        <label for="supporto-service">Desidero usufruire del servizio di supporto aggiuntivo alla
-                            consegna
-                            di questo ordine.</label>
-                    </div>
-                    <textarea placeholder="Note aggiuntive"></textarea>
-                </div>
-                <aside class="col-md-4 col-lg-3">
-                    <section>
-                        <h2>Sommmario</h2>
-                        <p th:each="prodotto : ${prodottiList}">
-                            <span th:text="${prodotto.nome}"></span> - <span th:text="${prodotto.prezzo}"></span>
-                        </p>
-                        <p>Importo Totale: <span th:text="${prodotto.totale}"></span></p>
-                        <div class="buttons">
-                            <button th:onclick="goBack()">Torna Indietro</button>
-                            <button th:onclick="confirmOrder()">Conferma</button>
+        <div class="col-md-8">
+            <section>
+                <!--/*@thymesVar id="ordineForm" type="it.unisa.greenbottle.controller.ordineControl.form.OrdineForm"*/-->
+                <form th:action="@{/catalogo}" th:object="${ordineForm}" method="post">
+                    <!-- Scelta dell'indirizzo -->
+                    <h2 style="text-align: center;">Indirizzo di spedizione</h2>
+                    <ul>
+                        <li>
+                            <input type="radio" id="address" name="address" value="address">
+                            <label for="address">Indirizzo</label>
+                        </li>
+                    </ul>
+                    <!-- Dati di pagamento -->
+                    <div class="payment-details">
+                        <h2 style="text-align: center;">Dati di pagamento</h2>
+                        <!-- Titolare -->
+                        <div class="mb-3">
+                            <label class="form-label" for="nome">Nome del titolare della carta</label>
+                            <input type="text" id="nome" name="nome" class="form-control">
                         </div>
-                    </section>
-                </aside>
-            </form>
-        </section>
+                        <!-- Numero -->
+                        <div class="mb-3">
+                            <label class="form-label" for="numero">Numero della carta</label>
+                            <input type="text" id="numero" name="numero" class="form-control">
+                        </div>
+                        <!-- Scadenza e CVV -->
+                        <div class="row">
+                            <!-- Scadenza -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="data">Data di scadenza</label>
+                                <input type="text" id="data" name="data" class="form-control">
+                            </div>
+                            <!-- CVV -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="cvv">CVV</label>
+                                <input type="text" id="cvv" name="cvv" class="form-control">
+                            </div>
+                        </div>
+                        <!-- Opzioni aggiuntive -->
+                        <div class="order-checkboxes">
+                            <input type="checkbox" id="ritiro-service" name="ritiro-service">
+                            <label for="ritiro-service">Desidero usufruire del servizio di ritiro bottiglie.</label>
+                        </div>
+                        <div class="order-checkboxes">
+                            <input type="checkbox" id="supporto-service" name="supporto-service">
+                            <label for="supporto-service">Desidero usufruire del servizio di supporto aggiuntivo alla
+                                consegna di questo ordine.</label>
+                        </div>
+                        <!-- Descrizione -->
+                        <label class="form-label" for="order-description">Note aggiuntive:</label>
+                        <textarea id="order-description" placeholder="..."></textarea>
+                    </div>
+                </form>
+            </section>
+        </div>
+        <aside class="col-md-4 col-lg-3">
+            <section>
+                <h2>Sommmario</h2>
+                <p th:each="prodotto : ${prodotti}">
+                    <span th:text="${prodotto.nome}"></span> - <span th:text="${'€ ' + prodotto.prezzo}"></span>
+                </p>
+                <!-- Logica per il calcolo del totale da aggiungere -->
+                <p>Importo Totale: <span th:text="${prodotto.totale}"></span></p>
+                <div class="summary-buttons">
+                    <button th:onclick="|location.href='carrello'|">Torna Indietro</button>
+                    <button th:onclick="confirmOrder()">Conferma</button>
+                </div>
+            </section>
+        </aside>
     </div>
 </main>
 <footer th:replace="~{fragments/fragments :: footer}"></footer>
