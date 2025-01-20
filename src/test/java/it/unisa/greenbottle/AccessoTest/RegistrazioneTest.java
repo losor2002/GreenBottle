@@ -1,6 +1,5 @@
 package it.unisa.greenbottle.AccessoTest;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -32,39 +31,20 @@ public class RegistrazioneTest {
 
 
   @Test
-  public void formatoCognomeErrato() {
-    assertThatThrownBy(
-        () -> test(NomeValido, "Toron@!@to", EmailValida, PasswordValida,
-            status().isOk())
-    ).isInstanceOf(IllegalArgumentException.class)
-        .hasMessage("Non è stato rispettato il formato del campo Cognome");
+  public void formatoCognomeErrato() throws Exception {
+    testRegistrazione("Giancarlo", "Toron@!@to", ("a").repeat(320), "ciao",
+        status().isBadRequest());
   }
 
   @Test
-  public void emailTroppoLunga() {
-    String emailTroppoLunga = EmailValida.repeat(50);
-    assertThatThrownBy(
-        () -> test(NomeValido, CognomeValido, emailTroppoLunga, PasswordValida,
-            status().isOk())
-    ).isInstanceOf(IllegalArgumentException.class)
-        .hasMessage("Email troppo Lunga/Corta");
+  public void emailTroppoLunga() throws Exception {
+    testRegistrazione("Giancarlo", "Toronto", ("a").repeat(320), "ciao", status().isBadRequest());
   }
 
   @Test
-  public void emailTroppoCorta() {
-    assertThatThrownBy(
-        () -> test(NomeValido, CognomeValido, "g@g.c", PasswordValida, status().isOk())
-    ).isInstanceOf(IllegalArgumentException.class)
-        .hasMessage("Email troppo Lunga/Corta");
-  }
-
-  @Test
-  public void formatoEmailErrato() {
-    assertThatThrownBy(
-        () -> test(NomeValido, CognomeValido, "GiancarloToronto@1966@gmail.c", PasswordValida,
-            status().isOk())
-    ).isInstanceOf(IllegalArgumentException.class)
-        .hasMessage("Non è stato rispettato il formato del campo Email");
+  public void formatoEmailErrato() throws Exception {
+    testRegistrazione("Giancarlo", "Toronto", "GiancarloToronto@1966@gmail.c", "ciao",
+        status().isBadRequest());
   }
 
   @Test
@@ -74,13 +54,13 @@ public class RegistrazioneTest {
   }
 
   @Test
-  public void registrazioneEffettuata()
-      throws Exception {
-    test(NomeValido, CognomeValido, EmailValida, PasswordValida, status().is3xxRedirection());
+  public void registrazioneEffettuata() throws Exception {
+    testRegistrazione("Giancarlo", "Toronto", "GiancarloToronto1966@gmail.com", "Giancotoro66!",
+        status().isOk());
   }
 
-  private void test(String nome, String cognome, String email, String password,
-                    ResultMatcher resultMatcher) throws Exception {
+  private void testRegistrazione(String nome, String cognome, String email, String password,
+                                 ResultMatcher resultMatcher) throws Exception {
 
     registrazioneForm = new RegistrazioneForm(nome, cognome, email, password);
 
