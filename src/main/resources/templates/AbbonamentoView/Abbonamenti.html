@@ -15,6 +15,7 @@
 <div th:replace="~{fragments/fragments.html :: header}"></div>
 <h1 style="text-align: center;">I nostri abbonamenti</h1>
 <div class="container mt-5">
+    <!--/*@thymesVar id="abbonamentoForm" type="it.unisa.greenbottle.controller.abbonamentoControl.form.AbbonamentoForm"*/-->
     <form class="filter-section p-4 sticky-top" id="tier-card" method="get" th:object="${abbonamentoForm}">
         <div class="row justify-content-center">
             <!-- Bronze Card -->
@@ -65,33 +66,39 @@
         </div>
     </form>
 </div>
-<section class="col-md-8">
-    <div class="row">
-        <h2>La nostra selezione:</h2>
-        <div class="col-md-4 mb-4" th:each="abbonamento : ${abbonamenti}">
-            <!-- Product List -->
-            <div class="product-list" th:each="prodotto : ${prodotti}">
+<section class="row" id="subSection">
+    <h2>La nostra selezione:</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>I prodotti</th>
+            <th>La frequenza</th>
+            <th>Il rinnovo</th>
+            <th>Il costo</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="sub : ${abbonamenti}">
+            <td th:each="prodotto : ${sub.getProdottiAbbonamento()}">
                 <ul>
-                    <li th:text="${prodotto.key}">key</li>
-                    <li th:text="${prodotto.value}">value</li>
+                    <!-- Aggiungere link alla pagina del prodotto singolo -->
+                    <li th:text="${prodotto.key.getNome() + ' x' + prodotto.value}"></li>
                 </ul>
-            </div>
-            <!-- Subscription Options -->
-            <div class="subscription-options">
-                <p th:text="${abbonamento.frequenza}"></p>
-                <p th:text="${abbonamento.rinnovo}"></p>
-            </div>
-            <!-- Price Section -->
-            <div class="price-section">
-                <p th:text="${prezzo}">Prezzo</p>
-                <button class="btn btn-primary w-20">Compra ora</button>
-            </div>
-        </div>
-    </div>
-    <!--<div class="text-center text-muted" th:if="${#lists.isEmpty(products)}">
-        <p>Nessun prodotto trovato con i filtri selezionati.</p>
-    </div>-->
+            </td>
+            <td th:text="${sub.getFrequenza()}"></td>
+            <td th:text="${sub.getRinnovo()}"></td>
+            <!-- Aggiungere link alla pagina di pagamento -->
+            <td th:width="200px" th:text="${sub.getPrezzo()}"><br><a href="">
+                <button class="btn btn-primary btn-sm w-20">Compra ora</button>
+            </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </section>
+<div class="text-center text-muted" th:if="${#lists.isEmpty(abbonamenti)}">
+    <p>Nessun abbonamento appartenente al tier selezionato.</p>
+</div>
 <script>
     document.querySelector('.bg-bronze').style.backgroundColor = '#cd7f32'; // Bronze
     document.querySelector('.bg-silver').style.backgroundColor = '#c0c0c0'; // Silver
@@ -102,7 +109,6 @@
     }
 </script>
 <div th:replace="~{fragments/fragments :: footer}"></div>
-<script th:src="@{/js/Abbonamenti.js}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

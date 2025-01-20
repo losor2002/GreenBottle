@@ -6,6 +6,9 @@ import it.unisa.greenbottle.controller.ordineControl.util.OrdineWrapper;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
 import it.unisa.greenbottle.storage.ordineStorage.dao.OrdineDao;
 import it.unisa.greenbottle.storage.ordineStorage.entity.Ordine;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/areaPersonale/visualizzaStoricoOrdini")
+@RequestMapping("areaPersonale/visualizzaStoricoOrdini")
 public class VisualizzaStoricoOrdiniController {
 
   private final String homeView = "/home";
@@ -31,7 +34,8 @@ public class VisualizzaStoricoOrdiniController {
   private SessionCliente sessionCliente;
 
   @GetMapping
-  public String get(@ModelAttribute DataForm dataForm, BindingResult bindingResult, Model model) {
+  public String get(@ModelAttribute DataForm dataForm, BindingResult bindingResult, Model model,
+                    HttpServletResponse httpServletResponse) throws IOException {
     if (bindingResult.hasErrors()) {
       return visualizzaStoricoOrdiniView;
     }
@@ -45,9 +49,16 @@ public class VisualizzaStoricoOrdiniController {
     // se non è stata inserita una data di fine, la data di fine è la data attuale
     String endDateStr = !dataForm.getEndDate().isEmpty() ? dataForm.getEndDate() :
         LocalDate.ofEpochDay(System.currentTimeMillis() / 86_400_000).toString();
+    LocalDate startDate = null;
+    LocalDate endDate = null;
 
-    LocalDate startDate = LocalDate.parse(startDateStr);
-    LocalDate endDate = LocalDate.parse(endDateStr);
+    try {
+      startDate = LocalDate.parse(startDateStr);
+      endDate = LocalDate.parse(endDateStr);
+    } catch (DateTimeException e) {
+      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Data non valida");
+      return visualizzaStoricoOrdiniView;
+    }
 
     List<OrdineWrapper> ordiniFinale = new LinkedList<>();
     List<Ordine> ordiniCliente = ordineDao.findOrdineByCliente(cliente);

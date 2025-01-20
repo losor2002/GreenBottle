@@ -16,7 +16,7 @@
         <div class="container-fluid">
 
             <!-- Logo sulla sinistra -->
-            <a class="navbar-brand" href="home" id="navbar-logo">GreenBottle</a>
+            <a class="navbar-brand" href="/" id="navbar-logo">GreenBottle</a>
 
             <!-- Il bottone serve per visualizzare la vista su schermi piccoli -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -28,21 +28,28 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="catalogo">Catalogo</a>
+                        <a class="nav-link" href="/catalogo">Catalogo</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Abbonamenti</a>
+                        <a class="nav-link" href="/abbonamento">Abbonamenti</a>
                     </li>
-                    <!--/*@thymesVar id="sessionCliente" type="it.unisa.greenbottle.controller.accessoControl.util.SessionCliente"*/-->
-                    <li class="nav-item" th:if="${sessionCliente != null and !sessionCliente.getCliente().isEmpty()}">
-                        <a class="nav-link" href="#">Area Personale</a>
+
+
+                    <li class="nav-item"
+                        th:if="${session.sessionCliente != null and !session.sessionCliente.getCliente().isEmpty()}">
+                        <a class="nav-link" href="/carrello">Carrello</a>
                     </li>
                     <li class="nav-item"
-                        th:unless="${sessionCliente != null and !sessionCliente.getCliente().isEmpty()}">
-                        <a class="nav-link" href="login">Accedi</a>
+                        th:if="${session.sessionCliente != null and !session.sessionCliente.getCliente().isEmpty()}">
+                        <a class="nav-link" href="/areaPersonale">Area Personale</a>
                     </li>
-                    <li class="nav-item" th:if="${sessionCliente != null and !sessionCliente.getCliente().isEmpty()}">
-                        <a class="nav-link" href="#">Carrello</a>
+                    <li class="nav-item"
+                        th:if="${session.sessionCliente != null and !session.sessionCliente.getCliente().isEmpty()}">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                    <li class="nav-item"
+                        th:unless="${session.sessionCliente != null and !session.sessionCliente.getCliente().isEmpty()}">
+                        <a class="nav-link" href="/login">Accedi</a>
                     </li>
                 </ul>
             </div>

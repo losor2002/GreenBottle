@@ -9,10 +9,9 @@
     <link th:href="@{/stylesheet/Head.css}" rel="stylesheet">
     <link th:href="@{/stylesheet/Footer.css}" rel="stylesheet">
     <link th:href="@{/stylesheet/Common.css}" rel="stylesheet">
-    <link th:href="@{/stylesheet/Registrazione.css}" rel="stylesheet">
+    <link th:href="@{/stylesheet/Accesso.css}" rel="stylesheet">
 </head>
 <body>
-<!-- Registration Form -->
 <div th:replace="~{fragments/fragments :: header}"></div>
 <div class="container my-5">
     <div class="row justify-content-center">
@@ -22,13 +21,14 @@
                     <h3>Registrazione</h3>
                 </div>
                 <div class="card-body">
-                    <!-- Campo Redirect -->
+                    <!-- Redirect al Login -->
                     <div class="text-center">
                         <p class="my-2">
                             Hai già un account?
                             <a href="login" class="text-primary font-weight-bold" id="redirect">Accedi!</a>
                         </p>
                     </div>
+                    <!-- Registration Form -->
                     <!--/*@thymesVar id="registrazioneForm" type="it.unisa.greenbottle.controller.accessoControl.form.RegistrazioneForm"*/-->
                     <form th:action="@{/registrazione}" method="post" th:object="${registrazioneForm}">
                         <!-- Campo Nome -->
@@ -39,7 +39,6 @@
                             <div class="text-danger px-2" th:if="${#fields.hasErrors('nome')}"
                                  th:errors="*{nome}"></div>
                         </div>
-
                         <!-- Campo Cognome -->
                         <div class="mb-3">
                             <label for="cognome" class="form-label">Cognome</label>
@@ -48,7 +47,6 @@
                             <div class="text-danger px-2" th:if="${#fields.hasErrors('cognome')}"
                                  th:errors="*{cognome}"></div>
                         </div>
-
                         <!-- Campo Email -->
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
@@ -57,21 +55,21 @@
                             <div class="text-danger px-2" th:if="${#fields.hasErrors('email')}"
                                  th:errors="*{email}"></div>
                         </div>
-
                         <!-- Campo Password -->
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" name="password"
-                                   th:field="*{password}" placeholder="Crea una password..." required>
+                            <div class="password-wrapper">
+                                <input type="password" class="form-control" id="password" name="password"
+                                       th:field="*{password}" placeholder="Crea una password..." required>
+                                <img id="eyeIcon" src="/img/eye-open.png" class="password-eye" alt="Show/Hide">
+                            </div>
                             <div class="text-danger px-2" th:if="${#fields.hasErrors('password')}"
                                  th:errors="*{password}"></div>
                         </div>
-
                         <!-- Messaggio di errore (email già registrata) -->
                         <div class="text-danger" th:if="${errore}">
                             <p th:text="${errore}"></p>
                         </div>
-
                         <!-- Tasto Registrazione -->
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary" id="btn">Registrati</button>
@@ -84,5 +82,21 @@
 </div>
 <div th:replace="~{fragments/fragments :: footer}"></div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const pwd = document.getElementById('password');
+        const eye = document.getElementById('eyeIcon');
+
+        eye.addEventListener('click', () => {
+            if (pwd.type === 'password') {
+                pwd.setAttribute('type', 'text');
+                eye.src = '/img/eye-closed.png';
+            } else {
+                pwd.setAttribute('type', 'password');
+                eye.src = '/img/eye-open.png';
+            }
+        });
+    });
+</script>
 </body>
 </html>

@@ -16,8 +16,8 @@ public class ClienteConfigFilter {
     FilterRegistrationBean<ClienteFilter> registrationBean = new FilterRegistrationBean<>();
 
     registrationBean.setFilter(clienteFilter);
-    registrationBean.addUrlPatterns("/areaPersonale", "/areaPersonale/*");
-    
+    registrationBean.addUrlPatterns("/areaPersonale", "/areaPersonale/*", "/carrello");
+
     return registrationBean;
   }
 }

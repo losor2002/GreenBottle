@@ -5,6 +5,7 @@ import it.unisa.greenbottle.controller.accessoControl.util.JasyptUtil;
 import it.unisa.greenbottle.controller.accessoControl.util.SessionAdmin;
 import it.unisa.greenbottle.storage.accessoStorage.dao.AdminDao;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Admin;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class LoginAdminController {
 
   @PostMapping
   public String post(@ModelAttribute @Valid LoginForm loginForm,
-                     BindingResult bindingResult, Model model) {
+                     BindingResult bindingResult, Model model, HttpSession session) {
     model.addAttribute("nameLogin", "/loginAdmin");
     if (bindingResult.hasErrors()) {
       return loginView;
@@ -65,6 +66,7 @@ public class LoginAdminController {
 
 
     sessionAdmin.setAdmin(a.get());
+    session.setAttribute("admin", sessionAdmin);
     return "redirect:" + "/admin";
   }
 

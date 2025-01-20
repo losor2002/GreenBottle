@@ -9,6 +9,7 @@ import static org.springframework.test.util.AssertionErrors.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 
 import it.unisa.greenbottle.controller.accessoControl.util.SessionCliente;
+import it.unisa.greenbottle.controller.ordineControl.util.SessionCarrello;
 import it.unisa.greenbottle.storage.accessoStorage.dao.ClienteDao;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
 import it.unisa.greenbottle.storage.areaPersonaleStorage.dao.IndirizzoDao;
@@ -49,6 +50,9 @@ public class CreazioneOrdineTest {
   @MockitoBean
   private ClienteDao clienteDao;
 
+  @MockitoBean
+  private SessionCarrello sessionCarrello;
+
   @Test
   public void quantitaNonValida() throws Exception {
 
@@ -73,7 +77,7 @@ public class CreazioneOrdineTest {
 
 
     when(sessionCliente.getCliente()).thenReturn(Optional.of(cliente));
-    when(sessionCliente.getCarrello()).thenReturn(Optional.of(carrello));
+    when(sessionCarrello.getCarrello()).thenReturn(Optional.of(carrello));
     when(indirizzoDao.findById(id_Indirizzo)).thenReturn(
         id_Indirizzo > 0 ? Optional.of(indirizzo) : Optional.empty());
 

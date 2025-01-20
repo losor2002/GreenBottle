@@ -5,6 +5,7 @@ import it.unisa.greenbottle.storage.accessoStorage.entity.Admin;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.context.annotation.SessionScope;
 
 @Component
@@ -23,10 +24,15 @@ public class SessionAdmin {
     }
   }
 
+  @ModelAttribute("admin")
   public Optional<Admin> getAdmin() {
     if (idAdmin != null) {
       return adminDao.findById(idAdmin);
     }
     return Optional.empty();
+  }
+
+  public void emptyAdmin() {
+    this.idAdmin = null;
   }
 }
