@@ -9,12 +9,20 @@ body {
 }
 
 #logo {
-    color: #F6FCDF;
+    font-size: 100px;
+    color: #31511E;
     transition: transform 0.3s ease, color 0.3s ease;
+}
+
+@media (max-width: 991px) {
+    #logo {
+        font-size: 50px;
+    }
 }
 
 #logo:hover {
     transform: scale(1.1);
+    color: #F6FCDF;
 }
 
 .carousel-inner {

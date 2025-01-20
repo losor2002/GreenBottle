@@ -37,16 +37,12 @@ public class CatalogoTest {
     prodottoDao.save(prodotto2);
     prodottoDao.save(prodotto3);
 
-    FiltroForm filterForm = new FiltroForm(null, categoriaDefault.getNome(), null, null, null);
+    FiltroForm filterForm = new FiltroForm(categoriaDefault.getId(), null, null, null);
     Specification<Prodotto> spec = Specification.where(null);
 
-    if (filterForm.getNome() != null && !filterForm.getNome().isEmpty()) {
+    if (filterForm.getIdCategoria() != null && filterForm.getIdCategoria() > 0) {
       spec = spec.and((root, query, criteriaBuilder) ->
-          criteriaBuilder.like(root.get("nome"), "%" + filterForm.getNome() + "%"));
-    }
-    if (filterForm.getCategoria() != null && !filterForm.getCategoria().isEmpty()) {
-      spec = spec.and((root, query, criteriaBuilder) ->
-          criteriaBuilder.equal(root.get("categoria").get("nome"), filterForm.getCategoria()));
+          criteriaBuilder.equal(root.get("categoria").get("nome"), filterForm.getIdCategoria()));
     }
     if (filterForm.getPrezzoMin() != null) {
       spec = spec.and((root, query, criteriaBuilder) ->
@@ -56,9 +52,9 @@ public class CatalogoTest {
       spec = spec.and((root, query, criteriaBuilder) ->
           criteriaBuilder.lessThanOrEqualTo(root.get("prezzo"), filterForm.getPrezzoMax()));
     }
-    if (filterForm.getVoto() != null) {
+    if (filterForm.getMedia() != null) {
       spec = spec.and((root, query, criteriaBuilder) ->
-          criteriaBuilder.greaterThanOrEqualTo(root.get("votoMedio"), filterForm.getVoto()));
+          criteriaBuilder.greaterThanOrEqualTo(root.get("votoMedio"), filterForm.getMedia()));
     }
 
 

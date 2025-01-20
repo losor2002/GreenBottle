@@ -16,21 +16,23 @@
 <main class="container-fluid my-4">
     <div class="row">
         <!-- Filtro -->
-        <aside class="col-md-4 col-lg-3">
-            <form class="filter-section p-4 sticky-top" id="filter-card" method="get" th:object="${filterForm}">
+        <aside class="col-md-6 col-lg-3">
+            <!--/*@thymesVar id="filtroForm" type="it.unisa.greenbottle.controller.catalogoControl.form.FiltroForm"*/-->
+            <form class="filter-section p-4 sticky-top shadow-lg bg-light rounded border" id="filter-card" method="get"
+                  th:object="${filtroForm}">
                 <h5 class="text-center mb-4">Filtri</h5>
 
                 <!-- Categoria -->
                 <div class="mb-4">
                     <h6 class="text">Categoria</h6>
                     <div class="d-flex flex-column">
-                        <input type="radio" class="btn-check" name="categoria" id="acqua" value="Acqua">
+                        <input type="radio" class="btn-check" name="categoria" id="acqua" value="1">
                         <label class="btn my-1" for="acqua">Acqua</label>
 
-                        <input type="radio" class="btn-check" name="categoria" id="succo" value="Succo di frutta">
+                        <input type="radio" class="btn-check" name="categoria" id="succo" value="2">
                         <label class="btn my-1" for="succo">Succo di frutta</label>
 
-                        <input type="radio" class="btn-check" name="categoria" id="bevanda" value="Bevanda gassata">
+                        <input type="radio" class="btn-check" name="categoria" id="bevanda" value="3">
                         <label class="btn my-1" for="bevanda">Bevanda gassata</label>
                     </div>
                 </div>
@@ -51,19 +53,19 @@
                 <div class="mb-4">
                     <h6 class="text">Recensione</h6>
                     <div class="d-flex">
-                        <input type="radio" class="btn-check" name="voto" id="star1" value="1">
+                        <input type="radio" class="btn-check" name="votoMedio" id="star1" value="1">
                         <label class="btn my-1" for="star1">☆</label>
 
-                        <input type="radio" class="btn-check" name="voto" id="star2" value="2">
+                        <input type="radio" class="btn-check" name="votoMedio" id="star2" value="2">
                         <label class="btn my-1" for="star2">☆</label>
 
-                        <input type="radio" class="btn-check" name="voto" id="star3" value="3">
+                        <input type="radio" class="btn-check" name="votoMedio" id="star3" value="3">
                         <label class="btn my-1" for="star3">☆</label>
 
-                        <input type="radio" class="btn-check" name="voto" id="star4" value="4">
+                        <input type="radio" class="btn-check" name="votoMedio" id="star4" value="4">
                         <label class="btn my-1" for="star4">☆</label>
 
-                        <input type="radio" class="btn-check" name="voto" id="star5" value="5">
+                        <input type="radio" class="btn-check" name="votoMedio" id="star5" value="5">
                         <label class="btn my-1" for="star5">☆</label>
                     </div>
                 </div>
