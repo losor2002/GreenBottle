@@ -55,7 +55,7 @@ public class RegistrazioneTest {
 
   @Test
   public void registrazioneEffettuata() throws Exception {
-    testRegistrazione("Giancarlo", "Toronto", "GiancarloToronto1966@gmail.com", "Giancotoro66!",
+    testRegistrazione("Giancarlo", "Toronto", "GiancarloToronto1966@gmail.com", "GiancoToro66!",
         status().isOk());
   }
 
