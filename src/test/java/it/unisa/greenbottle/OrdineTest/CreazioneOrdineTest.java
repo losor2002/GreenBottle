@@ -14,6 +14,8 @@ import it.unisa.greenbottle.storage.accessoStorage.dao.ClienteDao;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
 import it.unisa.greenbottle.storage.areaPersonaleStorage.dao.IndirizzoDao;
 import it.unisa.greenbottle.storage.areaPersonaleStorage.entity.Indirizzo;
+import it.unisa.greenbottle.storage.catalogoStorage.entity.Categoria;
+import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
 import it.unisa.greenbottle.storage.ordineStorage.dao.OrdineDao;
 import it.unisa.greenbottle.storage.ordineStorage.entity.Ordine;
 import java.util.HashMap;
@@ -73,11 +75,22 @@ public class CreazioneOrdineTest {
     Cliente cliente = new Cliente();
     Indirizzo indirizzo = new Indirizzo();
     Map<Long, Integer> carrello = new HashMap<>();
+    Categoria categoria = new Categoria("Bevande");
+    Prodotto prodotto1 = new Prodotto(
+        "Prodotto1", "Prodotto 1", null, 10.0f, 1000, categoria
+    );
+    Prodotto prodotto2 = new Prodotto(
+        "Prodotto2", "Prodotto 2", null, 5.0f, 1000, categoria
+    );
+
+    carrello.put(prodotto1.getId(), 10);
+    carrello.put(prodotto2.getId(), 50);
+
     indirizzo.setId(id_Indirizzo);
 
 
     when(sessionCliente.getCliente()).thenReturn(Optional.of(cliente));
-    when(sessionCarrello.getCarrello()).thenReturn(Optional.of(carrello));
+    when(sessionCarrello.getCarrello()).thenReturn(carrello);
     when(indirizzoDao.findById(id_Indirizzo)).thenReturn(
         id_Indirizzo > 0 ? Optional.of(indirizzo) : Optional.empty());
 

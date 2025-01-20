@@ -5,6 +5,7 @@ import it.unisa.greenbottle.storage.catalogoStorage.dao.CategoriaDao;
 import it.unisa.greenbottle.storage.catalogoStorage.dao.ProdottoDao;
 import it.unisa.greenbottle.storage.catalogoStorage.dao.RecensioneDao;
 import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
+import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -30,7 +31,7 @@ public class VisualizzaCatalogoController {
   private RecensioneDao recensioneDao;
 
   @GetMapping
-  public String get(@ModelAttribute FiltroForm filterForm, Model model) {
+  public String get(@ModelAttribute @Valid FiltroForm filterForm, Model model) {
 
 
     Specification<Prodotto> spec = Specification.where(null);
