@@ -10,6 +10,9 @@ import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Builder per la classe Ordine.
+ */
 @Getter
 @Setter
 public class OrdineBuilder {
@@ -63,11 +66,6 @@ public class OrdineBuilder {
     return this;
   }
 
-  public OrdineBuilder composizione(Composizione composizione) {
-    this.composizioni.add(composizione);
-    return this;
-  }
-
   public OrdineBuilder composizioni(Set<Composizione> composizioni) {
     this.composizioni = composizioni;
     return this;
@@ -88,6 +86,11 @@ public class OrdineBuilder {
     return this;
   }
 
+  /**
+   * Costruisce un oggetto Ordine.
+   *
+   * @return Ordine costruito
+   */
   public Ordine build() {
     Ordine ordine = new Ordine();
     ordine.setPrezzo(prezzo);
@@ -104,4 +107,3 @@ public class OrdineBuilder {
     return ordine;
   }
 }
-

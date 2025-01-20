@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+/**
+ * Interfaccia per la gestione dei dati degli ordini.
+ */
 public interface OrdineDao extends JpaRepository<Ordine, Long> {
   List<Ordine> findOrdineByStato(Ordine.StatoSpedizione statoSpedizione);
 

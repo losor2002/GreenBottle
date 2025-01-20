@@ -12,31 +12,52 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+/**
+ * Rappresenta un prodotto nel catalogo del sistema GreenBottle.
+ * Ogni prodotto include informazioni sul nome, descrizione, prezzo, quantità disponibile,
+ * media dei voti, immagine e categoria di appartenenza.
+ */
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 @ToString(exclude = "img")
-public final class Prodotto {
+public class Prodotto {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Long id; // Identificativo univoco del prodotto
+
   @Column(nullable = false, length = 256)
-  private String nome;
+  private String nome; // Nome del prodotto
+
   @Column(nullable = false, length = 1024)
-  private String descrizione;
+  private String descrizione; // Descrizione del prodotto
+
   @Lob
-  private byte[] img;
+  private byte[] img; // Immagine del prodotto (se presente)
+
   @Column(nullable = false)
-  private float prezzo;
+  private float prezzo; // Prezzo del prodotto
+
   @Column(nullable = false)
-  private int quantita;
+  private int quantita; // Quantità disponibile del prodotto
+
   @Column()
-  private float mediaVoti; //nuovo attributo ridondante
+  private float mediaVoti; // Media dei voti del prodotto
+
   @ManyToOne
-  private Categoria categoria;
+  private Categoria categoria; // Categoria di appartenenza del prodotto
 
-
+  /**
+   * Costruttore per creare un prodotto con parametri specifici.
+   *
+   * @param nome        Nome del prodotto
+   * @param descrizione Descrizione del prodotto
+   * @param img         Immagine del prodotto (se presente)
+   * @param prezzo      Prezzo del prodotto
+   * @param quantita    Quantità disponibile del prodotto
+   * @param categoria   Categoria di appartenenza del prodotto
+   */
   public Prodotto(String nome, String descrizione, byte[] img, float prezzo, int quantita,
                   Categoria categoria) {
     this.nome = nome;
@@ -46,5 +67,4 @@ public final class Prodotto {
     this.quantita = quantita;
     this.categoria = categoria;
   }
-
 }

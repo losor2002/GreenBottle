@@ -5,55 +5,45 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.util.Objects;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.ToString;
 
+/**
+ * Rappresenta un corriere nel sistema GreenBottle.
+ * Il corriere è associato alla gestione della consegna degli ordini.
+ */
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@NoArgsConstructor
+@Data
+@ToString
 public class Corriere {
+
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
-  @Column(nullable = false, length = 30)
-  private String nome;
-  @Column(nullable = false, length = 30)
-  private String cognome;
-  @Column(nullable = false, length = 10)
-  private String telefono;
+  private Long id; // Identificativo univoco del corriere
 
+  @Column(nullable = false, length = 30)
+  private String nome; // Nome del corriere
+
+  @Column(nullable = false, length = 30)
+  private String cognome; // Cognome del corriere
+
+  @Column(nullable = false, length = 10)
+  private String telefono; // Numero di telefono del corriere
+
+  /**
+   * Costruttore per creare un corriere con nome, cognome e numero di telefono.
+   *
+   * @param nome     Nome del corriere
+   * @param cognome  Cognome del corriere
+   * @param telefono Numero di telefono del corriere
+   */
   public Corriere(String nome, String cognome, String telefono) {
     this.nome = nome;
     this.cognome = cognome;
     this.telefono = telefono;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Corriere corriere = (Corriere) o;
-    return Objects.equals(id, corriere.id);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hashCode(id);
-  }
-
-  @Override
-  public String toString() {
-    return "Corriere{"
-        + "id=" + id
-        + ", nome='" + nome + '\''
-        + ", cognome='" + cognome + '\''
-        + ", telefono='" + telefono + '\''
-        + '}';
   }
 }

@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+/**
+ * Interfaccia per la gestione dei dati degli abbonamenti.
+ */
 public interface AbbonamentoDao extends JpaRepository<Abbonamento, Long> {
-    Optional<Abbonamento> findAbbonamentoById(Long id);
+  Optional<Abbonamento> findAbbonamentoById(Long id);
 
-    List<Abbonamento> findAll();
-    List<Abbonamento> findAbbonamentoByTipo(Abbonamento.TipoAbbonamento tipoAbbonamento);
+  List<Abbonamento> findAbbonamentoByTipo(Abbonamento.TipoAbbonamento tipoAbbonamento);
 }

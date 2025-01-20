@@ -7,12 +7,13 @@ import java.util.Optional;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+/**
+ * Interfaccia per la gestione dei dati dei prodotti nel database.
+ */
 public interface ProdottoDao extends JpaRepository<Prodotto, Long> {
-
   List<Prodotto> findProdottoByCategoria(Categoria categoria);
 
   List<Prodotto> findAll(Specification<Prodotto> spec);
 
   Optional<Prodotto> findProdottoById(Long idProdotto);
 }
-
