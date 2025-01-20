@@ -26,7 +26,7 @@ public class UtentiTest {
   Cliente clienteTest =
       new Cliente("mario.rossi@gmail.com", "asdfASDF1234!", "Mario", "Rossi", 0, 0, null, null);
 
-  Admin adminTest = new Admin("admin@greenbottle.it", "asdfASDF1234!");
+  Admin adminTest = new Admin("admin1@greenbottle.it", "asdfASDF1234!");
 
 
   @Test
@@ -36,7 +36,7 @@ public class UtentiTest {
 
     Optional<Cliente> c2 = clienteDao.findClienteByEmail("mario.rossi@gmail.com");
 
-    System.out.println(c2.isPresent() ? "cliente2" + c2.get().toString() : "Not found");
+    System.out.println(c2.isPresent() ? "cliente2" + c2.get() : "Not found");
     assert clienteTest.equals(c2.get());
   }
 
@@ -45,7 +45,7 @@ public class UtentiTest {
     adminDao.save(adminTest);
     System.out.println(adminTest.toString());
 
-    Optional<Admin> a2 = adminDao.findAdminByEmail("admin@greenbottle.it");
+    Optional<Admin> a2 = adminDao.findAdminByEmail("admin1@greenbottle.it");
 
     System.out.println(a2.isPresent() ? a2.get().toString() : "Not found");
     assert adminTest.equals(a2.get());
