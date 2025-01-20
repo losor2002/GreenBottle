@@ -13,7 +13,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 
 @SpringBootTest
-
 @AutoConfigureMockMvc
 public class RegistrazioneTest {
 
@@ -55,7 +54,7 @@ public class RegistrazioneTest {
   @Test
   public void registrazioneEffettuata() throws Exception {
     testRegistrazione("Giancarlo", "Toronto", "GiancarloToronto1966@gmail.com", "GiancoToro66!",
-        status().isOk());
+        status().is3xxRedirection());
   }
 
   private void testRegistrazione(String nome, String cognome, String email, String password,
