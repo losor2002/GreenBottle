@@ -45,10 +45,10 @@ public class RegistrazioneForm {
   @NotBlank(message = "Password vuota.")
   @Size(max = 32, message = "Dimensione Password errata.")
   @Pattern(
-      regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=]).{8,}$",
+      regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!]).{8,}$",
       message =
           "La Password deve contenere almeno una lettera minuscola, una maiuscola, un numero, "
-              + "un carattere speciale ( @, #, $, %, ^, &, +, = ) "
+              + "un carattere speciale ( @, #, $, %, ^, &, +, =, !) "
               + "e avere una lunghezza minima di 8 caratteri."
   )
   private String password;

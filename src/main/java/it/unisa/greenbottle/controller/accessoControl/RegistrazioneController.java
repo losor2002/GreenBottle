@@ -4,7 +4,9 @@ import it.unisa.greenbottle.controller.accessoControl.form.RegistrazioneForm;
 import it.unisa.greenbottle.controller.accessoControl.util.JasyptUtil;
 import it.unisa.greenbottle.storage.accessoStorage.dao.ClienteDao;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,10 +36,14 @@ public class RegistrazioneController {
 
   @PostMapping
   public String post(@ModelAttribute @Valid RegistrazioneForm registrazioneForm,
-                     BindingResult bindingResult, Model model) {
+                     BindingResult bindingResult, Model model,
+                     HttpServletResponse httpServletResponse)
+      throws IOException {
 
     if (bindingResult.hasErrors()) {
       model.addAttribute("errore", "Errore di formato.");
+      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,
+          bindingResult.getAllErrors().toString());
       return registrazioneView;
     }
 
