@@ -2,10 +2,11 @@ package it.unisa.greenbottle.OrdineTest;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import it.unisa.greenbottle.controller.accessoControl.util.SessionCliente;
+import it.unisa.greenbottle.controller.accessoControl.util.SessionAdmin;
+import it.unisa.greenbottle.storage.accessoStorage.entity.Admin;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
 import it.unisa.greenbottle.storage.ordineStorage.dao.OrdineDao;
 import it.unisa.greenbottle.storage.ordineStorage.entity.Ordine;
@@ -21,13 +22,12 @@ import org.springframework.test.web.servlet.ResultMatcher;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class VisualizzaStatoOrdineTest {
-
+public class AccettazioneOrdineAdminTest {
   @Autowired
   private MockMvc mockMvc;
 
   @MockitoBean
-  private SessionCliente sessionCliente;
+  private SessionAdmin sessionAdmin;
 
   @MockitoBean
   private OrdineDao ordineDao;
@@ -39,6 +39,7 @@ public class VisualizzaStatoOrdineTest {
 
   @Test
   public void idNonPresente() throws Exception {
+    Admin admin = new Admin();
     Cliente cliente = new Cliente();
     final String testId = "999";
     Ordine ordine =
@@ -48,9 +49,10 @@ public class VisualizzaStatoOrdineTest {
     ordineDao.save(ordine);
 
     when(ordineDao.findOrdineById(1L)).thenReturn(Optional.of(ordine));
-    when(sessionCliente.getCliente()).thenReturn(Optional.of(cliente));
+    when(sessionAdmin.getAdmin()).thenReturn(Optional.of(admin));
 
-    mockMvc.perform(get("/areaPersonale/visualizzaStatoOrdine").param("id", testId))
+    mockMvc.perform(post("/admin/accettazioneOrdine").param("ordineId", testId)
+            .param("newState", Ordine.StatoSpedizione.ACCETTATO.toString()))
         .andExpect(status().isNotFound());
   }
 
@@ -60,6 +62,7 @@ public class VisualizzaStatoOrdineTest {
   }
 
   private void test(Long idOrdine, ResultMatcher resultMatcher) throws Exception {
+    Admin admin = new Admin();
     Cliente cliente = new Cliente();
     Ordine ordine =
         new Ordine(12f, Ordine.StatoSpedizione.ELABORAZIONE, false, "0000-0000-0000-0000",
@@ -67,12 +70,12 @@ public class VisualizzaStatoOrdineTest {
     ordine.setId(1L);
 
     when(ordineDao.findOrdineById(any())).thenReturn(Optional.of(ordine));
-    when(sessionCliente.getCliente()).thenReturn(Optional.of(cliente));
+    when(sessionAdmin.getAdmin()).thenReturn(Optional.of(admin));
 
-    mockMvc.perform(get("/areaPersonale/visualizzaStatoOrdine")
-            .param("id", idOrdine.toString()))
+    mockMvc.perform(post("/admin/accettazioneOrdine")
+            .param("ordineId", idOrdine.toString())
+            .param("newState", Ordine.StatoSpedizione.ACCETTATO.toString()))
         .andExpect(resultMatcher);
 
   }
-
 }
