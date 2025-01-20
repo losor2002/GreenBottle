@@ -8,6 +8,8 @@ import it.unisa.greenbottle.storage.ordineStorage.dao.ComposizioneDao;
 import it.unisa.greenbottle.storage.ordineStorage.dao.OrdineDao;
 import it.unisa.greenbottle.storage.ordineStorage.entity.Composizione;
 import it.unisa.greenbottle.storage.ordineStorage.entity.Ordine;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +26,7 @@ public class VisualizzaStatoOrdineController {
 
   private final String homeView = "/home";
   private final String visualizzaStatoOrdineView = "/OrdineView/VisualizzaStatoOrdine";
-  private final String visualizzaStoricoOrdiniView = "/AreaPersonale/StoricoOrdini";
+  private final String visualizzaStoricoOrdineView = "/AreaPersonaleView/VisualizzaStoricoOrdine";
 
   @Autowired
   private OrdineDao ordineDao;
@@ -40,19 +42,21 @@ public class VisualizzaStatoOrdineController {
 
 
   @GetMapping
-  public String get(@RequestParam Long id, Model model) {
-    // TODO: rimuovi questo controllo quando saranno implementati i filtri
-    Optional<Cliente> optCliente = sessionCliente.getCliente();
-    if (optCliente.isEmpty()) {
-      return "redirect:" + homeView;
-    }
-    Cliente cliente = optCliente.get();
+  public String get(@RequestParam Long id, Model model, HttpServletResponse httpServletResponse)
+      throws IOException {
+    Cliente cliente = sessionCliente.getCliente().get();
 
+    if (id < 0) {
+      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Id non valido");
+      return null;
+    }
 
     Optional<Ordine> optOrdine = ordineDao.findOrdineById(id);
     if (optOrdine.isEmpty()) {
-      return "/error";
+      httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND, "Ordine non presente");
+      return null;
     }
+
     Ordine ordine = optOrdine.get();
     if (!ordine.getCliente().equals(cliente)) {
       return "/error";

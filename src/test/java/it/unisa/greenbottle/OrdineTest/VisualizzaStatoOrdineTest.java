@@ -1,4 +1,4 @@
-package it.unisa.greenbottle.AreaPersonaleTest;
+package it.unisa.greenbottle.OrdineTest;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -21,7 +21,8 @@ import org.springframework.test.web.servlet.ResultMatcher;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class VisualizzaStoricoOrdiniTest {
+public class VisualizzaStatoOrdineTest {
+
   @Autowired
   private MockMvc mockMvc;
 
@@ -31,33 +32,47 @@ public class VisualizzaStoricoOrdiniTest {
   @MockitoBean
   private OrdineDao ordineDao;
 
-
   @Test
-  public void startDateNonRispettaIlFormato() throws Exception {
-    test("2024/01/12", "2025/01/12", status().isBadRequest());
+  public void idNonValido() throws Exception {
+    test(-1L, status().isBadRequest());
   }
 
   @Test
-  public void endDateNonRispettaIlFormato() throws Exception {
-    test("2024-01-12", "2025/01/12", status().isBadRequest());
+  public void idNonPresente() throws Exception {
+    Cliente cliente = new Cliente();
+    final String testId = "999";
+    Ordine ordine =
+        new Ordine(12f, Ordine.StatoSpedizione.ELABORAZIONE, false, "0000-0000-0000-0000",
+            false, "", new Timestamp(System.currentTimeMillis()), cliente, null);
+    ordine.setId(1L);
+    ordineDao.save(ordine);
+
+    when(ordineDao.findOrdineById(1L)).thenReturn(Optional.of(ordine));
+    when(sessionCliente.getCliente()).thenReturn(Optional.of(cliente));
+
+    mockMvc.perform(get("/areaPersonale/visualizzaStatoOrdine").param("id", testId))
+        .andExpect(status().isNotFound());
   }
 
   @Test
-  public void dateRispettaIlFormato() throws Exception {
-    test("2024-01-12", "2025-01-12", status().isOk());
+  public void idValido() throws Exception {
+    test(1L, status().isOk());
   }
 
-  private void test(String startDate, String endDate, ResultMatcher resultMatcher)
-      throws Exception {
+  private void test(Long idOrdine, ResultMatcher resultMatcher) throws Exception {
     Cliente cliente = new Cliente();
     Ordine ordine =
         new Ordine(12f, Ordine.StatoSpedizione.ELABORAZIONE, false, "0000-0000-0000-0000",
             false, "", new Timestamp(System.currentTimeMillis()), cliente, null);
+    ordine.setId(1L);
 
     when(ordineDao.findOrdineById(any())).thenReturn(Optional.of(ordine));
     when(sessionCliente.getCliente()).thenReturn(Optional.of(cliente));
 
-    mockMvc.perform(get("/areaPersonale/visualizzaStoricoOrdini").param("startDate", startDate)
-        .param("endDate", endDate)).andExpect(resultMatcher);
+    mockMvc.perform(get("/areaPersonale/visualizzaStatoOrdine")
+            .param("id", idOrdine.toString()))
+        .andExpect(resultMatcher);
+
   }
+
 }

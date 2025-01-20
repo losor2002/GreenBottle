@@ -31,10 +31,14 @@ public class AccettazioneOrdineAdminController {
   public ResponseEntity<?> post(@RequestParam("ordineId") String id,
                                 @RequestParam("newState") String statoSpedizione) {
     Long veroId = Long.valueOf(id);
+    if (veroId <= 0) { // formato errato dell'id
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Id non valido.");
+    }
+
     Optional<Ordine> optOrdine = ordineDao.findOrdineById(veroId);
     if (optOrdine.isEmpty()) {
       // Risponde con un errore se l'ordine non esiste
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ordine non trovato.");
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ordine non presente.");
     }
 
     Ordine ordine = optOrdine.get();
