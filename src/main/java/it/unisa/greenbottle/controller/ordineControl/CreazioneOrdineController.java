@@ -2,7 +2,6 @@ package it.unisa.greenbottle.controller.ordineControl;
 
 import it.unisa.greenbottle.controller.accessoControl.util.SessionCliente;
 import it.unisa.greenbottle.controller.ordineControl.form.OrdineForm;
-import it.unisa.greenbottle.controller.ordineControl.form.ProdottoForm;
 import it.unisa.greenbottle.controller.ordineControl.util.SessionCarrello;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
 import it.unisa.greenbottle.storage.areaPersonaleStorage.dao.IndirizzoDao;
@@ -13,6 +12,7 @@ import it.unisa.greenbottle.storage.ordineStorage.dao.OrdineDao;
 import it.unisa.greenbottle.storage.ordineStorage.entity.Composizione;
 import it.unisa.greenbottle.storage.ordineStorage.entity.Ordine;
 import it.unisa.greenbottle.storage.ordineStorage.entity.OrdineDirector;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import java.util.HashMap;
@@ -33,7 +33,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/ordina")
 public class CreazioneOrdineController {
 
-  private static final String ordineView = "OrdineView/Ordine";
+  private static final String ordineView = "CatalogoView/Home";
+  //TODO CAMBIARE  in OrdineView/VisualizzaStatoOrdine quando la pagina è pronta
+  private static final String fallbackView = "CatalogoView/Home";
+  //TODO: Cambiare in OrdineView/Checkout quando la pagina del checkout è pronta
 
   @Autowired
   private OrdineDao ordineDao;
@@ -51,22 +54,25 @@ public class CreazioneOrdineController {
   private SessionCarrello sessionCarrello;
 
   @GetMapping
-  public String get(Model model) {
+  public String get(Model model, HttpServletResponse httpServletResponse) throws IOException {
     Optional<Cliente> clienteOptional = sessionCliente.getCliente();
     Map<Prodotto, Integer> carrello = sessionCarrello.getRealCarrello();
     if (clienteOptional.isEmpty()) {
       return "redirect:/login";
     }
-    if (carrello == null || carrello.isEmpty()){
+    if (carrello == null || carrello.isEmpty()) {
       model.addAttribute("errore", "Il carrello è vuoto.");
-      return "redirect:/carrello";
+      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Il carrello è vuoto");
+      return fallbackView;
     }
     return ordineView;
   }
 
   @PostMapping
   @Transactional
-  public String post(@ModelAttribute @Valid OrdineForm ordineForm, Model model, BindingResult bindingResult) {
+  public String post(@ModelAttribute @Valid OrdineForm ordineForm, Model model,
+                     BindingResult bindingResult, HttpServletResponse httpServletResponse) throws
+      IOException {
     Optional<Cliente> clienteOptional = sessionCliente.getCliente();
 
     if (clienteOptional.isEmpty()) {
@@ -75,7 +81,7 @@ public class CreazioneOrdineController {
 
     final Cliente cliente = clienteOptional.get();
 
-    if(bindingResult.hasErrors()) {
+    if (bindingResult.hasErrors()) {
       model.addAttribute("errore", bindingResult.getAllErrors());
       return "redirect:/carrello";
     }
@@ -92,7 +98,9 @@ public class CreazioneOrdineController {
         if (quantita > p.getQuantita()) {
           model.addAttribute("errore",
               "Prodotto: " + p.getNome() + " non disponibile in quantità richiesta.");
-          return "redirect:/carrello";
+          httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,
+              "Prodotto" + p.getNome() + " non disponibile in quantità richiesta");
+          return fallbackView;
         }
         prodotti.put(p, quantita);
       }
@@ -106,13 +114,15 @@ public class CreazioneOrdineController {
     String nomeTitolare = ordineForm.getNomeTitolare();
     final String riassuntoCarta = nomeTitolare + "/" + dataScadenza + "/" + numeroCarta.substring(
         numeroCarta.length() - 4);
-    boolean isSupporto = ordineForm.isSupporto();
+    Boolean isSupporto = ordineForm.getIsSupporto();
     String descrizioneSupporto = ordineForm.getDescrizioneSupporto();
     final boolean isRitiro = ordineForm.isRitiro();
 
     if (isSupporto && descrizioneSupporto.isBlank()) {
       model.addAttribute("errore", "Descrizione supporto non inserita.");
-      return "redirect:/carrello";
+      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,
+          "Descrizione supporto non inserita");
+      return fallbackView;
     } else if (!(isSupporto || descrizioneSupporto.isBlank())) { // De Morgan
       model.addAttribute("warning",
           "Errata selezione dell’opzione di richiesta supporto aggiuntivo");
@@ -123,7 +133,8 @@ public class CreazioneOrdineController {
 
     if (indirizzoOpt.isEmpty()) {
       model.addAttribute("errore", "Indirizzo non trovato.");
-      return "redirect:/carrello";
+      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Indirizzo non trovato");
+      return fallbackView;
     }
     Indirizzo indirizzo = indirizzoOpt.get();
 
@@ -146,7 +157,6 @@ public class CreazioneOrdineController {
     ordineDao.save(ordine);
     model.addAttribute("successo", "Ordine inserito con successo.");
     sessionCarrello.clearCarrello();
-
     return ordineView;
   }
 }

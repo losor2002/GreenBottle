@@ -55,6 +55,7 @@ public class CreazioneOrdineTest {
   @MockitoBean
   private SessionCarrello sessionCarrello;
 
+
   @Test
   public void quantitaNonValida() throws Exception {
 
@@ -101,6 +102,7 @@ public class CreazioneOrdineTest {
             .param("CVV", CVV)
             .param("id_Indirizzo", id_Indirizzo.toString())
             .param("flagSupporto", String.valueOf(isSupporto))
+            .param("isRitiro", "false")
             .param("Descrizione_Supporto", Descrizione_Supporto.orElse(""))
         )
         .andExpect(resultMatcher)

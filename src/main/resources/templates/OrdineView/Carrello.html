@@ -33,8 +33,7 @@
                 <tbody>
                 <tr th:each="entry : ${carrello.entrySet()}">
                     <td>
-                        <img th:src="@{/productImg(id=${entry.key.id})}">
-                             alt="Immagine prodotto" width="50">
+                        <img th:src="@{/productImg(id=${entry.key})}" alt="Immagine prodotto" width="50">
                     </td>
                     <td>
                         <strong th:text="${entry.key.nome}">Nome Prodotto</strong><br>
