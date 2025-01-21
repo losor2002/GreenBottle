@@ -16,7 +16,7 @@
 <h1 style="text-align: center;">I nostri abbonamenti</h1>
 <div class="container mt-5">
     <!--/*@thymesVar id="abbonamentoForm" type="it.unisa.greenbottle.controller.abbonamentoControl.form.AbbonamentoForm"*/-->
-    <form class="filter-section p-4 sticky-top" id="tier-card" method="get" th:object="${abbonamentoForm}">
+    <form class="filter-section p-4 sticky-top" id="tier-card" method="get">
         <div class="row justify-content-center">
             <!-- Bronze Card -->
             <div class="col-md-4">
@@ -43,7 +43,8 @@
                         <h5 class="card-title">Silver Plan</h5>
                         <p class="card-text">Ottieni di più con i nostri piani silver.</p>
                         <button type="submit" class="btn btn-primary" name="abbonamento" value="Silver"
-                                onclick="showSection()">Mostra
+                                onclick="
+                                showSection()">Mostra
                         </button>
                     </div>
                 </div>
@@ -79,8 +80,8 @@
         </thead>
         <tbody>
         <tr th:each="sub : ${abbonamenti}">
-            <td th:each="prodotto : ${sub.getProdottiAbbonamento()}">
-                <ul>
+            <td>
+                <ul th:each="prodotto : ${sub.getProdottiAbbonamento()}">
                     <!-- Aggiungere link alla pagina del prodotto singolo -->
                     <li th:text="${prodotto.key.getNome() + ' x' + prodotto.value}"></li>
                 </ul>
@@ -88,9 +89,9 @@
             <td th:text="${sub.getFrequenza()}"></td>
             <td th:text="${sub.getRinnovo()}"></td>
             <!-- Aggiungere link alla pagina di pagamento -->
-            <td th:width="200px" th:text="${sub.getPrezzo()}"><br><a href="">
-                <button class="btn btn-primary btn-sm w-20">Compra ora</button>
-            </a>
+            <td th:width="200px" th:text="${sub.getPrezzo()}"></td>
+            <td>
+                <button th:if="${session.sessionCliente != null and session.sessionCliente.getCliente().isPresent()}" th:onclick="|location.href='abbonamento?sottoscrivi=${sub.getId()}'|" class="btn btn-primary btn-sm w-20">Sottoscrivi</button>
             </td>
         </tr>
         </tbody>
@@ -99,6 +100,7 @@
 <div class="text-center text-muted" th:if="${#lists.isEmpty(abbonamenti)}">
     <p>Nessun abbonamento appartenente al tier selezionato.</p>
 </div>
+<div th:replace="~{fragments/fragments :: footer}"></div>
 <script>
     document.querySelector('.bg-bronze').style.backgroundColor = '#cd7f32'; // Bronze
     document.querySelector('.bg-silver').style.backgroundColor = '#c0c0c0'; // Silver
@@ -108,7 +110,6 @@
         document.querySelector('section').style.display = 'flex';
     }
 </script>
-<div th:replace="~{fragments/fragments :: footer}"></div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenBottle - Checkout</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/img/Logo.png}" rel="shortcut icon"/>
+    <link th:href="@{/stylesheet/Common.css}" rel="stylesheet">
+    <link th:href="@{/stylesheet/Head.css}" rel="stylesheet">
+    <link th:href="@{/stylesheet/Footer.css}" rel="stylesheet">
+    <link th:href="@{/stylesheet/Checkout.css}" rel="stylesheet">
+</head>
+<body>
+<div th:replace="~{fragments/fragments.html :: header}"></div>
+<h1 style="text-align: center;">Riepilogo Abbonamento</h1>
+<main class="container my-4">
+    <div class="row">
+        <div class="col-md-8">
+            <section>
+
+                <!--/*@thymesVar id="abbonamentoForm" type="it.unisa.greenbottle.controller.abbonamentoControl.form.AbbonamentoForm"*/-->
+                <form th:action="@{/abbonamento}" th:object="${abbonamentoForm}" method="post">
+                    <!-- Dati di pagamento -->
+                    <div class="payment-details">
+                        <h2 style="text-align: center;">Dati di pagamento</h2>
+                        <!-- Titolare -->
+                        <div class="mb-3">
+                            <label class="form-label" for="nome">Nome del titolare della carta</label>
+                            <input type="text" id="nome" name="nome" class="form-control">
+                        </div>
+                        <!-- Numero -->
+                        <div class="mb-3">
+                            <label class="form-label" for="numero">Numero della carta</label>
+                            <input type="text" id="numero" name="numero" class="form-control">
+                        </div>
+                        <!-- Scadenza e CVV -->
+                        <div class="row">
+                            <!-- Scadenza -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="data">Data di scadenza</label>
+                                <input type="text" id="data" name="data" class="form-control">
+                            </div>
+                            <!-- CVV -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="cvv">CVV</label>
+                                <input type="text" id="cvv" name="cvv" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </section>
+        </div>
+        <aside class="col-md-4 col-lg-3">
+            <section>
+                <h2>Sommario</h2>
+                <p th:text="${abbonamento.tipo}"></p>
+                <p th:text="${abbonamento.frequenza}"></p>
+                <p th:text="${abbonamento.prezzo}"></p>
+            </section>
+        </aside>
+    </div>
+    <div class="summary-buttons">
+        <button th:onclick="|location.href='abbonamento'|" class="btn btn-primary btn-sm w-20">Torna Indietro</button>
+        <button onclick="confirmAbbonamento()" class="btn btn-primary btn-sm w-20">Conferma</button>
+    </div>
+</main>
+<footer th:replace="~{fragments/fragments :: footer}"></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function confirmAbbonamento() {
+
+        const nomeTitolare = document.getElementById('nome').value;
+        const numeroCarta = document.getElementById('numero').value;
+        const dataScadenza = document.getElementById('data').value;
+        const CVV = document.getElementById('cvv').value;
+
+        if (!nomeTitolare || !numeroCarta || !dataScadenza || !CVV ) {
+            alert('Per favore, compila tutti i campi obbligatori.');
+            return;
+        }
+
+        const formData = new URLSearchParams();
+
+        formData.append('id', /*[[${abbonamento.id}]]*/);
+
+        formData.append('numeroCarta', numeroCarta);
+        formData.append('dataScadenza', dataScadenza);
+        formData.append('CVV', CVV);
+        formData.append('nomeTitolare', nomeTitolare);
+
+
+        fetch('/abbonamento', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: formData.toString()
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert('Abbonamento sottoscritto con successo!');
+
+                    window.location.href = '/catalogo';
+                } else {
+                    return response.text().then(errorMessage => {
+                        throw new Error(errorMessage || 'Errore durante la conferma dell\'ordine.');
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Errore:', error);
+                alert('Si è verificato un problema: ' + error.message);
+            });
+    }
+/*]]>*/
+</script>
+</body>
+</html>

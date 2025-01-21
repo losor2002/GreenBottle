@@ -23,6 +23,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,20 +51,22 @@ public class CreazioneOrdineController {
   private SessionCarrello sessionCarrello;
 
   @GetMapping
-  public String get(@ModelAttribute ProdottoForm prodottiForm, Model model) {
+  public String get(Model model) {
     Optional<Cliente> clienteOptional = sessionCliente.getCliente();
-
+    Map<Prodotto, Integer> carrello = sessionCarrello.getRealCarrello();
     if (clienteOptional.isEmpty()) {
-      // TODO: Invalidate the session if necessary.
       return "redirect:/login";
     }
-
+    if (carrello == null || carrello.isEmpty()){
+      model.addAttribute("errore", "Il carrello è vuoto.");
+      return "redirect:/carrello";
+    }
     return ordineView;
   }
 
   @PostMapping
   @Transactional
-  public String post(@ModelAttribute @Valid OrdineForm ordineForm, Model model) {
+  public String post(@ModelAttribute @Valid OrdineForm ordineForm, Model model, BindingResult bindingResult) {
     Optional<Cliente> clienteOptional = sessionCliente.getCliente();
 
     if (clienteOptional.isEmpty()) {
@@ -71,7 +74,11 @@ public class CreazioneOrdineController {
     }
 
     final Cliente cliente = clienteOptional.get();
-    
+
+    if(bindingResult.hasErrors()) {
+      model.addAttribute("errore", bindingResult.getAllErrors());
+      return "redirect:/carrello";
+    }
 
     Map<Long, Integer> prodottiUnparsed = sessionCarrello.getCarrello();
     Map<Prodotto, Integer> prodotti = new HashMap<>();

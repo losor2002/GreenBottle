@@ -19,7 +19,7 @@
         <div class="col-md-8">
             <section>
                 <!--/*@thymesVar id="ordineForm" type="it.unisa.greenbottle.controller.ordineControl.form.OrdineForm"*/-->
-                <form th:action="@{/catalogo}" th:object="${ordineForm}" method="post">
+                <form th:action="@{/ordina}" th:object="${ordineForm}" method="post">
                     <!-- Scelta dell'indirizzo -->
                     <h2 style="text-align: center;">Indirizzo di spedizione</h2>
                     <div class="address-wrapper">
@@ -78,7 +78,7 @@
         </div>
         <aside class="col-md-4 col-lg-3">
             <section>
-                <h2>Sommmario</h2>
+                <h2>Sommario</h2>
                 <p th:each="prodotto : ${prodotti}">
                     <span th:text="${prodotto.nome}"></span> - <span th:text="${'€ ' + prodotto.prezzo}"></span>
                 </p>
@@ -112,6 +112,63 @@
 
         toggleTextarea();
     });
+</script>
+
+<script>
+    function confirmOrder() {
+
+        const nomeTitolare = document.getElementById('nome').value.trim();
+        const numeroCarta = document.getElementById('numero').value.trim();
+        const dataScadenza = document.getElementById('data').value.trim();
+        const CVV = document.getElementById('cvv').value.trim();
+        const indirizzo = document.querySelector('input[name="address"]:checked')?.value;
+        const isSupporto = document.getElementById('supporto-service').checked;
+        const isRitiro = document.getElementById('ritiro-service').checked;
+        const descrizioneSupporto = document.getElementById('order-description').value.trim();
+
+        if (!nomeTitolare || !numeroCarta || !dataScadenza || !CVV || !indirizzo) {
+            alert('Per favore, compila tutti i campi obbligatori.');
+            return;
+        }
+
+        if (isSupporto && descrizioneSupporto === "") {
+            alert('Inserisci una descrizione per il supporto aggiuntivo.');
+            return;
+        }
+
+        const formData = new URLSearchParams();
+
+        formData.append('numeroCarta', numeroCarta);
+        formData.append('dataScadenza', dataScadenza);
+        formData.append('CVV', CVV);
+        formData.append('nomeTitolare', nomeTitolare);
+        formData.append('indirizzo', indirizzo);
+        formData.append('isSupporto', isSupporto);
+        formData.append('isRitiro', isRitiro);
+        formData.append('descrizioneSupporto', isSupporto ? descrizioneSupporto : "");
+
+        fetch('/ordina', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: formData.toString()
+        })
+            .then(response => {
+                if (response.redirected) {
+
+                    window.location.href = response.url;
+                } else {
+                    return response.text().then(html => {
+                        document.body.innerHTML = html;
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Errore:', error);
+                alert('Si è verificato un problema durante la conferma dell\'ordine. Riprova più tardi.');
+            });
+    }
 </script>
 </body>
 </html>
