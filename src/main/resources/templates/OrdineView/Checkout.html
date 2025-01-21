@@ -102,8 +102,10 @@
         function toggleTextarea() {
             if (supportButton.checked) {
                 textarea.disabled = false;
+                textarea.placeholder = 'Devi aggiungere una descrizione';
             } else {
                 textarea.disabled = true;
+                textarea.placeholder = 'Disponibile solo per il servizio di supporto aggiuntivo';
                 textarea.value = '';
             }
         }

@@ -16,6 +16,7 @@
 <h1 class="text-center">Il tuo Carrello</h1>
 <main class="container my-4">
     <div class="container">
+        <!--/*@thymesVar id="carrello" type="it.unisa.greenbottle.controller.ordineControl.util.SessionCarrello"*/-->
         <div th:if="${carrello == null || carrello.isEmpty()}">
             <p class="text-center">Il tuo carrello è vuoto. <a href="/catalogo">Torna al catalogo</a></p>
         </div>
@@ -31,10 +32,9 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="entry : ${carrello.entrySet()}">
+                <tr th:each="entry : ${carrello.getCarrello()}">
                     <td>
-                        <img th:src="@{/productImg(id=${entry.key.id})}">
-                             alt="Immagine prodotto" width="50">
+                        <img th:src="@{/productImg(id=${entry.key})}" alt="Immagine prodotto" width="50">
                     </td>
                     <td>
                         <strong th:text="${entry.key.nome}">Nome Prodotto</strong><br>
@@ -76,7 +76,7 @@
 </main>
 <footer th:replace="~{fragments/fragments :: footer}"></footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- solo quando viene caricata la pagina -->
+<!--
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         function calculateSubtotal() {
@@ -96,7 +96,8 @@
         calculateSubtotal();
     });
 </script>
-<!-- anche per quando vengono premuti i pulsanti -->
+-->
+<!-- ricalcolo del totale dinamico -->
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         function calculateSubtotal() {
