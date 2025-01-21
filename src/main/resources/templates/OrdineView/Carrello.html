@@ -33,7 +33,7 @@
                 <tbody>
                 <tr th:each="entry : ${carrello.entrySet()}">
                     <td>
-                        <img th:src="'data:image/png;base64,' + ${#strings.bytesToBase64(entry.key.img)}"
+                        <img th:src="@{/productImg(id=${entry.key.id})}">
                              alt="Immagine prodotto" width="50">
                     </td>
                     <td>
@@ -69,7 +69,7 @@
             </div>
             <div class="buttons d-flex justify-content-between mt-4">
                 <a href="/catalogo" class="btn btn-outline-primary">Torna al Catalogo</a>
-                <a href="/checkout" class="btn btn-primary">Checkout</a>
+                <a href="/ordina" class="btn btn-primary">Checkout</a>
             </div>
         </div>
     </div>
@@ -99,13 +99,12 @@
 <!-- anche per quando vengono premuti i pulsanti -->
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Function to calculate and display the subtotal
         function calculateSubtotal() {
             let subtotal = 0;
 
-            // Select all the elements with ID 'price' and iterate over them
+
             document.querySelectorAll('#price').forEach(priceElement => {
-                // Extract the numeric value of the price (remove '€' and parse as a float)
+
                 const price = parseFloat(priceElement.textContent.replace('€', '').trim());
                 if (!isNaN(price)) {
                     subtotal += price;
@@ -124,21 +123,20 @@
             const addButtons = document.querySelectorAll('.btn-success');
             const removeButtons = document.querySelectorAll('.btn-danger');
 
-            // Add button click events
+
             addButtons.forEach(button => {
                 button.addEventListener('click', (event) => {
                     event.preventDefault();
-                    // Simulate adding an item (adjust the quantity and price dynamically here)
+
                     const quantityElement = button.nextElementSibling;
                     const priceElement = button.closest('tr').querySelector('#price');
                     const unitPrice = parseFloat(priceElement.textContent.replace('€', '').trim()) / parseInt(quantityElement.textContent.trim());
 
-                    // Increment quantity and update price
+
                     const newQuantity = parseInt(quantityElement.textContent.trim()) + 1;
                     quantityElement.textContent = newQuantity;
                     priceElement.textContent = `€${(unitPrice * newQuantity).toFixed(2)}`;
 
-                    // Recalculate subtotal
                     calculateSubtotal();
                 });
             });

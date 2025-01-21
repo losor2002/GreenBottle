@@ -6,8 +6,12 @@ import it.unisa.greenbottle.controller.accessoControl.util.SessionCliente;
 import it.unisa.greenbottle.storage.abbonamentoStorage.dao.AbbonamentoDao;
 import it.unisa.greenbottle.storage.abbonamentoStorage.dao.DisposizioneDao;
 import it.unisa.greenbottle.storage.abbonamentoStorage.entity.Abbonamento;
+import it.unisa.greenbottle.storage.accessoStorage.dao.ClienteDao;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/abbonamento")
 public class AbbonamentoController {
   private static final String abbonamentoView = "AbbonamentoView/Abbonamenti";
+  private static final String checkoutAbbonamentoView = "AbbonamentoView/CheckoutAbbonamento";
 
   @Autowired
   private AbbonamentoDao abbonamentoDao;
@@ -35,20 +40,25 @@ public class AbbonamentoController {
   private SessionCliente sessionCliente;
   @Autowired
   private DisposizioneDao disposizioneDao;
+    @Autowired
+    private ClienteDao clienteDao;
 
   @GetMapping
   public String get(
-      @RequestParam(name = "abbonamento", required = false) String tipo,
-      @ModelAttribute AbbonamentoForm abbonamentoForm,
-      Model model) {
-    // Recupero l'abbonamento dal modello se non già presente
-    if (!model.containsAttribute("abbonamento")) {
+      @RequestParam(name = "abbonamento", required = false) String tipo, @RequestParam(name = "sottoscrivi", required = false) Long id, Model model) {
+    // Roecupero l'abbonamento dal modello se non già presente
+    /*if (!model.containsAttribute("abbonamento")) {
       Optional<Cliente> clienteOpt = sessionCliente.getCliente();
       clienteOpt.ifPresent(cliente -> {
         Abbonamento abbonamento = cliente.getAbbonamento();
         Optional.ofNullable(abbonamento)
             .ifPresent(a -> model.addAttribute("abbonamento", a.getId()));
       });
+    }*/
+
+    if(id != null) {
+      model.addAttribute("abbonamento", abbonamentoDao.findAbbonamentoById(id).get());
+      return checkoutAbbonamentoView;
     }
 
     if (tipo != null && !tipo.isBlank()) {
@@ -77,15 +87,21 @@ public class AbbonamentoController {
 
   }
 
-
   @PostMapping
   @ResponseBody
   public String post(@ModelAttribute @Valid AbbonamentoForm abbonamentoForm,
-                     BindingResult bindingResult, Model model) {
-
+                     BindingResult bindingResult, Model model, HttpServletResponse httpServletResponse)
+          throws IOException {
+          if (bindingResult.hasErrors()) {
+      model.addAttribute("errore", "Errore di formato.");
+      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,
+              bindingResult.getAllErrors().toString());
+      return "redirect:/error";
+    }
 
     Optional<Cliente> clienteOpt = sessionCliente.getCliente();
     if (clienteOpt.isEmpty()) {
+      model.addAttribute("errore", "Non loggato");
       return "redirect:/login";
     }
 
@@ -93,8 +109,10 @@ public class AbbonamentoController {
     Long idAbbonamento = abbonamentoForm.getId();
     Optional<Abbonamento> abbonamentoOptional = abbonamentoDao.findAbbonamentoById(idAbbonamento);
     if (abbonamentoOptional.isEmpty()) {
+      httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND, "Abbonamento non trovato");
       return "redirect:/error";
     }
+
 
 
     Abbonamento abbonamento = abbonamentoOptional.get();
@@ -102,6 +120,7 @@ public class AbbonamentoController {
 
     cliente.setAbbonamento(abbonamento);
     cliente.setSottoscrizione(new Timestamp(System.currentTimeMillis()));
+    clienteDao.save(cliente);
 
     model.addAttribute("abbonamento", abbonamento.getId());
 
@@ -109,6 +128,7 @@ public class AbbonamentoController {
     if (model.containsAttribute("abbonamento")) {
       return abbonamentoView;
     } else {
+      httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND, "Errore nel sottoscrivere l'abbonamento");
       return "errore";
     }
   }

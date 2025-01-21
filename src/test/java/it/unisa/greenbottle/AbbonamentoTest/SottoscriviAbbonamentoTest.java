@@ -55,6 +55,7 @@ public class SottoscriviAbbonamentoTest {
                 Abbonamento.FrequenzaAbbonamento.GIORNALIERO,
                 120.50f
         );
+        abbonamento.setId(1L);
 
     }
 
