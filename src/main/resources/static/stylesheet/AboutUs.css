@@ -1,0 +1,5 @@
+.card-img-small {
+    width: 50px; /* Dimensione dell'immagine */
+    height: 50px;
+    object-fit: cover;
+}

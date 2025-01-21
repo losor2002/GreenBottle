@@ -3,27 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Si è verificato un errore</title>
+    <title>GreenBottle: About Us</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link th:href="@{/stylesheet/Common.css}" rel="stylesheet">
     <link th:href="@{/stylesheet/Head.css}" rel="stylesheet">
     <link th:href="@{/stylesheet/Footer.css}" rel="stylesheet">
+    <link th:href="@{/stylesheet/AboutUs.css}" rel="stylesheet">
 </head>
 <body>
 <div th:replace="~{fragments/fragments.html :: header}"></div>
 
-<div class="row">
-    <!-- Card con Thymeleaf -->
-    <div class="col-md-6 col-lg-4 mb-3">
-        <div class="card">
-            <img th:src="@{/img/Logo.png}" class="card-img-top" alt="img">
-            <div class="card-body text-center">
-                <h5 class="card-title"> Marino Michael </h5>
-                <p class="card-text"> m.marino107@studenti.unisa.it </p>
-                <a href="https://github.com/Miky1071" class="btn btn-outline-dark" target="_blank">
-                    <i class="bi bi-github"></i> GitHub
-                </a>
+<div class="d-flex justify-content-center align-items-center my-3">
+    <div class="container">
+        <div class="row">
+            <!-- Card con Thymeleaf -->
+            <div class="card w-100 mb-3">
+                <div class="d-flex justify-content-between align-items-center p-3">
+                    <img th:src="@{/img/Logo.png}" class="card-img-small" alt="img">
+                    <h5 class="flex-grow-1 text-center mb-0 p-3">Lorenzo Sorrentino</h5>
+                    <p class="flex-grow-1 text-center mb-0 p-3">l.sorrentino66@studenti.unisa.it </p>
+                    <p class="flex-grow-1 text-center mb-0 p-3">Project Manager di GreenBottle</p>
+                    <a href="https://github.com/losor2002" class="btn btn-outline-dark btn-sm" target="_blank">
+                        <i class="bi bi-github"></i> GitHub
+                    </a>
+                </div>
             </div>
+
+            <div class="card w-100 mb-3">
+                <div class="d-flex justify-content-between align-items-center p-3">
+                    <img th:src="@{/img/Logo.png}" class="card-img-small" alt="img">
+                    <h5 class="flex-grow-1 text-center mb-0 p-3">Francesco Maria Puca</h5>
+                    <p class="flex-grow-1 text-center mb-0 p-3">f.puca3@studenti.unisa.it</p>
+                    <p class="flex-grow-1 text-center mb-0 p-3">Project Manager di GreenBottle</p>
+                    <a href="https://github.com" class="btn btn-outline-dark btn-sm" target="_blank">
+                        <i class="bi bi-github"></i> GitHub
+                    </a>
+                </div>
+            </div>
+
+            <div class="card w-100 mb-3">
+                <div class="d-flex justify-content-between align-items-center p-3">
+                    <img th:src="@{/img/Logo.png}" class="card-img-small" alt="img">
+                    <h5 class="flex-grow-1 text-center mb-0 p-3">Marino Michael</h5>
+                    <p class="flex-grow-1 text-center mb-0 p-3">m.marino107@studenti.unisa.it</p>
+                    <p class="flex-grow-1 text-center mb-0 p-3">Team Member di GreenBottle</p>
+                    <a href="https://github.com/Miky1071" class="btn btn-outline-dark btn-sm" target="_blank">
+                        <i class="bi bi-github"></i> GitHub
+                    </a>
+                </div>
+            </div>
+
+            <div class="card w-100 mb-3">
+                <div class="d-flex justify-content-between align-items-center p-3">
+                    <img th:src="@{/img/Logo.png}" class="card-img-small" alt="img">
+                    <h5 class="flex-grow-1 text-center mb-0 p-3">Giovanni Ruocco</h5>
+                    <p class="flex-grow-1 text-center mb-0 p-3">g.ruocco45@studenti.unisa.it</p>
+                    <p class="flex-grow-1 text-center mb-0 p-3">Team Member di GreenBottle</p>
+                    <a href="https://github.com/GiRuni" class="btn btn-outline-dark btn-sm" target="_blank">
+                        <i class="bi bi-github"></i> GitHub
+                    </a>
+                </div>
+            </div>
+
+            <div class="card w-100 mb-3">
+                <div class="d-flex justify-content-between align-items-center p-3">
+                    <img th:src="@{/img/Logo.png}" class="card-img-small" alt="img">
+                    <h5 class="flex-grow-1 text-center mb-0 p-3">Pietro D'antuono</h5>
+                    <p class="flex-grow-1 text-center mb-0 p-3">p.dantuono2@studenti.unisa.it</p>
+                    <p class="flex-grow-1 text-center mb-0 p-3">Team Member di GreenBottle</p>
+                    <a href="https://github.com/PDant17" class="btn btn-outline-dark btn-sm" target="_blank">
+                        <i class="bi bi-github"></i> GitHub
+                    </a>
+                </div>
+            </div>
+
+            <div class="card w-100 mb-3">
+                <div class="d-flex justify-content-between align-items-center p-3">
+                    <img th:src="@{/img/Logo.png}" class="card-img-small" alt="img">
+                    <h5 class="flex-grow-1 text-center mb-0 p-3">Stefano Cozzolino</h5>
+                    <p class="flex-grow-1 text-center mb-0 p-3">s.cozzolino15@studenti.unisa.it </p>
+                    <p class="flex-grow-1 text-center mb-0 p-3">Team Member di GreenBottle</p>
+                    <a href="https://github.com/Ser1zard" class="btn btn-outline-dark btn-sm" target="_blank">
+                        <i class="bi bi-github"></i> GitHub
+                    </a>
+                </div>
+            </div>
+
+            <div class="card w-100 mb-3">
+                <div class="d-flex justify-content-between align-items-center p-3">
+                    <img th:src="@{/img/Logo.png}" class="card-img-small" alt="img">
+                    <h5 class="flex-grow-1 text-center mb-0 p-3">Fabio Catello Ponticelli</h5>
+                    <p class="flex-grow-1 text-center mb-0 p-3">f.ponticelli2@studenti.unisa.it </p>
+                    <p class="flex-grow-1 text-center mb-0 p-3">Team Member di GreenBottle</p>
+                    <a href="https://github.com/Boh0263" class="btn btn-outline-dark btn-sm" target="_blank">
+                        <i class="bi bi-github"></i> GitHub
+                    </a>
+                </div>
+            </div>
+
+            <div class="card w-100 mb-3">
+                <div class="d-flex justify-content-between align-items-center p-3">
+                    <img th:src="@{/img/Logo.png}" class="card-img-small" alt="img">
+                    <h5 class="flex-grow-1 text-center mb-0 p-3">Giuseppe Pastena</h5>
+                    <p class="flex-grow-1 text-center mb-0 p-3">g.pastena1@studenti.unisa.it </p>
+                    <p class="flex-grow-1 text-center mb-0 p-3">Team Member di GreenBottle</p>
+                    <a href="https://github.com/GiuseppePastena23" class="btn btn-outline-dark btn-sm" target="_blank">
+                        <i class="bi bi-github"></i> GitHub
+                    </a>
+                </div>
+            </div>
+
+            <div class="card w-100 mb-3">
+                <div class="d-flex justify-content-between align-items-center p-3">
+                    <img th:src="@{/img/Logo.png}" class="card-img-small" alt="img">
+                    <h5 class="flex-grow-1 text-center mb-0 p-3">Pasquale Muraca</h5>
+                    <p class="flex-grow-1 text-center mb-0 p-3">p.muraca@studenti.unisa.it</p>
+                    <p class="flex-grow-1 text-center mb-0 p-3">Team Member di GreenBottle</p>
+                    <a href="https://github.com/PasqualeMuraca" class="btn btn-outline-dark btn-sm" target="_blank">
+                        <i class="bi bi-github"></i> GitHub
+                    </a>
+                </div>
+            </div>
+
+            <div class="card w-100 mb-3">
+                <div class="d-flex justify-content-between align-items-center p-3">
+                    <img th:src="@{/img/Logo.png}" class="card-img-small" alt="img">
+                    <h5 class="flex-grow-1 text-center mb-0 p-3">Salvatore Conte</h5>
+                    <p class="flex-grow-1 text-center mb-0 p-3">s.conte19@studenti.unisa.it</p>
+                    <p class="flex-grow-1 text-center mb-0 p-3">Team Member di GreenBottle</p>
+                    <a href="https://github.com" class="btn btn-outline-dark btn-sm" target="_blank">
+                        <i class="bi bi-github"></i> GitHub
+                    </a>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
