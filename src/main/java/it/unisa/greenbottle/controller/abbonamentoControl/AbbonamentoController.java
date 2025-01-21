@@ -100,7 +100,6 @@ public class AbbonamentoController {
     Abbonamento abbonamento = abbonamentoOptional.get();
     Cliente cliente = clienteOpt.get();
 
-
     cliente.setAbbonamento(abbonamento);
     cliente.setSottoscrizione(new Timestamp(System.currentTimeMillis()));
 

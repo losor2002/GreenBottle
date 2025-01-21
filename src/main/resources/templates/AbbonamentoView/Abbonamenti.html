@@ -43,7 +43,8 @@
                         <h5 class="card-title">Silver Plan</h5>
                         <p class="card-text">Ottieni di più con i nostri piani silver.</p>
                         <button type="submit" class="btn btn-primary" name="abbonamento" value="Silver"
-                                onclick="showSection()">Mostra
+                                onclick="
+                                showSection()">Mostra
                         </button>
                     </div>
                 </div>
@@ -79,8 +80,7 @@
         </thead>
         <tbody>
         <tr th:each="sub : ${abbonamenti}">
-            <td th:each="prodotto : ${sub.getProdottiAbbonamento()}">
-                <ul>
+                <ul th:each="prodotto : ${sub.getProdottiAbbonamento()}">
                     <!-- Aggiungere link alla pagina del prodotto singolo -->
                     <li th:text="${prodotto.key.getNome() + ' x' + prodotto.value}"></li>
                 </ul>
