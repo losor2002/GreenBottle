@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<html lang="it" xmlns:th="https://www.thymeleaf.org">
 <head>
     <title>Fragments</title>
     <meta charset="UTF-8">
@@ -34,7 +34,6 @@
                         <a class="nav-link" href="/abbonamento">Abbonamenti</a>
                     </li>
 
-
                     <li class="nav-item"
                         th:if="${session.sessionCliente != null and !session.sessionCliente.getCliente().isEmpty()}">
                         <a class="nav-link" href="/carrello">Carrello</a>
@@ -58,7 +57,10 @@
 </header>
 <footer th:fragment="footer" class="footer py-3">
     <div class="container text-center">
-        <p>&copy; 2025 I diritti della pagina sono di chi l'ha creata</p>
+        <p><strong>&copy; 2025 - GreenBottle. I diritti della pagina sono di chi l'ha creata</strong><br>
+            <strong>Lorenzo Sorrentino, Francesco Maria Puca, Pasquale Muraca, Pietro D'Antuono, Fabio Catello
+                Ponticelli,<br>Giovanni Ruocco, Stefano Cozzolino, Giuseppe Pastena, Michael Marino, Salvatore
+                Conte</strong></p>
     </div>
 </footer>
 </body>
