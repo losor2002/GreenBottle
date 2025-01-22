@@ -32,6 +32,9 @@ public class SottoscrizioneAbbonamentoTest {
     @MockitoBean
     private AbbonamentoForm abbonamentoForm;
 
+    @MockitoBean
+    private ClienteDao clienteDao;
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -42,6 +45,7 @@ public class SottoscrizioneAbbonamentoTest {
     public void setUp() {
         Cliente cliente = new Cliente();
         when(sessionCliente.getCliente()).thenReturn(Optional.of(cliente));
+        when(clienteDao.findClienteById(1L)).thenReturn(Optional.of(cliente));
 
         Abbonamento abbonamento = new Abbonamento(
                 Abbonamento.TipoAbbonamento.BRONZE,
