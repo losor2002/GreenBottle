@@ -13,7 +13,7 @@
 <body>
 <div th:replace="~{fragments/fragments :: header}"></div>
 <main class="container my-5">
-    <h2 th:text="'Stato Ordine: ' + ${ordine.getStato().toString()}"></h2>
+    <h2 th:text="'Stato Ordine: ' + ${ordine.getId()}"></h2>
     <div th:if="${ordine.getStato().equals(StatoSpedizione.ELABORAZIONE)}">
         <form action="/areaPersonale/visualizzaStatoOrdine" method="post">
             <input type="hidden" th:name="id" th:value="${ordine.getId()}"/>

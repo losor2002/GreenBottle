@@ -65,7 +65,8 @@ public class VisualizzaStoricoOrdiniController {
 
     for (Ordine ordine : ordiniCliente) {
       LocalDate dataOrdine = ordine.getData().toLocalDateTime().toLocalDate();
-      if (dataOrdine.isAfter(startDate) && dataOrdine.isBefore(endDate)) {
+      if ((dataOrdine.isEqual(startDate) || dataOrdine.isAfter(startDate))
+          && (dataOrdine.isEqual(endDate) || dataOrdine.isBefore(endDate))) {
         ordiniFinale.add(new OrdineWrapper(ordine, ordine.getComposizioni().stream().toList()));
       }
     }
