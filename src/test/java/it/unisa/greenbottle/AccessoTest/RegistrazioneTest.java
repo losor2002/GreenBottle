@@ -27,39 +27,40 @@ public class RegistrazioneTest {
 
   @Test
   public void formatoNomeErrato() throws Exception {
-    testRegistrazione("Gian@!@Carlo", "Toronto", "giancarlo@example.com", "password123",
+    testRegistrazione("Gian@!@Carlo", "Toronto", "GiancarloToronto#1966@gmail.com", "ciao",
         status().isOk(), "Nome non rispetta il formato.");
   }
 
   @Test
   public void formatoCognomeErrato() throws Exception {
-    testRegistrazione("Giancarlo", "Toron@!@to", "giancarlo@example.com", "password123",
+    testRegistrazione("Giancarlo", "Toron@!@to", "GiancarloToronto#1966@gmail.com", "ciao",
         status().isOk(), "Cognome non rispetta il formato.");
   }
 
   @Test
   public void emailTroppoLunga() throws Exception {
-    testRegistrazione("Giancarlo", "Toronto", ("a").repeat(320) + "@example.com", "password123",
+    testRegistrazione("Giancarlo", "Toronto", ("a").repeat(320) + "@example.com", "ciao",
         status().isOk(), "Dimensione Email errata.");
   }
 
   @Test
   public void formatoEmailErrato() throws Exception {
-    testRegistrazione("Giancarlo", "Toronto", "GiancarloToronto@1966@gmail.c", "password123",
+    testRegistrazione("Giancarlo", "Toronto", "GiancarloToronto#1966@gmail.c", "ciao",
         status().isOk(), "Formato Email errato.");
   }
 
   @Test
   public void formatoPasswordErrato() throws Exception {
-    testRegistrazione("Giancarlo", "Toronto", "giancarlo@example.com", "ciao",
+    testRegistrazione("Giancarlo", "Toronto", "GiancarloToronto1966@gmail.com", "ciao",
         status().isOk(), "La Password deve contenere");
   }
 
   @Test
   public void registrazioneEffettuata() throws Exception {
-    when(clienteDao.findClienteByEmail("giancarlo@example.com")).thenReturn(Optional.empty());
+    when(clienteDao.findClienteByEmail("GiancarloToronto1966@example.com")).thenReturn(
+        Optional.empty());
 
-    testRegistrazione("Giancarlo", "Toronto", "giancarlo@example.com", "GiancoToro66!",
+    testRegistrazione("Giancarlo", "Toronto", "GiancarloToronto1966@gmail.com", "GiancoToro66!",
         status().is3xxRedirection(), null);
   }
 

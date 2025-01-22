@@ -36,9 +36,9 @@ public class RegistrazioneForm {
   @Email(message = "Formato Email errato.")
   @Size(min = 6, max = 319, message = "Dimensione Email errata.")
   @Pattern(
-      regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+      regexp = "^[a-zA-Z0-9.]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
       message =
-          " "
+          "Formato Email errato."
   )
   private String email;
 
