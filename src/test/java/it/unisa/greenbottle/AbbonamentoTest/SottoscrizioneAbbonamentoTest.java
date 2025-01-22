@@ -6,10 +6,8 @@ import it.unisa.greenbottle.storage.abbonamentoStorage.dao.AbbonamentoDao;
 import it.unisa.greenbottle.storage.abbonamentoStorage.entity.Abbonamento;
 import it.unisa.greenbottle.storage.accessoStorage.dao.ClienteDao;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,8 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
-
-import javax.xml.crypto.Data;
 
 import java.util.Optional;
 
@@ -28,10 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class SottoscriviAbbonamentoTest {
-
-    @MockitoBean
-    private ClienteDao clienteDao;
+public class SottoscrizioneAbbonamentoTest {
 
     @MockitoBean
     private SessionCliente sessionCliente;
@@ -39,10 +32,11 @@ public class SottoscriviAbbonamentoTest {
     @MockitoBean
     private AbbonamentoForm abbonamentoForm;
 
-    @MockitoBean
-    private AbbonamentoDao abbonamentoDao;
     @Autowired
     private MockMvc mockMvc;
+
+    @MockitoBean
+    private AbbonamentoDao abbonamentoDao;
 
     @BeforeEach
     public void setUp() {
@@ -80,15 +74,22 @@ public class SottoscriviAbbonamentoTest {
         testSottoscriviAbbonamento("Giancarlo Filippi", "5267893664829376", "11/27", "00C", status().isBadRequest());
     }
 
+    @Test
+    public void abbonamentoSottoscritto() throws Exception {
+        Abbonamento abbonamento = new Abbonamento();
+        when(abbonamentoDao.findAbbonamentoById(1L)).thenReturn(Optional.of(abbonamento));
+        testSottoscriviAbbonamento("Giancarlo Filippi", "5267893664829376", "11/27", "337", status().isOk());
+    }
+
 
     public void testSottoscriviAbbonamento(String Nome_titolare, String Numero_carta, String Data_scadenza, String CVV, ResultMatcher resultMatcher) throws Exception {
         abbonamentoForm = new AbbonamentoForm(1L, Numero_carta, Data_scadenza, Nome_titolare, CVV);
 
         mockMvc.perform(post("/abbonamento")
                 .param("id", "1")
-                .param("Numero carta", Numero_carta)
-                .param("Data scadenza", Data_scadenza)
-                .param("Nome titolare", Nome_titolare)
+                .param("numeroCarta", Numero_carta)
+                .param("dataScadenza", Data_scadenza)
+                .param("nomeTitolare", Nome_titolare)
                 .param("CVV", CVV))
             .andExpect(resultMatcher);
     }
