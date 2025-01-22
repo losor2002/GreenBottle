@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.context.annotation.SessionScope;
 
 @Component
@@ -23,7 +22,7 @@ public class SessionCarrello {
   @Autowired
   private ProdottoDao prodottoDao;
 
-  @ModelAttribute("carrello")
+
   public Map<Prodotto, Integer> getRealCarrello() {
     if (carrello == null || carrello.isEmpty()) {
       return new HashMap<>();

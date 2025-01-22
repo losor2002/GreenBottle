@@ -89,11 +89,15 @@
                         </button>
                         <div class="d-flex justify-content-between">
                             <p class="text-muted my-4" th:text="${prodotto.prezzo + ' €'}"></p>
-                            <button class="btn btn-success btn-sm my-4"
-                                    th:onclick="'addToCart(' + ${prodotto.id} + ')'">
-                                <i class="bi bi-cart"></i>
-                                Aggiungi Al Carrello
-                            </button>
+                            <!--/*@thymesVar id="prodottoForm" type="it.unisa.greenbottle.controller.ordineControl.form.ProdottoForm"*/-->
+                            <form th:action="@{/aggiungi-al-carrello}" method="post" th:object="${prodottoForm}">
+                                <input type="hidden" name="idProdotto" th:value="${prodotto.id}">
+                                <input type="hidden" name="quantita" th:value="${1}">
+                                <button class="btn btn-success btn-sm my-4" type="submit">
+                                    <i class="bi bi-cart"></i>
+                                    Aggiungi Al Carrello
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -123,11 +127,20 @@
 </script>
 <script>
     function addToCart(productId) {
-        fetch(`/getProdotti/add/${productId}`, {
+
+        const prodottoForm = {
+            idProdotto: productId,
+            quantita: '1'
+        };
+
+        const formData = new URLSearchParams(prodottoForm).toString();
+
+        fetch(`/aggiungi-al-carrello`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
-            }
+            },
+            body: formData
         })
             .then(response => {
                 if (response.ok) {

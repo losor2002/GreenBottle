@@ -1,6 +1,7 @@
 package it.unisa.greenbottle.controller.catalogoControl;
 
 import it.unisa.greenbottle.controller.catalogoControl.form.FiltroForm;
+import it.unisa.greenbottle.controller.ordineControl.form.ProdottoForm;
 import it.unisa.greenbottle.storage.catalogoStorage.dao.CategoriaDao;
 import it.unisa.greenbottle.storage.catalogoStorage.dao.ProdottoDao;
 import it.unisa.greenbottle.storage.catalogoStorage.dao.RecensioneDao;
@@ -79,8 +80,10 @@ public class VisualizzaCatalogoController {
     }
 
     List<Prodotto> prodotti = prodottoDao.findAll(spec);
+    ProdottoForm prodottoForm = new ProdottoForm();
     model.addAttribute("prodotti", prodotti);
     model.addAttribute("filterForm", filtroForm);
+    model.addAttribute("prodottoForm", prodottoForm);
     return catalogoView;
   }
 

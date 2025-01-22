@@ -14,7 +14,6 @@
 <div th:replace="~{fragments/fragments.html :: header}"></div>
 <h1 class="text-center">Il tuo Carrello</h1>
 <main class="container my-4">
-    <!--/*@thymesVar id="carrello" type="it.unisa.greenbottle.controller.ordineControl.util.SessionCarrello"*/-->
     <div class="container">
         <div th:if="${carrello == null || #maps.isEmpty(carrello)}">
             <p class="text-center">Il tuo carrello è vuoto. <a href="/catalogo">Torna al catalogo</a></p>
@@ -31,7 +30,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="entry : ${carrello.getRealCarrello()}">
+                <tr th:each="entry : ${carrello}">
                     <td>
                         <img th:src="@{/productImg(id=${entry.key.getId()})}" alt="Immagine prodotto" width="50">
                     </td>
@@ -47,7 +46,7 @@
                         </form>
                         <span th:text="${entry.value}">1</span>
                         <!-- Form for removing quantity -->
-                        <form action="/cart/remove" method="post" class="d-inline">
+                        <form action="" method="post" class="d-inline">
                             <input type="hidden" name="id" th:value="${entry.key.getId()}">
                             <button type="submit" class="btn btn-sm btn-danger">-</button>
                         </form>
@@ -55,7 +54,7 @@
                     <td id="price" th:text="${entry.key.prezzo * entry.value}">€0.00</td>
                     <td>
                         <!-- Form for removing all items of a product -->
-                        <form action="/cart/removeAll" method="post" class="d-inline">
+                        <form action="" method="post" class="d-inline">
                             <input type="hidden" name="id" th:value="${entry.key.getId()}">
                             <button type="submit" class="btn btn-sm btn-outline-danger">X</button>
                         </form>
