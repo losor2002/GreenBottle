@@ -57,6 +57,7 @@ public class OrdineDirector {
                                                Set<Composizione> composizioni) {
     Ordine ordine = new OrdineBuilder()
         .prezzo(prezzoTotale)
+        .stato(Ordine.StatoSpedizione.ELABORAZIONE)
         .isRitiro(isRitiro)
         .carta(carta)
         .isSupporto(true)

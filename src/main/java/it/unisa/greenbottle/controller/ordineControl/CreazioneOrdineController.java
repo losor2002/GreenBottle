@@ -16,8 +16,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -34,10 +36,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/ordina")
 public class CreazioneOrdineController {
 
-  private static final String ordineView = "CatalogoView/Home";
-  //TODO CAMBIARE  in OrdineView/VisualizzaStatoOrdine quando la pagina è pronta
-  private static final String fallbackView = "CatalogoView/Home";
-  //TODO: Cambiare in OrdineView/Checkout quando la pagina del checkout è pronta
+  private static final String ordineView = "OrdineView/Checkout";
+
+  private static final String fallbackView = "redirect:/";
+
+  private static final String successView = "redirect:/areaPersonale/visualizzaStoricoOrdini";
+
 
   @Autowired
   private OrdineDao ordineDao;
@@ -66,6 +70,10 @@ public class CreazioneOrdineController {
       httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Il carrello è vuoto");
       return fallbackView;
     }
+    // return a model attribute of List<Indirizzo> grabbing all Indirizzo by Cliente in the session:
+    Cliente cliente = clienteOptional.get();
+    List<Indirizzo> indirizzi = indirizzoDao.findAllByCliente(cliente).orElse(new ArrayList<>());
+    model.addAttribute("indirizzi", indirizzi);
     return ordineView;
   }
 
@@ -88,8 +96,13 @@ public class CreazioneOrdineController {
     }
 
     Map<Long, Integer> prodottiUnparsed = sessionCarrello.getCarrello();
-    Map<Prodotto, Integer> prodotti = new HashMap<>();
 
+    if (prodottiUnparsed == null || prodottiUnparsed.isEmpty()) {
+      model.addAttribute("errore", "Il carrello è vuoto");
+      return fallbackView;
+    }
+
+    Map<Prodotto, Integer> prodotti = new HashMap<>();
     for (Map.Entry<Long, Integer> entry : prodottiUnparsed.entrySet()) {
       Optional<Prodotto> prodottoOpt = prodottoDao.findProdottoById(entry.getKey());
       if (prodottoOpt.isPresent()) {
@@ -158,6 +171,6 @@ public class CreazioneOrdineController {
     ordineDao.save(ordine);
     model.addAttribute("successo", "Ordine inserito con successo.");
     sessionCarrello.clearCarrello();
-    return ordineView;
+    return successView;
   }
 }

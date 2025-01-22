@@ -39,8 +39,6 @@ public class RegistrazioneController {
 
     if (bindingResult.hasErrors()) {
       model.addAttribute("errore", "Errore di formato.");
-      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,
-          bindingResult.getAllErrors().toString());
       return registrazioneView;
     }
 

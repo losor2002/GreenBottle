@@ -53,8 +53,8 @@ public class Ordine {
   @Column(nullable = false)
   private boolean isSupporto; // Indica se l'ordine è supportato da un servizio
 
-  @Column(nullable = false, length = 300)
-  private String descrizione; // Descrizione dell'ordine
+  @Column(nullable = true, length = 300)
+  private String descrizione = ""; // Descrizione dell'ordine
 
   @Column(nullable = false)
   private Timestamp data; // Data e ora di creazione dell'ordine

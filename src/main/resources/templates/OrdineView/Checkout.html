@@ -23,12 +23,17 @@
                     <!-- Scelta dell'indirizzo -->
                     <h2 style="text-align: center;">Indirizzo di spedizione</h2>
                     <div class="address-wrapper">
-                        <ul>
-                            <li>
-                                <input type="radio" id="address" name="address" value="address">
-                                <label for="address">Indirizzo</label>
-                            </li>
-                        </ul>
+                        <div class="no-addresses" th:if="${#lists.isEmpty(indirizzi)}">
+                            <p class="text-center">Non hai indirizzi. <a href="/areaPersonale">Torna al catalogo</a></p>
+                        </div>
+                        <div class="addresses" th:each="addr : ${indirizzi}">
+                            <ul>
+                                <li>
+                                    <input type="radio" id="indirizzo" name="indirizzo" th:value="${addr.getId()}">
+                                    <label for="indirizzo" th:text="${addr.getVia()}"></label>
+                                </li>
+                            </ul>
+                        </div>
                         <button class="add-address">+</button>
                     </div>
                     <!-- Dati di pagamento -->
@@ -70,8 +75,8 @@
                         <!-- Descrizione -->
                         <label class="form-label" for="order-description">Note:</label>
                         <textarea id="order-description"
-                                  placeholder="Disponibile solo per il servizio di supporto aggiuntivo"
-                                  disabled></textarea>
+                                  placeholder="Disponibile solo per il servizio di supporto aggiuntivo" disabled>
+                        </textarea>
                     </div>
                 </form>
             </section>
@@ -83,7 +88,7 @@
                     <span th:text="${prodotto.nome}"></span> - <span th:text="${'€ ' + prodotto.prezzo}"></span>
                 </p>
                 <!-- Logica per il calcolo del totale da aggiungere -->
-                <p>Importo Totale: <span th:text="${prodotto.totale}"></span></p>
+                <p>Importo Totale:</p>
                 <div class="summary-buttons">
                     <button th:onclick="|location.href='carrello'|">Torna Indietro</button>
                     <button th:onclick="confirmOrder()">Conferma</button>
@@ -123,7 +128,7 @@
         const numeroCarta = document.getElementById('numero').value.trim();
         const dataScadenza = document.getElementById('data').value.trim();
         const CVV = document.getElementById('cvv').value.trim();
-        const indirizzo = document.querySelector('input[name="address"]:checked')?.value;
+        const indirizzo = document.querySelector('input[name="indirizzo"]:checked')?.value;
         const isSupporto = document.getElementById('supporto-service').checked;
         const isRitiro = document.getElementById('ritiro-service').checked;
         const descrizioneSupporto = document.getElementById('order-description').value.trim();
@@ -171,6 +176,67 @@
                 alert('Si è verificato un problema durante la conferma dell\'ordine. Riprova più tardi.');
             });
     }
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        function calculateTotal() {
+            let subtotal = 0;
+
+            document.querySelectorAll('#price').forEach(priceElement => {
+
+                const price = parseFloat(priceElement.textContent.replace('€', '').trim());
+                if (!isNaN(price)) {
+                    subtotal += price;
+                }
+            });
+
+            const totalElement = document.querySelector('.total h3 span');
+            if (subtotalElement) {
+                subtotalElement.textContent = `€${subtotal.toFixed(2)}`;
+            }
+        }
+
+        function attachButtonListeners() {
+            const addButtons = document.querySelectorAll('.btn-success');
+            const removeButtons = document.querySelectorAll('.btn-danger');
+
+            addButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.preventDefault();
+
+                    const quantityElement = button.nextElementSibling;
+                    const priceElement = button.closest('tr').querySelector('#price');
+                    const unitPrice = parseFloat(priceElement.textContent.replace('€', '').trim()) / parseInt(quantityElement.textContent.trim());
+                    const newQuantity = parseInt(quantityElement.textContent.trim()) + 1;
+                    quantityElement.textContent = newQuantity;
+                    priceElement.textContent = `€${(unitPrice * newQuantity).toFixed(2)}`;
+
+                    calculateTotal();
+                });
+            });
+
+            removeButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.preventDefault();
+
+                    const quantityElement = button.previousElementSibling;
+                    const priceElement = button.closest('tr').querySelector('#price');
+                    const unitPrice = parseFloat(priceElement.textContent.replace('€', '').trim()) / parseInt(quantityElement.textContent.trim());
+
+                    // Decremento con controllo che non diventi minore di 1
+                    const newQuantity = Math.max(parseInt(quantityElement.textContent.trim()) - 1, 1);
+                    quantityElement.textContent = newQuantity;
+                    priceElement.textContent = `€${(unitPrice * newQuantity).toFixed(2)}`;
+
+                    calculateTotal();
+                });
+            });
+        }
+
+        calculateTotal();
+        attachButtonListeners();
+    });
 </script>
 </body>
 </html>
