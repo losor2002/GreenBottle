@@ -8,7 +8,7 @@ public class AboutUsController {
 
   private String footerView = "/AboutUs";
 
-  @GetMapping(value = {"/", "/AboutUs"})
+  @GetMapping(value = {"/AboutUs"})
   public String home() {
     return footerView;
   }
