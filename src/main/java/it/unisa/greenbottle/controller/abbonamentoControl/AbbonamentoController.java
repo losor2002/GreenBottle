@@ -92,6 +92,7 @@ public class AbbonamentoController {
   public String post(@ModelAttribute @Valid AbbonamentoForm abbonamentoForm,
                      BindingResult bindingResult, Model model, HttpServletResponse httpServletResponse)
           throws IOException {
+
           if (bindingResult.hasErrors()) {
       model.addAttribute("errore", "Errore di formato.");
       httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,
@@ -129,7 +130,7 @@ public class AbbonamentoController {
       return abbonamentoView;
     } else {
       httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND, "Errore nel sottoscrivere l'abbonamento");
-      return "errore";
+      return "redirect:/error";
     }
   }
 }

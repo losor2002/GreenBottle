@@ -103,10 +103,10 @@
                 if (response.ok) {
                     alert('Abbonamento sottoscritto con successo!');
 
-                    window.location.href = '/catalogo';
+                    window.location.href = '/abbonamento';
                 } else {
                     return response.text().then(errorMessage => {
-                        throw new Error(errorMessage || 'Errore durante la conferma dell\'ordine.');
+                        throw new Error('Formato di un campo sbagliato');
                     });
                 }
             })
