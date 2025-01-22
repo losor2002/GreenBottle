@@ -6,6 +6,7 @@ import it.unisa.greenbottle.controller.ordineControl.util.OrdineWrapper;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
 import it.unisa.greenbottle.storage.ordineStorage.dao.OrdineDao;
 import it.unisa.greenbottle.storage.ordineStorage.entity.Ordine;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.DateTimeException;
@@ -35,7 +36,7 @@ public class VisualizzaStoricoOrdiniController {
 
   @GetMapping
   public String get(@ModelAttribute DataForm dataForm, BindingResult bindingResult, Model model,
-                    HttpServletResponse httpServletResponse) throws IOException {
+                    HttpServletResponse httpServletResponse, HttpServletRequest httpServletRequest) throws IOException {
     if (bindingResult.hasErrors()) {
       return visualizzaStoricoOrdiniView;
     }
@@ -56,6 +57,19 @@ public class VisualizzaStoricoOrdiniController {
       startDate = LocalDate.parse(startDateStr);
       endDate = LocalDate.parse(endDateStr);
     } catch (DateTimeException e) {
+
+      httpServletRequest.setAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
+      httpServletRequest.setAttribute("message", "Data non valida");
+
+      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Data non valida");
+      return visualizzaStoricoOrdiniView;
+    }
+
+    if(startDate.isAfter(endDate)) {
+
+      httpServletRequest.setAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
+      httpServletRequest.setAttribute("message", "Data non valida");
+
       httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Data non valida");
       return visualizzaStoricoOrdiniView;
     }

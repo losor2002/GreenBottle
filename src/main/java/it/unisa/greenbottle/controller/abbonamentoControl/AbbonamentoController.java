@@ -93,16 +93,59 @@ public class AbbonamentoController {
                      BindingResult bindingResult, Model model, HttpServletResponse httpServletResponse)
           throws IOException {
 
-          if (bindingResult.hasErrors()) {
-      model.addAttribute("errore", "Errore di formato.");
-      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,
-              bindingResult.getAllErrors().toString());
-      return "redirect:/error";
+    if (bindingResult.hasErrors()) {
+      // Se c'è un errore specifico per un campo, gestisci il messaggio
+      bindingResult.getFieldErrors().forEach(fieldError -> {
+        if ("numeroCarta".equals(fieldError.getField())) {
+          model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
+          model.addAttribute("message", "Numero di carta non valido.");
+
+          try {
+            httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Numero di carta non valido.");
+          } catch (IOException e) {
+            throw new RuntimeException(e);
+          }
+        }
+
+        if ("dataScadenza".equals(fieldError.getField())) {
+          model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
+          model.addAttribute("message", "Data di scadenza della carta non valida.");
+
+          try {
+            httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Data di scadenza della carta non valida.");
+          } catch (IOException e) {
+            throw new RuntimeException(e);
+          }
+        }
+
+        if ("CVV".equals(fieldError.getField())) {
+          model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
+          model.addAttribute("message", "CVV non valido.");
+
+          try {
+            httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "CVV non valido.");
+          } catch (IOException e) {
+            throw new RuntimeException(e);
+          }
+        }
+
+        if ("nomeTitolare".equals(fieldError.getField())) {
+          model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
+          model.addAttribute("message", "Nome del titolare della carta non valido.");
+
+          try {
+            httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Nome del titolare della carta non valido.");
+          } catch (IOException e) {
+            throw new RuntimeException(e);
+          }
+        }
+      });
+      return "error";  // Visualizza la vista con il messaggio di errore
     }
 
     Optional<Cliente> clienteOpt = sessionCliente.getCliente();
     if (clienteOpt.isEmpty()) {
-      model.addAttribute("errore", "Non loggato");
+      model.addAttribute("errore", "Non loggato.");
       return "redirect:/login";
     }
 
@@ -110,7 +153,7 @@ public class AbbonamentoController {
     Long idAbbonamento = abbonamentoForm.getId();
     Optional<Abbonamento> abbonamentoOptional = abbonamentoDao.findAbbonamentoById(idAbbonamento);
     if (abbonamentoOptional.isEmpty()) {
-      httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND, "Abbonamento non trovato");
+      httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND, "Abbonamento non trovato.");
       return "redirect:/error";
     }
 
@@ -129,7 +172,7 @@ public class AbbonamentoController {
     if (model.containsAttribute("abbonamento")) {
       return abbonamentoView;
     } else {
-      httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND, "Errore nel sottoscrivere l'abbonamento");
+      httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND, "Errore nel sottoscrivere l'abbonamento.");
       return "redirect:/error";
     }
   }

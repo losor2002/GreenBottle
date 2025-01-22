@@ -22,19 +22,19 @@ public class AbbonamentoForm {
   @NotNull
   @Pattern(
           regexp = "^(0?[1-9]|1[0-2])[/\\-]\\d{2}(\\d{2})?$",
-          message = "Data di scadenza della carta non valida"
+          message = "Data di scadenza della carta non valida."
   )
   private String dataScadenza;
   @NotNull
   @Pattern(
           regexp = "^\\d{3,4}$",
-          message = "CVV non valido"
+          message = "CVV non valido."
   )
   private String CVV;
   @NotNull
   @Pattern(
           regexp = "^[A-Za-zÀ-ÿ\\s']{2,20}$",
-          message = "Nome del titolare della carta non valido"
+          message = "Nome del titolare della carta non valido."
   )
   private String nomeTitolare;
 
