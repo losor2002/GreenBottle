@@ -66,4 +66,7 @@ public class SessionCarrello {
     return false;
   }
 
+  public boolean isEmpty() {
+    return carrello.isEmpty();
+  }
 }
