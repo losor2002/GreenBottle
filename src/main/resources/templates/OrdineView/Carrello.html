@@ -39,13 +39,13 @@
                         <small th:text="${entry.key.getDescrizione()}">Descrizione prodotto</small>
                     </td>
                     <td class="actions">
-                        <!-- Form for adding quantity -->
+                        <!-- Form per aggiungere uno alla quantità -->
                         <form action="/aggiungi-al-carrello" method="post" class="d-inline">
                             <input type="hidden" name="id" th:value="${entry.key.getId()}">
                             <button type="submit" class="btn btn-sm btn-success">+</button>
                         </form>
                         <span th:text="${entry.value}">1</span>
-                        <!-- Form for removing quantity -->
+                        <!-- Form per togliere uno alla quantità -->
                         <form action="" method="post" class="d-inline">
                             <input type="hidden" name="id" th:value="${entry.key.getId()}">
                             <button type="submit" class="btn btn-sm btn-danger">-</button>
@@ -53,7 +53,7 @@
                     </td>
                     <td id="price" th:text="${entry.key.prezzo * entry.value}">€0.00</td>
                     <td>
-                        <!-- Form for removing all items of a product -->
+                        <!-- Form per rimuovere il prodotto dal carrello -->
                         <form action="" method="post" class="d-inline">
                             <input type="hidden" name="id" th:value="${entry.key.getId()}">
                             <button type="submit" class="btn btn-sm btn-outline-danger">X</button>
@@ -65,7 +65,6 @@
             <div class="total">
                 <h3>SubTotale: <span>€0.00</span></h3>
             </div>
-            <!-- Ricontrollare le href -->
             <div class="buttons d-flex justify-content-between mt-4">
                 <a href="/catalogo" class="btn btn-outline-primary">Torna al Catalogo</a>
                 <a href="/ordina" class="btn btn-primary">Checkout</a>
@@ -80,15 +79,12 @@
     document.addEventListener('DOMContentLoaded', () => {
         function calculateSubtotal() {
             let subtotal = 0;
-
             document.querySelectorAll('#price').forEach(priceElement => {
-
                 const price = parseFloat(priceElement.textContent.replace('€', '').trim());
                 if (!isNaN(price)) {
                     subtotal += price;
                 }
             });
-
             const subtotalElement = document.querySelector('.total h3 span');
             if (subtotalElement) {
                 subtotalElement.textContent = `€${subtotal.toFixed(2)}`;
@@ -98,35 +94,28 @@
         function attachButtonListeners() {
             const addButtons = document.querySelectorAll('.btn-success');
             const removeButtons = document.querySelectorAll('.btn-danger');
-
             addButtons.forEach(button => {
                 button.addEventListener('click', (event) => {
                     event.preventDefault();
-
                     const quantityElement = button.nextElementSibling;
                     const priceElement = button.closest('tr').querySelector('#price');
                     const unitPrice = parseFloat(priceElement.textContent.replace('€', '').trim()) / parseInt(quantityElement.textContent.trim());
                     const newQuantity = parseInt(quantityElement.textContent.trim()) + 1;
                     quantityElement.textContent = newQuantity;
                     priceElement.textContent = `€${(unitPrice * newQuantity).toFixed(2)}`;
-
                     calculateSubtotal();
                 });
             });
-
             removeButtons.forEach(button => {
                 button.addEventListener('click', (event) => {
                     event.preventDefault();
-
                     const quantityElement = button.previousElementSibling;
                     const priceElement = button.closest('tr').querySelector('#price');
                     const unitPrice = parseFloat(priceElement.textContent.replace('€', '').trim()) / parseInt(quantityElement.textContent.trim());
-
                     // Decremento con controllo che non diventi minore di 1
                     const newQuantity = Math.max(parseInt(quantityElement.textContent.trim()) - 1, 1);
                     quantityElement.textContent = newQuantity;
                     priceElement.textContent = `€${(unitPrice * newQuantity).toFixed(2)}`;
-
                     calculateSubtotal();
                 });
             });

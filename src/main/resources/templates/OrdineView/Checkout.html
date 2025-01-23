@@ -30,11 +30,14 @@
                             <ul>
                                 <li>
                                     <input type="radio" id="indirizzo" name="indirizzo" th:value="${addr.getId()}">
-                                    <label for="indirizzo" th:text="${addr.getVia()}"></label>
+                                    <label for="indirizzo"
+                                           th:text="${'Via ' + addr.getVia() + ' ' + addr.getCivico() + ' ' + addr.getCitta() + ' ' + addr.getProvincia() + ' ' + addr.getCap()}"></label>
                                 </li>
                             </ul>
                         </div>
-                        <button class="add-address">+</button>
+                        <button class="add-address" th:onclick="|location.href='/areaPersonale/areaPersonale'|">
+                            Aggiungi un indirizzo
+                        </button>
                     </div>
                     <!-- Dati di pagamento -->
                     <div class="payment-details">
@@ -49,7 +52,7 @@
                             <label class="form-label" for="numero">Numero della carta</label>
                             <input type="text" id="numero" name="numero" class="form-control">
                         </div>
-                        <!-- Scadenza e CVV -->
+                        <!-- Wrap per mostrarli uno accanto all'altro -->
                         <div class="row">
                             <!-- Scadenza -->
                             <div class="col-md-6 mb-3">
@@ -85,9 +88,8 @@
             <section>
                 <h2>Sommario</h2>
                 <p th:each="prodotto : ${prodotti}">
-                    <span th:text="${prodotto.nome}"></span> - <span th:text="${'€ ' + prodotto.prezzo}"></span>
+                    <span th:text="${prodotto.nome + 'x ' + prodotto.quantita}"></span>
                 </p>
-                <!-- Logica per il calcolo del totale da aggiungere -->
                 <p>Importo Totale:</p>
                 <div class="summary-buttons">
                     <button th:onclick="|location.href='carrello'|">Torna Indietro</button>
@@ -120,10 +122,8 @@
         toggleTextarea();
     });
 </script>
-
 <script>
     function confirmOrder() {
-
         const nomeTitolare = document.getElementById('nome').value.trim();
         const numeroCarta = document.getElementById('numero').value.trim();
         const dataScadenza = document.getElementById('data').value.trim();
@@ -137,14 +137,12 @@
             alert('Per favore, compila tutti i campi obbligatori.');
             return;
         }
-
         if (isSupporto && descrizioneSupporto === "") {
             alert('Inserisci una descrizione per il supporto aggiuntivo.');
             return;
         }
 
         const formData = new URLSearchParams();
-
         formData.append('numeroCarta', numeroCarta);
         formData.append('dataScadenza', dataScadenza);
         formData.append('CVV', CVV);
@@ -163,7 +161,6 @@
         })
             .then(response => {
                 if (response.redirected) {
-
                     window.location.href = response.url;
                 } else {
                     return response.text().then(html => {
@@ -177,34 +174,28 @@
             });
     }
 </script>
-
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         function calculateTotal() {
             let subtotal = 0;
-
             document.querySelectorAll('#price').forEach(priceElement => {
-
                 const price = parseFloat(priceElement.textContent.replace('€', '').trim());
                 if (!isNaN(price)) {
                     subtotal += price;
                 }
             });
-
             const totalElement = document.querySelector('.total h3 span');
-            if (subtotalElement) {
-                subtotalElement.textContent = `€${subtotal.toFixed(2)}`;
+            if (totalElement) {
+                totalElement.textContent = `€${subtotal.toFixed(2)}`;
             }
         }
 
         function attachButtonListeners() {
             const addButtons = document.querySelectorAll('.btn-success');
             const removeButtons = document.querySelectorAll('.btn-danger');
-
             addButtons.forEach(button => {
                 button.addEventListener('click', (event) => {
                     event.preventDefault();
-
                     const quantityElement = button.nextElementSibling;
                     const priceElement = button.closest('tr').querySelector('#price');
                     const unitPrice = parseFloat(priceElement.textContent.replace('€', '').trim()) / parseInt(quantityElement.textContent.trim());
@@ -219,12 +210,10 @@
             removeButtons.forEach(button => {
                 button.addEventListener('click', (event) => {
                     event.preventDefault();
-
                     const quantityElement = button.previousElementSibling;
                     const priceElement = button.closest('tr').querySelector('#price');
                     const unitPrice = parseFloat(priceElement.textContent.replace('€', '').trim()) / parseInt(quantityElement.textContent.trim());
-
-                    // Decremento con controllo che non diventi minore di 1
+                    //(to fix) Decremento con controllo che non diventi minore di 1
                     const newQuantity = Math.max(parseInt(quantityElement.textContent.trim()) - 1, 1);
                     quantityElement.textContent = newQuantity;
                     priceElement.textContent = `€${(unitPrice * newQuantity).toFixed(2)}`;
