@@ -27,32 +27,35 @@ public class RegistrazioneTest {
 
   @Test
   public void formatoNomeErrato() throws Exception {
-    testRegistrazione("Gian@!@Carlo", "Toronto", "GiancarloToronto#1966@gmail.com", "ciao",
+    testRegistrazione("Gian@!@Carlo", "Toronto", "GiancarloToronto1966@gmail.com", "GiancoToro66!",
         status().isBadRequest(), "Nome non rispetta il formato.");
   }
 
   @Test
   public void formatoCognomeErrato() throws Exception {
-    testRegistrazione("Giancarlo", "Toron@!@to", "GiancarloToronto#1966@gmail.com", "ciao",
+    testRegistrazione("Giancarlo", "Toron@!@to", "GiancarloToronto1966@gmail.com", "GiancoToro66!",
         status().isBadRequest(), "Cognome non rispetta il formato.");
   }
 
   @Test
   public void emailTroppoLunga() throws Exception {
-    testRegistrazione("Giancarlo", "Toronto", "a".repeat(320) + "@gmail.com", "ciao",
+    testRegistrazione("Giancarlo", "Toronto", "a".repeat(320) + "@gmail.com", "GiancoToro66!",
         status().isBadRequest(), "Dimensione Email errata.");
   }
 
   @Test
   public void formatoEmailErrato() throws Exception {
-    testRegistrazione("Giancarlo", "Toronto", "GiancarloToronto#1966@gmail.c", "ciao",
+    testRegistrazione("Giancarlo", "Toronto", "GiancarloToronto#1966@gmail.c", "GiancoToro66!",
         status().isBadRequest(), "Formato Email errato.");
   }
 
   @Test
   public void formatoPasswordErrato() throws Exception {
     testRegistrazione("Giancarlo", "Toronto", "GiancarloToronto1966@gmail.com", "ciao",
-        status().isBadRequest(), "La Password deve contenere");
+        status().isBadRequest(), "La Password deve contenere almeno una lettera minuscola, "
+                    + "una maiuscola, un numero, "
+                    + "un carattere speciale ( @, #, $, %, ^, &, +, =, !) "
+                    + "e avere una lunghezza minima di 8 caratteri.");
   }
 
   @Test
@@ -86,8 +89,8 @@ public class RegistrazioneTest {
         .andExpect(expectedStatus)
         .andExpect(result -> {
           if (expectedMessage != null) {
-            String responseContent = result.getResponse().getContentAsString();
-            assertTrue(responseContent.contains(expectedMessage),
+            String errorMessage = result.getResponse().getErrorMessage();
+            assertTrue(errorMessage.contains(expectedMessage),
                 "La risposta non contiene il messaggio atteso: " + expectedMessage);
           }
         });
