@@ -53,6 +53,11 @@
                     </div>
                     <button class="btn btn-primary w-100" type="submit" id="submit">Conferma</button>
                 </form>
+                <div class="d-grid">
+                    <button th:onclick="|location.href='abbonamento'|" class="btn btn-outline-primary btn-sm w-20">
+                        Torna Indietro
+                    </button>
+                </div>
             </section>
         </div>
         <aside class="col-md-4 col-lg-3">
@@ -63,9 +68,6 @@
                 <p th:text="${abbonamento.prezzo}"></p>
             </section>
         </aside>
-    </div>
-    <div class="summary-buttons">
-        <button th:onclick="|location.href='abbonamento'|" class="btn btn-primary btn-sm w-20">Torna Indietro</button>
     </div>
 </main>
 <footer th:replace="~{fragments/fragments :: footer}"></footer>

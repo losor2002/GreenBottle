@@ -26,22 +26,25 @@
                 </div>
                 <div class="card-body">
                     <!--/*@thymesVar id="dataForm" type="it.unisa.greenbottle.controller.areaPersonaleControl.form.DataForm"*/-->
-                    <form class="filter-section p-4 sticky-top" id="filter-card" method="get"
+                    <form class="filter-section p-4" id="filter-card" method="get"
                           th:object="${dataForm}">
-                        <!-- Data Min -->
-                        <div class="mb-3">
-                            <label for="startDate" class="form-label">Inizio</label>
-                            <input type="date" id="startDate" name="startDate" class="form-control"
-                                   th:field="*{startDate}">
-                            <div class="text-danger px-2" th:if="${#fields.hasErrors('startDate')}"
-                                 th:errors="*{startDate}"></div>
-                        </div>
-                        <!-- Data Max -->
-                        <div class="mb-3">
-                            <label for="endDate" class="form-label">Fine</label>
-                            <input type="date" id="endDate" name="endDate" class="form-control" th:field="*{endDate}">
-                            <div class="text-danger px-2" th:if="${#fields.hasErrors('endDate')}"
-                                 th:errors="*{endDate}"></div>
+                        <div class="row">
+                            <!-- Data Min -->
+                            <div class="col-md-6 mb-3">
+                                <label for="startDate" class="form-label">Inizio</label>
+                                <input type="date" id="startDate" name="startDate" class="form-control"
+                                       th:field="*{startDate}">
+                                <div class="text-danger px-2" th:if="${#fields.hasErrors('startDate')}"
+                                     th:errors="*{startDate}"></div>
+                            </div>
+                            <!-- Data Max -->
+                            <div class="col-md-6 mb-3">
+                                <label for="endDate" class="form-label">Fine</label>
+                                <input type="date" id="endDate" name="endDate" class="form-control"
+                                       th:field="*{endDate}">
+                                <div class="text-danger px-2" th:if="${#fields.hasErrors('endDate')}"
+                                     th:errors="*{endDate}"></div>
+                            </div>
                         </div>
                         <!-- Applica Button -->
                         <div class="d-grid">

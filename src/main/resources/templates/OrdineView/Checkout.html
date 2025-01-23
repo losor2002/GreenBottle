@@ -92,8 +92,10 @@
                 </p>
                 <p>Importo Totale:</p>
                 <div class="summary-buttons">
-                    <button th:onclick="|location.href='carrello'|">Torna Indietro</button>
-                    <button th:onclick="confirmOrder()">Conferma</button>
+                    <button class="btn btn-outline-primary" th:onclick="|location.href='carrello'|">
+                        Torna Indietro
+                    </button>
+                    <button class="btn btn-primary" th:onclick="confirmOrder()">Conferma</button>
                 </div>
             </section>
         </aside>
