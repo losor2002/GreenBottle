@@ -46,7 +46,7 @@ public class VisualizzaStoricoOrdiniController {
       return "error";// Visualizza la vista con il messaggio di errore
     }
 
-    Cliente cliente = null;
+    Cliente cliente;
     if(sessionCliente.getCliente().isPresent()) cliente = sessionCliente.getCliente().get();
     else return "redirect:/login";
 
@@ -61,13 +61,21 @@ public class VisualizzaStoricoOrdiniController {
 
     try {
       startDate = LocalDate.parse(startDateStr);
+    } catch (DateTimeException e) {
+      httpServletRequest.setAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
+      httpServletRequest.setAttribute("message", "Data di inizio non valida.");
+
+      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Data di inizio non valida.");
+      return visualizzaStoricoOrdiniView;
+    }
+
+    try {
       endDate = LocalDate.parse(endDateStr);
     } catch (DateTimeException e) {
-
       httpServletRequest.setAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
-      httpServletRequest.setAttribute("message", "Data non valida.");
+      httpServletRequest.setAttribute("message", "Data di fine non valida.");
 
-      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Data non valida.");
+      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Data di fine non valida.");
       return visualizzaStoricoOrdiniView;
     }
 

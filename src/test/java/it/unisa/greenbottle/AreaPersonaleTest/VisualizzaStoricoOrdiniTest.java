@@ -1,5 +1,6 @@
 package it.unisa.greenbottle.AreaPersonaleTest;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -34,25 +35,25 @@ public class VisualizzaStoricoOrdiniTest {
 
   @Test
   public void startDateNonRispettaIlFormato() throws Exception {
-    test("2024/01/12", "2025/01/12", status().isBadRequest());
+    testVisualizzaStoricoOrdini("2024/01/12", "2025-01-12", status().isBadRequest(), "Data di inizio non valida.");
   }
 
   @Test
   public void endDateNonRispettaIlFormato() throws Exception {
-    test("2024-01-12", "2025/01/12", status().isBadRequest());
+    testVisualizzaStoricoOrdini("2024-01-12", "2025/01/12", status().isBadRequest(), "Data di fine non valida.");
   }
 
   @Test
   public void startDateDopoEndDate() throws Exception {
-    test("2024-01-25", "2024-01-24", status().isBadRequest());
+    testVisualizzaStoricoOrdini("2024-01-25", "2024-01-24", status().isBadRequest(), "Data iniziale successiva alla data finale.");
   }
 
   @Test
   public void dateRispettaIlFormato() throws Exception {
-    test("2024-01-12", "2025-01-12", status().isOk());
+    testVisualizzaStoricoOrdini("2024-01-12", "2025-01-12", status().isOk(), null);
   }
 
-  private void test(String startDate, String endDate, ResultMatcher resultMatcher)
+  private void testVisualizzaStoricoOrdini(String startDate, String endDate, ResultMatcher resultMatcher, String expectedMessage)
       throws Exception {
     Cliente cliente = new Cliente();
     Ordine ordine =
@@ -63,6 +64,12 @@ public class VisualizzaStoricoOrdiniTest {
     when(sessionCliente.getCliente()).thenReturn(Optional.of(cliente));
 
     mockMvc.perform(get("/areaPersonale/visualizzaStoricoOrdini").param("startDate", startDate)
-        .param("endDate", endDate)).andExpect(resultMatcher);
+        .param("endDate", endDate)).andExpect(resultMatcher).andExpect(result -> {
+      if (expectedMessage != null) {
+        String errorMessage = result.getResponse().getErrorMessage();
+        assertTrue(errorMessage.contains(expectedMessage),
+                "La risposta non contiene il messaggio atteso: " + expectedMessage);
+      }
+    });
   }
 }
