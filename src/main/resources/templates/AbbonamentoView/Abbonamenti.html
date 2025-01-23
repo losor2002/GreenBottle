@@ -82,23 +82,28 @@
         <tr th:each="sub : ${abbonamenti}">
             <td>
                 <ul th:each="prodotto : ${sub.getProdottiAbbonamento()}">
-                    <!-- Aggiungere link alla pagina del prodotto singolo -->
                     <li th:text="${prodotto.key.getNome() + ' x' + prodotto.value}"></li>
                 </ul>
             </td>
             <td th:text="${sub.getFrequenza()}"></td>
             <td th:text="${sub.getRinnovo()}"></td>
-            <!-- Aggiungere link alla pagina di pagamento -->
             <td th:width="200px" th:text="${sub.getPrezzo()}"></td>
             <td>
-                <button th:if="${session.sessionCliente != null and session.sessionCliente.getCliente().isPresent()}" th:onclick="|location.href='abbonamento?sottoscrivi=${sub.getId()}'|" class="btn btn-primary btn-sm w-20">Sottoscrivi</button>
+                <button th:if="${session.sessionCliente != null and session.sessionCliente.getCliente().isPresent()}"
+                        th:onclick="|location.href='abbonamento?sottoscrivi=${sub.getId()}'|"
+                        class="btn btn-primary btn-sm w-20">Sottoscrivi
+                </button>
             </td>
         </tr>
         </tbody>
     </table>
 </section>
-<div class="text-center text-muted" th:if="${#lists.isEmpty(abbonamenti)}">
+<div class="text-center text-muted" th:if="${#lists.isEmpty(abbonamenti)}" style="margin-top: 8px">
     <p>Nessun abbonamento appartenente al tier selezionato.</p>
+</div>
+<div class="text-center text-muted" style="margin-top: 8px"
+     th:if="${session.sessionCliente == null}">
+    <p>Effettua l'accesso per acquistare un abbonamento</p>
 </div>
 <div th:replace="~{fragments/fragments :: footer}"></div>
 <script>

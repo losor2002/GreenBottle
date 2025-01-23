@@ -51,13 +51,14 @@
                     <div>
                         <label for="id"></label><input id="id" name="id" hidden th:value="${abbonamento.getId()}">
                     </div>
-                    <button class="btn btn-primary w-100" type="submit" id="submit">Conferma</button>
+                    <div class="buttons d-flex">
+                        <button class="btn btn-outline-primary btn-sm" style="width:50%" type="button"
+                                th:onclick="|location.href='abbonamento'|">
+                            Torna Indietro
+                        </button>
+                        <button class="btn btn-primary" type="submit" id="submit" style="width:50%">Conferma</button>
+                    </div>
                 </form>
-                <div class="d-grid">
-                    <button th:onclick="|location.href='abbonamento'|" class="btn btn-outline-primary btn-sm w-20">
-                        Torna Indietro
-                    </button>
-                </div>
             </section>
         </div>
         <aside class="col-md-4 col-lg-3">
@@ -65,7 +66,7 @@
                 <h2>Sommario</h2>
                 <p th:text="${abbonamento.tipo}"></p>
                 <p th:text="${abbonamento.frequenza}"></p>
-                <p th:text="${abbonamento.prezzo}"></p>
+                <p th:text="${abbonamento.prezzo + ' €'}"></p>
             </section>
         </aside>
     </div>

@@ -37,8 +37,8 @@
             <tbody>
             <tr th:each="entry : ${ordine.getProdottiOrdine()}">
                 <td>
-                    <a th:text="${entry.getKey().getNome()}"
-                       th:href="@{/catalogo/prodotto(id=${entry.getKey().getId()})}"></a>
+                    <!-- th:href="@{/catalogo/prodotto(id=${entry.getKey().getId()})}" -->
+                    <a th:text="${entry.getKey().getNome()}"></a>
                 </td>
                 <td th:text="${entry.getKey().getDescrizione()}"></td>
                 <td th:text="${'€' + entry.getKey().getPrezzo()}"></td>
