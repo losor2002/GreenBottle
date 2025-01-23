@@ -43,6 +43,11 @@ public class VisualizzaStoricoOrdiniTest {
   }
 
   @Test
+  public void startDateDopoEndDate() throws Exception {
+    test("2024-01-25", "2024-01-24", status().isBadRequest());
+  }
+
+  @Test
   public void dateRispettaIlFormato() throws Exception {
     test("2024-01-12", "2025-01-12", status().isOk());
   }

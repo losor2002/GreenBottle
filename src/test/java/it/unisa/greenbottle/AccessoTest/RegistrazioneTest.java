@@ -28,31 +28,31 @@ public class RegistrazioneTest {
   @Test
   public void formatoNomeErrato() throws Exception {
     testRegistrazione("Gian@!@Carlo", "Toronto", "GiancarloToronto#1966@gmail.com", "ciao",
-        status().isOk(), "Nome non rispetta il formato.");
+        status().isBadRequest(), "Nome non rispetta il formato.");
   }
 
   @Test
   public void formatoCognomeErrato() throws Exception {
     testRegistrazione("Giancarlo", "Toron@!@to", "GiancarloToronto#1966@gmail.com", "ciao",
-        status().isOk(), "Cognome non rispetta il formato.");
+        status().isBadRequest(), "Cognome non rispetta il formato.");
   }
 
   @Test
   public void emailTroppoLunga() throws Exception {
-    testRegistrazione("Giancarlo", "Toronto", ("a").repeat(320) + "@example.com", "ciao",
-        status().isOk(), "Dimensione Email errata.");
+    testRegistrazione("Giancarlo", "Toronto", "a".repeat(320) + "@gmail.com", "ciao",
+        status().isBadRequest(), "Dimensione Email errata.");
   }
 
   @Test
   public void formatoEmailErrato() throws Exception {
     testRegistrazione("Giancarlo", "Toronto", "GiancarloToronto#1966@gmail.c", "ciao",
-        status().isOk(), "Formato Email errato.");
+        status().isBadRequest(), "Formato Email errato.");
   }
 
   @Test
   public void formatoPasswordErrato() throws Exception {
     testRegistrazione("Giancarlo", "Toronto", "GiancarloToronto1966@gmail.com", "ciao",
-        status().isOk(), "La Password deve contenere");
+        status().isBadRequest(), "La Password deve contenere");
   }
 
   @Test

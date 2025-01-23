@@ -11,12 +11,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import java.io.IOException;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,58 +45,29 @@ public class VisualizzaCatalogoController {
 
   if (bindingResult.hasErrors()) {
     // Se c'è un errore specifico per un campo, gestisci il messaggio
-    bindingResult.getFieldErrors().forEach(fieldError -> {
-      if ("prezzoMin".equals(fieldError.getField())) {
-        model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
-        model.addAttribute("message", "Il prezzo minimo deve essere maggiore o uguale a 1.");
+    FieldError fieldError = bindingResult.getFieldErrors().getFirst();
+    model.addAttribute("message", fieldError.getDefaultMessage());
+    model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
+    httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, fieldError.getField());
+    return "error";// Visualizza la vista con il messaggio di errore
+    }
 
-          try {
-              httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Il prezzo minimo deve essere maggiore o uguale a 1.");
-          } catch (IOException e) {
-              throw new RuntimeException(e);
-          }
-      }
-      if ("prezzoMax".equals(fieldError.getField())) {
-        model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
-        model.addAttribute("message", "Il prezzo massimo deve essere minore o uguale a 999.");
-
-          try {
-              httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Il prezzo massimo deve essere minore o uguale a 999.");
-          } catch (IOException e) {
-              throw new RuntimeException(e);
-          }
-      }
-      if ("media".equals(fieldError.getField())) {
-        model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
-        model.addAttribute("message", "La media deve essere compresa tra 1.0 e 5.0.");
-
-          try {
-              httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "La media deve essere compresa tra 1.0 e 5.0");
-          } catch (IOException e) {
-              throw new RuntimeException(e);
-          }
-      }
-    });
-    return "error";  // Visualizza la vista con il messaggio di errore
-  }
+    if (!filtroForm.isPrezzoMinMaxValid()) {
+      model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
+      model.addAttribute("message", "Prezzo minimo non può essere maggiore del prezzo massimo.");
+      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Prezzo minimo non può essere maggiore del prezzo massimo.");
+      return "error";// Visualizza la vista con il messaggio di errore
+    }
 
     Specification<Prodotto> spec = Specification.where(null);
 
     //CONTROLLO CATEGORIA
     if (filtroForm.getIdCategoria() != null) {
-      if (filtroForm.getIdCategoria().compareTo(0L) < 0) {
-
-        httpServletRequest.setAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
-        httpServletRequest.setAttribute("message", "Id non valido.");
-
-        httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Id non valido.");
-        return "error";
-      }
 
       if (categoriaDao.findCategoriaById(filtroForm.getIdCategoria()).isEmpty()) {
 
-        httpServletRequest.setAttribute("status", HttpServletResponse.SC_NOT_FOUND);
-        httpServletRequest.setAttribute("message", "Categoria non presente.");
+        model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
+        model.addAttribute("message", "Categoria non presente.");
 
         httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND, "Categoria non presente.");
         return "error";

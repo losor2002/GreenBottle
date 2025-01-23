@@ -27,12 +27,4 @@ public class DataForm {
       message = "Data di fine non valida."
   )
   private String endDate = LocalDate.ofEpochDay(System.currentTimeMillis() / 86_400_000).toString();
-
-  public String getStartDate() {
-    return startDate;
-  }
-
-  public String getEndDate() {
-    return endDate;
-  }
 }

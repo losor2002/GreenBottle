@@ -23,10 +23,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -91,8 +93,12 @@ public class CreazioneOrdineController {
     final Cliente cliente = clienteOptional.get();
 
     if (bindingResult.hasErrors()) {
-      model.addAttribute("errore", bindingResult.getAllErrors());
-      return "redirect:/carrello";
+      // Se c'è un errore specifico per un campo, gestisci il messaggio
+      FieldError fieldError = bindingResult.getFieldErrors().getFirst();
+      model.addAttribute("message", fieldError.getDefaultMessage());
+      model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
+      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, fieldError.getField());
+      return "error";// Visualizza la vista con il messaggio di errore
     }
 
     Map<Long, Integer> prodottiUnparsed = sessionCarrello.getCarrello();
@@ -134,21 +140,21 @@ public class CreazioneOrdineController {
 
     if (isSupporto && descrizioneSupporto.isBlank()) {
       model.addAttribute("errore", "Descrizione supporto non inserita.");
-      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,
-          "Descrizione supporto non inserita");
-      return fallbackView;
+      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Descrizione supporto non inserita");
+      return null;
     } else if (!(isSupporto || descrizioneSupporto.isBlank())) { // De Morgan
       model.addAttribute("warning",
-          "Errata selezione dell’opzione di richiesta supporto aggiuntivo");
+              "Errata selezione dell’opzione di richiesta supporto aggiuntivo");
     }
 
     Long idIndirizzo = ordineForm.getIndirizzo();
     Optional<Indirizzo> indirizzoOpt = indirizzoDao.findIndirizzoById(idIndirizzo);
 
     if (indirizzoOpt.isEmpty()) {
-      model.addAttribute("errore", "Indirizzo non trovato.");
+      model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
+      model.addAttribute("message", "Indirizzo non trovato.");
       httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Indirizzo non trovato");
-      return fallbackView;
+      return "error";
     }
     Indirizzo indirizzo = indirizzoOpt.get();
 

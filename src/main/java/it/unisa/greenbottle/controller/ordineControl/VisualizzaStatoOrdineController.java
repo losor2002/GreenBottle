@@ -2,7 +2,6 @@ package it.unisa.greenbottle.controller.ordineControl;
 
 import it.unisa.greenbottle.controller.accessoControl.util.SessionCliente;
 import it.unisa.greenbottle.controller.ordineControl.util.OrdineWrapper;
-import it.unisa.greenbottle.storage.accessoStorage.dao.ClienteDao;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
 import it.unisa.greenbottle.storage.ordineStorage.dao.ComposizioneDao;
 import it.unisa.greenbottle.storage.ordineStorage.dao.OrdineDao;
@@ -26,13 +25,9 @@ public class VisualizzaStatoOrdineController {
 
   private final String homeView = "/home";
   private final String visualizzaStatoOrdineView = "/OrdineView/VisualizzaStatoOrdine";
-  private final String visualizzaStoricoOrdineView = "/AreaPersonaleView/VisualizzaStoricoOrdine";
 
   @Autowired
   private OrdineDao ordineDao;
-
-  @Autowired
-  private ClienteDao clienteDao;
 
   @Autowired
   private ComposizioneDao composizioneDao;
@@ -47,19 +42,29 @@ public class VisualizzaStatoOrdineController {
     Cliente cliente = sessionCliente.getCliente().get();
 
     if (id < 0) {
-      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Id non valido");
-      return null;
+      model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
+      model.addAttribute("message", "Id non valido.");
+
+      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Id non valido.");
+      return "error";
     }
 
     Optional<Ordine> optOrdine = ordineDao.findOrdineById(id);
     if (optOrdine.isEmpty()) {
-      httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND, "Ordine non presente");
-      return null;
+      model.addAttribute("status", HttpServletResponse.SC_NOT_FOUND);
+      model.addAttribute("message", "Ordine non presente.");
+
+      httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND, "Ordine non presente.");
+      return "error";
     }
 
     Ordine ordine = optOrdine.get();
     if (!ordine.getCliente().equals(cliente)) {
-      return "/error";
+      model.addAttribute("status", HttpServletResponse.SC_FORBIDDEN);
+      model.addAttribute("message", "Ordine non accessibile.");
+
+      httpServletResponse.sendError(HttpServletResponse.SC_FORBIDDEN, "Ordine non accessibile.");
+      return "error";
     }
 
     List<Composizione> composizione = composizioneDao.findComposizioneByOrdine(ordine);

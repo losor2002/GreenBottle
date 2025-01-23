@@ -54,7 +54,6 @@ public class SottoscrizioneAbbonamentoTest {
                 120.50f
         );
         abbonamento.setId(1L);
-
     }
 
 
@@ -82,7 +81,7 @@ public class SottoscrizioneAbbonamentoTest {
     public void abbonamentoSottoscritto() throws Exception {
         Abbonamento abbonamento = new Abbonamento();
         when(abbonamentoDao.findAbbonamentoById(1L)).thenReturn(Optional.of(abbonamento));
-        testSottoscriviAbbonamento("Giancarlo Filippi", "5267893664829376", "11/27", "337", status().isOk());
+        testSottoscriviAbbonamento("Giancarlo Filippi", "5267893664829376", "11/27", "337", status().is3xxRedirection());
     }
 
 

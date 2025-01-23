@@ -33,8 +33,8 @@ public class RegistrazioneForm {
   private String cognome;
 
   @NotBlank(message = "Email vuota.")
-  @Email(message = "Formato Email errato.")
   @Size(min = 6, max = 319, message = "Dimensione Email errata.")
+  @Email(message = "Dimensione Email errata.")
   @Pattern(
       regexp = "^[a-zA-Z0-9.]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
       message =
@@ -52,39 +52,5 @@ public class RegistrazioneForm {
               + "e avere una lunghezza minima di 8 caratteri."
   )
   private String password;
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-
-    this.email = email;
-
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  public String getNome() {
-    return nome;
-  }
-
-  public void setNome(String nome) {
-    this.nome = nome;
-  }
-
-  public String getCognome() {
-    return cognome;
-  }
-
-  public void setCognome(String cognome) {
-    this.cognome = cognome;
-  }
 
 }

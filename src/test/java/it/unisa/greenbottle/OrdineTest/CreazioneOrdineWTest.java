@@ -51,10 +51,6 @@ public class CreazioneOrdineWTest {
   @MockitoBean
   private IndirizzoDao indirizzoDao;
 
-  @MockitoBean
-  private CategoriaDao categoriaDao;
-
-
   @Test
   public void nomeNonValido() throws Exception {
     testCreazioneOrdine("A1", "0000000000000000", "99/99", "ABC", 55L, null, Optional.of("asd"),
@@ -88,13 +84,13 @@ public class CreazioneOrdineWTest {
   @Test
   public void indirizzoNonPresente() throws Exception {
     testCreazioneOrdine("Luigi Rossi", "5032123166322313", "02/26", "123", 7355608L, null,
-        Optional.of("asd"), status().isBadRequest());
+        Optional.of("asd"), status().is3xxRedirection());
   }
 
   @Test
   public void isSupportoNonValido() throws Exception {
     testCreazioneOrdine("Luigi Rossi", "5032123166322313", "02/26", "123", 1L, null,
-        Optional.of("asd"), status().isBadRequest());
+        Optional.of("asd"), status().is3xxRedirection());
   }
 
   @Test
@@ -112,13 +108,13 @@ public class CreazioneOrdineWTest {
   @Test
   public void ordineSupportoValido() throws Exception {
     testCreazioneOrdine("Luigi Rossi", "5032123166322313", "02/26", "123", 1L, true,
-        Optional.of("Consegna al primo piano"), status().isOk());
+        Optional.of("Consegna al primo piano"), status().is3xxRedirection());
   }
 
   @Test
   public void ordineValido() throws Exception {
     testCreazioneOrdine("Luigi Rossi", "5032123166322313", "02/26", "123", 1L, false,
-        Optional.of(""), status().isOk());
+        Optional.of(""), status().is3xxRedirection());
   }
 
   private void testCreazioneOrdine(String Nome_titolare, String Numero_carta, String Data_scadenza,

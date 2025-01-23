@@ -16,16 +16,17 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/abbonamento")
@@ -88,59 +89,16 @@ public class AbbonamentoController {
   }
 
   @PostMapping
-  @ResponseBody
   public String post(@ModelAttribute @Valid AbbonamentoForm abbonamentoForm,
                      BindingResult bindingResult, Model model, HttpServletResponse httpServletResponse)
           throws IOException {
-
     if (bindingResult.hasErrors()) {
       // Se c'è un errore specifico per un campo, gestisci il messaggio
-      bindingResult.getFieldErrors().forEach(fieldError -> {
-        if ("numeroCarta".equals(fieldError.getField())) {
-          model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
-          model.addAttribute("message", "Numero di carta non valido.");
-
-          try {
-            httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Numero di carta non valido.");
-          } catch (IOException e) {
-            throw new RuntimeException(e);
-          }
-        }
-
-        if ("dataScadenza".equals(fieldError.getField())) {
-          model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
-          model.addAttribute("message", "Data di scadenza della carta non valida.");
-
-          try {
-            httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Data di scadenza della carta non valida.");
-          } catch (IOException e) {
-            throw new RuntimeException(e);
-          }
-        }
-
-        if ("CVV".equals(fieldError.getField())) {
-          model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
-          model.addAttribute("message", "CVV non valido.");
-
-          try {
-            httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "CVV non valido.");
-          } catch (IOException e) {
-            throw new RuntimeException(e);
-          }
-        }
-
-        if ("nomeTitolare".equals(fieldError.getField())) {
-          model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
-          model.addAttribute("message", "Nome del titolare della carta non valido.");
-
-          try {
-            httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Nome del titolare della carta non valido.");
-          } catch (IOException e) {
-            throw new RuntimeException(e);
-          }
-        }
-      });
-      return "error";  // Visualizza la vista con il messaggio di errore
+      FieldError fieldError = bindingResult.getFieldErrors().getFirst();
+      model.addAttribute("message", fieldError.getDefaultMessage());
+      model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
+      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, fieldError.getField());
+      return "error";// Visualizza la vista con il messaggio di errore
     }
 
     Optional<Cliente> clienteOpt = sessionCliente.getCliente();
@@ -154,7 +112,7 @@ public class AbbonamentoController {
     Optional<Abbonamento> abbonamentoOptional = abbonamentoDao.findAbbonamentoById(idAbbonamento);
     if (abbonamentoOptional.isEmpty()) {
       httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND, "Abbonamento non trovato.");
-      return "redirect:/error";
+      return "error";
     }
 
 
@@ -170,10 +128,10 @@ public class AbbonamentoController {
 
 
     if (model.containsAttribute("abbonamento")) {
-      return abbonamentoView;
+      return "redirect:/areaPersonale";
     } else {
       httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND, "Errore nel sottoscrivere l'abbonamento.");
-      return "redirect:/error";
+      return "error";
     }
   }
 }

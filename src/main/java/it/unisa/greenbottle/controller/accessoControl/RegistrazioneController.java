@@ -7,10 +7,12 @@ import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,8 +40,12 @@ public class RegistrazioneController {
       throws IOException {
 
     if (bindingResult.hasErrors()) {
-      model.addAttribute("errore", "Errore di formato.");
-      return registrazioneView;
+      // Se c'è un errore specifico per un campo, gestisci il messaggio
+      FieldError fieldError = bindingResult.getFieldErrors().getFirst();
+      model.addAttribute("message", fieldError.getDefaultMessage());
+      model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
+      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, fieldError.getField());
+      return "error";// Visualizza la vista con il messaggio di errore
     }
 
     String encryptedPassword = JasyptUtil.encrypt(registrazioneForm.getPassword());
