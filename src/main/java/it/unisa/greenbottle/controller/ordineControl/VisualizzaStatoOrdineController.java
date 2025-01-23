@@ -78,13 +78,7 @@ public class VisualizzaStatoOrdineController {
 
   @PostMapping
   public String post(@RequestParam Long id, Model model) {
-    // TODO: rimuovi questo controllo quando saranno implementati i filtri
-    Optional<Cliente> optCliente = sessionCliente.getCliente();
-    if (optCliente.isEmpty()) {
-      return "redirect:" + homeView;
-    }
-    Cliente cliente = optCliente.get();
-
+    Cliente cliente = sessionCliente.getCliente().get();
 
     Optional<Ordine> optOrdine = ordineDao.findOrdineById(id);
     if (optOrdine.isEmpty()) {
