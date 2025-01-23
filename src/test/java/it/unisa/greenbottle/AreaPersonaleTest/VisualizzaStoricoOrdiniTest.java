@@ -45,7 +45,7 @@ public class VisualizzaStoricoOrdiniTest {
 
   @Test
   public void startDateDopoEndDate() throws Exception {
-    testVisualizzaStoricoOrdini("2024-01-25", "2024-01-24", status().isBadRequest(), "Data iniziale successiva alla data finale.");
+    testVisualizzaStoricoOrdini("2024-01-12", "2024-01-11", status().isBadRequest(), "Data iniziale successiva alla data finale.");
   }
 
   @Test
