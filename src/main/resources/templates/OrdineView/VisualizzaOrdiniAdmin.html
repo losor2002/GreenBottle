@@ -14,6 +14,21 @@
 <body>
 <div th:replace="~{fragments/adminFragments :: header}"></div>
 <div class="container my-5">
+    <div th:if="${ordini == null || #lists.isEmpty(ordini)}">
+        <div class="d-flex align-items-center justify-content-center my-5">
+            <div class="text-center row">
+                <div class=" col-md-6">
+                    <img style="width: 350px; height: 270px;"
+                         src="https://static.vecteezy.com/system/resources/previews/010/852/913/original/leaf-icon-vector-png.png"
+                         alt="" class="img-fluid">
+                </div>
+                <div class=" col-md-6 mt-5">
+                    <p class="lead"> Non ci sono ordini in Attesa! <span th:text="${status}"></span></p>
+                    <a href="/admin" class="btn btn-primary">Torna Alla Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <!--/*@thymesVar id="StatoSpedizione" type="it.unisa.greenbottle.storage.ordineStorage.entity.Ordine.StatoSpedizione"*/-->
     <div class="row" th:each="ordine : ${ordini}">
         <div class="card shadow-lg p-3 mb-3" th:data-ordine-id="${ordine.getId()}">
