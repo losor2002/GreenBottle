@@ -23,20 +23,19 @@ public class AggiungiAlCarrelloController {
   private SessionCarrello sessionCarrello;
 
   @PostMapping("/aggiungi-al-carrello")
-  public ResponseEntity<?> post(@ModelAttribute @Valid ProdottoForm prodottoForm) {
+  public String post(@ModelAttribute @Valid ProdottoForm prodottoForm) {
 
     Prodotto prod = prodottoDao.findProdottoById(prodottoForm.getIdProdotto()).orElse(null);
     if (prod == null) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Prodotto non trovato nel sistema");
+      return "error";
     }
 
     if (prodottoForm.getQuantita() > prod.getQuantita()) {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-          .body("Quantità richiesta non disponibile");
+      return "error";
     }
 
     sessionCarrello.addToCarrello(prod.getId(), prodottoForm.getQuantita());
-    return ResponseEntity.ok("Prodotto aggiunto al carrello");
+    return "redirect:/catalogo";
 
   }
 }
