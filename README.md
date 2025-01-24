@@ -1,4 +1,4 @@
-# JustTraditions
+# GreenBottle
 
 <p align = "center">
   <img src = "https://github.com/losor2002/GreenBottle/blob/master/src/main/resources/static/img/Logo.png" width="256" height="256">
@@ -50,13 +50,13 @@ In this section we introduce technical information and installing guides!
 
 Follow these steps:
 
-1. Download and start MySQL 8.0.31;
-2. Download Java SE 17;
+1. Download and start MySQL 8.0.42;
+2. Download Java SE 21;
 3. Clone this repo;
-4. Go into JustTraditions directory;
+4. Go into GreenBottle directory;
 5. Run `./mwnw (or .\mvnw.cmd if you're on windows) clean package` and wait for maven to build;
 6. Open and run configurationFiles/databaseInit.sql on MySQL workbench;
-7. Run `java -jar target/justTraditions-1.0.jar –spring.datasource.password="<password_database>"
+7. Run `java -jar target/GreenBottle-1.0.jar –spring.datasource.password="<password_database>"
    –spring.datasource.username="<username_database>"`;
 8. Open and run configurationFiles/defaultadmin.sql on MySQL workbench;
 9. Open your browser at `localhost:8080`.
