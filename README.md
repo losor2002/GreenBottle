@@ -1,7 +1,7 @@
 # JustTraditions
 
 <p align = "center">
-  <img src = ".github/GreenBottle.png" width="256" height="256">
+  <img src = "https://github.com/losor2002/GreenBottle/blob/master/src/main/resources/static/img/Logo.png" width="256" height="256">
 </p>
 
 <p align = "center">
