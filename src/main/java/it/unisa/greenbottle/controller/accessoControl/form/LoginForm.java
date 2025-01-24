@@ -8,6 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Classe LoginForm, utilizzata per la validazione dei dati inseriti dal cliente nel form di login.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -27,20 +30,4 @@ public class LoginForm {
               + "e avere una lunghezza minima di 8 caratteri."
   )
   private String password;
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
 }

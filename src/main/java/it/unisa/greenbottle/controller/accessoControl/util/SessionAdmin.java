@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.context.annotation.SessionScope;
 
+/**
+ * Classe SessionAdmin, utilizzata per la gestione della sessione dell'admin.
+ */
 @Component
 @SessionScope
 public class SessionAdmin {
@@ -16,6 +19,11 @@ public class SessionAdmin {
   @Autowired
   private AdminDao adminDao;
 
+  /**
+   * Metodo per settare l'admin.
+   *
+   * @param admin admin da settare
+   */
   public void setAdmin(Admin admin) {
     if (admin == null) {
       this.idAdmin = null;
@@ -24,6 +32,11 @@ public class SessionAdmin {
     }
   }
 
+  /**
+   * Metodo per ottenere l'admin.
+   *
+   * @return admin
+   */
   @ModelAttribute("admin")
   public Optional<Admin> getAdmin() {
     if (idAdmin != null) {

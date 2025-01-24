@@ -8,6 +8,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Classe RegistrazioneForm,
+ * utilizzata per la validazione dei dati inseriti dall'utente nel form di registrazione.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -21,7 +25,6 @@ public class RegistrazioneForm {
           "Nome non rispetta il formato."
   )
   private String nome;
-
 
   @NotBlank(message = "Cognome vuoto.")
   @Size(max = 30, message = "Dimensione Cognome errata.")
@@ -52,5 +55,4 @@ public class RegistrazioneForm {
               + "e avere una lunghezza minima di 8 caratteri."
   )
   private String password;
-
 }

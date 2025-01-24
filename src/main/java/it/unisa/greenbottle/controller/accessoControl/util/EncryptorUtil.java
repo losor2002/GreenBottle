@@ -5,31 +5,19 @@ import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-public class JasyptUtil {
-  /*
-    private static final String ENCRYPTION_KEY = "tua-chiave-segreta";
-
-    public static String encrypt(String text) {
-      StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
-      encryptor.setPassword(ENCRYPTION_KEY); // Chiave segreta
-      encryptor.setAlgorithm("PBEWithMD5AndDES"); // Algoritmo deterministico
-      encryptor.setIvGenerator(new NoIvGenerator()); // Rimuove l'uso dell'IV
-      return encryptor.encrypt(text);
-    }
-
-    public static String decrypt(String encryptedText) {
-      StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
-      encryptor.setPassword(ENCRYPTION_KEY); // Chiave segreta
-      encryptor.setAlgorithm("PBEWithMD5AndDES"); // Algoritmo deterministico
-      encryptor.setIvGenerator(new NoIvGenerator()); // Rimuove l'uso dell'IV
-      return encryptor.decrypt(encryptedText);
-    }
-  }
-   */
-
+/**
+ * Classe EncryptorUtil, utilizzata per la cifratura e decifratura di stringhe.
+ */
+public class EncryptorUtil {
   private static final String ALGORITHM = "AES";
-  private static final String ENCRYPTION_KEY = "1234567890123456";
+  private static final String ENCRYPTION_KEY = "1234567890123456"; // solo per scopo di test
 
+  /**
+   * Metodo per cifrare una stringa.
+   *
+   * @param text stringa da cifrare
+   * @return stringa cifrata
+   */
   public static String encrypt(String text) {
     try {
       SecretKey secretKey = new SecretKeySpec(ENCRYPTION_KEY.getBytes(), ALGORITHM);
@@ -42,6 +30,12 @@ public class JasyptUtil {
     }
   }
 
+  /**
+   * Metodo per decifrare una stringa.
+   *
+   * @param encryptedText stringa cifrata
+   * @return stringa decifrata
+   */
   public static String decrypt(String encryptedText) {
     try {
       SecretKey secretKey = new SecretKeySpec(ENCRYPTION_KEY.getBytes(), ALGORITHM);
