@@ -10,13 +10,11 @@ import it.unisa.greenbottle.storage.accessoStorage.dao.ClienteDao;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +26,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * Controller per la gestione degli abbonamenti.
+ */
 @Controller
 @RequestMapping("/abbonamento")
 public class AbbonamentoController {
@@ -36,36 +37,46 @@ public class AbbonamentoController {
 
   @Autowired
   private AbbonamentoDao abbonamentoDao;
-
   @Autowired
   private SessionCliente sessionCliente;
   @Autowired
   private DisposizioneDao disposizioneDao;
-    @Autowired
-    private ClienteDao clienteDao;
+  @Autowired
+  private ClienteDao clienteDao;
 
+  /**
+   * Mostro la lista degli abbonamenti disponibili e i dettagli dell'abbonamento selezionato.
+   *
+   * @param tipo  Bronze, Silver, Gold
+   * @param id    id dell'abbonamento selezionato per la sottoscrizione
+   * @param model model
+   * @return la vista degli abbonamenti
+   */
   @GetMapping
   public String get(
-      @RequestParam(name = "abbonamento", required = false) String tipo, @RequestParam(name = "sottoscrivi", required = false) Long id, Model model) {
-    // Roecupero l'abbonamento dal modello se non già presente
-    /*if (!model.containsAttribute("abbonamento")) {
-      Optional<Cliente> clienteOpt = sessionCliente.getCliente();
-      clienteOpt.ifPresent(cliente -> {
-        Abbonamento abbonamento = cliente.getAbbonamento();
-        Optional.ofNullable(abbonamento)
-            .ifPresent(a -> model.addAttribute("abbonamento", a.getId()));
-      });
-    }*/
+      @RequestParam(name = "abbonamento", required = false) String tipo,
+      @RequestParam(name = "sottoscrivi", required = false) Long id, Model model) {
+    // Recupero l'abbonamento dal modello se non già presente
+    /*
+      if (!model.containsAttribute("abbonamento")) {
+        Optional<Cliente> clienteOpt = sessionCliente.getCliente();
+        clienteOpt.ifPresent(cliente -> {
+          Abbonamento abbonamento = cliente.getAbbonamento();
+          Optional.ofNullable(abbonamento)
+              .ifPresent(a -> model.addAttribute("abbonamento", a.getId()));
+        });
+      }
+    */
 
-    if(id != null) {
+    if (id != null) {
       model.addAttribute("abbonamento", abbonamentoDao.findAbbonamentoById(id).get());
       return checkoutAbbonamentoView;
     }
 
     if (tipo != null && !tipo.isBlank()) {
-      if (!tipo.equalsIgnoreCase("BRONZE") &&
-          !tipo.equalsIgnoreCase("SILVER") &&
-          !tipo.equalsIgnoreCase("GOLD")) {
+      if (!tipo.equalsIgnoreCase("BRONZE")
+          && !tipo.equalsIgnoreCase("SILVER")
+          && !tipo.equalsIgnoreCase("GOLD")) {
         throw new IllegalArgumentException("Tipo di abbonamento non valido: " + tipo);
       }
 
@@ -88,17 +99,28 @@ public class AbbonamentoController {
 
   }
 
+  /**
+   * Sottoscrizione dell'abbonamento.
+   *
+   * @param abbonamentoForm     form dell'abbonamento
+   * @param bindingResult       binding result
+   * @param model               model
+   * @param httpServletResponse response
+   * @return la vista dell'abbonamento
+   * @throws IOException IOException
+   */
   @PostMapping
   public String post(@ModelAttribute @Valid AbbonamentoForm abbonamentoForm,
-                     BindingResult bindingResult, Model model, HttpServletResponse httpServletResponse)
-          throws IOException {
+                     BindingResult bindingResult, Model model,
+                     HttpServletResponse httpServletResponse)
+      throws IOException {
     if (bindingResult.hasErrors()) {
       // Se c'è un errore specifico per un campo, gestisci il messaggio
       FieldError fieldError = bindingResult.getFieldErrors().getFirst();
       model.addAttribute("message", fieldError.getDefaultMessage());
       model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
       httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, fieldError.getField());
-      return "error";// Visualizza la vista con il messaggio di errore
+      return "error"; // Visualizza la vista con il messaggio di errore
     }
 
     Optional<Cliente> clienteOpt = sessionCliente.getCliente();
@@ -107,15 +129,12 @@ public class AbbonamentoController {
       return "redirect:/login";
     }
 
-
     Long idAbbonamento = abbonamentoForm.getId();
     Optional<Abbonamento> abbonamentoOptional = abbonamentoDao.findAbbonamentoById(idAbbonamento);
     if (abbonamentoOptional.isEmpty()) {
       httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND, "Abbonamento non trovato.");
       return "error";
     }
-
-
 
     Abbonamento abbonamento = abbonamentoOptional.get();
     Cliente cliente = clienteOpt.get();
@@ -126,11 +145,11 @@ public class AbbonamentoController {
 
     model.addAttribute("abbonamento", abbonamento.getId());
 
-
     if (model.containsAttribute("abbonamento")) {
       return "redirect:/areaPersonale";
     } else {
-      httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND, "Errore nel sottoscrivere l'abbonamento.");
+      httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND,
+          "Errore nel sottoscrivere l'abbonamento.");
       return "error";
     }
   }

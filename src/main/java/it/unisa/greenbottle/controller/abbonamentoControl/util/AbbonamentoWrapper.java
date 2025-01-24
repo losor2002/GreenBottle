@@ -7,47 +7,54 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Wrapper per l'abbonamento, contiene l'abbonamento e la lista delle disposizioni.
+ */
+// do not lombok
 public class AbbonamentoWrapper implements Serializable {
   private static final long serialVersionUID = 1L;
-  private Abbonamento a;
-  private List<Disposizione> d;
+  private Abbonamento abbonamento;
+  private List<Disposizione> disposizioni;
 
-  public AbbonamentoWrapper(Abbonamento a, List<Disposizione> d) {
-    this.a = a;
-    this.d = d;
+  public AbbonamentoWrapper(Abbonamento abbonamento, List<Disposizione> disposizioni) {
+    this.abbonamento = abbonamento;
+    this.disposizioni = disposizioni;
   }
 
   public Abbonamento getAbbonamento() {
-    return a;
+    return abbonamento;
   }
 
   public List<Disposizione> getDisposizione() {
-    return d;
+    return disposizioni;
   }
 
   public Long getId() {
-    return a.getId();
+    return abbonamento.getId();
   }
 
   public Abbonamento.TipoAbbonamento getTipo() {
-    return a.getTipo();
+    return abbonamento.getTipo();
   }
 
   public Abbonamento.FrequenzaAbbonamento getFrequenza() {
-    return a.getFrequenza();
+    return abbonamento.getFrequenza();
   }
 
   public Abbonamento.RinnovoAbbonamento getRinnovo() {
-    return a.getRinnovo();
+    return abbonamento.getRinnovo();
   }
 
   public float getPrezzo() {
-    return a.getPrezzo();
+    return abbonamento.getPrezzo();
   }
 
+  /**
+   * Restituisce una mappa con i prodotti dell'abbonamento e le relative quantità.
+   */
   public HashMap<Prodotto, Integer> getProdottiAbbonamento() {
     HashMap<Prodotto, Integer> mappa = new HashMap<>();
-    for (Disposizione disposizione : d) {
+    for (Disposizione disposizione : disposizioni) {
       Prodotto chiave = disposizione.getProdotto();
       Integer valore = disposizione.getQuantita();
       mappa.put(chiave, valore);
@@ -58,13 +65,12 @@ public class AbbonamentoWrapper implements Serializable {
   @Override
   public String toString() {
     return "AbbonamentoWrapper{"
-        + "id=" + a.getId()
-        + ", tipo=" + a.getTipo()
-        + ", frequenza=" + a.getFrequenza()
-        + ", rinnovo=" + a.getRinnovo()
+        + "id=" + abbonamento.getId()
+        + ", tipo=" + abbonamento.getTipo()
+        + ", frequenza=" + abbonamento.getFrequenza()
+        + ", rinnovo=" + abbonamento.getRinnovo()
         + ", prodottiAbbonamento=" + getProdottiAbbonamento()
         + '}';
 
   }
-
 }
