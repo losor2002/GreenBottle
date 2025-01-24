@@ -5,9 +5,9 @@
 </p>
 
 <p align = "center">
-  Spring Boot Web App to sell
+  Spring Boot Web App to sell drinks in glass bottles and recycling glass bottles
   <br>
-  A project for selling drinks in glass bottles and recycling glass bottles
+  A project for
   <br>
   Software Engineering and Software Project Management 
   <br>
