@@ -1,7 +1,3 @@
-section {
-    padding-left: 150px;
-}
-
 .subscription-container {
     display: flex;
     justify-content: center;
@@ -82,4 +78,11 @@ section {
 
 .price-section {
     text-align: center;
+}
+
+.custom-table {
+    background-color: #f2f2f2; /* Grigio chiaro */
+    border-radius: 10px; /* Angoli arrotondati */
+    margin-top: 20px; /* Spazio sopra */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombra leggera */
 }

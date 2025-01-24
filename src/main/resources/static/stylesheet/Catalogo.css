@@ -20,6 +20,10 @@ body {
     min-height: calc(100vh - 120vh);
 }
 
+.card {
+    width: 18rem;
+    height: 28rem;
+}
 
 .btn-check:checked + .btn {
     opacity: 1;

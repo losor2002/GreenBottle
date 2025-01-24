@@ -78,25 +78,35 @@
         <!-- Prodotti -->
         <section class="col-md-8">
             <div class="row">
-                <div class="col-md-4 mb-4" th:each="prodotto : ${prodotti}">
-                    <div class="product-card col-md-4 mx-2 my-2 rounded">
-                        <img th:src="@{/productImg(id=${prodotto.id})}" class="img-fluid w-100 d-block"
-                             alt="Immagine prodotto">
-                        <h3 class="mt-3" th:text="${prodotto.nome}"></h3>
-                        <!-- th:onclick="|location.href='catalogo/prodotto?id=${prodotto.id}'|" -->
-                        <button class="btn btn-info btn-sm my-4"
-                                th:onclick="|location.href='#'|">
-                            Informazioni Prodotto
-                        </button>
-                        <div class="d-flex justify-content-between">
-                            <p class="text-muted my-4" th:text="${prodotto.prezzo + ' €'}"></p>
+                <!-- Iterazione sui prodotti -->
+                <div class="col-md-3 mb-3" th:each="prodotto : ${prodotti}">
+                    <div class="card product-card rounded shadow-sm h-100">
+                        <!-- Immagine prodotto -->
+                        <img th:src="@{/productImg(id=${prodotto.id})}"
+                             class="card-img-top img-fluid"
+                             alt="Immagine prodotto"
+                             style="height: 15rem; object-fit: cover;">
+
+                        <!-- Corpo della card -->
+                        <div class="card-body d-flex flex-column">
+                            <!-- Nome del prodotto -->
+                            <h5 class="card-title text-center" th:text="${prodotto.nome}"></h5>
+                            <!-- th:onclick="|location.href='catalogo/prodotto?id=${prodotto.id}'|" -->
+                            <!-- Prezzo del prodotto -->
+                            <p class="card-text text-muted text-center my-3" th:text="${prodotto.prezzo + ' €'}"></p>
                             <!--/*@thymesVar id="prodottoForm" type="it.unisa.greenbottle.controller.ordineControl.form.ProdottoForm"*/-->
+                            <!-- Bottone Informazioni -->
+                            <button class="btn btn-info btn-sm mb-3"
+                                    th:onclick="|location.href='catalogo/prodotto?id=${prodotto.id}'|">
+                                Informazioni Prodotto
+                            </button>
+
+                            <!-- Form per aggiungere al carrello -->
                             <form th:action="@{/aggiungi-al-carrello}" method="post" th:object="${prodottoForm}">
                                 <input type="hidden" name="idProdotto" th:value="${prodotto.id}">
                                 <input type="hidden" name="quantita" th:value="${1}">
-                                <button class="btn btn-success btn-sm my-4" type="submit">
-                                    <i class="bi bi-cart"></i>
-                                    Aggiungi Al Carrello
+                                <button class="btn btn-success btn-sm w-100" type="submit">
+                                    <i class="bi bi-cart"></i> Aggiungi al Carrello
                                 </button>
                             </form>
                         </div>

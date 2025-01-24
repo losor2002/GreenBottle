@@ -13,17 +13,18 @@
 </head>
 <body>
 <div th:replace="~{fragments/fragments.html :: header}"></div>
-<h1 style="text-align: center;">Riepilogo Abbonamento</h1>
+<h1 class="text-center mb-4 my-4">Riepilogo Abbonamento</h1>
 <main class="container my-4">
     <div class="row">
         <div class="col-md-8">
             <section>
 
                 <!--/*@thymesVar id="abbonamentoForm" type="it.unisa.greenbottle.controller.abbonamentoControl.form.AbbonamentoForm"*/-->
-                <form th:action="@{/abbonamento}" th:object="${abbonamentoForm}" method="post">
+                <form th:action="@{/abbonamento}" th:object="${abbonamentoForm}" method="post"
+                      class="container rounded bg-light shadow">
                     <!-- Dati di pagamento -->
                     <div class="payment-details">
-                        <h2 style="text-align: center;">Dati di pagamento</h2>
+                        <h2 class="text-center">Dati di pagamento</h2>
                         <!-- Titolare -->
                         <div class="mb-3">
                             <label class="form-label" for="nome">Nome del titolare della carta</label>
@@ -52,21 +53,31 @@
                         <label for="id"></label><input id="id" name="id" hidden th:value="${abbonamento.getId()}">
                     </div>
                     <div class="buttons d-flex">
-                        <button class="btn btn-outline-primary btn-sm" style="width:50%" type="button"
+                        <button class="btn btn-outline-primary btn-sm mx-2 mb-4" style="width:50%" type="button"
                                 th:onclick="|location.href='abbonamento'|">
                             Torna Indietro
                         </button>
-                        <button class="btn btn-primary" type="submit" id="submit" style="width:50%">Conferma</button>
+                        <button class="btn btn-primary mx-2 mb-4" type="submit" id="submit" style="width:50%">Conferma
+                        </button>
                     </div>
                 </form>
             </section>
         </div>
         <aside class="col-md-4 col-lg-3">
-            <section>
-                <h2>Sommario</h2>
-                <p th:text="${abbonamento.tipo}"></p>
-                <p th:text="${abbonamento.frequenza}"></p>
-                <p th:text="${abbonamento.prezzo + ' €'}"></p>
+            <section class="bg-light p-4 rounded shadow">
+                <h2 class="text-center my-4">Sommario</h2>
+                <div class="text-center mb-4">
+                    <p><strong>Tipo di Abbonamento:</strong></p>
+                    <p th:text="${abbonamento.tipo}"></p>
+                </div>
+                <div class="text-center mb-4">
+                    <p><strong>Rinnovo:</strong></p>
+                    <p th:text="${abbonamento.frequenza}"></p>
+                </div>
+                <div class="text-center mb-3">
+                    <p><strong>Prezzo:</strong></p>
+                    <p th:text="${abbonamento.prezzo + ' €'}"></p>
+                </div>
             </section>
         </aside>
     </div>

@@ -23,7 +23,7 @@ public class LoginForm {
 
   @NotBlank(message = "password vuota")
   @Pattern(
-      regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=]).{8,}$",
+      regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!]).{8,}$",
       message =
           "La password deve contenere almeno una lettera minuscola, una maiuscola, un numero, "
               + "un carattere speciale ( @, #, $, %, ^, &, +, = ) "

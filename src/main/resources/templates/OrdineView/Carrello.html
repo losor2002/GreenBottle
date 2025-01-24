@@ -12,11 +12,23 @@
 </head>
 <body>
 <div th:replace="~{fragments/fragments.html :: header}"></div>
-<h1 class="text-center">Il tuo Carrello</h1>
+<h1 class="text-center my-4">Il tuo Carrello</h1>
 <main class="container my-4">
     <div class="container">
         <div th:if="${carrello == null || #maps.isEmpty(carrello)}">
-            <p class="text-center">Il tuo carrello è vuoto. <a href="/catalogo">Torna al catalogo</a></p>
+            <div class="d-flex align-items-center justify-content-center my-5">
+                <div class="text-center row">
+                    <div class=" col-md-6">
+                        <img style="width: 350px; height: 270px;"
+                             src="https://static.vecteezy.com/system/resources/previews/010/852/913/original/leaf-icon-vector-png.png"
+                             alt="" class="img-fluid">
+                    </div>
+                    <div class=" col-md-6 mt-5">
+                        <p class="lead"> Il tuo carrello è vuoto! <span th:text="${status}"></span></p>
+                        <a href="/catalogo" class="btn btn-primary">Torna al Catalogo</a>
+                    </div>
+                </div>
+            </div>
         </div>
         <div th:if="${carrello != null && !(#maps.isEmpty(carrello))}">
             <table class="table table-bordered text-center">

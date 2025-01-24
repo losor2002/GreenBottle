@@ -67,37 +67,41 @@
         </div>
     </form>
 </div>
-<section class="row" id="subSection">
-    <h2>La nostra selezione:</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>I prodotti</th>
-            <th>La frequenza</th>
-            <th>Il rinnovo</th>
-            <th>Il costo</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="sub : ${abbonamenti}">
-            <td>
-                <ul th:each="prodotto : ${sub.getProdottiAbbonamento()}">
-                    <li th:text="${prodotto.key.getNome() + ' x' + prodotto.value}"></li>
-                </ul>
-            </td>
-            <td th:text="${sub.getFrequenza()}"></td>
-            <td th:text="${sub.getRinnovo()}"></td>
-            <td th:width="200px" th:text="${sub.getPrezzo()}"></td>
-            <td>
-                <button th:if="${session.sessionCliente != null and session.sessionCliente.getCliente().isPresent()}"
-                        th:onclick="|location.href='abbonamento?sottoscrivi=${sub.getId()}'|"
-                        class="btn btn-primary btn-sm w-20">Sottoscrivi
-                </button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+<section class="row justify-content-center mx-0" id="subSection">
+    <h2 class="text-center mb-4">La nostra selezione:</h2>
+    <div class="col-md-10 col-lg-8"> <!-- Stesso contenitore centrato -->
+        <table class="table table-bordered text-center custom-table">
+            <thead class="thead-dark table-light">
+            <tr>
+                <th>I prodotti</th>
+                <th>La frequenza</th>
+                <th>Il rinnovo</th>
+                <th>Il costo</th>
+                <th>Azioni</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="sub : ${abbonamenti}">
+                <td>
+                    <ul th:each="prodotto : ${sub.getProdottiAbbonamento()}" class="list-unstyled">
+                        <li th:text="${prodotto.key.getNome() + ' x' + prodotto.value}"></li>
+                    </ul>
+                </td>
+                <td th:text="${sub.getFrequenza()}"></td>
+                <td th:text="${sub.getRinnovo()}"></td>
+                <td th:width="200px" th:text="${sub.getPrezzo()}"></td>
+                <td>
+                    <button th:if="${session.sessionCliente != null and session.sessionCliente.getCliente().isPresent()}"
+                            th:onclick="|location.href='abbonamento?sottoscrivi=${sub.getId()}'|"
+                            class="btn btn-primary btn-sm w-100">Sottoscrivi
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </section>
+
 <div class="text-center text-muted" th:if="${#lists.isEmpty(abbonamenti)}" style="margin-top: 8px">
     <p>Nessun abbonamento appartenente al tier selezionato.</p>
 </div>
