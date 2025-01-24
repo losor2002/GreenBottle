@@ -22,6 +22,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * Questa classe gestisce la visualizzazione dello storico degli ordini di un cliente.
+ */
 @Controller
 @RequestMapping("areaPersonale/visualizzaStoricoOrdini")
 public class VisualizzaStoricoOrdiniController {
@@ -34,21 +37,37 @@ public class VisualizzaStoricoOrdiniController {
   @Autowired
   private SessionCliente sessionCliente;
 
+  /**
+   * Questo metodo gestisce la richiesta GET
+   * per la visualizzazione dello storico degli ordini di un cliente.
+   *
+   * @param dataForm            form per la data di inizio e di fine
+   * @param bindingResult       bindingResult
+   * @param model               model
+   * @param httpServletResponse httpServletResponse
+   * @param httpServletRequest  httpServletRequest
+   * @return visualizzaStoricoOrdiniView
+   * @throws IOException IOException
+   */
   @GetMapping
   public String get(@ModelAttribute DataForm dataForm, BindingResult bindingResult, Model model,
-                    HttpServletResponse httpServletResponse, HttpServletRequest httpServletRequest) throws IOException {
+                    HttpServletResponse httpServletResponse, HttpServletRequest httpServletRequest)
+      throws IOException {
     if (bindingResult.hasErrors()) {
       // Se c'è un errore specifico per un campo, gestisci il messaggio
       FieldError fieldError = bindingResult.getFieldErrors().getFirst();
       model.addAttribute("message", fieldError.getDefaultMessage());
       model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
       httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, fieldError.getField());
-      return "error";// Visualizza la vista con il messaggio di errore
+      return "error"; // Visualizza la vista con il messaggio di errore
     }
 
     Cliente cliente;
-    if(sessionCliente.getCliente().isPresent()) cliente = sessionCliente.getCliente().get();
-    else return "redirect:/login";
+    if (sessionCliente.getCliente().isPresent()) {
+      cliente = sessionCliente.getCliente().get();
+    } else {
+      return "redirect:/login";
+    }
 
     // se non è stata inserita una data di inizio, la data di inizio è 2023-01-01
     String startDateStr =
@@ -65,7 +84,8 @@ public class VisualizzaStoricoOrdiniController {
       httpServletRequest.setAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
       httpServletRequest.setAttribute("message", "Data di inizio non valida.");
 
-      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Data di inizio non valida.");
+      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,
+          "Data di inizio non valida.");
       return visualizzaStoricoOrdiniView;
     }
 
@@ -79,12 +99,13 @@ public class VisualizzaStoricoOrdiniController {
       return visualizzaStoricoOrdiniView;
     }
 
-    if(startDate.isAfter(endDate)) {
+    if (startDate.isAfter(endDate)) {
 
       httpServletRequest.setAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
       httpServletRequest.setAttribute("message", "Data iniziale successiva alla data finale.");
 
-      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Data iniziale successiva alla data finale.");
+      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,
+          "Data iniziale successiva alla data finale.");
       return visualizzaStoricoOrdiniView;
     }
 
@@ -103,5 +124,4 @@ public class VisualizzaStoricoOrdiniController {
     model.addAttribute("StatoSpedizione", Ordine.StatoSpedizione.class);
     return visualizzaStoricoOrdiniView;
   }
-
 }

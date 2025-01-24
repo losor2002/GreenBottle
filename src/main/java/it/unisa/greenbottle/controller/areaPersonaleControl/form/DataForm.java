@@ -7,6 +7,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Classe che rappresenta il form per la selezione
+ * delle date di inizio e fine per la visualizzazione degli ordini.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

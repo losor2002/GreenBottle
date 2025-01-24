@@ -1,4 +1,4 @@
-package it.unisa.greenbottle.controller.areaPersonaleControl;
+package it.unisa.greenbottle.controller.areaPersonaleControl.util;
 
 import it.unisa.greenbottle.storage.accessoStorage.dao.ClienteDao;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
@@ -15,13 +15,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
+/**
+ * Classe per la gestione del caricamento delle immagini dei clienti.
+ */
 @RestController
 public class RenderCliente {
 
   @Autowired
   private ClienteDao clienteDao;
 
+  /**
+   * Metodo per ottenere l'immagine di un cliente.
+   * Se l'immagine non è presente, viene restituita l'immagine di default.
+   *
+   * @param id L'id del cliente di cui si vuole ottenere l'immagine.
+   * @return L'immagine del cliente come array di byte.
+   */
   @GetMapping("/userImg")
   public ResponseEntity<byte[]> getImage(@RequestParam Long id) {
     Optional<Cliente> optCliente = clienteDao.findClienteById(id);
@@ -59,5 +68,4 @@ public class RenderCliente {
       return null;
     }
   }
-
 }
