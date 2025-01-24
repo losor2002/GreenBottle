@@ -1,0 +1,852 @@
+{
+  "id": "57a78e3d-90c8-4a59-8c97-c8ed0e8efe91",
+  "version": "2.0",
+  "name": "testSottoscrizioneAbbonamento",
+  "url": "http://localhost:8080/areaPersonale",
+  "tests": [{
+    "id": "94f83319-4830-4ed8-93cc-00c3a9c2c9d8",
+    "name": "case1",
+    "commands": [{
+      "id": "d85f854b-8909-47f6-a5cd-8876cbd4e1bc",
+      "comment": "",
+      "command": "open",
+      "target": "/abbonamento",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1eae7c0d-0655-4a5e-a477-2a1bb8f1cc5b",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "974x1040",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "21632450-e9a4-47c1-8d30-0fd8bdf3fb0c",
+      "comment": "",
+      "command": "click",
+      "target": "name=abbonamento",
+      "targets": [
+        ["name=abbonamento", "name"],
+        ["css=.col-md-4:nth-child(1) .btn", "css:finder"],
+        ["xpath=//button[@name='abbonamento']", "xpath:attributes"],
+        ["xpath=//form[@id='tier-card']/div/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Mostra')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "14a2d628-65d2-4e88-8ea3-0b2cbd8b6aba",
+      "comment": "",
+      "command": "click",
+      "target": "css=td:nth-child(5)",
+      "targets": [
+        ["css=td:nth-child(5)", "css:finder"],
+        ["xpath=//section[@id='subSection']/table/tbody/tr/td[5]", "xpath:idRelative"],
+        ["xpath=//td[5]", "xpath:position"],
+        ["xpath=//td[contains(.,'Sottoscrivi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "065b5d85-f980-494b-bf05-f117d83d3d3c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-sm",
+      "targets": [
+        ["css=.btn-sm", "css:finder"],
+        ["xpath=//button[@onclick=\"location.href='abbonamento?sottoscrivi=1'\"]", "xpath:attributes"],
+        ["xpath=//section[@id='subSection']/table/tbody/tr/td[5]/button", "xpath:idRelative"],
+        ["xpath=//td[5]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Sottoscrivi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "975d258b-3eff-433d-81c6-eb3b5d1d2f1c",
+      "comment": "",
+      "command": "click",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nomeTitolare", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6b1e249b-754d-4db5-8150-ad34a4adb8b1",
+      "comment": "",
+      "command": "type",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nomeTitolare", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "C32"
+    }, {
+      "id": "2c99ddf4-a4cd-48d6-9d00-97b3214ae4d6",
+      "comment": "",
+      "command": "click",
+      "target": "id=numero",
+      "targets": [
+        ["id=numero", "id"],
+        ["name=numeroCarta", "name"],
+        ["css=#numero", "css:finder"],
+        ["xpath=//input[@id='numero']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0acd72f9-2f62-4361-a9e1-131e7001a4e5",
+      "comment": "",
+      "command": "click",
+      "target": "css=.mb-3:nth-child(3)",
+      "targets": [
+        ["css=.mb-3:nth-child(3)", "css:finder"],
+        ["xpath=//div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1f7b3ed2-0815-4d61-93dc-e81e1526f621",
+      "comment": "",
+      "command": "click",
+      "target": "id=numero",
+      "targets": [
+        ["id=numero", "id"],
+        ["name=numeroCarta", "name"],
+        ["css=#numero", "css:finder"],
+        ["xpath=//input[@id='numero']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "837522d5-3fe3-4693-9f17-57bda3a5164f",
+      "comment": "",
+      "command": "type",
+      "target": "id=numero",
+      "targets": [
+        ["id=numero", "id"],
+        ["name=numeroCarta", "name"],
+        ["css=#numero", "css:finder"],
+        ["xpath=//input[@id='numero']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "5267893664829376"
+    }, {
+      "id": "f19c5f65-e31f-4000-95e5-6bda043a5eee",
+      "comment": "",
+      "command": "click",
+      "target": "id=data",
+      "targets": [
+        ["id=data", "id"],
+        ["name=dataScadenza", "name"],
+        ["css=#data", "css:finder"],
+        ["xpath=//input[@id='data']", "xpath:attributes"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f23b6152-0028-45cf-94b3-19b71f070084",
+      "comment": "",
+      "command": "type",
+      "target": "id=data",
+      "targets": [
+        ["id=data", "id"],
+        ["name=dataScadenza", "name"],
+        ["css=#data", "css:finder"],
+        ["xpath=//input[@id='data']", "xpath:attributes"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": "11/27"
+    }, {
+      "id": "036c903a-d920-4963-b8d8-9c7c2fdf0a78",
+      "comment": "",
+      "command": "type",
+      "target": "id=cvv",
+      "targets": [
+        ["id=cvv", "id"],
+        ["name=cvv", "name"],
+        ["css=#cvv", "css:finder"],
+        ["xpath=//input[@id='cvv']", "xpath:attributes"],
+        ["xpath=//div[3]/div[2]/input", "xpath:position"]
+      ],
+      "value": "337"
+    }, {
+      "id": "0e036795-2303-45a4-95d6-bf798e09677a",
+      "comment": "",
+      "command": "click",
+      "target": "id=submit",
+      "targets": [
+        ["id=submit", "id"],
+        ["css=#submit", "css:finder"],
+        ["xpath=//button[@id='submit']", "xpath:attributes"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Conferma')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f244fec2-a802-464c-95a9-ebddefb40292",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.lead:nth-child(3)",
+      "targets": [
+        ["css=.lead:nth-child(3)", "css:finder"],
+        ["xpath=//p[3]", "xpath:position"],
+        ["xpath=//p[contains(.,'Problema riscontrato: Nome del titolare della carta non valido.')]", "xpath:innerText"]
+      ],
+      "value": "Problema riscontrato: Nome del titolare della carta non valido."
+    }]
+  }, {
+    "id": "58d8dfee-5c7b-4f3c-b51f-46e1569c0e92",
+    "name": "case2",
+    "commands": [{
+      "id": "eda7161c-da38-4cdc-aae4-b37312806252",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/abbonamento",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7376e9a5-21f8-46be-b9a8-5571bc2288f3",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "974x1040",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f10eb1bb-c017-48b6-b3ff-60a709528e20",
+      "comment": "",
+      "command": "click",
+      "target": "name=abbonamento",
+      "targets": [
+        ["name=abbonamento", "name"],
+        ["css=.col-md-4:nth-child(1) .btn", "css:finder"],
+        ["xpath=//button[@name='abbonamento']", "xpath:attributes"],
+        ["xpath=//form[@id='tier-card']/div/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Mostra')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "cf23acbc-8cdc-4c1d-b83b-6d5281e6a366",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-sm",
+      "targets": [
+        ["css=.btn-sm", "css:finder"],
+        ["xpath=//button[@onclick=\"location.href='abbonamento?sottoscrivi=1'\"]", "xpath:attributes"],
+        ["xpath=//section[@id='subSection']/table/tbody/tr/td[5]/button", "xpath:idRelative"],
+        ["xpath=//td[5]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Sottoscrivi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "64628f2e-72f3-4bf7-ad55-ad5fa9ab16f5",
+      "comment": "",
+      "command": "click",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nomeTitolare", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5266a396-23c8-4104-807d-3908692e0581",
+      "comment": "",
+      "command": "type",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nomeTitolare", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Giancarlo Filippi"
+    }, {
+      "id": "b4abfa9c-a052-4433-87bf-fda0db608143",
+      "comment": "",
+      "command": "click",
+      "target": "id=numero",
+      "targets": [
+        ["id=numero", "id"],
+        ["name=numeroCarta", "name"],
+        ["css=#numero", "css:finder"],
+        ["xpath=//input[@id='numero']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2aba9278-4ae0-44ab-b18d-ef81a711651b",
+      "comment": "",
+      "command": "type",
+      "target": "id=numero",
+      "targets": [
+        ["id=numero", "id"],
+        ["name=numeroCarta", "name"],
+        ["css=#numero", "css:finder"],
+        ["xpath=//input[@id='numero']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "000000000000"
+    }, {
+      "id": "4c53bfdd-e83c-4694-a8b4-9ae4db7538c4",
+      "comment": "",
+      "command": "click",
+      "target": "id=data",
+      "targets": [
+        ["id=data", "id"],
+        ["name=dataScadenza", "name"],
+        ["css=#data", "css:finder"],
+        ["xpath=//input[@id='data']", "xpath:attributes"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "827318ea-f668-446f-94e1-27041753a9e4",
+      "comment": "",
+      "command": "type",
+      "target": "id=data",
+      "targets": [
+        ["id=data", "id"],
+        ["name=dataScadenza", "name"],
+        ["css=#data", "css:finder"],
+        ["xpath=//input[@id='data']", "xpath:attributes"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": "11/27"
+    }, {
+      "id": "8f3eec08-33d6-486c-af08-481fb9c2fa7c",
+      "comment": "",
+      "command": "type",
+      "target": "id=cvv",
+      "targets": [
+        ["id=cvv", "id"],
+        ["name=cvv", "name"],
+        ["css=#cvv", "css:finder"],
+        ["xpath=//input[@id='cvv']", "xpath:attributes"],
+        ["xpath=//div[3]/div[2]/input", "xpath:position"]
+      ],
+      "value": "337"
+    }, {
+      "id": "3343ae56-1851-4751-8b7f-d8a1476dc930",
+      "comment": "",
+      "command": "click",
+      "target": "id=submit",
+      "targets": [
+        ["id=submit", "id"],
+        ["css=#submit", "css:finder"],
+        ["xpath=//button[@id='submit']", "xpath:attributes"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Conferma')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "453b03de-89dd-4757-9e5f-2c955463e359",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.lead:nth-child(3)",
+      "targets": [
+        ["css=.lead:nth-child(3)", "css:finder"],
+        ["xpath=//p[3]", "xpath:position"],
+        ["xpath=//p[contains(.,'Problema riscontrato: Numero di carta non valido.')]", "xpath:innerText"]
+      ],
+      "value": "Problema riscontrato: Numero di carta non valido."
+    }]
+  }, {
+    "id": "19a63357-f13f-4457-8466-75574123d9d5",
+    "name": "case3",
+    "commands": [{
+      "id": "83762d15-d364-4587-9e88-c3712e7bf53e",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/abbonamento",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "91bbeadd-e94d-496f-af06-f957e7254aa8",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "974x1040",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8bac4f23-d6ea-46d9-bd7f-313b3cc5886d",
+      "comment": "",
+      "command": "click",
+      "target": "name=abbonamento",
+      "targets": [
+        ["name=abbonamento", "name"],
+        ["css=.col-md-4:nth-child(1) .btn", "css:finder"],
+        ["xpath=//button[@name='abbonamento']", "xpath:attributes"],
+        ["xpath=//form[@id='tier-card']/div/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Mostra')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f84c070b-7ab3-4181-b477-5577b84350cf",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-sm",
+      "targets": [
+        ["css=.btn-sm", "css:finder"],
+        ["xpath=//button[@onclick=\"location.href='abbonamento?sottoscrivi=1'\"]", "xpath:attributes"],
+        ["xpath=//section[@id='subSection']/table/tbody/tr/td[5]/button", "xpath:idRelative"],
+        ["xpath=//td[5]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Sottoscrivi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "90ea5630-6ef0-4eb9-8080-843968ba4a44",
+      "comment": "",
+      "command": "click",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nomeTitolare", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "07e8ead8-35c4-4145-9e1d-3ca3e14825a9",
+      "comment": "",
+      "command": "type",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nomeTitolare", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Giancarlo Filippi"
+    }, {
+      "id": "58f84ad6-7e1c-425f-bef1-3d1c093cce13",
+      "comment": "",
+      "command": "click",
+      "target": "id=numero",
+      "targets": [
+        ["id=numero", "id"],
+        ["name=numeroCarta", "name"],
+        ["css=#numero", "css:finder"],
+        ["xpath=//input[@id='numero']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3cde8b7a-028a-4b48-b51b-acfa37a9c527",
+      "comment": "",
+      "command": "type",
+      "target": "id=numero",
+      "targets": [
+        ["id=numero", "id"],
+        ["name=numeroCarta", "name"],
+        ["css=#numero", "css:finder"],
+        ["xpath=//input[@id='numero']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "5267893664829376"
+    }, {
+      "id": "fddb271e-3f76-4b2d-812e-dcd7bcc14034",
+      "comment": "",
+      "command": "click",
+      "target": "id=data",
+      "targets": [
+        ["id=data", "id"],
+        ["name=dataScadenza", "name"],
+        ["css=#data", "css:finder"],
+        ["xpath=//input[@id='data']", "xpath:attributes"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b29d96c9-cd88-4baa-af4c-9deec140cb1b",
+      "comment": "",
+      "command": "type",
+      "target": "id=data",
+      "targets": [
+        ["id=data", "id"],
+        ["name=dataScadenza", "name"],
+        ["css=#data", "css:finder"],
+        ["xpath=//input[@id='data']", "xpath:attributes"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": "99/99"
+    }, {
+      "id": "800befb3-92dd-4d5c-ba74-395bd41627eb",
+      "comment": "",
+      "command": "type",
+      "target": "id=cvv",
+      "targets": [
+        ["id=cvv", "id"],
+        ["name=cvv", "name"],
+        ["css=#cvv", "css:finder"],
+        ["xpath=//input[@id='cvv']", "xpath:attributes"],
+        ["xpath=//div[3]/div[2]/input", "xpath:position"]
+      ],
+      "value": "337"
+    }, {
+      "id": "4acf80c6-cd29-4f3b-bd97-2207457f644e",
+      "comment": "",
+      "command": "click",
+      "target": "id=submit",
+      "targets": [
+        ["id=submit", "id"],
+        ["css=#submit", "css:finder"],
+        ["xpath=//button[@id='submit']", "xpath:attributes"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Conferma')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "feec9c16-2b49-4352-98e2-43c06fae6c9a",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.lead:nth-child(3)",
+      "targets": [
+        ["css=.lead:nth-child(3)", "css:finder"],
+        ["xpath=//p[3]", "xpath:position"],
+        ["xpath=//p[contains(.,'Problema riscontrato: Numero di carta non valido.')]", "xpath:innerText"]
+      ],
+      "value": "Problema riscontrato: Data di scadenza della carta non valida."
+    }]
+  }, {
+    "id": "1cec4559-b85f-4035-bbe1-ee3717ab88f1",
+    "name": "case4",
+    "commands": [{
+      "id": "45b2280d-d2f3-4ca3-8619-e4f1e93e809c",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/abbonamento",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "81b5fa64-661e-4440-aa11-587fe0e1895f",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "974x1040",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3ca42b27-34e7-4b3d-8fa2-d08618f239b0",
+      "comment": "",
+      "command": "click",
+      "target": "name=abbonamento",
+      "targets": [
+        ["name=abbonamento", "name"],
+        ["css=.col-md-4:nth-child(1) .btn", "css:finder"],
+        ["xpath=//button[@name='abbonamento']", "xpath:attributes"],
+        ["xpath=//form[@id='tier-card']/div/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Mostra')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "18bc030c-e289-4e75-8782-3a481823e895",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-sm",
+      "targets": [
+        ["css=.btn-sm", "css:finder"],
+        ["xpath=//button[@onclick=\"location.href='abbonamento?sottoscrivi=1'\"]", "xpath:attributes"],
+        ["xpath=//section[@id='subSection']/table/tbody/tr/td[5]/button", "xpath:idRelative"],
+        ["xpath=//td[5]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Sottoscrivi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "20e39aca-43f8-45d4-ae8b-7fea9d48e772",
+      "comment": "",
+      "command": "click",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nomeTitolare", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3a1000bd-27a9-40eb-b091-89c809d56ac4",
+      "comment": "",
+      "command": "type",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nomeTitolare", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Giancarlo Filippi"
+    }, {
+      "id": "e88a007a-4ab9-4ce9-9757-98d90490ee0b",
+      "comment": "",
+      "command": "click",
+      "target": "id=numero",
+      "targets": [
+        ["id=numero", "id"],
+        ["name=numeroCarta", "name"],
+        ["css=#numero", "css:finder"],
+        ["xpath=//input[@id='numero']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e985be3f-bf42-4326-b748-7f1bc26727ce",
+      "comment": "",
+      "command": "type",
+      "target": "id=numero",
+      "targets": [
+        ["id=numero", "id"],
+        ["name=numeroCarta", "name"],
+        ["css=#numero", "css:finder"],
+        ["xpath=//input[@id='numero']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "5267893664829376"
+    }, {
+      "id": "c2edf530-b16a-4e3a-8f08-ef56a0b554c2",
+      "comment": "",
+      "command": "click",
+      "target": "id=data",
+      "targets": [
+        ["id=data", "id"],
+        ["name=dataScadenza", "name"],
+        ["css=#data", "css:finder"],
+        ["xpath=//input[@id='data']", "xpath:attributes"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0ae3de95-1134-4eba-b410-09d380cff703",
+      "comment": "",
+      "command": "type",
+      "target": "id=data",
+      "targets": [
+        ["id=data", "id"],
+        ["name=dataScadenza", "name"],
+        ["css=#data", "css:finder"],
+        ["xpath=//input[@id='data']", "xpath:attributes"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": "11/27"
+    }, {
+      "id": "f554aa35-2c75-4f76-a066-489576625f09",
+      "comment": "",
+      "command": "type",
+      "target": "id=cvv",
+      "targets": [
+        ["id=cvv", "id"],
+        ["name=cvv", "name"],
+        ["css=#cvv", "css:finder"],
+        ["xpath=//input[@id='cvv']", "xpath:attributes"],
+        ["xpath=//div[3]/div[2]/input", "xpath:position"]
+      ],
+      "value": "00C"
+    }, {
+      "id": "83a314c0-5ee1-45d2-ab73-818f20fbc001",
+      "comment": "",
+      "command": "click",
+      "target": "id=submit",
+      "targets": [
+        ["id=submit", "id"],
+        ["css=#submit", "css:finder"],
+        ["xpath=//button[@id='submit']", "xpath:attributes"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Conferma')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "6caade75-e070-411a-896e-4cbfd9b61a07",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.lead:nth-child(3)",
+      "targets": [
+        ["css=.lead:nth-child(3)", "css:finder"],
+        ["xpath=//p[3]", "xpath:position"],
+        ["xpath=//p[contains(.,'Problema riscontrato: Numero di carta non valido.')]", "xpath:innerText"]
+      ],
+      "value": "Problema riscontrato: CVV non valido."
+    }]
+  }, {
+    "id": "f7cdbdaa-82bd-4f26-a8f7-72203b73767a",
+    "name": "case5",
+    "commands": [{
+      "id": "1dfa9791-db2d-4f7d-a37a-d80f5a6fd762",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/abbonamento",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8652fdc3-cae8-457f-a59b-cb0bbef2dd35",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "974x1040",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "75d3fd9c-8523-4c41-9084-46240d4498f8",
+      "comment": "",
+      "command": "click",
+      "target": "name=abbonamento",
+      "targets": [
+        ["name=abbonamento", "name"],
+        ["css=.col-md-4:nth-child(1) .btn", "css:finder"],
+        ["xpath=//button[@name='abbonamento']", "xpath:attributes"],
+        ["xpath=//form[@id='tier-card']/div/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Mostra')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "27d5078d-b915-4996-ba9c-02beed7ae09e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-sm",
+      "targets": [
+        ["css=.btn-sm", "css:finder"],
+        ["xpath=//button[@onclick=\"location.href='abbonamento?sottoscrivi=1'\"]", "xpath:attributes"],
+        ["xpath=//section[@id='subSection']/table/tbody/tr/td[5]/button", "xpath:idRelative"],
+        ["xpath=//td[5]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Sottoscrivi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "fb10fd40-80a7-4e94-8811-df21b7cd6c62",
+      "comment": "",
+      "command": "click",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nomeTitolare", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1070c8d0-91cf-4982-98a1-852103f7d63a",
+      "comment": "",
+      "command": "type",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nomeTitolare", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Giancarlo Filippi"
+    }, {
+      "id": "20960c3f-e1ea-4314-808b-a8ba0b5de861",
+      "comment": "",
+      "command": "click",
+      "target": "id=numero",
+      "targets": [
+        ["id=numero", "id"],
+        ["name=numeroCarta", "name"],
+        ["css=#numero", "css:finder"],
+        ["xpath=//input[@id='numero']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cab9cc41-a57f-4099-864f-f67626ccadf9",
+      "comment": "",
+      "command": "type",
+      "target": "id=numero",
+      "targets": [
+        ["id=numero", "id"],
+        ["name=numeroCarta", "name"],
+        ["css=#numero", "css:finder"],
+        ["xpath=//input[@id='numero']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "5267893664829376"
+    }, {
+      "id": "c1c2071a-1931-41d1-b28c-af56565de9d5",
+      "comment": "",
+      "command": "click",
+      "target": "id=data",
+      "targets": [
+        ["id=data", "id"],
+        ["name=dataScadenza", "name"],
+        ["css=#data", "css:finder"],
+        ["xpath=//input[@id='data']", "xpath:attributes"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fcc851e9-acba-4034-a03a-2a814e9fe0f4",
+      "comment": "",
+      "command": "type",
+      "target": "id=data",
+      "targets": [
+        ["id=data", "id"],
+        ["name=dataScadenza", "name"],
+        ["css=#data", "css:finder"],
+        ["xpath=//input[@id='data']", "xpath:attributes"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": "11/27"
+    }, {
+      "id": "e15b5e3f-e81d-4c70-8fd1-62a7df002861",
+      "comment": "",
+      "command": "type",
+      "target": "id=cvv",
+      "targets": [
+        ["id=cvv", "id"],
+        ["name=cvv", "name"],
+        ["css=#cvv", "css:finder"],
+        ["xpath=//input[@id='cvv']", "xpath:attributes"],
+        ["xpath=//div[3]/div[2]/input", "xpath:position"]
+      ],
+      "value": "337"
+    }, {
+      "id": "314afd24-c1a1-42e7-a818-a53b96cdc10b",
+      "comment": "",
+      "command": "click",
+      "target": "id=submit",
+      "targets": [
+        ["id=submit", "id"],
+        ["css=#submit", "css:finder"],
+        ["xpath=//button[@id='submit']", "xpath:attributes"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Conferma')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "470954a5-3479-4cc7-94c9-64fc69b0a683",
+      "comment": "",
+      "command": "verifyElementPresent",
+      "target": "css=.col-md-6:nth-child(2) span:nth-child(5)",
+      "targets": [
+        ["css=.col-md-6:nth-child(2) span:nth-child(5)", "css:finder"],
+        ["xpath=//div[2]/p/span[2]", "xpath:position"],
+        ["xpath=//span[contains(.,'2025-01-24 14:57:29.884')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "5dbba97f-523f-4a8f-8652-c193faaefa75",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["94f83319-4830-4ed8-93cc-00c3a9c2c9d8"]
+  }],
+  "urls": ["http://localhost:8080/", "http://localhost:8080/abbonamento", "http://localhost:8080/areaPersonale"],
+  "plugins": []
+}
