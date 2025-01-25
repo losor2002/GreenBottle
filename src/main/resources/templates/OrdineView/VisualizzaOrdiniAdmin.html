@@ -23,7 +23,7 @@
                          alt="" class="img-fluid">
                 </div>
                 <div class=" col-md-6 mt-5">
-                    <p class="lead"> Non ci sono ordini in Attesa! <span th:text="${status}"></span></p>
+                    <p class="lead"> Non ci sono ordini in attesa! <span th:text="${status}"></span></p>
                     <a href="/admin" class="btn btn-primary">Torna Alla Dashboard</a>
                 </div>
             </div>
@@ -32,13 +32,17 @@
     <!--/*@thymesVar id="StatoSpedizione" type="it.unisa.greenbottle.storage.ordineStorage.entity.Ordine.StatoSpedizione"*/-->
     <div class="row" th:each="ordine : ${ordini}">
         <div class="card shadow-lg p-3 mb-3" th:data-ordine-id="${ordine.getId()}">
-            <h4 class="text" th:text="${ordine.getDescrizione()}"></h4>
-            <h6 class="text" th:text="${ordine.getData()}"></h6>
+            <h3 class="text" th:text="${'Id:' + ordine.getId()}"></h3>
+            <h5 class="text" th:text="${ordine.getData()}"></h5>
             <p><strong>Prezzo:</strong> <span th:text="${ordine.getPrezzo()}"></span>€</p>
             <p><strong>Cliente:</strong> <span
                     th:text="${ordine.getNomeCliente()} + ' ' + ${ordine.getCognomeCliente()}"></span></p>
             <p><strong>Email:</strong> <span th:text="${ordine.getEmailCliente()}"></span></p>
             <p><strong>Indirizzo:</strong> <span th:text="${ordine.getIndirizzo()}"></span></p>
+            <p th:if="${ordine.isRitiro()}"><strong> Richiesto il servizio di ritiro bottiglie </strong></p>
+            <p th:if="${ordine.isSupporto()}"><strong> Richiesto il servizio di supporto aggiuntivo </strong></p>
+            <p th:if="${ordine.isSupporto()}"> La descrizione fornita:
+                <span th:text="${ordine.getDescrizione()}"></span></p>
             <div class="card-button d-flex gap-2">
                 <button type="button" class="btn btn-primary btn-acc col-6 col-md-2">Accetta</button>
                 <button type="button" class="btn btn-danger btn-rif col-6 col-md-2">Rifiuta</button>
