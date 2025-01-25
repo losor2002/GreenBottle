@@ -5,10 +5,9 @@
 </p>
 
 <p align = "center">
-  Spring Boot Web App to sell drinks in glass bottles and recycling glass bottles
+  Spring Boot Web App to sell drinks in glass bottles and recycling glass bottles.
   <br>
   A project for
-  <br>
   Software Engineering and Software Project Management 
   <br>
   courses of Computer Science at University of Salerno.
@@ -20,7 +19,7 @@ In this section we introduce context information for the project.
 
 ## Introduction
 
-Spring Boot Web App to support artisans. Produced for the Software Engineering and Software Project Management
+Spring Boot Web App to sell drinks in glass bottles and recycling glass bottles. Produced for the Software Engineering and Software Project Management
 courses of Computer Science at University of Salerno.
 
 ## Authors
@@ -63,7 +62,7 @@ Follow these steps:
 
 ## Built With
 
-* [Java](https://jdk.java.net/17/) - The programming language used for the back-end development.
+* [Java](https://jdk.java.net/21/) - The programming language used for the back-end development.
 * [Spring Framework](https://spring.io/) - The java framework used to develop (Spring Web and Spring Data JPA).
 * [Maven](https://maven.apache.org/) - Dependency Management.
 * [HTML5](https://www.w3schools.com/html/default.asp) - The programming language used for the front-end development.
