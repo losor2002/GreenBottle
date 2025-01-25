@@ -1,0 +1,116 @@
+{
+  "id": "4be03f8b-474d-4d50-8357-58b5930db65c",
+  "version": "2.0",
+  "name": "testFiltraProdotti",
+  "url": "http://localhost:8080/catalogo",
+  "tests": [{
+    "id": "25b6550b-ee4c-423f-9fe8-0db6ba5a9676",
+    "name": "TC_3.1_1",
+    "commands": [{
+      "id": "ce7af72f-4691-4cbd-a29c-cd627a7a47da",
+      "comment": "",
+      "command": "open",
+      "target": "?idCategoria=-1",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "3b21d19a-8469-4e4d-998f-b2f72526cfdc",
+    "name": "TC_3.1_2",
+    "commands": [{
+      "id": "24164d35-67b3-4db6-b5d9-89268954f625",
+      "comment": "",
+      "command": "open",
+      "target": "?idCategoria=10",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "273de4b3-3719-4848-b227-05095ec9d882",
+    "name": "TC_3.1_3",
+    "commands": [{
+      "id": "c04ef44f-9c08-4b9c-a504-2717a379935c",
+      "comment": "",
+      "command": "open",
+      "target": "?idCategoria=1",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "1664ba3e-f735-4b0f-9470-06ef96c69186",
+    "name": "TC_3.1_4",
+    "commands": [{
+      "id": "b46d3727-df3d-41f6-aa5e-59f7a8837638",
+      "comment": "",
+      "command": "open",
+      "target": "?prezzoMin=-5",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "4e7f749c-8d6b-4581-8b59-8d2a70025f09",
+    "name": "TC_3.1_5",
+    "commands": [{
+      "id": "cfb1f0eb-774e-4fdc-bfb4-30a29939b990",
+      "comment": "",
+      "command": "open",
+      "target": "?prezzoMin=8.5",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "5645ffb9-8726-4323-8dd4-b533ddb9cdfe",
+    "name": "TC_3.1_6",
+    "commands": [{
+      "id": "bbaae8a0-61ab-4883-9af0-052c067dfbef",
+      "comment": "",
+      "command": "open",
+      "target": "?prezzoMin=10&prezzoMax=8.5",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "606e7736-aa25-4f79-af0b-8c0e56ad290e",
+    "name": "TC_3.1_7",
+    "commands": [{
+      "id": "dd7ebedd-5fd8-46f3-b718-c346258bd3bb",
+      "comment": "",
+      "command": "open",
+      "target": "?prezzoMin=10&prezzoMax=40.25",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "3ed47438-2bee-4c71-b02a-50deddcfba69",
+    "name": "TC_3.1_8",
+    "commands": [{
+      "id": "6fe322a1-088e-4832-9f84-3798cd8d0ff2",
+      "comment": "",
+      "command": "open",
+      "target": "?media=-3",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "9d7887bd-4c09-41e2-93a0-af45f489bb86",
+    "name": "TC_3.1_9",
+    "commands": [{
+      "id": "88b458c8-d9e2-487d-9f8f-65e99673699e",
+      "comment": "",
+      "command": "open",
+      "target": "?media=4",
+      "targets": [],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "a815e82c-a602-46a7-b219-3f1bd54606f0",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["25b6550b-ee4c-423f-9fe8-0db6ba5a9676"]
+  }],
+  "urls": ["http://localhost:8080/catalogo"],
+  "plugins": []
+}
