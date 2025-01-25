@@ -35,7 +35,7 @@ public class VisualizzaStoricoOrdiniTest {
 
   @Test
   public void startDateNonRispettaIlFormato() throws Exception {
-    testVisualizzaStoricoOrdini("2024/01/12", "2025-01-12", status().isBadRequest(), "Data di inizio non valida.");
+    testVisualizzaStoricoOrdini("2024/01/01", "2025-01-12", status().isBadRequest(), "Data di inizio non valida.");
   }
 
   @Test
