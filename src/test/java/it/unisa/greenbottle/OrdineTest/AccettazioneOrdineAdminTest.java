@@ -1,5 +1,6 @@
 package it.unisa.greenbottle.OrdineTest;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -34,7 +35,7 @@ public class AccettazioneOrdineAdminTest {
 
   @Test
   public void idNonValido() throws Exception {
-    test(-1L, status().isBadRequest());
+    test(-1L, status().isBadRequest(), "Id non valido.");
   }
 
   @Test
@@ -53,15 +54,22 @@ public class AccettazioneOrdineAdminTest {
 
     mockMvc.perform(post("/admin/accettazioneOrdine").param("ordineId", testId)
             .param("newState", Ordine.StatoSpedizione.ACCETTATO.toString()))
-        .andExpect(status().isNotFound());
+        .andExpect(status().isNotFound())
+            .andExpect(result -> {
+              String errorMessage = result.getResponse().getErrorMessage();
+              if (errorMessage != null) {
+                assertTrue(errorMessage.contains("Ordine non presente."),
+                        "La risposta non contiene il messaggio atteso: Ordine non presente.");
+              }
+            });
   }
 
   @Test
   public void idValido() throws Exception {
-    test(1L, status().isOk());
+    test(1L, status().isOk(), null);
   }
 
-  private void test(Long idOrdine, ResultMatcher resultMatcher) throws Exception {
+  private void test(Long idOrdine, ResultMatcher resultMatcher, String expectedMessage) throws Exception {
     Admin admin = new Admin();
     Cliente cliente = new Cliente();
     Ordine ordine =
@@ -75,7 +83,14 @@ public class AccettazioneOrdineAdminTest {
     mockMvc.perform(post("/admin/accettazioneOrdine")
             .param("ordineId", idOrdine.toString())
             .param("newState", Ordine.StatoSpedizione.ACCETTATO.toString()))
-        .andExpect(resultMatcher);
+        .andExpect(resultMatcher)
+        .andExpect(result -> {
+              if (expectedMessage != null) {
+                String errorMessage = result.getResponse().getContentAsString();
+                assertTrue(errorMessage.contains(expectedMessage),
+                        "La risposta non contiene il messaggio atteso: " + expectedMessage);
+              }
+            });
 
   }
 }
