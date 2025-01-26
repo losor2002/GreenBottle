@@ -1,4 +1,4 @@
-package it.unisa.greenbottle.CatalogoTest;
+package it.unisa.greenbottle.catalogoTest;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -16,6 +16,9 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 
+/**
+ * Testa la funzionalità di filtraggio dei prodotti.
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 public class FiltraProdottiTest {

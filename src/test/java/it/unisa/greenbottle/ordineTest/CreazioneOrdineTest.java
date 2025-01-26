@@ -1,4 +1,4 @@
-package it.unisa.greenbottle.OrdineTest;
+package it.unisa.greenbottle.ordineTest;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -25,9 +25,12 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 
+/**
+ * Testa la funzionalità di creazione di un ordine.
+ */
 @AutoConfigureMockMvc
 @SpringBootTest
-public class CreazioneOrdineWTest {
+public class CreazioneOrdineTest {
 
   @Autowired
   private MockMvc mockMvc;
@@ -69,7 +72,7 @@ public class CreazioneOrdineWTest {
   }
 
   @Test
-  public void CVVNonValido() throws Exception {
+  public void cvvNonValido() throws Exception {
     testCreazioneOrdine("Luigi Rossi", "5032123166322313", "02/26", "ABC", 55L, null,
         Optional.of("asd"), status().isBadRequest());
   }
@@ -116,9 +119,9 @@ public class CreazioneOrdineWTest {
         Optional.of(""), status().is3xxRedirection());
   }
 
-  private void testCreazioneOrdine(String Nome_titolare, String Numero_carta, String Data_scadenza,
-                                   String CVV, Long idIndirizzo, Boolean isSupporto,
-                                   Optional<String> Descrizione_Supporto,
+  private void testCreazioneOrdine(String nomeTitolare, String numeroCarta, String dataScadenza,
+                                   String cvv, Long idIndirizzo, Boolean isSupporto,
+                                   Optional<String> descrizioneSupporto,
                                    ResultMatcher resultmatcher)
       throws Exception {
     Cliente cliente = new Cliente();
@@ -137,8 +140,8 @@ public class CreazioneOrdineWTest {
     carrello.put(prodotto2.getId(), 50);
     indirizzo.setId(idIndirizzo);
     ordineForm =
-        new OrdineForm(Numero_carta, Data_scadenza, CVV, Nome_titolare, idIndirizzo, isSupporto,
-            true, Descrizione_Supporto.orElse(""));
+        new OrdineForm(numeroCarta, dataScadenza, cvv, nomeTitolare, idIndirizzo, isSupporto,
+            true, descrizioneSupporto.orElse(""));
 
     when(sessionCliente.getCliente()).thenReturn(Optional.of(cliente));
     when(sessionCarrello.getCarrello()).thenReturn(carrello);
@@ -157,11 +160,7 @@ public class CreazioneOrdineWTest {
         .param("isSupporto",
             ordineForm.getIsSupporto() == null ? null : ordineForm.getIsSupporto().toString())
         .param("isRitiro", "false")
-        .param("descrizioneSupporto", Descrizione_Supporto.orElse(""))
+        .param("descrizioneSupporto", descrizioneSupporto.orElse(""))
     ).andExpect(resultmatcher);
-
-
   }
-
-
 }

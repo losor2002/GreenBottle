@@ -1,4 +1,4 @@
-package it.unisa.greenbottle.DataJPATests;
+package it.unisa.greenbottle.dataJPATests;
 
 
 import it.unisa.greenbottle.storage.accessoStorage.dao.AdminDao;
@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+/**
+ * Testa la creazione di un cliente e di un admin.
+ */
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class UtentiTest {
@@ -50,5 +53,4 @@ public class UtentiTest {
     System.out.println(a2.isPresent() ? a2.get().toString() : "Not found");
     assert adminTest.equals(a2.get());
   }
-
 }

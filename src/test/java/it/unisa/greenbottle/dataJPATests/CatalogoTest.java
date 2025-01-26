@@ -1,4 +1,4 @@
-package it.unisa.greenbottle.DataJPATests;
+package it.unisa.greenbottle.dataJPATests;
 
 
 import it.unisa.greenbottle.controller.catalogoControl.form.FiltroForm;
@@ -14,6 +14,9 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.jpa.domain.Specification;
 
+/**
+ * Testa la funzionalità di filtraggio dei prodotti.
+ */
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class CatalogoTest {

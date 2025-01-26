@@ -1,4 +1,4 @@
-package it.unisa.greenbottle.DataJPATests;
+package it.unisa.greenbottle.dataJPATests;
 
 import it.unisa.greenbottle.storage.accessoStorage.dao.ClienteDao;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
@@ -21,9 +21,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+/**
+ * Testa la creazione di un ordine e la sua persistenza nel database.
+ */
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-//TODO: aggiustare i path per i test di entità.
 public class OrdineTest {
 
   @Autowired

@@ -1,4 +1,4 @@
-package it.unisa.greenbottle.DataJPATests;
+package it.unisa.greenbottle.dataJPATests;
 
 import it.unisa.greenbottle.storage.abbonamentoStorage.dao.AbbonamentoDao;
 import it.unisa.greenbottle.storage.abbonamentoStorage.dao.DisposizioneDao;
@@ -15,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+/**
+ * Test per la classe Abbonamento.
+ */
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class AbbonamentoTest {
@@ -32,7 +35,8 @@ public class AbbonamentoTest {
     Abbonamento abbonamento1 = new Abbonamento(Abbonamento.TipoAbbonamento.BRONZE,
         Abbonamento.RinnovoAbbonamento.SEMESTRALE, Abbonamento.FrequenzaAbbonamento.MENSILE, 100f);
     Abbonamento abbonamento2 = new Abbonamento(Abbonamento.TipoAbbonamento.SILVER,
-        Abbonamento.RinnovoAbbonamento.BIMESTRALE, Abbonamento.FrequenzaAbbonamento.SETTIMANALE, 20f);
+        Abbonamento.RinnovoAbbonamento.BIMESTRALE, Abbonamento.FrequenzaAbbonamento.SETTIMANALE,
+        20f);
     Abbonamento abbonamento3 =
         new Abbonamento(Abbonamento.TipoAbbonamento.GOLD, Abbonamento.RinnovoAbbonamento.MENSILE,
             Abbonamento.FrequenzaAbbonamento.GIORNALIERO, 5f);

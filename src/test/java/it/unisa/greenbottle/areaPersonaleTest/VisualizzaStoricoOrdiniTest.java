@@ -1,4 +1,4 @@
-package it.unisa.greenbottle.AreaPersonaleTest;
+package it.unisa.greenbottle.areaPersonaleTest;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -20,6 +20,9 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 
+/**
+ * Testa la funzionalità di visualizzazione dello storico degli ordini.
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 public class VisualizzaStoricoOrdiniTest {
@@ -35,17 +38,20 @@ public class VisualizzaStoricoOrdiniTest {
 
   @Test
   public void startDateNonRispettaIlFormato() throws Exception {
-    testVisualizzaStoricoOrdini("2024/01/01", "2025-01-12", status().isBadRequest(), "Data di inizio non valida.");
+    testVisualizzaStoricoOrdini("2024/01/01", "2025-01-12", status().isBadRequest(),
+        "Data di inizio non valida.");
   }
 
   @Test
   public void endDateNonRispettaIlFormato() throws Exception {
-    testVisualizzaStoricoOrdini("2024-01-12", "2025/01/12", status().isBadRequest(), "Data di fine non valida.");
+    testVisualizzaStoricoOrdini("2024-01-12", "2025/01/12", status().isBadRequest(),
+        "Data di fine non valida.");
   }
 
   @Test
   public void startDateDopoEndDate() throws Exception {
-    testVisualizzaStoricoOrdini("2024-01-12", "2024-01-11", status().isBadRequest(), "Data iniziale successiva alla data finale.");
+    testVisualizzaStoricoOrdini("2024-01-12", "2024-01-11", status().isBadRequest(),
+        "Data iniziale successiva alla data finale.");
   }
 
   @Test
@@ -53,7 +59,8 @@ public class VisualizzaStoricoOrdiniTest {
     testVisualizzaStoricoOrdini("2024-01-12", "2025-01-12", status().isOk(), null);
   }
 
-  private void testVisualizzaStoricoOrdini(String startDate, String endDate, ResultMatcher resultMatcher, String expectedMessage)
+  private void testVisualizzaStoricoOrdini(String startDate, String endDate,
+                                           ResultMatcher resultMatcher, String expectedMessage)
       throws Exception {
     Cliente cliente = new Cliente();
     Ordine ordine =
@@ -63,13 +70,18 @@ public class VisualizzaStoricoOrdiniTest {
     when(ordineDao.findOrdineById(any())).thenReturn(Optional.of(ordine));
     when(sessionCliente.getCliente()).thenReturn(Optional.of(cliente));
 
-    mockMvc.perform(get("/areaPersonale/visualizzaStoricoOrdini").param("startDate", startDate)
-        .param("endDate", endDate)).andExpect(resultMatcher).andExpect(result -> {
-      if (expectedMessage != null) {
-        String errorMessage = result.getResponse().getErrorMessage();
-        assertTrue(errorMessage.contains(expectedMessage),
+    mockMvc.perform(get("/areaPersonale/visualizzaStoricoOrdini")
+            .param("startDate", startDate)
+            .param("endDate", endDate))
+        .andExpect(resultMatcher)
+        .andExpect(result -> {
+
+          if (expectedMessage != null) {
+            String errorMessage = result.getResponse().getErrorMessage();
+            assertTrue(errorMessage.contains(expectedMessage),
                 "La risposta non contiene il messaggio atteso: " + expectedMessage);
-      }
-    });
+          }
+        });
+
   }
 }

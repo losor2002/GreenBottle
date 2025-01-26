@@ -1,4 +1,4 @@
-package it.unisa.greenbottle.AbbonamentoTest;
+package it.unisa.greenbottle.abbonamentoTest;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
@@ -21,6 +21,9 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 
+/**
+ * Test per la sottoscrizione degli abbonamenti.
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 public class SottoscrizioneAbbonamentoTest {
@@ -40,6 +43,9 @@ public class SottoscrizioneAbbonamentoTest {
   @MockitoBean
   private AbbonamentoDao abbonamentoDao;
 
+  /**
+   * Setup per il test.
+   */
   @BeforeEach
   public void setUp() {
     Cliente cliente = new Cliente();
@@ -75,7 +81,7 @@ public class SottoscrizioneAbbonamentoTest {
   }
 
   @Test
-  public void CVVNonValido() throws Exception {
+  public void cvvNonValido() throws Exception {
     testSottoscriviAbbonamento("Giancarlo Filippi", "5267893664829376", "11/27", "00C",
         status().isBadRequest(), "CVV non valido.");
   }
@@ -89,26 +95,36 @@ public class SottoscrizioneAbbonamentoTest {
   }
 
 
-  public void testSottoscriviAbbonamento(String Nome_titolare, String Numero_carta,
-                                         String Data_scadenza, String CVV,
-                                         ResultMatcher resultMatcher, String expectedMessage) throws Exception {
-    abbonamentoForm = new AbbonamentoForm(1L, Numero_carta, Data_scadenza, Nome_titolare, CVV);
+  /**
+   * Test per la sottoscrizione degli abbonamenti.
+   *
+   * @param nomeTitolare    Stringa con il nome del titolare
+   * @param numeroCarta     Stringa con il numero di carta
+   * @param dataScadenza    Stringa con la data di scadenza
+   * @param cvv             Stringa con il cvv della carta di credito
+   * @param resultMatcher   resultMatcher
+   * @param expectedMessage messaggio atteso
+   * @throws Exception eccezione
+   */
+  public void testSottoscriviAbbonamento(String nomeTitolare, String numeroCarta,
+                                         String dataScadenza, String cvv,
+                                         ResultMatcher resultMatcher, String expectedMessage)
+      throws Exception {
+    abbonamentoForm = new AbbonamentoForm(1L, numeroCarta, dataScadenza, nomeTitolare, cvv);
 
     mockMvc.perform(post("/abbonamento")
             .param("id", "1")
-            .param("numeroCarta", Numero_carta)
-            .param("dataScadenza", Data_scadenza)
-            .param("nomeTitolare", Nome_titolare)
-            .param("cvv", CVV))
+            .param("numeroCarta", numeroCarta)
+            .param("dataScadenza", dataScadenza)
+            .param("nomeTitolare", nomeTitolare)
+            .param("cvv", cvv))
         .andExpect(resultMatcher)
-            .andExpect(result -> {
-              if (expectedMessage != null) {
-                String errorMessage = result.getResponse().getErrorMessage();
-                assertTrue(errorMessage.contains(expectedMessage),
-                        "La risposta non contiene il messaggio atteso: " + expectedMessage);
-              }
-            });
+        .andExpect(result -> {
+          if (expectedMessage != null) {
+            String errorMessage = result.getResponse().getErrorMessage();
+            assertTrue(errorMessage.contains(expectedMessage),
+                "La risposta non contiene il messaggio atteso: " + expectedMessage);
+          }
+        });
   }
-
-
 }

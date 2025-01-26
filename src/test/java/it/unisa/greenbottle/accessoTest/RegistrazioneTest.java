@@ -1,4 +1,4 @@
-package it.unisa.greenbottle.AccessoTest;
+package it.unisa.greenbottle.accessoTest;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
@@ -15,6 +15,9 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 
+/**
+ * Test per la registrazione dei clienti.
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 public class RegistrazioneTest {
@@ -53,9 +56,9 @@ public class RegistrazioneTest {
   public void formatoPasswordErrato() throws Exception {
     testRegistrazione("Giancarlo", "Toronto", "GiancarloToronto1966@gmail.com", "ciao",
         status().isBadRequest(), "La Password deve contenere almeno una lettera minuscola, "
-                    + "una maiuscola, un numero, "
-                    + "un carattere speciale ( @, #, $, %, ^, &, +, =, !) "
-                    + "e avere una lunghezza minima di 8 caratteri.");
+            + "una maiuscola, un numero, "
+            + "un carattere speciale ( @, #, $, %, ^, &, +, =, !) "
+            + "e avere una lunghezza minima di 8 caratteri.");
   }
 
   @Test
@@ -75,7 +78,8 @@ public class RegistrazioneTest {
    * @param email           Email dell'utente
    * @param password        Password dell'utente
    * @param expectedStatus  Status HTTP atteso
-   * @param expectedMessage Messaggio di errore atteso nella risposta (null se non serve controllare)
+   * @param expectedMessage Messaggio di errore atteso
+   *                        nella risposta (null se non serve controllare)
    * @throws Exception In caso di errori durante il test
    */
   private void testRegistrazione(String nome, String cognome, String email, String password,

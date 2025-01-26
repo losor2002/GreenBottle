@@ -1,12 +1,13 @@
-package it.unisa.greenbottle.OrdineTest;
+package it.unisa.greenbottle.ordineTest;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import it.unisa.greenbottle.controller.accessoControl.util.SessionCliente;
+import it.unisa.greenbottle.controller.accessoControl.util.SessionAdmin;
+import it.unisa.greenbottle.storage.accessoStorage.entity.Admin;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
 import it.unisa.greenbottle.storage.ordineStorage.dao.OrdineDao;
 import it.unisa.greenbottle.storage.ordineStorage.entity.Ordine;
@@ -20,15 +21,17 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 
+/**
+ * Testa la funzionalità di accettazione di un ordine da parte dell'admin.
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
-public class VisualizzaStatoOrdineTest {
-
+public class AccettazioneOrdineAdminTest {
   @Autowired
   private MockMvc mockMvc;
 
   @MockitoBean
-  private SessionCliente sessionCliente;
+  private SessionAdmin sessionAdmin;
 
   @MockitoBean
   private OrdineDao ordineDao;
@@ -48,17 +51,19 @@ public class VisualizzaStatoOrdineTest {
     ordine.setId(1L);
     ordineDao.save(ordine);
 
+    Admin admin = new Admin();
     when(ordineDao.findOrdineById(1L)).thenReturn(Optional.of(ordine));
-    when(sessionCliente.getCliente()).thenReturn(Optional.of(cliente));
+    when(sessionAdmin.getAdmin()).thenReturn(Optional.of(admin));
 
-    mockMvc.perform(get("/areaPersonale/visualizzaStatoOrdine").param("id", testId))
+    mockMvc.perform(post("/admin/accettazioneOrdine").param("ordineId", testId)
+            .param("newState", Ordine.StatoSpedizione.ACCETTATO.toString()))
         .andExpect(status().isNotFound())
         .andExpect(result -> {
-                String errorMessage = result.getResponse().getErrorMessage();
-            if (errorMessage != null) {
-              assertTrue(errorMessage.contains("Ordine non presente."),
-                      "La risposta non contiene il messaggio atteso: Ordine non presente.");
-            }
+          String errorMessage = result.getResponse().getErrorMessage();
+          if (errorMessage != null) {
+            assertTrue(errorMessage.contains("Ordine non presente."),
+                "La risposta non contiene il messaggio atteso: Ordine non presente.");
+          }
         });
   }
 
@@ -67,7 +72,9 @@ public class VisualizzaStatoOrdineTest {
     test(1L, status().isOk(), null);
   }
 
-  private void test(Long idOrdine, ResultMatcher resultMatcher, String expectedMessage) throws Exception {
+  private void test(Long idOrdine, ResultMatcher resultMatcher, String expectedMessage)
+      throws Exception {
+    Admin admin = new Admin();
     Cliente cliente = new Cliente();
     Ordine ordine =
         new Ordine(12f, Ordine.StatoSpedizione.ELABORAZIONE, false, "0000-0000-0000-0000",
@@ -75,19 +82,18 @@ public class VisualizzaStatoOrdineTest {
     ordine.setId(1L);
 
     when(ordineDao.findOrdineById(any())).thenReturn(Optional.of(ordine));
-    when(sessionCliente.getCliente()).thenReturn(Optional.of(cliente));
+    when(sessionAdmin.getAdmin()).thenReturn(Optional.of(admin));
 
-    mockMvc.perform(get("/areaPersonale/visualizzaStatoOrdine")
-            .param("id", idOrdine.toString()))
+    mockMvc.perform(post("/admin/accettazioneOrdine")
+            .param("ordineId", idOrdine.toString())
+            .param("newState", Ordine.StatoSpedizione.ACCETTATO.toString()))
         .andExpect(resultMatcher)
         .andExpect(result -> {
-              if (expectedMessage != null) {
-                String errorMessage = result.getResponse().getErrorMessage();
-                assertTrue(errorMessage.contains(expectedMessage),
-                        "La risposta non contiene il messaggio atteso: " + expectedMessage);
-              }
-            });
-
+          if (expectedMessage != null) {
+            String errorMessage = result.getResponse().getContentAsString();
+            assertTrue(errorMessage.contains(expectedMessage),
+                "La risposta non contiene il messaggio atteso: " + expectedMessage);
+          }
+        });
   }
-
 }
