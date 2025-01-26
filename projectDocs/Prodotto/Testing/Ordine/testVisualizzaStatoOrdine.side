@@ -1,0 +1,85 @@
+{
+  "id": "ae3b8f1f-f453-49f2-86cd-53ec5dbf4c26",
+  "version": "2.0",
+  "name": "VisualizzaStatoOrdine",
+  "url": "http://localhost:8080/areaPersonale/visualizzaStatoOrdine?id=5",
+  "tests": [{
+    "id": "34bd8cd2-b5e9-49f5-a748-87c58d325469",
+    "name": "TC_5.3_1",
+    "commands": [{
+      "id": "77f46dc2-b4c7-45a0-a59f-0b5dc687ca38",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/areaPersonale/visualizzaStatoOrdine?id=-1",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "696d616c-8677-4b18-87f1-efe1e004b91e",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.lead:nth-child(3) > span",
+      "targets": [
+        ["css=.lead:nth-child(3) > span", "css:finder"],
+        ["xpath=//p[3]/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Id non valido.')]", "xpath:innerText"]
+      ],
+      "value": "Id non valido."
+    }]
+  }, {
+    "id": "04ebbe84-348a-45fc-8e1e-4c123bfb4ccc",
+    "name": "TC_5.3_2",
+    "commands": [{
+      "id": "7a8a75e5-926f-4e93-bd33-ba97d75b9479",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/areaPersonale/visualizzaStatoOrdine?id=999",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ac2b5636-2506-49eb-9076-89d5a03df15a",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.lead:nth-child(3) > span",
+      "targets": [
+        ["css=.lead:nth-child(3) > span", "css:finder"],
+        ["xpath=//p[3]/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Ordine non presente.')]", "xpath:innerText"]
+      ],
+      "value": "Ordine non presente."
+    }]
+  }, {
+    "id": "b58551ab-b72a-4570-9c9e-6adcd770119e",
+    "name": "TC_5.3_3",
+    "commands": [{
+      "id": "60d3da3a-d8a0-4a05-b0ac-bb2e06e2ee59",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/areaPersonale/visualizzaStatoOrdine?id=5",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "32388642-b62a-4226-9cb9-433d0a1537c4",
+      "comment": "",
+      "command": "verifyElementPresent",
+      "target": "id=stato_ordine",
+      "targets": [
+        ["id=stato_ordine", "id"],
+        ["css=#stato_ordine", "css:finder"],
+        ["xpath=//h2[@id='stato_ordine']", "xpath:attributes"],
+        ["xpath=//h2", "xpath:position"],
+        ["xpath=//h2[contains(.,'Stato Ordine: ELABORAZIONE')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "65293436-b08d-4713-82e3-810247d78737",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["34bd8cd2-b5e9-49f5-a748-87c58d325469"]
+  }],
+  "urls": ["http://localhost:8080/", "http://localhost:8080/areaPersonale/visualizzaStatoOrdine?id=-1", "http://localhost:8080/areaPersonale/visualizzaStatoOrdine?id=999", "http://localhost:8080/areaPersonale/visualizzaStatoOrdine?id=5"],
+  "plugins": []
+}
