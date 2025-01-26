@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/>
+    <title>SessionCarrello.java</title>
+    <link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../jacoco-resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">All in greenbottle Coverage Results</a> &gt; <a href="index.source.html"
+                                                                                               class="el_package">it.unisa.greenbottle.controller.ordineControl.util</a>
+    &gt; <span class="el_source">SessionCarrello.java</span></div>
+<h1>SessionCarrello.java</h1>
+<pre class="source lang-java linenums">package it.unisa.greenbottle.controller.ordineControl.util;
+
+import it.unisa.greenbottle.storage.catalogoStorage.dao.ProdottoDao;
+import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.SessionScope;
+
+/**
+ * Classe che rappresenta il carrello dell'utente in sessione.
+ */
+@Component
+@SessionScope
+@Setter
+@Getter
+<span class="nc" id="L21">public class SessionCarrello {</span>
+
+<span class="nc" id="L23">  private Map&lt;Long, Integer&gt; carrello = new HashMap&lt;&gt;();</span>
+
+  @Autowired
+  private ProdottoDao prodottoDao;
+
+
+  /**
+   * Restituisce il carrello filtrato.
+   *
+   * @return il carrello filtrato
+   */
+  public Map&lt;Prodotto, Integer&gt; getRealCarrello() {
+<span class="nc bnc" id="L35" title="All 4 branches missed.">    if (carrello == null || carrello.isEmpty()) {</span>
+<span class="nc" id="L36">      return new HashMap&lt;&gt;();</span>
+    }
+
+<span class="nc" id="L39">    Map&lt;Prodotto, Integer&gt; filteredCarrello = new HashMap&lt;&gt;();</span>
+
+<span class="nc bnc" id="L41" title="All 2 branches missed.">    for (Map.Entry&lt;Long, Integer&gt; entry : carrello.entrySet()) {</span>
+<span class="nc" id="L42">      Long productId = entry.getKey();</span>
+
+<span class="nc" id="L44">      Optional&lt;Prodotto&gt; existingProduct = prodottoDao.findById(productId);</span>
+
+<span class="nc" id="L46">      existingProduct.ifPresent(prodotto -&gt; filteredCarrello.put(prodotto, entry.getValue()));</span>
+<span class="nc" id="L47">    }</span>
+
+<span class="nc" id="L49">    return filteredCarrello;</span>
+  }
+
+  /**
+   * Aggiunge un prodotto al carrello.
+   *
+   * @param prodotto id del prodotto
+   * @param quantita quantità del prodotto
+   * @return true se l'operazione è andata a buon fine, false altrimenti
+   */
+  public boolean addToCarrello(Long prodotto, Integer quantita) {
+<span class="nc bnc" id="L60" title="All 6 branches missed.">    if (prodotto == null || quantita == null || quantita &lt;= 0) {</span>
+<span class="nc" id="L61">      return false;</span>
+    }
+<span class="nc" id="L63">    carrello.put(prodotto, carrello.getOrDefault(prodotto, 0) + quantita);</span>
+<span class="nc" id="L64">    return true;</span>
+  }
+
+  /**
+   * Rimuove un prodotto dal carrello.
+   *
+   * @param prodotto id del prodotto
+   * @return true se l'operazione è andata a buon fine, false altrimenti
+   */
+  public boolean removeFromCarrello(Long prodotto) {
+<span class="nc bnc" id="L74" title="All 4 branches missed.">    if (prodotto == null || !carrello.containsKey(prodotto)) {</span>
+<span class="nc" id="L75">      return false;</span>
+    }
+<span class="nc" id="L77">    carrello.remove(prodotto);</span>
+<span class="nc" id="L78">    return true;</span>
+  }
+
+  /**
+   * Svuota il carrello.
+   *
+   * @return true se l'operazione è andata a buon fine, false altrimenti
+   */
+  public boolean clearCarrello() {
+<span class="nc bnc" id="L87" title="All 2 branches missed.">    if (!carrello.isEmpty()) {</span>
+<span class="nc" id="L88">      carrello.clear();</span>
+<span class="nc" id="L89">      return true;</span>
+    }
+<span class="nc" id="L91">    return false;</span>
+  }
+}
+</pre>
+<div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span>
+</div>
+</body>
+</html>

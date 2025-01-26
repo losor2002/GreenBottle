@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/>
+    <title>Ordine.java</title>
+    <link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../jacoco-resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">All in greenbottle Coverage Results</a> &gt; <a href="index.source.html"
+                                                                                               class="el_package">it.unisa.greenbottle.storage.ordineStorage.entity</a>
+    &gt; <span class="el_source">Ordine.java</span></div>
+<h1>Ordine.java</h1>
+<pre class="source lang-java linenums">package it.unisa.greenbottle.storage.ordineStorage.entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import it.unisa.greenbottle.storage.accessoStorage.entity.Admin;
+import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
+import it.unisa.greenbottle.storage.areaPersonaleStorage.entity.Indirizzo;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+/**
+ * Rappresenta un ordine effettuato da un cliente nel sistema GreenBottle.
+ * Ogni ordine può includere diversi prodotti e informazioni di spedizione.
+ */
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@ToString(exclude = &quot;composizioni&quot;)
+public class Ordine {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id; // Identificativo univoco dell'ordine
+
+  @Column(nullable = false, length = 7, precision = 2)
+  private float prezzo; // Prezzo totale dell'ordine
+
+  @Column(nullable = false)
+  @Enumerated(EnumType.STRING)
+  private StatoSpedizione stato; // Stato attuale della spedizione
+
+  @Column(nullable = false)
+  private boolean isRitiro; // Indica se l'ordine è per il ritiro o la spedizione
+
+  @Column(nullable = false, length = 39)
+  private String carta; // Numero della carta di pagamento
+
+  @Column(nullable = false)
+  private boolean isSupporto; // Indica se l'ordine è supportato da un servizio
+
+<span class="fc" id="L56">  @Column(length = 300)</span>
+  private String descrizione = &quot;&quot;; // Descrizione dell'ordine
+
+  @Column(nullable = false)
+  private Timestamp data; // Data e ora di creazione dell'ordine
+
+<span class="fc"
+      id="L62">  @OneToMany(mappedBy = &quot;ordine&quot;, cascade = CascadeType.ALL, orphanRemoval = true)</span>
+  @JsonIgnore
+  // Lista di composizioni (prodotti) nell'ordine
+  private Set&lt;Composizione&gt; composizioni = new HashSet&lt;&gt;();
+
+  @ManyToOne(optional = false)
+  private Cliente cliente; // Cliente che ha effettuato l'ordine
+
+  @ManyToOne
+  private Indirizzo indirizzo; // Indirizzo di spedizione (se applicabile)
+
+  @ManyToOne
+  private Admin admin; // Amministratore che gestisce l'ordine
+
+  /**
+   * Costruttore per creare un ordine con i dettagli specifici.
+   *
+   * @param prezzo      Prezzo totale dell'ordine
+   * @param stato       Stato attuale della spedizione
+   * @param isRitiro    Indica se l'ordine è per il ritiro
+   * @param carta       Numero della carta di pagamento
+   * @param isSupporto  Indica se l'ordine è supportato
+   * @param descrizione Descrizione dell'ordine
+   * @param data        Data e ora di creazione dell'ordine
+   * @param cliente     Cliente che ha effettuato l'ordine
+   * @param admin       Amministratore che gestisce l'ordine
+   */
+  public Ordine(float prezzo, StatoSpedizione stato, boolean isRitiro, String carta,
+                boolean isSupporto, String descrizione, Timestamp data,
+<span class="fc" id="L91">                Cliente cliente, Admin admin) {</span>
+<span class="fc" id="L92">    this.prezzo = prezzo;</span>
+<span class="fc" id="L93">    this.stato = stato;</span>
+<span class="fc" id="L94">    this.isRitiro = isRitiro;</span>
+<span class="fc" id="L95">    this.carta = carta;</span>
+<span class="fc" id="L96">    this.isSupporto = isSupporto;</span>
+<span class="fc" id="L97">    this.descrizione = descrizione;</span>
+<span class="fc" id="L98">    this.data = data;</span>
+<span class="fc" id="L99">    this.cliente = cliente;</span>
+<span class="fc" id="L100">    this.admin = admin;</span>
+<span class="fc" id="L101">  }</span>
+
+  @Override
+  public boolean equals(Object o) {
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">    if (this == o) {</span>
+<span class="fc" id="L106">      return true;</span>
+    }
+<span class="nc bnc" id="L108" title="All 4 branches missed.">    if (o == null || getClass() != o.getClass()) {</span>
+<span class="nc" id="L109">      return false;</span>
+    }
+<span class="nc" id="L111">    Ordine ordine = (Ordine) o;</span>
+<span class="nc bnc" id="L112" title="All 4 branches missed.">    return id != null &amp;&amp; id.equals(ordine.id); // Confronta per ID</span>
+  }
+
+  @Override
+  public int hashCode() {
+<span class="nc bnc" id="L117" title="All 2 branches missed.">    return id != null ? id.hashCode() : 0; // Usa l'ID come base per hashCode</span>
+  }
+
+  /**
+   * Enum che rappresenta i possibili stati di spedizione di un ordine.
+   * I valori possibili sono:
+   * - ELABORAZIONE
+   * - ACCETTATO
+   * - RIFIUTATO
+   * - SPEDITO
+   * - CONSEGNATO
+   */
+<span class="fc" id="L129">  public enum StatoSpedizione {</span>
+<span class="fc" id="L130">    ELABORAZIONE, // Ordine in fase di elaborazione</span>
+<span class="fc" id="L131">    ACCETTATO,    // Ordine accettato</span>
+<span class="fc" id="L132">    RIFIUTATO,    // Ordine rifiutato</span>
+<span class="fc" id="L133">    SPEDITO,      // Ordine spedito</span>
+<span class="fc" id="L134">    CONSEGNATO    // Ordine consegnato</span>
+  }
+}
+</pre>
+<div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span>
+</div>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/>
+    <title>OrdineWrapper.java</title>
+    <link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../jacoco-resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">All in greenbottle Coverage Results</a> &gt; <a href="index.source.html"
+                                                                                               class="el_package">it.unisa.greenbottle.controller.ordineControl.util</a>
+    &gt; <span class="el_source">OrdineWrapper.java</span></div>
+<h1>OrdineWrapper.java</h1>
+<pre class="source lang-java linenums">package it.unisa.greenbottle.controller.ordineControl.util;
+
+import it.unisa.greenbottle.storage.accessoStorage.entity.Admin;
+import it.unisa.greenbottle.storage.areaPersonaleStorage.entity.Indirizzo;
+import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
+import it.unisa.greenbottle.storage.ordineStorage.entity.Composizione;
+import it.unisa.greenbottle.storage.ordineStorage.entity.Ordine;
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.List;
+
+/**
+ * Classe che rappresenta un wrapper per l'oggetto Ordine, che contiene anche la lista delle
+ * composizioni di un ordine.
+ */
+public class OrdineWrapper implements Serializable {
+  private static final long serialVersionUID = 1L;
+
+  private Ordine ord;
+  private List&lt;Composizione&gt; comp;
+
+<span class="fc" id="L23">  public OrdineWrapper(Ordine ord, List&lt;Composizione&gt; comp) {</span>
+<span class="fc" id="L24">    this.ord = ord;</span>
+<span class="fc" id="L25">    this.comp = comp;</span>
+<span class="fc" id="L26">  }</span>
+
+  public Long getId() {
+<span class="fc" id="L29">    return ord.getId();</span>
+  }
+
+  public String getDescrizione() {
+<span class="fc" id="L33">    return ord.getDescrizione();</span>
+  }
+
+  public float getPrezzo() {
+<span class="fc" id="L37">    return ord.getPrezzo();</span>
+  }
+
+  public Ordine.StatoSpedizione getStato() {
+<span class="fc" id="L41">    return ord.getStato();</span>
+  }
+
+  public boolean isRitiro() {
+<span class="fc" id="L45">    return ord.isRitiro();</span>
+  }
+
+  public boolean isSupporto() {
+<span class="fc" id="L49">    return ord.isSupporto();</span>
+  }
+
+  public String getNomeCliente() {
+<span class="fc" id="L53">    return ord.getCliente().getNome();</span>
+  }
+
+  public String getCognomeCliente() {
+<span class="fc" id="L57">    return ord.getCliente().getCognome();</span>
+  }
+
+  public String getEmailCliente() {
+<span class="fc" id="L61">    return ord.getCliente().getEmail();</span>
+  }
+
+  public Timestamp getData() {
+<span class="fc" id="L65">    return ord.getData();</span>
+  }
+
+  public Admin getAdmin() {
+<span class="nc" id="L69">    return ord.getAdmin();</span>
+  }
+
+  /**
+   * Metodo che restituisce l'indirizzo dell'ordine.
+   *
+   * @return Stringa contenente l'indirizzo dell'ordine.
+   */
+  public String getIndirizzo() {
+<span class="fc" id="L78">    Indirizzo i = ord.getIndirizzo();</span>
+<span class="nc" id="L79">    return i.getVia() + &quot; &quot; + i.getCivico() + &quot; &quot; + i.getCap() + &quot; &quot; + i.getCitta() + &quot; &quot;</span>
+<span class="nc" id="L80">        + i.getProvincia();</span>
+  }
+
+  /**
+   * Metodo che restituisce una mappa contenente i prodotti dell'ordine e le relative quantità.
+   *
+   * @return Mappa contenente i prodotti dell'ordine e le relative quantità.
+   */
+  public HashMap&lt;Prodotto, Integer&gt; getProdottiOrdine() {
+<span class="fc" id="L89">    HashMap&lt;Prodotto, Integer&gt; mappa = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">    for (Composizione composizione : comp) {</span>
+<span class="fc" id="L91">      Prodotto chiave = composizione.getProdotto();</span>
+<span class="fc" id="L92">      Integer valore = composizione.getQuantita();</span>
+<span class="fc" id="L93">      mappa.put(chiave, valore);</span>
+<span class="fc" id="L94">    }</span>
+<span class="fc" id="L95">    return mappa;</span>
+  }
+
+  @Override
+  public String toString() {
+<span class="pc" id="L100">    return &quot;OrdineWrapper{&quot;</span>
+<span class="fc" id="L101">        + &quot;id=&quot; + getId()</span>
+<span class="fc" id="L102">        + &quot;, descrizione='&quot; + getDescrizione() + '\''</span>
+<span class="fc" id="L103">        + &quot;, prezzo=&quot; + getPrezzo()</span>
+<span class="fc" id="L104">        + &quot;, stato=&quot; + getStato()</span>
+<span class="fc" id="L105">        + &quot;, ritiro=&quot; + isRitiro()</span>
+<span class="fc" id="L106">        + &quot;, supporto=&quot; + isSupporto()</span>
+<span class="fc" id="L107">        + &quot;, nomeCliente='&quot; + getNomeCliente() + '\''</span>
+<span class="fc" id="L108">        + &quot;, cognomeCliente='&quot; + getCognomeCliente() + '\''</span>
+<span class="fc" id="L109">        + &quot;, emailCliente='&quot; + getEmailCliente() + '\''</span>
+<span class="fc" id="L110">        + &quot;, data=&quot; + getData() + '\''</span>
+<span class="nc" id="L111">        + &quot;, indirizzo='&quot; + getIndirizzo() + '\''</span>
+<span class="nc" id="L112">        + &quot;, prodottiOrdine=&quot; + getProdottiOrdine()</span>
+        + '}';
+  }
+}
+</pre>
+<div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span>
+</div>
+</body>
+</html>

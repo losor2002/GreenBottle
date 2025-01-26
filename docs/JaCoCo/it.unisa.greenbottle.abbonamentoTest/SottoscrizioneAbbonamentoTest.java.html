@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/>
+    <title>SottoscrizioneAbbonamentoTest.java</title>
+    <link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../jacoco-resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">All in greenbottle Coverage Results</a> &gt; <a href="index.source.html"
+                                                                                               class="el_package">it.unisa.greenbottle.abbonamentoTest</a>
+    &gt; <span class="el_source">SottoscrizioneAbbonamentoTest.java</span></div>
+<h1>SottoscrizioneAbbonamentoTest.java</h1>
+<pre class="source lang-java linenums">package it.unisa.greenbottle.abbonamentoTest;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import it.unisa.greenbottle.controller.abbonamentoControl.form.AbbonamentoForm;
+import it.unisa.greenbottle.controller.accessoControl.util.SessionCliente;
+import it.unisa.greenbottle.storage.abbonamentoStorage.dao.AbbonamentoDao;
+import it.unisa.greenbottle.storage.abbonamentoStorage.entity.Abbonamento;
+import it.unisa.greenbottle.storage.accessoStorage.dao.ClienteDao;
+import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
+import java.util.Optional;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
+
+/**
+ * Test per la sottoscrizione degli abbonamenti.
+ */
+@SpringBootTest
+@AutoConfigureMockMvc
+<span class="fc" id="L29">public class SottoscrizioneAbbonamentoTest {</span>
+
+  @MockitoBean
+  private SessionCliente sessionCliente;
+
+  @MockitoBean
+  private AbbonamentoForm abbonamentoForm;
+
+  @MockitoBean
+  private ClienteDao clienteDao;
+
+  @Autowired
+  private MockMvc mockMvc;
+
+  @MockitoBean
+  private AbbonamentoDao abbonamentoDao;
+
+  /**
+   * Setup per il test.
+   */
+  @BeforeEach
+  public void setUp() {
+<span class="fc" id="L51">    Cliente cliente = new Cliente();</span>
+<span class="fc" id="L52">    when(sessionCliente.getCliente()).thenReturn(Optional.of(cliente));</span>
+<span class="fc" id="L53">    when(clienteDao.findClienteById(1L)).thenReturn(Optional.of(cliente));</span>
+
+<span class="fc" id="L55">    Abbonamento abbonamento = new Abbonamento(</span>
+        Abbonamento.TipoAbbonamento.BRONZE,
+        Abbonamento.RinnovoAbbonamento.SEMESTRALE,
+        Abbonamento.FrequenzaAbbonamento.GIORNALIERO,
+        120.50f
+    );
+<span class="fc" id="L61">    abbonamento.setId(1L);</span>
+<span class="fc" id="L62">  }</span>
+
+
+  @Test
+  public void nomeNonValido() throws Exception {
+<span class="fc" id="L67">    testSottoscriviAbbonamento(&quot;C32&quot;, &quot;5267893664829376&quot;, &quot;11/27&quot;, &quot;337&quot;,</span>
+<span class="fc"
+      id="L68">        status().isBadRequest(), &quot;Nome del titolare della carta non valido.&quot;);</span>
+<span class="fc" id="L69">  }</span>
+
+  @Test
+  public void numeroCartaNonValido() throws Exception {
+<span class="fc" id="L73">    testSottoscriviAbbonamento(&quot;Giancarlo Filippi&quot;, &quot;00000000000000000&quot;, &quot;11/27&quot;, &quot;337&quot;,</span>
+<span class="fc" id="L74">        status().isBadRequest(), &quot;Numero di carta non valido.&quot;);</span>
+<span class="fc" id="L75">  }</span>
+
+  @Test
+  public void dataNonValido() throws Exception {
+<span class="fc" id="L79">    testSottoscriviAbbonamento(&quot;Giancarlo Filippi&quot;, &quot;5267893664829376&quot;, &quot;99/99&quot;, &quot;337&quot;,</span>
+<span class="fc" id="L80">        status().isBadRequest(), &quot;Data di scadenza della carta non valida.&quot;);</span>
+<span class="fc" id="L81">  }</span>
+
+  @Test
+  public void cvvNonValido() throws Exception {
+<span class="fc" id="L85">    testSottoscriviAbbonamento(&quot;Giancarlo Filippi&quot;, &quot;5267893664829376&quot;, &quot;11/27&quot;, &quot;00C&quot;,</span>
+<span class="fc" id="L86">        status().isBadRequest(), &quot;CVV non valido.&quot;);</span>
+<span class="fc" id="L87">  }</span>
+
+  @Test
+  public void abbonamentoSottoscritto() throws Exception {
+<span class="fc" id="L91">    Abbonamento abbonamento = new Abbonamento();</span>
+<span class="fc" id="L92">    when(abbonamentoDao.findAbbonamentoById(1L)).thenReturn(Optional.of(abbonamento));</span>
+<span class="fc" id="L93">    testSottoscriviAbbonamento(&quot;Giancarlo Filippi&quot;, &quot;5267893664829376&quot;, &quot;11/27&quot;, &quot;337&quot;,</span>
+<span class="fc" id="L94">        status().is3xxRedirection(), null);</span>
+<span class="fc" id="L95">  }</span>
+
+
+  /**
+   * Test per la sottoscrizione degli abbonamenti.
+   *
+   * @param nomeTitolare    Stringa con il nome del titolare
+   * @param numeroCarta     Stringa con il numero di carta
+   * @param dataScadenza    Stringa con la data di scadenza
+   * @param cvv             Stringa con il cvv della carta di credito
+   * @param resultMatcher   resultMatcher
+   * @param expectedMessage messaggio atteso
+   * @throws Exception eccezione
+   */
+  public void testSottoscriviAbbonamento(String nomeTitolare, String numeroCarta,
+                                         String dataScadenza, String cvv,
+                                         ResultMatcher resultMatcher, String expectedMessage)
+      throws Exception {
+<span class="fc"
+      id="L113">    abbonamentoForm = new AbbonamentoForm(1L, numeroCarta, dataScadenza, nomeTitolare, cvv);</span>
+
+<span class="fc" id="L115">    mockMvc.perform(post(&quot;/abbonamento&quot;)</span>
+<span class="fc" id="L116">            .param(&quot;id&quot;, &quot;1&quot;)</span>
+<span class="fc" id="L117">            .param(&quot;numeroCarta&quot;, numeroCarta)</span>
+<span class="fc" id="L118">            .param(&quot;dataScadenza&quot;, dataScadenza)</span>
+<span class="fc" id="L119">            .param(&quot;nomeTitolare&quot;, nomeTitolare)</span>
+<span class="fc" id="L120">            .param(&quot;cvv&quot;, cvv))</span>
+<span class="fc" id="L121">        .andExpect(resultMatcher)</span>
+<span class="fc" id="L122">        .andExpect(result -&gt; {</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">          if (expectedMessage != null) {</span>
+<span class="fc" id="L124">            String errorMessage = result.getResponse().getErrorMessage();</span>
+<span class="fc" id="L125">            assertTrue(errorMessage.contains(expectedMessage),</span>
+                &quot;La risposta non contiene il messaggio atteso: &quot; + expectedMessage);
+          }
+<span class="fc" id="L128">        });</span>
+<span class="fc" id="L129">  }</span>
+}
+</pre>
+<div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span>
+</div>
+</body>
+</html>

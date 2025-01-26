@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/>
+    <title>Prodotto.java</title>
+    <link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../jacoco-resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">All in greenbottle Coverage Results</a> &gt; <a href="index.source.html"
+                                                                                               class="el_package">it.unisa.greenbottle.storage.catalogoStorage.entity</a>
+    &gt; <span class="el_source">Prodotto.java</span></div>
+<h1>Prodotto.java</h1>
+<pre class="source lang-java linenums">package it.unisa.greenbottle.storage.catalogoStorage.entity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+/**
+ * Rappresenta un prodotto nel catalogo del sistema GreenBottle.
+ * Ogni prodotto include informazioni sul nome, descrizione, prezzo, quantità disponibile,
+ * media dei voti, immagine e categoria di appartenenza.
+ */
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@ToString(exclude = &quot;img&quot;)
+public class Prodotto {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id; // Identificativo univoco del prodotto
+
+  @Column(nullable = false, length = 256)
+  private String nome; // Nome del prodotto
+
+  @Column(nullable = false, length = 1024)
+  private String descrizione; // Descrizione del prodotto
+
+  @Lob
+  private byte[] img; // Immagine del prodotto (se presente)
+
+  @Column(nullable = false)
+  private float prezzo; // Prezzo del prodotto
+
+  @Column(nullable = false)
+  private int quantita; // Quantità disponibile del prodotto
+
+  @Column()
+  private float mediaVoti; // Media dei voti del prodotto
+
+  @ManyToOne
+  private Categoria categoria; // Categoria di appartenenza del prodotto
+
+  /**
+   * Costruttore per creare un prodotto con parametri specifici.
+   *
+   * @param nome        Nome del prodotto
+   * @param descrizione Descrizione del prodotto
+   * @param img         Immagine del prodotto (se presente)
+   * @param prezzo      Prezzo del prodotto
+   * @param quantita    Quantità disponibile del prodotto
+   * @param categoria   Categoria di appartenenza del prodotto
+   */
+  public Prodotto(String nome, String descrizione, byte[] img, float prezzo, int quantita,
+<span class="fc" id="L62">                  Categoria categoria) {</span>
+<span class="fc" id="L63">    this.nome = nome;</span>
+<span class="fc" id="L64">    this.descrizione = descrizione;</span>
+<span class="fc" id="L65">    this.img = img;</span>
+<span class="fc" id="L66">    this.prezzo = prezzo;</span>
+<span class="fc" id="L67">    this.quantita = quantita;</span>
+<span class="fc" id="L68">    this.categoria = categoria;</span>
+<span class="fc" id="L69">  }</span>
+}
+</pre>
+<div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span>
+</div>
+</body>
+</html>

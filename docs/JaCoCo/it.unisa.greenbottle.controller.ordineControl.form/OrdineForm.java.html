@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/>
+    <title>OrdineForm.java</title>
+    <link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../jacoco-resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">All in greenbottle Coverage Results</a> &gt; <a href="index.source.html"
+                                                                                               class="el_package">it.unisa.greenbottle.controller.ordineControl.form</a>
+    &gt; <span class="el_source">OrdineForm.java</span></div>
+<h1>OrdineForm.java</h1>
+<pre class="source lang-java linenums">package it.unisa.greenbottle.controller.ordineControl.form;
+
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+import jdk.jfr.BooleanFlag;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+/**
+ * Classe che rappresenta il form per la creazione di un ordine.
+ */
+@AllArgsConstructor
+@Data
+public class OrdineForm {
+  @NotNull
+  @Pattern(
+      regexp = &quot;^(\\d{4}[-\\s]?){3}\\d{4}$&quot;,
+      message = &quot;Numero di carta non valido.&quot;
+  )
+  private String numeroCarta;
+
+  @NotNull
+  @Pattern(
+      regexp = &quot;^(0?[1-9]|1[0-2])[/\\-]\\d{2}(\\d{2})?$&quot;,
+      message = &quot;Data di scadenza della carta non valida.&quot;
+  )
+  private String dataScadenza;
+
+  @NotNull
+  @Pattern(
+      regexp = &quot;^\\d{3,4}$&quot;,
+      message = &quot;cvv non valido.&quot;
+  )
+  private String cvv;
+
+  @NotNull
+  @Pattern(
+      regexp = &quot;^[A-Za-zÀ-ÿ\\s']{2,20}$&quot;,
+      message = &quot;Nome del titolare della carta non valido.&quot;
+  )
+  private String nomeTitolare;
+
+  @NotNull
+  @Positive(message = &quot;Indirizzo non valido.&quot;)
+  private Long indirizzo;
+
+  @NotNull(message = &quot;isSupporto non valido.&quot;)
+  @BooleanFlag
+  private Boolean isSupporto;
+
+  @NotNull(message = &quot;isRitiro non valido.&quot;)
+  @BooleanFlag
+  private Boolean isRitiro;
+
+  @Size(max = 300, message = &quot;descrizioneSupporto troppo lunga.&quot;)
+  private String descrizioneSupporto;
+
+  public Boolean getIsSupporto() {
+<span class="fc bfc" id="L61" title="All 2 branches covered.">    return isSupporto == null ? Boolean.FALSE : isSupporto;</span>
+  }
+
+  public String getDescrizioneSupporto() {
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">    return descrizioneSupporto == null ? &quot;&quot; : descrizioneSupporto;</span>
+  }
+
+  public boolean isSupportoDescrizioneValid() {
+<span class="nc bnc" id="L69" title="All 4 branches missed.">    return getIsSupporto() &amp;&amp; !getDescrizioneSupporto().isBlank();</span>
+  }
+}
+</pre>
+<div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span>
+</div>
+</body>
+</html>

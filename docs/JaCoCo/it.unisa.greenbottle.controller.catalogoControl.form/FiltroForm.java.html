@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/>
+    <title>FiltroForm.java</title>
+    <link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../jacoco-resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">All in greenbottle Coverage Results</a> &gt; <a href="index.source.html"
+                                                                                               class="el_package">it.unisa.greenbottle.controller.catalogoControl.form</a>
+    &gt; <span class="el_source">FiltroForm.java</span></div>
+<h1>FiltroForm.java</h1>
+<pre class="source lang-java linenums">package it.unisa.greenbottle.controller.catalogoControl.form;
+
+import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+/**
+ * Classe che rappresenta il form per la ricerca di prodotti.
+ */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class FiltroForm {
+  @Min(value = 1, message = &quot;IdCategoria deve essere maggiore o uguale a 1.&quot;)
+  private Long idCategoria;
+
+  @Min(value = 1, message = &quot;Prezzo minimo deve essere maggiore o uguale a 1.&quot;)
+  private Float prezzoMin;
+
+  @Max(value = 999, message = &quot;Prezzo massimo deve essere minore o uguale a 999.&quot;)
+  @Min(value = 1, message = &quot;Prezzo massimo deve essere maggiore o uguale a 1.&quot;)
+  private Float prezzoMax;
+
+  @Min(value = 1, message = &quot;Media deve essere almeno 1.0&quot;)
+  @Max(value = 5, message = &quot;Media deve essere al massimo 5.0&quot;)
+  private Float media;
+
+  /**
+   * Metodo che controlla se il prezzo minimo è minore o uguale.
+   *
+   * @return true se il prezzo minimo è minore o uguale al prezzo massimo, false altrimenti.
+   */
+  @AssertTrue(message = &quot;Prezzo minimo non può essere maggiore del prezzo massimo.&quot;)
+  public boolean isPrezzoMinMaxValid() {
+<span class="fc bfc" id="L38"
+      title="All 4 branches covered.">    if (prezzoMin != null &amp;&amp; prezzoMax != null) {</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">      return prezzoMin &lt;= prezzoMax;</span>
+    }
+<span class="fc" id="L41">    return true;</span>
+  }
+}
+</pre>
+<div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span>
+</div>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/>
+    <title>LoginController.java</title>
+    <link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../jacoco-resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">All in greenbottle Coverage Results</a> &gt; <a href="index.source.html"
+                                                                                               class="el_package">it.unisa.greenbottle.controller.accessoControl</a>
+    &gt; <span class="el_source">LoginController.java</span></div>
+<h1>LoginController.java</h1>
+<pre class="source lang-java linenums">package it.unisa.greenbottle.controller.accessoControl;
+
+import it.unisa.greenbottle.controller.accessoControl.form.LoginForm;
+import it.unisa.greenbottle.controller.accessoControl.util.EncryptorUtil;
+import it.unisa.greenbottle.controller.accessoControl.util.SessionCliente;
+import it.unisa.greenbottle.storage.accessoStorage.dao.ClienteDao;
+import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+/**
+ * Classe LoginController, utilizzata per la gestione del login del cliente.
+ */
+@Controller
+@RequestMapping(&quot;/login&quot;)
+<span class="fc" id="L25">public class LoginController {</span>
+
+  private static final String loginView = &quot;/AccessoView/Login&quot;;
+
+  @Autowired
+  private ClienteDao clienteDao;
+
+  @Autowired
+  private SessionCliente sessionCliente;
+
+  /**
+   * Metodo per ottenere la pagina di login del cliente.
+   *
+   * @param loginForm form di login
+   * @param model     model
+   * @return pagina di login del cliente
+   */
+  @GetMapping
+  public String get(@ModelAttribute LoginForm loginForm, Model model) {
+<span class="nc" id="L44">    model.addAttribute(&quot;nameLogin&quot;, &quot;/login&quot;);</span>
+    // DEBUG: System.out.println(JasyptUtil.encrypt(&quot;asdfAsdf123@&quot;)); ===&gt;  1FU7WYQZftZbHQuBb3M5Tw==
+<span class="nc" id="L46">    return loginView;</span>
+  }
+
+  /**
+   * Metodo per effettuare il login del cliente.
+   * Se l'email non esiste o la password è errata, ritorna la pagina di login.
+   *
+   * @param loginForm     form di login
+   * @param bindingResult binding result
+   * @param model         model
+   * @param session       sessioneHttp
+   * @return redirect all'area personale del cliente
+   */
+  @PostMapping
+  public String post(@ModelAttribute @Valid LoginForm loginForm,
+                     BindingResult bindingResult, Model model, HttpSession session) {
+<span class="nc" id="L62">    model.addAttribute(&quot;nameLogin&quot;, &quot;/login&quot;);</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">    if (bindingResult.hasErrors()) {</span>
+<span class="nc" id="L64">      return loginView;</span>
+    }
+
+<span class="nc" id="L67">    String email = loginForm.getEmail();</span>
+<span class="nc" id="L68">    String password = loginForm.getPassword();</span>
+
+<span class="nc" id="L70">    Optional&lt;Cliente&gt; c = clienteDao.findClienteByEmail(email);</span>
+<span class="nc" id="L71">    boolean existsEmail = c.isPresent();</span>
+<span class="nc" id="L72">    model.addAttribute(&quot;existsEmail&quot;, existsEmail);</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">    if (!existsEmail) {</span>
+<span class="nc" id="L74">      return loginView;</span>
+    }
+
+<span class="nc" id="L77">    String encryptedPassword = EncryptorUtil.encrypt(password);</span>
+<span class="nc bnc" id="L78"
+      title="All 2 branches missed.">    if (!c.get().getPassword().equals(encryptedPassword)) {</span>
+<span class="nc" id="L79">      model.addAttribute(&quot;correctPassword&quot;, false);</span>
+<span class="nc" id="L80">      return loginView;</span>
+    }
+<span class="nc" id="L82">    model.addAttribute(&quot;correctPassword&quot;, true);</span>
+
+<span class="nc" id="L84">    sessionCliente.setCliente(c.get());</span>
+<span class="nc" id="L85">    session.setAttribute(&quot;sessionCliente&quot;, sessionCliente);</span>
+<span class="nc" id="L86">    return &quot;redirect:&quot; + &quot;/areaPersonale&quot;;</span>
+  }
+}
+</pre>
+<div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span>
+</div>
+</body>
+</html>

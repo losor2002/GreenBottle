@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/>
+    <title>Composizione.java</title>
+    <link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../jacoco-resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">All in greenbottle Coverage Results</a> &gt; <a href="index.source.html"
+                                                                                               class="el_package">it.unisa.greenbottle.storage.ordineStorage.entity</a>
+    &gt; <span class="el_source">Composizione.java</span></div>
+<h1>Composizione.java</h1>
+<pre class="source lang-java linenums">package it.unisa.greenbottle.storage.ordineStorage.entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+/**
+ * Rappresenta una composizione di un ordine, che associa un prodotto a una quantità.
+ * Ogni composizione fa parte di un ordine specifico.
+ */
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@ToString(exclude = &quot;ordine&quot;)
+public class Composizione {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id; // Identificativo univoco della composizione
+
+  @ManyToOne
+  @JsonIgnore
+  private Ordine ordine; // Ordine a cui è associata questa composizione
+
+  @ManyToOne
+  private Prodotto prodotto; // Prodotto associato alla composizione
+
+  @Column(nullable = false)
+  private int quantita; // Quantità del prodotto nell'ordine
+
+  /**
+   * Metodo chiamato prima del persist per aggiornare la quantità del prodotto.
+   * Se la quantità richiesta è maggiore della quantità disponibile del prodotto,
+   * solleva un'eccezione.
+   */
+  @PrePersist
+  public void updateQuantitaProdotto() {
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">    if (prodotto.getQuantita() &lt; quantita) {</span>
+<span class="nc" id="L50">      throw new IllegalArgumentException(</span>
+<span class="nc" id="L51">          &quot;Quantità richiesta per &quot; + prodotto.getNome() + &quot; non disponibile.&quot;</span>
+      );
+    }
+<span class="fc" id="L54">    prodotto.setQuantita(</span>
+<span class="fc"
+      id="L55">        prodotto.getQuantita() - quantita); // Decrementa la quantità disponibile del prodotto</span>
+<span class="fc" id="L56">  }</span>
+
+  /**
+   * Costruttore per creare una composizione con il prodotto e la quantità.
+   *
+   * @param prodotto Prodotto associato alla composizione
+   * @param quantita Quantità del prodotto
+   */
+<span class="fc" id="L64">  public Composizione(Prodotto prodotto, int quantita) {</span>
+<span class="fc" id="L65">    this.prodotto = prodotto;</span>
+<span class="fc" id="L66">    this.quantita = quantita;</span>
+<span class="fc" id="L67">  }</span>
+
+  /**
+   * Costruttore per creare una composizione con il prodotto, la quantità e l'ordine associato.
+   *
+   * @param prodotto Prodotto associato alla composizione
+   * @param quantita Quantità del prodotto
+   * @param ordine   Ordine a cui appartiene questa composizione
+   */
+<span class="nc" id="L76">  public Composizione(Prodotto prodotto, int quantita, Ordine ordine) {</span>
+<span class="nc" id="L77">    this.prodotto = prodotto;</span>
+<span class="nc" id="L78">    this.quantita = quantita;</span>
+<span class="nc" id="L79">    this.ordine = ordine;</span>
+<span class="nc" id="L80">  }</span>
+
+  @Override
+  public boolean equals(Object o) {
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">    if (this == o) {</span>
+<span class="nc" id="L85">      return true;</span>
+    }
+<span class="pc bpc" id="L87" title="2 of 4 branches missed.">    if (o == null || getClass() != o.getClass()) {</span>
+<span class="nc" id="L88">      return false;</span>
+    }
+<span class="fc" id="L90">    Composizione that = (Composizione) o;</span>
+<span class="pc bpc" id="L91" title="3 of 4 branches missed.">    return id != null &amp;&amp; id.equals(that.id); // Confronta per ID</span>
+  }
+
+  @Override
+  public int hashCode() {
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">    return id != null ? id.hashCode() : 0; // Usa l'ID come base per hashCode</span>
+  }
+}
+</pre>
+<div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span>
+</div>
+</body>
+</html>

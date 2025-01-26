@@ -1,0 +1,233 @@
+typeSearchIndex = [{
+    "p": "it.unisa.greenbottle.storage.abbonamentoStorage.entity",
+    "l": "Abbonamento"
+}, {
+    "p": "it.unisa.greenbottle.controller.abbonamentoControl",
+    "l": "AbbonamentoController"
+}, {
+    "p": "it.unisa.greenbottle.storage.abbonamentoStorage.dao",
+    "l": "AbbonamentoDao"
+}, {
+    "p": "it.unisa.greenbottle.controller.abbonamentoControl.form",
+    "l": "AbbonamentoForm"
+}, {
+    "p": "it.unisa.greenbottle.dataJPATests",
+    "l": "AbbonamentoTest"
+}, {
+    "p": "it.unisa.greenbottle.controller.abbonamentoControl.util",
+    "l": "AbbonamentoWrapper"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl",
+    "l": "AccettazioneOrdineAdminController"
+}, {
+    "p": "it.unisa.greenbottle.ordineTest",
+    "l": "AccettazioneOrdineAdminTest"
+}, {
+    "p": "it.unisa.greenbottle.storage.accessoStorage.entity",
+    "l": "Admin"
+}, {
+    "p": "it.unisa.greenbottle.controller.filters",
+    "l": "AdminConfigFilter"
+}, {
+    "p": "it.unisa.greenbottle.storage.accessoStorage.dao",
+    "l": "AdminDao"
+}, {
+    "p": "it.unisa.greenbottle.controller.filters",
+    "l": "AdminFilter"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl",
+    "l": "AggiungiAlCarrelloController"
+}, {
+    "l": "All Classes and Interfaces",
+    "u": "allclasses-index.html"
+}, {
+    "p": "it.unisa.greenbottle.controller.areaPersonaleControl",
+    "l": "AreaPersonaleController"
+}, {
+    "p": "it.unisa.greenbottle.dataJPATests",
+    "l": "CatalogoTest"
+}, {
+    "p": "it.unisa.greenbottle.storage.catalogoStorage.entity",
+    "l": "Categoria"
+}, {
+    "p": "it.unisa.greenbottle.storage.catalogoStorage.dao",
+    "l": "CategoriaDao"
+}, {
+    "p": "it.unisa.greenbottle.storage.accessoStorage.entity",
+    "l": "Cliente"
+}, {
+    "p": "it.unisa.greenbottle.controller.filters",
+    "l": "ClienteConfigFilter"
+}, {
+    "p": "it.unisa.greenbottle.storage.accessoStorage.dao",
+    "l": "ClienteDao"
+}, {
+    "p": "it.unisa.greenbottle.controller.filters",
+    "l": "ClienteFilter"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "l": "Composizione"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.dao",
+    "l": "ComposizioneDao"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "l": "Corriere"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.dao",
+    "l": "CorriereDao"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl",
+    "l": "CreazioneOrdineController"
+}, {
+    "p": "it.unisa.greenbottle.ordineTest",
+    "l": "CreazioneOrdineTest"
+}, {
+    "p": "it.unisa.greenbottle.controller.errorController",
+    "l": "CustomErrorController"
+}, {
+    "p": "it.unisa.greenbottle.controller.areaPersonaleControl",
+    "l": "DashboardAdminController"
+}, {
+    "p": "it.unisa.greenbottle.controller.areaPersonaleControl.form",
+    "l": "DataForm"
+}, {
+    "p": "it.unisa.greenbottle.storage.abbonamentoStorage.entity",
+    "l": "Disposizione"
+}, {
+    "p": "it.unisa.greenbottle.storage.abbonamentoStorage.dao",
+    "l": "DisposizioneDao"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl.util",
+    "l": "EncryptorUtil"
+}, {
+    "p": "it.unisa.greenbottle.catalogoTest",
+    "l": "FiltraProdottiTest"
+}, {
+    "p": "it.unisa.greenbottle.controller.catalogoControl.form",
+    "l": "FiltroForm"
+}, {
+    "p": "it.unisa.greenbottle.storage.abbonamentoStorage.entity",
+    "l": "Abbonamento.FrequenzaAbbonamento"
+}, {
+    "p": "it.unisa.greenbottle",
+    "l": "GreenBottleApplication"
+}, {
+    "p": "it.unisa.greenbottle.controller.catalogoControl",
+    "l": "HomeController"
+}, {
+    "p": "it.unisa.greenbottle.storage.areaPersonaleStorage.entity",
+    "l": "Indirizzo"
+}, {
+    "p": "it.unisa.greenbottle.storage.areaPersonaleStorage.dao",
+    "l": "IndirizzoDao"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl",
+    "l": "LoginAdminController"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl",
+    "l": "LoginController"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl.form",
+    "l": "LoginForm"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl",
+    "l": "LogoutController"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "l": "Ordine"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "l": "OrdineBuilder"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.dao",
+    "l": "OrdineDao"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "l": "OrdineDirector"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.form",
+    "l": "OrdineForm"
+}, {
+    "p": "it.unisa.greenbottle.dataJPATests",
+    "l": "OrdineTest"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.util",
+    "l": "OrdineWrapper"
+}, {
+    "p": "it.unisa.greenbottle.storage.catalogoStorage.entity",
+    "l": "Prodotto"
+}, {
+    "p": "it.unisa.greenbottle.controller.catalogoControl",
+    "l": "ProdottoController"
+}, {
+    "p": "it.unisa.greenbottle.storage.catalogoStorage.dao",
+    "l": "ProdottoDao"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.form",
+    "l": "ProdottoForm"
+}, {
+    "p": "it.unisa.greenbottle.storage.catalogoStorage.entity",
+    "l": "Recensione"
+}, {
+    "p": "it.unisa.greenbottle.storage.catalogoStorage.dao",
+    "l": "RecensioneDao"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl",
+    "l": "RegistrazioneController"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl.form",
+    "l": "RegistrazioneForm"
+}, {
+    "p": "it.unisa.greenbottle.accessoTest",
+    "l": "RegistrazioneTest"
+}, {
+    "p": "it.unisa.greenbottle.controller.areaPersonaleControl.util",
+    "l": "RenderCliente"
+}, {
+    "p": "it.unisa.greenbottle.controller.catalogoControl",
+    "l": "RenderImg"
+}, {
+    "p": "it.unisa.greenbottle.storage.abbonamentoStorage.entity",
+    "l": "Abbonamento.RinnovoAbbonamento"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl.util",
+    "l": "SessionAdmin"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.util",
+    "l": "SessionCarrello"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl.util",
+    "l": "SessionCliente"
+}, {
+    "p": "it.unisa.greenbottle.abbonamentoTest",
+    "l": "SottoscrizioneAbbonamentoTest"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "l": "Ordine.StatoSpedizione"
+}, {
+    "p": "it.unisa.greenbottle.storage.abbonamentoStorage.entity",
+    "l": "Abbonamento.TipoAbbonamento"
+}, {"p": "it.unisa.greenbottle.dataJPATests", "l": "UtentiTest"}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl",
+    "l": "VisualizzaCarrelloController"
+}, {
+    "p": "it.unisa.greenbottle.controller.catalogoControl",
+    "l": "VisualizzaCatalogoController"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl",
+    "l": "VisualizzaOrdiniAdminController"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl",
+    "l": "VisualizzaStatoOrdineController"
+}, {
+    "p": "it.unisa.greenbottle.ordineTest",
+    "l": "VisualizzaStatoOrdineTest"
+}, {
+    "p": "it.unisa.greenbottle.controller.areaPersonaleControl",
+    "l": "VisualizzaStoricoOrdiniController"
+}, {
+    "p": "it.unisa.greenbottle.areaPersonaleTest",
+    "l": "VisualizzaStoricoOrdiniTest"
+}, {"p": "it.unisa.greenbottle.storage.catalogoStorage.entity", "l": "Recensione.VotoRecensione"}];
+updateSearchResults();

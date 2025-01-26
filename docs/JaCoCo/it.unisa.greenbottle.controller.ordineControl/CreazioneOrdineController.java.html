@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/>
+    <title>CreazioneOrdineController.java</title>
+    <link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../jacoco-resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">All in greenbottle Coverage Results</a> &gt; <a href="index.source.html"
+                                                                                               class="el_package">it.unisa.greenbottle.controller.ordineControl</a>
+    &gt; <span class="el_source">CreazioneOrdineController.java</span></div>
+<h1>CreazioneOrdineController.java</h1>
+<pre class="source lang-java linenums">package it.unisa.greenbottle.controller.ordineControl;
+
+import it.unisa.greenbottle.controller.accessoControl.util.SessionCliente;
+import it.unisa.greenbottle.controller.ordineControl.form.OrdineForm;
+import it.unisa.greenbottle.controller.ordineControl.util.SessionCarrello;
+import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
+import it.unisa.greenbottle.storage.areaPersonaleStorage.dao.IndirizzoDao;
+import it.unisa.greenbottle.storage.areaPersonaleStorage.entity.Indirizzo;
+import it.unisa.greenbottle.storage.catalogoStorage.dao.ProdottoDao;
+import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
+import it.unisa.greenbottle.storage.ordineStorage.dao.OrdineDao;
+import it.unisa.greenbottle.storage.ordineStorage.entity.Composizione;
+import it.unisa.greenbottle.storage.ordineStorage.entity.Ordine;
+import it.unisa.greenbottle.storage.ordineStorage.entity.OrdineDirector;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+/**
+ * Controller per la creazione di un ordine.
+ */
+@Controller
+@RequestMapping(&quot;/ordina&quot;)
+<span class="fc" id="L41">public class CreazioneOrdineController {</span>
+
+  private static final String ordineView = &quot;OrdineView/Checkout&quot;;
+  private static final String fallbackView = &quot;redirect:/&quot;;
+  private static final String successView = &quot;redirect:/areaPersonale/visualizzaStoricoOrdini&quot;;
+
+  @Autowired
+  private OrdineDao ordineDao;
+
+  @Autowired
+  private ProdottoDao prodottoDao;
+
+  @Autowired
+  private IndirizzoDao indirizzoDao;
+
+  @Autowired
+  private SessionCliente sessionCliente;
+
+  @Autowired
+  private SessionCarrello sessionCarrello;
+
+  /**
+   * Metodo per la visualizzazione della pagina di checkout.
+   *
+   * @param model               modello per la vista
+   * @param httpServletResponse response http
+   * @return la vista di checkout
+   * @throws IOException eccezione di I/O
+   */
+  @GetMapping
+  public String get(Model model, HttpServletResponse httpServletResponse) throws IOException {
+<span class="nc" id="L72">    Optional&lt;Cliente&gt; clienteOptional = sessionCliente.getCliente();</span>
+<span class="nc" id="L73">    Map&lt;Prodotto, Integer&gt; carrello = sessionCarrello.getRealCarrello();</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">    if (clienteOptional.isEmpty()) {</span>
+<span class="nc" id="L75">      return &quot;redirect:/login&quot;;</span>
+    }
+<span class="nc bnc" id="L77" title="All 4 branches missed.">    if (carrello == null || carrello.isEmpty()) {</span>
+<span class="nc" id="L78">      model.addAttribute(&quot;errore&quot;, &quot;Il carrello è vuoto.&quot;);</span>
+<span class="nc" id="L79">      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, &quot;Il carrello è vuoto&quot;);</span>
+<span class="nc" id="L80">      return fallbackView;</span>
+    }
+    // return a model attribute of List&lt;Indirizzo&gt; grabbing all Indirizzo by Cliente in the session:
+<span class="nc" id="L83">    Cliente cliente = clienteOptional.get();</span>
+<span class="nc" id="L84">    List&lt;Indirizzo&gt; indirizzi = indirizzoDao.findAllByCliente(cliente).orElse(new ArrayList&lt;&gt;());</span>
+<span class="nc" id="L85">    model.addAttribute(&quot;indirizzi&quot;, indirizzi);</span>
+<span class="nc" id="L86">    return ordineView;</span>
+  }
+
+  /**
+   * Metodo per la creazione di un ordine.
+   *
+   * @param ordineForm          form per la creazione dell'ordine
+   * @param model               modello per la vista
+   * @param bindingResult       risultato del binding
+   * @param httpServletResponse response http
+   * @return la vista di errore o di successo
+   * @throws IOException eccezione di I/O
+   */
+  @PostMapping
+  @Transactional
+  public String post(@ModelAttribute @Valid OrdineForm ordineForm, Model model,
+                     BindingResult bindingResult, HttpServletResponse httpServletResponse) throws
+      IOException {
+<span class="fc" id="L104">    Optional&lt;Cliente&gt; clienteOptional = sessionCliente.getCliente();</span>
+
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">    if (clienteOptional.isEmpty()) {</span>
+<span class="nc" id="L107">      return &quot;redirect:/login&quot;;</span>
+    }
+
+<span class="fc" id="L110">    final Cliente cliente = clienteOptional.get();</span>
+
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">    if (bindingResult.hasErrors()) {</span>
+      // Se c'è un errore specifico per un campo, gestisci il messaggio
+<span class="nc" id="L114">      FieldError fieldError = bindingResult.getFieldErrors().getFirst();</span>
+<span class="nc" id="L115">      model.addAttribute(&quot;message&quot;, fieldError.getDefaultMessage());</span>
+<span class="nc" id="L116">      model.addAttribute(&quot;status&quot;, HttpServletResponse.SC_BAD_REQUEST);</span>
+<span class="nc" id="L117">      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, fieldError.getField());</span>
+<span class="nc" id="L118">      return &quot;error&quot;; // Visualizza la vista con il messaggio di errore</span>
+    }
+
+<span class="fc" id="L121">    Map&lt;Long, Integer&gt; prodottiUnparsed = sessionCarrello.getCarrello();</span>
+
+<span class="pc bpc" id="L123" title="2 of 4 branches missed.">    if (prodottiUnparsed == null || prodottiUnparsed.isEmpty()) {</span>
+<span class="nc" id="L124">      model.addAttribute(&quot;errore&quot;, &quot;Il carrello è vuoto&quot;);</span>
+<span class="nc" id="L125">      return fallbackView;</span>
+    }
+
+<span class="fc" id="L128">    Map&lt;Prodotto, Integer&gt; prodotti = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">    for (Map.Entry&lt;Long, Integer&gt; entry : prodottiUnparsed.entrySet()) {</span>
+<span class="fc"
+      id="L130">      Optional&lt;Prodotto&gt; prodottoOpt = prodottoDao.findProdottoById(entry.getKey());</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">      if (prodottoOpt.isPresent()) {</span>
+<span class="fc" id="L132">        Prodotto p = prodottoOpt.get();</span>
+<span class="fc" id="L133">        int quantita = entry.getValue();</span>
+
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">        if (quantita &gt; p.getQuantita()) {</span>
+<span class="nc" id="L136">          model.addAttribute(&quot;errore&quot;,</span>
+<span class="nc" id="L137">              &quot;Prodotto: &quot; + p.getNome() + &quot; non disponibile in quantità richiesta.&quot;);</span>
+<span class="nc" id="L138">          httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,</span>
+<span class="nc" id="L139">              &quot;Prodotto&quot; + p.getNome() + &quot; non disponibile in quantità richiesta&quot;);</span>
+<span class="nc" id="L140">          return fallbackView;</span>
+        }
+<span class="fc" id="L142">        prodotti.put(p, quantita);</span>
+      }
+<span class="fc" id="L144">    }</span>
+
+<span class="fc" id="L146">    final float prezzoTotale = (float) prodotti.entrySet().stream()</span>
+<span class="fc" id="L147">        .mapToDouble(entry -&gt; entry.getKey().getPrezzo() * entry.getValue())</span>
+<span class="fc" id="L148">        .sum();</span>
+<span class="fc" id="L149">    String numeroCarta = ordineForm.getNumeroCarta();</span>
+<span class="fc" id="L150">    String dataScadenza = ordineForm.getDataScadenza();</span>
+<span class="fc" id="L151">    String nomeTitolare = ordineForm.getNomeTitolare();</span>
+<span class="fc" id="L152">    final String riassuntoCarta = nomeTitolare + &quot;/&quot; + dataScadenza + &quot;/&quot; + numeroCarta.substring(</span>
+<span class="fc" id="L153">        numeroCarta.length() - 4);</span>
+<span class="fc" id="L154">    Boolean isSupporto = ordineForm.getIsSupporto();</span>
+<span class="fc" id="L155">    String descrizioneSupporto = ordineForm.getDescrizioneSupporto();</span>
+<span class="fc" id="L156">    final Boolean isRitiro = ordineForm.getIsRitiro();</span>
+
+<span class="fc bfc" id="L158" title="All 4 branches covered.">    if (isSupporto &amp;&amp; descrizioneSupporto.isBlank()) {</span>
+<span class="fc"
+      id="L159">      model.addAttribute(&quot;errore&quot;, &quot;Descrizione supporto non inserita.&quot;);</span>
+<span class="fc" id="L160">      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,</span>
+          &quot;Descrizione supporto non inserita&quot;);
+<span class="fc" id="L162">      return null;</span>
+<span class="fc bfc" id="L163" title="All 4 branches covered.">    } else if (!(isSupporto || descrizioneSupporto.isBlank())) { // De Morgan</span>
+<span class="fc" id="L164">      model.addAttribute(&quot;warning&quot;,</span>
+          &quot;Errata selezione dell’opzione di richiesta supporto aggiuntivo&quot;);
+    }
+
+<span class="fc" id="L168">    Long idIndirizzo = ordineForm.getIndirizzo();</span>
+<span class="fc"
+      id="L169">    Optional&lt;Indirizzo&gt; indirizzoOpt = indirizzoDao.findIndirizzoById(idIndirizzo);</span>
+
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">    if (indirizzoOpt.isEmpty()) {</span>
+<span class="nc" id="L172">      model.addAttribute(&quot;status&quot;, HttpServletResponse.SC_BAD_REQUEST);</span>
+<span class="nc" id="L173">      model.addAttribute(&quot;message&quot;, &quot;Indirizzo non trovato.&quot;);</span>
+<span class="nc" id="L174">      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, &quot;Indirizzo non trovato&quot;);</span>
+<span class="nc" id="L175">      return &quot;error&quot;;</span>
+    }
+<span class="fc" id="L177">    Indirizzo indirizzo = indirizzoOpt.get();</span>
+
+<span class="fc" id="L179">    Set&lt;Composizione&gt; composizioni = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">    for (Map.Entry&lt;Prodotto, Integer&gt; entry : prodotti.entrySet()) {</span>
+<span class="fc" id="L181">      Prodotto prod = entry.getKey();</span>
+<span class="fc" id="L182">      int quantita = entry.getValue();</span>
+<span class="fc" id="L183">      composizioni.add(new Composizione(prod, quantita));</span>
+<span class="fc" id="L184">    }</span>
+
+    Ordine ordine;
+<span class="fc bfc" id="L187" title="All 2 branches covered.">    if (isSupporto) {</span>
+<span class="fc"
+      id="L188">      ordine = OrdineDirector.createOrdineConSupporto(prezzoTotale, isRitiro, riassuntoCarta,</span>
+          descrizioneSupporto, indirizzo, cliente, composizioni);
+    } else {
+<span class="fc"
+      id="L191">      ordine = OrdineDirector.createOrdine(prezzoTotale, isRitiro, riassuntoCarta, indirizzo,</span>
+          cliente, composizioni);
+    }
+
+<span class="fc" id="L195">    ordineDao.save(ordine);</span>
+<span class="fc"
+      id="L196">    model.addAttribute(&quot;successo&quot;, &quot;Ordine inserito con successo.&quot;);</span>
+<span class="fc" id="L197">    sessionCarrello.clearCarrello();</span>
+<span class="fc" id="L198">    return successView;</span>
+  }
+}
+</pre>
+<div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span>
+</div>
+</body>
+</html>

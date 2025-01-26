@@ -1,0 +1,1139 @@
+memberSearchIndex = [{
+    "p": "it.unisa.greenbottle.dataJPATests",
+    "c": "AbbonamentoTest",
+    "l": "abbonamentiTier()"
+}, {
+    "p": "it.unisa.greenbottle.storage.abbonamentoStorage.entity",
+    "c": "Abbonamento",
+    "l": "Abbonamento(Abbonamento.TipoAbbonamento, Abbonamento.RinnovoAbbonamento, Abbonamento.FrequenzaAbbonamento, float)",
+    "u": "%3Cinit%3E(it.unisa.greenbottle.storage.abbonamentoStorage.entity.Abbonamento.TipoAbbonamento,it.unisa.greenbottle.storage.abbonamentoStorage.entity.Abbonamento.RinnovoAbbonamento,it.unisa.greenbottle.storage.abbonamentoStorage.entity.Abbonamento.FrequenzaAbbonamento,float)"
+}, {
+    "p": "it.unisa.greenbottle.controller.abbonamentoControl",
+    "c": "AbbonamentoController",
+    "l": "AbbonamentoController()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.controller.abbonamentoControl.form",
+    "c": "AbbonamentoForm",
+    "l": "AbbonamentoForm()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.abbonamentoTest",
+    "c": "SottoscrizioneAbbonamentoTest",
+    "l": "abbonamentoSottoscritto()"
+}, {
+    "p": "it.unisa.greenbottle.dataJPATests",
+    "c": "AbbonamentoTest",
+    "l": "AbbonamentoTest()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.controller.abbonamentoControl.util",
+    "c": "AbbonamentoWrapper",
+    "l": "AbbonamentoWrapper(Abbonamento, List<Disposizione>)",
+    "u": "%3Cinit%3E(it.unisa.greenbottle.storage.abbonamentoStorage.entity.Abbonamento,java.util.List)"
+}, {
+    "p": "it.unisa.greenbottle.controller.catalogoControl",
+    "c": "HomeController",
+    "l": "aboutUs()"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "Ordine.StatoSpedizione",
+    "l": "ACCETTATO"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl",
+    "c": "AccettazioneOrdineAdminController",
+    "l": "AccettazioneOrdineAdminController()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.ordineTest",
+    "c": "AccettazioneOrdineAdminTest",
+    "l": "AccettazioneOrdineAdminTest()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.util",
+    "c": "SessionCarrello",
+    "l": "addToCarrello(Long, Integer)",
+    "u": "addToCarrello(java.lang.Long,java.lang.Integer)"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "OrdineBuilder",
+    "l": "admin(Admin)",
+    "u": "admin(it.unisa.greenbottle.storage.accessoStorage.entity.Admin)"
+}, {
+    "p": "it.unisa.greenbottle.storage.accessoStorage.entity",
+    "c": "Admin",
+    "l": "Admin(String, String)",
+    "u": "%3Cinit%3E(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.unisa.greenbottle.controller.filters",
+    "c": "AdminConfigFilter",
+    "l": "AdminConfigFilter()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.controller.filters",
+    "c": "AdminFilter",
+    "l": "AdminFilter()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl",
+    "c": "AggiungiAlCarrelloController",
+    "l": "AggiungiAlCarrelloController()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.storage.abbonamentoStorage.entity",
+    "c": "Abbonamento.RinnovoAbbonamento",
+    "l": "ANNUALE"
+}, {
+    "p": "it.unisa.greenbottle.controller.areaPersonaleControl",
+    "c": "AreaPersonaleController",
+    "l": "AreaPersonaleController()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.storage.abbonamentoStorage.entity",
+    "c": "Abbonamento.RinnovoAbbonamento",
+    "l": "BIMESTRALE"
+}, {
+    "p": "it.unisa.greenbottle.storage.abbonamentoStorage.entity",
+    "c": "Abbonamento.TipoAbbonamento",
+    "l": "BRONZE"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "OrdineBuilder",
+    "l": "build()"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "OrdineBuilder",
+    "l": "carta(String)",
+    "u": "carta(java.lang.String)"
+}, {
+    "p": "it.unisa.greenbottle.dataJPATests",
+    "c": "CatalogoTest",
+    "l": "CatalogoTest()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.storage.catalogoStorage.entity",
+    "c": "Categoria",
+    "l": "Categoria(String)",
+    "u": "%3Cinit%3E(java.lang.String)"
+}, {
+    "p": "it.unisa.greenbottle.storage.catalogoStorage.entity",
+    "c": "Recensione.VotoRecensione",
+    "l": "CINQUE"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.util",
+    "c": "SessionCarrello",
+    "l": "clearCarrello()"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "OrdineBuilder",
+    "l": "cliente(Cliente)",
+    "u": "cliente(it.unisa.greenbottle.storage.accessoStorage.entity.Cliente)"
+}, {
+    "p": "it.unisa.greenbottle.storage.accessoStorage.entity",
+    "c": "Cliente",
+    "l": "Cliente(String, String, String, String, int, float, byte[], Timestamp)",
+    "u": "%3Cinit%3E(java.lang.String,java.lang.String,java.lang.String,java.lang.String,int,float,byte[],java.sql.Timestamp)"
+}, {
+    "p": "it.unisa.greenbottle.controller.filters",
+    "c": "ClienteConfigFilter",
+    "l": "ClienteConfigFilter()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.controller.filters",
+    "c": "ClienteFilter",
+    "l": "ClienteFilter()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "Composizione",
+    "l": "Composizione(Prodotto, int)",
+    "u": "%3Cinit%3E(it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto,int)"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "Composizione",
+    "l": "Composizione(Prodotto, int, Ordine)",
+    "u": "%3Cinit%3E(it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto,int,it.unisa.greenbottle.storage.ordineStorage.entity.Ordine)"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "OrdineBuilder",
+    "l": "composizioni(Set<Composizione>)",
+    "u": "composizioni(java.util.Set)"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "Ordine.StatoSpedizione",
+    "l": "CONSEGNATO"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "Corriere",
+    "l": "Corriere(String, String, String)",
+    "u": "%3Cinit%3E(java.lang.String,java.lang.String,java.lang.String)"
+}, {
+    "p": "it.unisa.greenbottle.dataJPATests",
+    "c": "UtentiTest",
+    "l": "createAdmin()"
+}, {
+    "p": "it.unisa.greenbottle.dataJPATests",
+    "c": "OrdineTest",
+    "l": "createAndVerifyOrdineAndComposizione()"
+}, {
+    "p": "it.unisa.greenbottle.dataJPATests",
+    "c": "UtentiTest",
+    "l": "createCliente()"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "OrdineDirector",
+    "l": "createEmptyOrdine(Indirizzo, Cliente)",
+    "u": "createEmptyOrdine(it.unisa.greenbottle.storage.areaPersonaleStorage.entity.Indirizzo,it.unisa.greenbottle.storage.accessoStorage.entity.Cliente)"
+}, {
+    "p": "it.unisa.greenbottle.dataJPATests",
+    "c": "OrdineTest",
+    "l": "createOrdine()"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "OrdineDirector",
+    "l": "createOrdine(float, boolean, String, Indirizzo, Cliente, Set<Composizione>)",
+    "u": "createOrdine(float,boolean,java.lang.String,it.unisa.greenbottle.storage.areaPersonaleStorage.entity.Indirizzo,it.unisa.greenbottle.storage.accessoStorage.entity.Cliente,java.util.Set)"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "OrdineDirector",
+    "l": "createOrdineConSupporto(float, boolean, String, String, Indirizzo, Cliente, Set<Composizione>)",
+    "u": "createOrdineConSupporto(float,boolean,java.lang.String,java.lang.String,it.unisa.greenbottle.storage.areaPersonaleStorage.entity.Indirizzo,it.unisa.greenbottle.storage.accessoStorage.entity.Cliente,java.util.Set)"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl",
+    "c": "CreazioneOrdineController",
+    "l": "CreazioneOrdineController()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.ordineTest",
+    "c": "CreazioneOrdineTest",
+    "l": "CreazioneOrdineTest()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.controller.errorController",
+    "c": "CustomErrorController",
+    "l": "CustomErrorController()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.abbonamentoTest",
+    "c": "SottoscrizioneAbbonamentoTest",
+    "l": "cvvNonValido()"
+}, {
+    "p": "it.unisa.greenbottle.ordineTest",
+    "c": "CreazioneOrdineTest",
+    "l": "cvvNonValido()"
+}, {
+    "p": "it.unisa.greenbottle.controller.areaPersonaleControl",
+    "c": "DashboardAdminController",
+    "l": "dashboard()"
+}, {
+    "p": "it.unisa.greenbottle.controller.areaPersonaleControl",
+    "c": "DashboardAdminController",
+    "l": "DashboardAdminController()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "OrdineBuilder",
+    "l": "data(Timestamp)",
+    "u": "data(java.sql.Timestamp)"
+}, {
+    "p": "it.unisa.greenbottle.controller.areaPersonaleControl.form",
+    "c": "DataForm",
+    "l": "DataForm()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.abbonamentoTest",
+    "c": "SottoscrizioneAbbonamentoTest",
+    "l": "dataNonValido()"
+}, {
+    "p": "it.unisa.greenbottle.ordineTest",
+    "c": "CreazioneOrdineTest",
+    "l": "dataNonValido()"
+}, {
+    "p": "it.unisa.greenbottle.areaPersonaleTest",
+    "c": "VisualizzaStoricoOrdiniTest",
+    "l": "dateRispettaIlFormato()"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl.util",
+    "c": "EncryptorUtil",
+    "l": "decrypt(String)",
+    "u": "decrypt(java.lang.String)"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "OrdineBuilder",
+    "l": "descrizione(String)",
+    "u": "descrizione(java.lang.String)"
+}, {
+    "p": "it.unisa.greenbottle.ordineTest",
+    "c": "CreazioneOrdineTest",
+    "l": "descrizioneNonPresente()"
+}, {
+    "p": "it.unisa.greenbottle.ordineTest",
+    "c": "CreazioneOrdineTest",
+    "l": "descrizioneNonValida()"
+}, {
+    "p": "it.unisa.greenbottle.storage.abbonamentoStorage.entity",
+    "c": "Disposizione",
+    "l": "Disposizione(int, Prodotto, Abbonamento)",
+    "u": "%3Cinit%3E(int,it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto,it.unisa.greenbottle.storage.abbonamentoStorage.entity.Abbonamento)"
+}, {
+    "p": "it.unisa.greenbottle.controller.filters",
+    "c": "AdminFilter",
+    "l": "doFilter(ServletRequest, ServletResponse, FilterChain)",
+    "u": "doFilter(jakarta.servlet.ServletRequest,jakarta.servlet.ServletResponse,jakarta.servlet.FilterChain)"
+}, {
+    "p": "it.unisa.greenbottle.controller.filters",
+    "c": "ClienteFilter",
+    "l": "doFilter(ServletRequest, ServletResponse, FilterChain)",
+    "u": "doFilter(jakarta.servlet.ServletRequest,jakarta.servlet.ServletResponse,jakarta.servlet.FilterChain)"
+}, {
+    "p": "it.unisa.greenbottle.storage.catalogoStorage.entity",
+    "c": "Recensione.VotoRecensione",
+    "l": "DUE"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "Ordine.StatoSpedizione",
+    "l": "ELABORAZIONE"
+}, {
+    "p": "it.unisa.greenbottle.accessoTest",
+    "c": "RegistrazioneTest",
+    "l": "emailTroppoLunga()"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl.util",
+    "c": "SessionAdmin",
+    "l": "emptyAdmin()"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl.util",
+    "c": "SessionCliente",
+    "l": "emptyCliente()"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl.util",
+    "c": "EncryptorUtil",
+    "l": "encrypt(String)",
+    "u": "encrypt(java.lang.String)"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl.util",
+    "c": "EncryptorUtil",
+    "l": "EncryptorUtil()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.areaPersonaleTest",
+    "c": "VisualizzaStoricoOrdiniTest",
+    "l": "endDateNonRispettaIlFormato()"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "Composizione",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "Ordine",
+    "l": "equals(Object)",
+    "u": "equals(java.lang.Object)"
+}, {
+    "p": "it.unisa.greenbottle.controller.errorController",
+    "c": "CustomErrorController",
+    "l": "error(HttpServletRequest, Model)",
+    "u": "error(jakarta.servlet.http.HttpServletRequest,org.springframework.ui.Model)"
+}, {
+    "p": "it.unisa.greenbottle.controller.filters",
+    "c": "AdminConfigFilter",
+    "l": "filterBeanAdmin()"
+}, {
+    "p": "it.unisa.greenbottle.controller.filters",
+    "c": "ClienteConfigFilter",
+    "l": "filterBeanCliente()"
+}, {
+    "p": "it.unisa.greenbottle.dataJPATests",
+    "c": "CatalogoTest",
+    "l": "filtraProdotti()"
+}, {
+    "p": "it.unisa.greenbottle.catalogoTest",
+    "c": "FiltraProdottiTest",
+    "l": "FiltraProdottiTest()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.controller.catalogoControl.form",
+    "c": "FiltroForm",
+    "l": "FiltroForm()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.storage.abbonamentoStorage.dao",
+    "c": "AbbonamentoDao",
+    "l": "findAbbonamentoById(Long)",
+    "u": "findAbbonamentoById(java.lang.Long)"
+}, {
+    "p": "it.unisa.greenbottle.storage.abbonamentoStorage.dao",
+    "c": "AbbonamentoDao",
+    "l": "findAbbonamentoByTipo(Abbonamento.TipoAbbonamento)",
+    "u": "findAbbonamentoByTipo(it.unisa.greenbottle.storage.abbonamentoStorage.entity.Abbonamento.TipoAbbonamento)"
+}, {
+    "p": "it.unisa.greenbottle.storage.accessoStorage.dao",
+    "c": "AdminDao",
+    "l": "findAdminByEmail(String)",
+    "u": "findAdminByEmail(java.lang.String)"
+}, {
+    "p": "it.unisa.greenbottle.storage.catalogoStorage.dao",
+    "c": "ProdottoDao",
+    "l": "findAll(Specification<Prodotto>)",
+    "u": "findAll(org.springframework.data.jpa.domain.Specification)"
+}, {
+    "p": "it.unisa.greenbottle.storage.areaPersonaleStorage.dao",
+    "c": "IndirizzoDao",
+    "l": "findAllByCliente(Cliente)",
+    "u": "findAllByCliente(it.unisa.greenbottle.storage.accessoStorage.entity.Cliente)"
+}, {
+    "p": "it.unisa.greenbottle.storage.catalogoStorage.dao",
+    "c": "CategoriaDao",
+    "l": "findCategoriaById(Long)",
+    "u": "findCategoriaById(java.lang.Long)"
+}, {
+    "p": "it.unisa.greenbottle.storage.accessoStorage.dao",
+    "c": "ClienteDao",
+    "l": "findClienteByEmail(String)",
+    "u": "findClienteByEmail(java.lang.String)"
+}, {
+    "p": "it.unisa.greenbottle.storage.accessoStorage.dao",
+    "c": "ClienteDao",
+    "l": "findClienteById(Long)",
+    "u": "findClienteById(java.lang.Long)"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.dao",
+    "c": "ComposizioneDao",
+    "l": "findComposizioneByOrdine(Ordine)",
+    "u": "findComposizioneByOrdine(it.unisa.greenbottle.storage.ordineStorage.entity.Ordine)"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.dao",
+    "c": "CorriereDao",
+    "l": "findCorriereById(Long)",
+    "u": "findCorriereById(java.lang.Long)"
+}, {
+    "p": "it.unisa.greenbottle.storage.abbonamentoStorage.dao",
+    "c": "DisposizioneDao",
+    "l": "findDisposizioneByAbbonamento(Abbonamento)",
+    "u": "findDisposizioneByAbbonamento(it.unisa.greenbottle.storage.abbonamentoStorage.entity.Abbonamento)"
+}, {
+    "p": "it.unisa.greenbottle.storage.areaPersonaleStorage.dao",
+    "c": "IndirizzoDao",
+    "l": "findIndirizzoById(Long)",
+    "u": "findIndirizzoById(java.lang.Long)"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.dao",
+    "c": "OrdineDao",
+    "l": "findOrdineByCliente(Cliente)",
+    "u": "findOrdineByCliente(it.unisa.greenbottle.storage.accessoStorage.entity.Cliente)"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.dao",
+    "c": "OrdineDao",
+    "l": "findOrdineById(Long)",
+    "u": "findOrdineById(java.lang.Long)"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.dao",
+    "c": "OrdineDao",
+    "l": "findOrdineByStato(Ordine.StatoSpedizione)",
+    "u": "findOrdineByStato(it.unisa.greenbottle.storage.ordineStorage.entity.Ordine.StatoSpedizione)"
+}, {
+    "p": "it.unisa.greenbottle.storage.catalogoStorage.dao",
+    "c": "ProdottoDao",
+    "l": "findProdottoByCategoria(Categoria)",
+    "u": "findProdottoByCategoria(it.unisa.greenbottle.storage.catalogoStorage.entity.Categoria)"
+}, {
+    "p": "it.unisa.greenbottle.storage.catalogoStorage.dao",
+    "c": "ProdottoDao",
+    "l": "findProdottoById(Long)",
+    "u": "findProdottoById(java.lang.Long)"
+}, {
+    "p": "it.unisa.greenbottle.storage.catalogoStorage.dao",
+    "c": "RecensioneDao",
+    "l": "findRecensioneById(Long)",
+    "u": "findRecensioneById(java.lang.Long)"
+}, {
+    "p": "it.unisa.greenbottle.accessoTest",
+    "c": "RegistrazioneTest",
+    "l": "formatoCognomeErrato()"
+}, {
+    "p": "it.unisa.greenbottle.accessoTest",
+    "c": "RegistrazioneTest",
+    "l": "formatoEmailErrato()"
+}, {
+    "p": "it.unisa.greenbottle.accessoTest",
+    "c": "RegistrazioneTest",
+    "l": "formatoNomeErrato()"
+}, {
+    "p": "it.unisa.greenbottle.accessoTest",
+    "c": "RegistrazioneTest",
+    "l": "formatoPasswordErrato()"
+}, {
+    "p": "it.unisa.greenbottle.controller.areaPersonaleControl",
+    "c": "VisualizzaStoricoOrdiniController",
+    "l": "get(DataForm, BindingResult, Model, HttpServletResponse, HttpServletRequest)",
+    "u": "get(it.unisa.greenbottle.controller.areaPersonaleControl.form.DataForm,org.springframework.validation.BindingResult,org.springframework.ui.Model,jakarta.servlet.http.HttpServletResponse,jakarta.servlet.http.HttpServletRequest)"
+}, {
+    "p": "it.unisa.greenbottle.controller.catalogoControl",
+    "c": "VisualizzaCatalogoController",
+    "l": "get(FiltroForm, BindingResult, Model, HttpServletResponse, HttpServletRequest)",
+    "u": "get(it.unisa.greenbottle.controller.catalogoControl.form.FiltroForm,org.springframework.validation.BindingResult,org.springframework.ui.Model,jakarta.servlet.http.HttpServletResponse,jakarta.servlet.http.HttpServletRequest)"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl",
+    "c": "LogoutController",
+    "l": "get(HttpSession)",
+    "u": "get(jakarta.servlet.http.HttpSession)"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl",
+    "c": "LoginAdminController",
+    "l": "get(LoginForm, Model)",
+    "u": "get(it.unisa.greenbottle.controller.accessoControl.form.LoginForm,org.springframework.ui.Model)"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl",
+    "c": "LoginController",
+    "l": "get(LoginForm, Model)",
+    "u": "get(it.unisa.greenbottle.controller.accessoControl.form.LoginForm,org.springframework.ui.Model)"
+}, {
+    "p": "it.unisa.greenbottle.controller.catalogoControl",
+    "c": "ProdottoController",
+    "l": "get(Long)",
+    "u": "get(java.lang.Long)"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl",
+    "c": "VisualizzaStatoOrdineController",
+    "l": "get(Long, Model, HttpServletResponse)",
+    "u": "get(java.lang.Long,org.springframework.ui.Model,jakarta.servlet.http.HttpServletResponse)"
+}, {
+    "p": "it.unisa.greenbottle.controller.areaPersonaleControl",
+    "c": "AreaPersonaleController",
+    "l": "get(Model)",
+    "u": "get(org.springframework.ui.Model)"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl",
+    "c": "VisualizzaCarrelloController",
+    "l": "get(Model)",
+    "u": "get(org.springframework.ui.Model)"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl",
+    "c": "VisualizzaOrdiniAdminController",
+    "l": "get(Model)",
+    "u": "get(org.springframework.ui.Model)"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl",
+    "c": "CreazioneOrdineController",
+    "l": "get(Model, HttpServletResponse)",
+    "u": "get(org.springframework.ui.Model,jakarta.servlet.http.HttpServletResponse)"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl",
+    "c": "RegistrazioneController",
+    "l": "get(RegistrazioneForm)",
+    "u": "get(it.unisa.greenbottle.controller.accessoControl.form.RegistrazioneForm)"
+}, {
+    "p": "it.unisa.greenbottle.controller.abbonamentoControl",
+    "c": "AbbonamentoController",
+    "l": "get(String, Long, Model)",
+    "u": "get(java.lang.String,java.lang.Long,org.springframework.ui.Model)"
+}, {
+    "p": "it.unisa.greenbottle.controller.abbonamentoControl.util",
+    "c": "AbbonamentoWrapper",
+    "l": "getAbbonamento()"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl.util",
+    "c": "SessionAdmin",
+    "l": "getAdmin()"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.util",
+    "c": "OrdineWrapper",
+    "l": "getAdmin()"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl.util",
+    "c": "SessionCliente",
+    "l": "getCliente()"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.util",
+    "c": "OrdineWrapper",
+    "l": "getCognomeCliente()"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.util",
+    "c": "OrdineWrapper",
+    "l": "getData()"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.util",
+    "c": "OrdineWrapper",
+    "l": "getDescrizione()"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.form",
+    "c": "OrdineForm",
+    "l": "getDescrizioneSupporto()"
+}, {
+    "p": "it.unisa.greenbottle.controller.abbonamentoControl.util",
+    "c": "AbbonamentoWrapper",
+    "l": "getDisposizione()"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.util",
+    "c": "OrdineWrapper",
+    "l": "getEmailCliente()"
+}, {
+    "p": "it.unisa.greenbottle.controller.abbonamentoControl.util",
+    "c": "AbbonamentoWrapper",
+    "l": "getFrequenza()"
+}, {
+    "p": "it.unisa.greenbottle.controller.abbonamentoControl.util",
+    "c": "AbbonamentoWrapper",
+    "l": "getId()"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.util",
+    "c": "OrdineWrapper",
+    "l": "getId()"
+}, {
+    "p": "it.unisa.greenbottle.controller.areaPersonaleControl.util",
+    "c": "RenderCliente",
+    "l": "getImage(Long)",
+    "u": "getImage(java.lang.Long)"
+}, {
+    "p": "it.unisa.greenbottle.controller.catalogoControl",
+    "c": "RenderImg",
+    "l": "getImage(Long)",
+    "u": "getImage(java.lang.Long)"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.util",
+    "c": "OrdineWrapper",
+    "l": "getIndirizzo()"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.form",
+    "c": "OrdineForm",
+    "l": "getIsSupporto()"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.util",
+    "c": "OrdineWrapper",
+    "l": "getNomeCliente()"
+}, {
+    "p": "it.unisa.greenbottle.controller.abbonamentoControl.util",
+    "c": "AbbonamentoWrapper",
+    "l": "getPrezzo()"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.util",
+    "c": "OrdineWrapper",
+    "l": "getPrezzo()"
+}, {
+    "p": "it.unisa.greenbottle.controller.abbonamentoControl.util",
+    "c": "AbbonamentoWrapper",
+    "l": "getProdottiAbbonamento()"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.util",
+    "c": "OrdineWrapper",
+    "l": "getProdottiOrdine()"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.util",
+    "c": "SessionCarrello",
+    "l": "getRealCarrello()"
+}, {
+    "p": "it.unisa.greenbottle.controller.abbonamentoControl.util",
+    "c": "AbbonamentoWrapper",
+    "l": "getRinnovo()"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.util",
+    "c": "OrdineWrapper",
+    "l": "getStato()"
+}, {
+    "p": "it.unisa.greenbottle.controller.abbonamentoControl.util",
+    "c": "AbbonamentoWrapper",
+    "l": "getTipo()"
+}, {
+    "p": "it.unisa.greenbottle.storage.abbonamentoStorage.entity",
+    "c": "Abbonamento.FrequenzaAbbonamento",
+    "l": "GIORNALIERO"
+}, {
+    "p": "it.unisa.greenbottle.storage.abbonamentoStorage.entity",
+    "c": "Abbonamento.TipoAbbonamento",
+    "l": "GOLD"
+}, {
+    "p": "it.unisa.greenbottle",
+    "c": "GreenBottleApplication",
+    "l": "GreenBottleApplication()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "Composizione",
+    "l": "hashCode()"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "Ordine",
+    "l": "hashCode()"
+}, {
+    "p": "it.unisa.greenbottle.controller.catalogoControl",
+    "c": "HomeController",
+    "l": "home()"
+}, {
+    "p": "it.unisa.greenbottle.controller.catalogoControl",
+    "c": "HomeController",
+    "l": "HomeController()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.catalogoTest",
+    "c": "FiltraProdottiTest",
+    "l": "idCategoriaEsiste()"
+}, {
+    "p": "it.unisa.greenbottle.catalogoTest",
+    "c": "FiltraProdottiTest",
+    "l": "idCategoriaNonEsiste()"
+}, {
+    "p": "it.unisa.greenbottle.catalogoTest",
+    "c": "FiltraProdottiTest",
+    "l": "idCategoriaNonValido()"
+}, {
+    "p": "it.unisa.greenbottle.ordineTest",
+    "c": "AccettazioneOrdineAdminTest",
+    "l": "idNonPresente()"
+}, {
+    "p": "it.unisa.greenbottle.ordineTest",
+    "c": "VisualizzaStatoOrdineTest",
+    "l": "idNonPresente()"
+}, {
+    "p": "it.unisa.greenbottle.ordineTest",
+    "c": "AccettazioneOrdineAdminTest",
+    "l": "idNonValido()"
+}, {
+    "p": "it.unisa.greenbottle.ordineTest",
+    "c": "VisualizzaStatoOrdineTest",
+    "l": "idNonValido()"
+}, {
+    "p": "it.unisa.greenbottle.ordineTest",
+    "c": "AccettazioneOrdineAdminTest",
+    "l": "idValido()"
+}, {
+    "p": "it.unisa.greenbottle.ordineTest",
+    "c": "VisualizzaStatoOrdineTest",
+    "l": "idValido()"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "OrdineBuilder",
+    "l": "indirizzo(Indirizzo)",
+    "u": "indirizzo(it.unisa.greenbottle.storage.areaPersonaleStorage.entity.Indirizzo)"
+}, {
+    "p": "it.unisa.greenbottle.storage.areaPersonaleStorage.entity",
+    "c": "Indirizzo",
+    "l": "Indirizzo(String, int, String, String, String, Cliente)",
+    "u": "%3Cinit%3E(java.lang.String,int,java.lang.String,java.lang.String,java.lang.String,it.unisa.greenbottle.storage.accessoStorage.entity.Cliente)"
+}, {
+    "p": "it.unisa.greenbottle.ordineTest",
+    "c": "CreazioneOrdineTest",
+    "l": "indirizzoNonPresente()"
+}, {
+    "p": "it.unisa.greenbottle.ordineTest",
+    "c": "CreazioneOrdineTest",
+    "l": "indirizzoNonValido()"
+}, {
+    "p": "it.unisa.greenbottle.controller.catalogoControl.form",
+    "c": "FiltroForm",
+    "l": "isPrezzoMinMaxValid()"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.util",
+    "c": "OrdineWrapper",
+    "l": "isRitiro()"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "OrdineBuilder",
+    "l": "isRitiro(boolean)"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.util",
+    "c": "OrdineWrapper",
+    "l": "isSupporto()"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "OrdineBuilder",
+    "l": "isSupporto(boolean)"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.form",
+    "c": "OrdineForm",
+    "l": "isSupportoDescrizioneValid()"
+}, {
+    "p": "it.unisa.greenbottle.ordineTest",
+    "c": "CreazioneOrdineTest",
+    "l": "isSupportoNonValido()"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl",
+    "c": "LoginAdminController",
+    "l": "LoginAdminController()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl",
+    "c": "LoginController",
+    "l": "LoginController()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl.form",
+    "c": "LoginForm",
+    "l": "LoginForm()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl",
+    "c": "LogoutController",
+    "l": "LogoutController()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle",
+    "c": "GreenBottleApplication",
+    "l": "main(String[])",
+    "u": "main(java.lang.String[])"
+}, {
+    "p": "it.unisa.greenbottle.catalogoTest",
+    "c": "FiltraProdottiTest",
+    "l": "mediaNonValida()"
+}, {
+    "p": "it.unisa.greenbottle.catalogoTest",
+    "c": "FiltraProdottiTest",
+    "l": "mediaValida()"
+}, {
+    "p": "it.unisa.greenbottle.storage.abbonamentoStorage.entity",
+    "c": "Abbonamento.FrequenzaAbbonamento",
+    "l": "MENSILE"
+}, {
+    "p": "it.unisa.greenbottle.storage.abbonamentoStorage.entity",
+    "c": "Abbonamento.RinnovoAbbonamento",
+    "l": "MENSILE"
+}, {
+    "p": "it.unisa.greenbottle.abbonamentoTest",
+    "c": "SottoscrizioneAbbonamentoTest",
+    "l": "nomeNonValido()"
+}, {
+    "p": "it.unisa.greenbottle.ordineTest",
+    "c": "CreazioneOrdineTest",
+    "l": "nomeNonValido()"
+}, {
+    "p": "it.unisa.greenbottle.abbonamentoTest",
+    "c": "SottoscrizioneAbbonamentoTest",
+    "l": "numeroCartaNonValido()"
+}, {
+    "p": "it.unisa.greenbottle.ordineTest",
+    "c": "CreazioneOrdineTest",
+    "l": "numeroNonValido()"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "Ordine",
+    "l": "Ordine(float, Ordine.StatoSpedizione, boolean, String, boolean, String, Timestamp, Cliente, Admin)",
+    "u": "%3Cinit%3E(float,it.unisa.greenbottle.storage.ordineStorage.entity.Ordine.StatoSpedizione,boolean,java.lang.String,boolean,java.lang.String,java.sql.Timestamp,it.unisa.greenbottle.storage.accessoStorage.entity.Cliente,it.unisa.greenbottle.storage.accessoStorage.entity.Admin)"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "OrdineBuilder",
+    "l": "OrdineBuilder()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "OrdineDirector",
+    "l": "OrdineDirector()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.form",
+    "c": "OrdineForm",
+    "l": "OrdineForm()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.ordineTest",
+    "c": "CreazioneOrdineTest",
+    "l": "ordineSupportoValido()"
+}, {
+    "p": "it.unisa.greenbottle.dataJPATests",
+    "c": "OrdineTest",
+    "l": "OrdineTest()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.ordineTest",
+    "c": "CreazioneOrdineTest",
+    "l": "ordineValido()"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.util",
+    "c": "OrdineWrapper",
+    "l": "OrdineWrapper(Ordine, List<Composizione>)",
+    "u": "%3Cinit%3E(it.unisa.greenbottle.storage.ordineStorage.entity.Ordine,java.util.List)"
+}, {
+    "p": "it.unisa.greenbottle.controller.abbonamentoControl",
+    "c": "AbbonamentoController",
+    "l": "post(AbbonamentoForm, BindingResult, Model, HttpServletResponse)",
+    "u": "post(it.unisa.greenbottle.controller.abbonamentoControl.form.AbbonamentoForm,org.springframework.validation.BindingResult,org.springframework.ui.Model,jakarta.servlet.http.HttpServletResponse)"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl",
+    "c": "LoginAdminController",
+    "l": "post(LoginForm, BindingResult, Model, HttpSession)",
+    "u": "post(it.unisa.greenbottle.controller.accessoControl.form.LoginForm,org.springframework.validation.BindingResult,org.springframework.ui.Model,jakarta.servlet.http.HttpSession)"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl",
+    "c": "LoginController",
+    "l": "post(LoginForm, BindingResult, Model, HttpSession)",
+    "u": "post(it.unisa.greenbottle.controller.accessoControl.form.LoginForm,org.springframework.validation.BindingResult,org.springframework.ui.Model,jakarta.servlet.http.HttpSession)"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl",
+    "c": "VisualizzaStatoOrdineController",
+    "l": "post(Long)",
+    "u": "post(java.lang.Long)"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl",
+    "c": "CreazioneOrdineController",
+    "l": "post(OrdineForm, Model, BindingResult, HttpServletResponse)",
+    "u": "post(it.unisa.greenbottle.controller.ordineControl.form.OrdineForm,org.springframework.ui.Model,org.springframework.validation.BindingResult,jakarta.servlet.http.HttpServletResponse)"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl",
+    "c": "AggiungiAlCarrelloController",
+    "l": "post(ProdottoForm)",
+    "u": "post(it.unisa.greenbottle.controller.ordineControl.form.ProdottoForm)"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl",
+    "c": "RegistrazioneController",
+    "l": "post(RegistrazioneForm, BindingResult, Model, HttpServletResponse)",
+    "u": "post(it.unisa.greenbottle.controller.accessoControl.form.RegistrazioneForm,org.springframework.validation.BindingResult,org.springframework.ui.Model,jakarta.servlet.http.HttpServletResponse)"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl",
+    "c": "AccettazioneOrdineAdminController",
+    "l": "post(String, String)",
+    "u": "post(java.lang.String,java.lang.String)"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "OrdineBuilder",
+    "l": "prezzo(float)"
+}, {
+    "p": "it.unisa.greenbottle.catalogoTest",
+    "c": "FiltraProdottiTest",
+    "l": "prezzoMassimoMinoreDiPrezzoMinimo()"
+}, {
+    "p": "it.unisa.greenbottle.catalogoTest",
+    "c": "FiltraProdottiTest",
+    "l": "prezzoMassimoValido()"
+}, {
+    "p": "it.unisa.greenbottle.catalogoTest",
+    "c": "FiltraProdottiTest",
+    "l": "prezzoMinimoNonValido()"
+}, {
+    "p": "it.unisa.greenbottle.catalogoTest",
+    "c": "FiltraProdottiTest",
+    "l": "prezzoMinimoValido()"
+}, {
+    "p": "it.unisa.greenbottle.storage.catalogoStorage.entity",
+    "c": "Prodotto",
+    "l": "Prodotto(String, String, byte[], float, int, Categoria)",
+    "u": "%3Cinit%3E(java.lang.String,java.lang.String,byte[],float,int,it.unisa.greenbottle.storage.catalogoStorage.entity.Categoria)"
+}, {
+    "p": "it.unisa.greenbottle.controller.catalogoControl",
+    "c": "ProdottoController",
+    "l": "ProdottoController()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.form",
+    "c": "ProdottoForm",
+    "l": "ProdottoForm()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.storage.catalogoStorage.entity",
+    "c": "Recensione.VotoRecensione",
+    "l": "QUATTRO"
+}, {
+    "p": "it.unisa.greenbottle.storage.catalogoStorage.entity",
+    "c": "Recensione",
+    "l": "Recensione(String, Recensione.VotoRecensione, Prodotto, Cliente)",
+    "u": "%3Cinit%3E(java.lang.String,it.unisa.greenbottle.storage.catalogoStorage.entity.Recensione.VotoRecensione,it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto,it.unisa.greenbottle.storage.accessoStorage.entity.Cliente)"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl",
+    "c": "RegistrazioneController",
+    "l": "RegistrazioneController()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.accessoTest",
+    "c": "RegistrazioneTest",
+    "l": "registrazioneEffettuata()"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl.form",
+    "c": "RegistrazioneForm",
+    "l": "RegistrazioneForm()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.accessoTest",
+    "c": "RegistrazioneTest",
+    "l": "RegistrazioneTest()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.util",
+    "c": "SessionCarrello",
+    "l": "removeFromCarrello(Long)",
+    "u": "removeFromCarrello(java.lang.Long)"
+}, {
+    "p": "it.unisa.greenbottle.controller.areaPersonaleControl.util",
+    "c": "RenderCliente",
+    "l": "RenderCliente()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.controller.catalogoControl",
+    "c": "RenderImg",
+    "l": "RenderImg()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "Ordine.StatoSpedizione",
+    "l": "RIFIUTATO"
+}, {
+    "p": "it.unisa.greenbottle.storage.abbonamentoStorage.entity",
+    "c": "Abbonamento.RinnovoAbbonamento",
+    "l": "SEMESTRALE"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl.util",
+    "c": "SessionAdmin",
+    "l": "SessionAdmin()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.util",
+    "c": "SessionCarrello",
+    "l": "SessionCarrello()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl.util",
+    "c": "SessionCliente",
+    "l": "SessionCliente()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl.util",
+    "c": "SessionAdmin",
+    "l": "setAdmin(Admin)",
+    "u": "setAdmin(it.unisa.greenbottle.storage.accessoStorage.entity.Admin)"
+}, {
+    "p": "it.unisa.greenbottle.controller.accessoControl.util",
+    "c": "SessionCliente",
+    "l": "setCliente(Cliente)",
+    "u": "setCliente(it.unisa.greenbottle.storage.accessoStorage.entity.Cliente)"
+}, {
+    "p": "it.unisa.greenbottle.storage.abbonamentoStorage.entity",
+    "c": "Abbonamento.FrequenzaAbbonamento",
+    "l": "SETTIMANALE"
+}, {
+    "p": "it.unisa.greenbottle.abbonamentoTest",
+    "c": "SottoscrizioneAbbonamentoTest",
+    "l": "setUp()"
+}, {
+    "p": "it.unisa.greenbottle.storage.abbonamentoStorage.entity",
+    "c": "Abbonamento.TipoAbbonamento",
+    "l": "SILVER"
+}, {
+    "p": "it.unisa.greenbottle.abbonamentoTest",
+    "c": "SottoscrizioneAbbonamentoTest",
+    "l": "SottoscrizioneAbbonamentoTest()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "Ordine.StatoSpedizione",
+    "l": "SPEDITO"
+}, {
+    "p": "it.unisa.greenbottle.areaPersonaleTest",
+    "c": "VisualizzaStoricoOrdiniTest",
+    "l": "startDateDopoEndDate()"
+}, {
+    "p": "it.unisa.greenbottle.areaPersonaleTest",
+    "c": "VisualizzaStoricoOrdiniTest",
+    "l": "startDateNonRispettaIlFormato()"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "OrdineBuilder",
+    "l": "stato(Ordine.StatoSpedizione)",
+    "u": "stato(it.unisa.greenbottle.storage.ordineStorage.entity.Ordine.StatoSpedizione)"
+}, {
+    "p": "it.unisa.greenbottle.abbonamentoTest",
+    "c": "SottoscrizioneAbbonamentoTest",
+    "l": "testSottoscriviAbbonamento(String, String, String, String, ResultMatcher, String)",
+    "u": "testSottoscriviAbbonamento(java.lang.String,java.lang.String,java.lang.String,java.lang.String,org.springframework.test.web.servlet.ResultMatcher,java.lang.String)"
+}, {
+    "p": "it.unisa.greenbottle.controller.abbonamentoControl.util",
+    "c": "AbbonamentoWrapper",
+    "l": "toString()"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl.util",
+    "c": "OrdineWrapper",
+    "l": "toString()"
+}, {
+    "p": "it.unisa.greenbottle.storage.catalogoStorage.entity",
+    "c": "Recensione.VotoRecensione",
+    "l": "TRE"
+}, {
+    "p": "it.unisa.greenbottle.storage.catalogoStorage.entity",
+    "c": "Recensione.VotoRecensione",
+    "l": "UNO"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "Composizione",
+    "l": "updateQuantitaProdotto()"
+}, {
+    "p": "it.unisa.greenbottle.dataJPATests",
+    "c": "UtentiTest",
+    "l": "UtentiTest()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.storage.abbonamentoStorage.entity",
+    "c": "Abbonamento.FrequenzaAbbonamento",
+    "l": "valueOf(String)",
+    "u": "valueOf(java.lang.String)"
+}, {
+    "p": "it.unisa.greenbottle.storage.abbonamentoStorage.entity",
+    "c": "Abbonamento.RinnovoAbbonamento",
+    "l": "valueOf(String)",
+    "u": "valueOf(java.lang.String)"
+}, {
+    "p": "it.unisa.greenbottle.storage.abbonamentoStorage.entity",
+    "c": "Abbonamento.TipoAbbonamento",
+    "l": "valueOf(String)",
+    "u": "valueOf(java.lang.String)"
+}, {
+    "p": "it.unisa.greenbottle.storage.catalogoStorage.entity",
+    "c": "Recensione.VotoRecensione",
+    "l": "valueOf(String)",
+    "u": "valueOf(java.lang.String)"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "Ordine.StatoSpedizione",
+    "l": "valueOf(String)",
+    "u": "valueOf(java.lang.String)"
+}, {
+    "p": "it.unisa.greenbottle.storage.abbonamentoStorage.entity",
+    "c": "Abbonamento.FrequenzaAbbonamento",
+    "l": "values()"
+}, {
+    "p": "it.unisa.greenbottle.storage.abbonamentoStorage.entity",
+    "c": "Abbonamento.RinnovoAbbonamento",
+    "l": "values()"
+}, {
+    "p": "it.unisa.greenbottle.storage.abbonamentoStorage.entity",
+    "c": "Abbonamento.TipoAbbonamento",
+    "l": "values()"
+}, {
+    "p": "it.unisa.greenbottle.storage.catalogoStorage.entity",
+    "c": "Recensione.VotoRecensione",
+    "l": "values()"
+}, {
+    "p": "it.unisa.greenbottle.storage.ordineStorage.entity",
+    "c": "Ordine.StatoSpedizione",
+    "l": "values()"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl",
+    "c": "VisualizzaCarrelloController",
+    "l": "VisualizzaCarrelloController()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.controller.catalogoControl",
+    "c": "VisualizzaCatalogoController",
+    "l": "VisualizzaCatalogoController()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl",
+    "c": "VisualizzaOrdiniAdminController",
+    "l": "VisualizzaOrdiniAdminController()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.controller.ordineControl",
+    "c": "VisualizzaStatoOrdineController",
+    "l": "VisualizzaStatoOrdineController()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.ordineTest",
+    "c": "VisualizzaStatoOrdineTest",
+    "l": "VisualizzaStatoOrdineTest()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.controller.areaPersonaleControl",
+    "c": "VisualizzaStoricoOrdiniController",
+    "l": "VisualizzaStoricoOrdiniController()",
+    "u": "%3Cinit%3E()"
+}, {
+    "p": "it.unisa.greenbottle.areaPersonaleTest",
+    "c": "VisualizzaStoricoOrdiniTest",
+    "l": "VisualizzaStoricoOrdiniTest()",
+    "u": "%3Cinit%3E()"
+}];
+updateSearchResults();

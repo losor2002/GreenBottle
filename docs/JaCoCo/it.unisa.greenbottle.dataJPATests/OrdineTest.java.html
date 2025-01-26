@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/>
+    <title>OrdineTest.java</title>
+    <link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../jacoco-resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">All in greenbottle Coverage Results</a> &gt; <a href="index.source.html"
+                                                                                               class="el_package">it.unisa.greenbottle.dataJPATests</a>
+    &gt; <span class="el_source">OrdineTest.java</span></div>
+<h1>OrdineTest.java</h1>
+<pre class="source lang-java linenums">package it.unisa.greenbottle.dataJPATests;
+
+import it.unisa.greenbottle.storage.accessoStorage.dao.ClienteDao;
+import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
+import it.unisa.greenbottle.storage.areaPersonaleStorage.dao.IndirizzoDao;
+import it.unisa.greenbottle.storage.areaPersonaleStorage.entity.Indirizzo;
+import it.unisa.greenbottle.storage.catalogoStorage.dao.ProdottoDao;
+import it.unisa.greenbottle.storage.catalogoStorage.entity.Categoria;
+import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
+import it.unisa.greenbottle.storage.ordineStorage.dao.OrdineDao;
+import it.unisa.greenbottle.storage.ordineStorage.entity.Composizione;
+import it.unisa.greenbottle.storage.ordineStorage.entity.Ordine;
+import it.unisa.greenbottle.storage.ordineStorage.entity.OrdineDirector;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+/**
+ * Testa la creazione di un ordine e la sua persistenza nel database.
+ */
+<span class="fc" id="L27">@DataJpaTest</span>
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+<span class="fc" id="L29">public class OrdineTest {</span>
+
+  @Autowired
+  private OrdineDao ordineDao;
+
+  @Autowired
+  private IndirizzoDao indirizzoDao;
+
+  @Autowired
+  private ProdottoDao prodottoDao;
+
+  @Autowired
+  private ClienteDao clienteDao;
+
+<span class="fc" id="L43">  private final Cliente clienteTest =</span>
+      new Cliente(&quot;mario.rossi@gmail.com&quot;, &quot;asdfASDF1234!&quot;, &quot;Mario&quot;, &quot;Rossi&quot;, 0, 0, null, null);
+
+<span class="fc" id="L46">  private final Indirizzo indirizzoTest =</span>
+      new Indirizzo(&quot;Via Roma&quot;, 5, &quot;Potenza&quot;, &quot;PZ&quot;, &quot;85100&quot;, clienteTest);
+
+<span class="fc" id="L49">  private final Categoria categoriaTest = new Categoria(&quot;Bevande&quot;);</span>
+<span class="fc" id="L50">  private final Prodotto prodottoTest =</span>
+      new Prodotto(&quot;Acqua minerale&quot;, &quot;Acqua minerale naturale&quot;, null, 0.5f, 1000, categoriaTest);
+
+<span class="fc" id="L53">  private final Prodotto[] arrayProdottiTest = new Prodotto[] {</span>
+      prodottoTest,
+      new Prodotto(&quot;Acqua frizzante&quot;, &quot;Acqua frizzante naturale&quot;, null, 0.5f, 1000, categoriaTest),
+      new Prodotto(&quot;Acqua tonica&quot;, &quot;Acqua tonica naturale&quot;, null, 0.5f, 1000, categoriaTest),
+      new Prodotto(&quot;Acqua gassata&quot;, &quot;Acqua gassata naturale&quot;, null, 0.5f, 1000, categoriaTest),
+      new Prodotto(&quot;Acqua liscia&quot;, &quot;Acqua liscia naturale&quot;, null, 0.5f, 1000, categoriaTest),
+      new Prodotto(&quot;Fantasia&quot;, &quot;Fantasia naturale&quot;, null, 0.5f, 1000, categoriaTest),
+      new Prodotto(&quot;Acqua intostata&quot;, &quot;Acqua intostata naturale&quot;, null, 0.5f, 1000, categoriaTest),
+      new Prodotto(&quot;Aranzata&quot;, &quot;Aranzata naturale&quot;, null, 0.5f, 1000, categoriaTest)
+  };
+<span class="fc" id="L63">  private final List&lt;Prodotto&gt; prodottiTest = Arrays.asList(arrayProdottiTest);</span>
+<span class="fc" id="L64">  private final Set&lt;Composizione&gt; composizioniTest = new HashSet&lt;&gt;();</span>
+
+  @Test
+  public void createOrdine() {
+
+<span class="fc" id="L69">    clienteDao.save(clienteTest);</span>
+<span class="fc" id="L70">    indirizzoDao.save(indirizzoTest);</span>
+<span class="fc" id="L71">    prodottoDao.save(prodottoTest);</span>
+
+<span class="fc" id="L73">    composizioniTest.add(new Composizione(prodottoTest, 2));</span>
+
+<span class="fc" id="L75">    float prezzoTotale = (float) composizioniTest.stream()</span>
+<span class="fc" id="L76">        .mapToDouble(c -&gt; c.getProdotto().getPrezzo() * c.getQuantita())</span>
+<span class="fc" id="L77">        .sum();</span>
+
+<span class="fc" id="L79">    Ordine ordineTest = OrdineDirector.createOrdineConSupporto(</span>
+        prezzoTotale,
+        false,
+        &quot;1234-5678-9876-5432&quot;,
+        &quot;Supporto Aggiuntivo&quot;,
+        indirizzoTest,
+        clienteTest,
+        composizioniTest);
+
+<span class="fc" id="L88">    ordineDao.save(ordineTest);</span>
+
+<span class="fc" id="L90">    Optional&lt;Ordine&gt; o2 = ordineDao.findById(ordineTest.getId());</span>
+
+<span class="pc bpc" id="L92" title="2 of 4 branches missed.">    assert o2.isPresent() &amp;&amp; ordineTest.equals(o2.get());</span>
+
+<span class="fc" id="L94">    System.out.println(&quot;Saved Ordine: &quot; + o2.get());</span>
+<span class="fc" id="L95">  }</span>
+
+  @Test
+  public void createAndVerifyOrdineAndComposizione() {
+<span class="fc" id="L99">    clienteDao.save(clienteTest);</span>
+<span class="fc" id="L100">    indirizzoDao.save(indirizzoTest);</span>
+<span class="fc" id="L101">    prodottoDao.saveAll(prodottiTest);</span>
+
+<span class="fc" id="L103">    composizioniTest.add(new Composizione(prodottoTest, 2));</span>
+<span class="fc" id="L104">    composizioniTest.add(new Composizione(prodottiTest.get(1), 100));</span>
+
+<span class="fc" id="L106">    float prezzoTotale = (float) composizioniTest.stream()</span>
+<span class="fc" id="L107">        .mapToDouble(c -&gt; c.getProdotto().getPrezzo() * c.getQuantita())</span>
+<span class="fc" id="L108">        .sum();</span>
+
+<span class="fc" id="L110">    Ordine ordineTest = OrdineDirector.createOrdineConSupporto(</span>
+        prezzoTotale,
+        false,
+        &quot;1234-5678-9876-5432&quot;,
+        &quot;Supporto Aggiuntivo&quot;,
+        indirizzoTest,
+        clienteTest,
+        composizioniTest);
+
+<span class="fc" id="L119">    ordineDao.save(ordineTest);</span>
+
+<span class="fc" id="L121">    Optional&lt;Ordine&gt; retrievedOrdine = ordineDao.findById(ordineTest.getId());</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">    assert retrievedOrdine.isPresent();</span>
+
+<span class="fc" id="L124">    Ordine savedOrdine = retrievedOrdine.get();</span>
+
+<span class="pc bpc" id="L126" title="2 of 4 branches missed.">    assert savedOrdine.getComposizioni() != null &amp;&amp; !savedOrdine.getComposizioni().isEmpty();</span>
+<span class="fc"
+      id="L127">    System.out.println(&quot;Retrieved Composizioni: &quot; + savedOrdine.getComposizioni());</span>
+
+<span class="fc bfc" id="L129" title="All 2 branches covered.">    for (Composizione composizione : savedOrdine.getComposizioni()) {</span>
+<span class="fc" id="L130">      Prodotto prodotto = composizione.getProdotto();</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">      assert prodottiTest.contains(prodotto);</span>
+
+<span class="fc" id="L133">      System.out.println(&quot;Composizione: &quot; + composizione);</span>
+<span class="fc" id="L134">      System.out.println(&quot;Product in Composizione: &quot; + prodotto);</span>
+<span class="fc" id="L135">    }</span>
+<span class="fc" id="L136">  }</span>
+}
+</pre>
+<div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span>
+</div>
+</body>
+</html>

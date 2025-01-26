@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/>
+    <title>Abbonamento.java</title>
+    <link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../jacoco-resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">All in greenbottle Coverage Results</a> &gt; <a href="index.source.html"
+                                                                                               class="el_package">it.unisa.greenbottle.storage.abbonamentoStorage.entity</a>
+    &gt; <span class="el_source">Abbonamento.java</span></div>
+<h1>Abbonamento.java</h1>
+<pre class="source lang-java linenums">package it.unisa.greenbottle.storage.abbonamentoStorage.entity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+/**
+ * Rappresenta un abbonamento nel sistema GreenBottle.
+ * Gli abbonamenti includono un tipo, un rinnovo, una frequenza e un prezzo.
+ */
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@ToString
+public class Abbonamento {
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id; // Identificativo univoco dell'abbonamento
+
+  @Column()
+  @Enumerated(EnumType.STRING)
+  private TipoAbbonamento tipo; // Tipo di abbonamento (es. BRONZE, SILVER, GOLD)
+
+  @Column()
+  @Enumerated(EnumType.STRING)
+  private RinnovoAbbonamento rinnovo; // Modalità di rinnovo dell'abbonamento
+
+  @Enumerated(EnumType.STRING)
+  @Column()
+  private FrequenzaAbbonamento frequenza; // Frequenza dell'abbonamento (es. giornaliero, mensile)
+
+  @Column()
+  private float prezzo; // Prezzo dell'abbonamento
+
+  /**
+   * Costruttore per creare un abbonamento con parametri specifici.
+   *
+   * @param tipo      Tipo di abbonamento
+   * @param rinnovo   Modalità di rinnovo dell'abbonamento
+   * @param frequenza Frequenza dell'abbonamento
+   * @param prezzo    Prezzo dell'abbonamento
+   */
+  public Abbonamento(TipoAbbonamento tipo, RinnovoAbbonamento rinnovo,
+<span class="fc" id="L53">                     FrequenzaAbbonamento frequenza, float prezzo) {</span>
+<span class="fc" id="L54">    this.tipo = tipo;</span>
+<span class="fc" id="L55">    this.rinnovo = rinnovo;</span>
+<span class="fc" id="L56">    this.frequenza = frequenza;</span>
+<span class="fc" id="L57">    this.prezzo = prezzo;</span>
+<span class="fc" id="L58">  }</span>
+
+  /**
+   * Enum per rappresentare i tipi di abbonamento.
+   */
+<span class="fc" id="L63">  public enum TipoAbbonamento {</span>
+<span class="fc" id="L64">    BRONZE, // Abbonamento base</span>
+<span class="fc" id="L65">    SILVER, // Abbonamento intermedio</span>
+<span class="fc" id="L66">    GOLD    // Abbonamento premium</span>
+  }
+
+  /**
+   * Enum per rappresentare le modalità di rinnovo dell'abbonamento.
+   */
+<span class="fc" id="L72">  public enum RinnovoAbbonamento {</span>
+<span class="fc" id="L73">    MENSILE,      // Rinnovo ogni mese</span>
+<span class="fc" id="L74">    BIMESTRALE,   // Rinnovo ogni due mesi</span>
+<span class="fc" id="L75">    SEMESTRALE,   // Rinnovo ogni sei mesi</span>
+<span class="fc" id="L76">    ANNUALE       // Rinnovo annuale</span>
+  }
+
+  /**
+   * Enum per rappresentare la frequenza dell'abbonamento.
+   */
+<span class="fc" id="L82">  public enum FrequenzaAbbonamento {</span>
+<span class="fc" id="L83">    GIORNALIERO,  // Frequenza giornaliera</span>
+<span class="fc" id="L84">    SETTIMANALE,  // Frequenza settimanale</span>
+<span class="fc" id="L85">    MENSILE       // Frequenza mensile</span>
+  }
+}
+</pre>
+<div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span>
+</div>
+</body>
+</html>

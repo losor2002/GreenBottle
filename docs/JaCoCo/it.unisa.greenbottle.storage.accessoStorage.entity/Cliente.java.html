@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/>
+    <title>Cliente.java</title>
+    <link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../jacoco-resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">All in greenbottle Coverage Results</a> &gt; <a href="index.source.html"
+                                                                                               class="el_package">it.unisa.greenbottle.storage.accessoStorage.entity</a>
+    &gt; <span class="el_source">Cliente.java</span></div>
+<h1>Cliente.java</h1>
+<pre class="source lang-java linenums">package it.unisa.greenbottle.storage.accessoStorage.entity;
+
+import it.unisa.greenbottle.storage.abbonamentoStorage.entity.Abbonamento;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
+import java.sql.Timestamp;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+/**
+ * Rappresenta un cliente del sistema GreenBottle.
+ * Include informazioni personali, credenziali di accesso e dettagli sul risparmio e
+ * sull'uso del servizio.
+ */
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@ToString(exclude = {&quot;img&quot;})
+public class Cliente {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id; // Identificativo univoco del cliente
+
+  @Column(nullable = false, unique = true, length = 319)
+  private String email; // Email del cliente
+
+  @Column(nullable = false)
+  private String password; // Password del cliente
+
+  @Column(length = 30)
+  private String nome; // Nome del cliente
+
+  @Column(length = 30)
+  private String cognome; // Cognome del cliente
+
+  private int bottiglie; // Numero di bottiglie salvate dal cliente
+
+  @Column(nullable = false, precision = 2)
+  private float risparmio; // Risparmio totale ottenuto dal cliente
+
+  @Lob
+  private byte[] img; // Immagine di profilo del cliente
+
+  private Timestamp sottoscrizione; // Data e ora di sottoscrizione all'abbonamento
+
+  @ManyToOne
+  private Abbonamento abbonamento; // Abbonamento associato al cliente
+
+
+  /**
+   * Costruttore di un cliente.
+   *
+   * @param email          Email del cliente
+   * @param password       Password del cliente
+   * @param nome           Nome del cliente
+   * @param cognome        Cognome del cliente
+   * @param bottiglie      Numero di bottiglie salvate dal cliente
+   * @param risparmio      Risparmio totale ottenuto dal cliente
+   * @param img            Immagine di profilo del cliente
+   * @param sottoscrizione Data e ora di sottoscrizione all'abbonamento
+   */
+  public Cliente(String email, String password, String nome, String cognome, int bottiglie,
+<span class="fc" id="L71">                 float risparmio, byte[] img, Timestamp sottoscrizione) {</span>
+<span class="fc" id="L72">    this.email = email;</span>
+<span class="fc" id="L73">    this.password = password;</span>
+<span class="fc" id="L74">    this.nome = nome;</span>
+<span class="fc" id="L75">    this.cognome = cognome;</span>
+<span class="fc" id="L76">    this.bottiglie = bottiglie;</span>
+<span class="fc" id="L77">    this.risparmio = risparmio;</span>
+<span class="fc" id="L78">    this.img = img;</span>
+<span class="fc" id="L79">    this.sottoscrizione = sottoscrizione;</span>
+<span class="fc" id="L80">  }</span>
+}
+</pre>
+<div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span>
+</div>
+</body>
+</html>

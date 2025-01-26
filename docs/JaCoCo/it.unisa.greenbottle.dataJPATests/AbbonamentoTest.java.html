@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/>
+    <title>AbbonamentoTest.java</title>
+    <link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../jacoco-resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">All in greenbottle Coverage Results</a> &gt; <a href="index.source.html"
+                                                                                               class="el_package">it.unisa.greenbottle.dataJPATests</a>
+    &gt; <span class="el_source">AbbonamentoTest.java</span></div>
+<h1>AbbonamentoTest.java</h1>
+<pre class="source lang-java linenums">package it.unisa.greenbottle.dataJPATests;
+
+import it.unisa.greenbottle.storage.abbonamentoStorage.dao.AbbonamentoDao;
+import it.unisa.greenbottle.storage.abbonamentoStorage.dao.DisposizioneDao;
+import it.unisa.greenbottle.storage.abbonamentoStorage.entity.Abbonamento;
+import it.unisa.greenbottle.storage.abbonamentoStorage.entity.Disposizione;
+import it.unisa.greenbottle.storage.catalogoStorage.dao.CategoriaDao;
+import it.unisa.greenbottle.storage.catalogoStorage.dao.ProdottoDao;
+import it.unisa.greenbottle.storage.catalogoStorage.entity.Categoria;
+import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
+import java.util.HashMap;
+import java.util.List;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+/**
+ * Test per la classe Abbonamento.
+ */
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+<span class="fc" id="L23">public class AbbonamentoTest {</span>
+  @Autowired
+  private AbbonamentoDao abbonamentoDao;
+  @Autowired
+  private DisposizioneDao disposizioneDao;
+  @Autowired
+  private ProdottoDao prodottoDao;
+  @Autowired
+  private CategoriaDao categoriaDao;
+
+  @Test
+  public void abbonamentiTier() {
+<span class="fc" id="L35">    Abbonamento abbonamento1 = new Abbonamento(Abbonamento.TipoAbbonamento.BRONZE,</span>
+        Abbonamento.RinnovoAbbonamento.SEMESTRALE, Abbonamento.FrequenzaAbbonamento.MENSILE, 100f);
+<span class="fc" id="L37">    Abbonamento abbonamento2 = new Abbonamento(Abbonamento.TipoAbbonamento.SILVER,</span>
+        Abbonamento.RinnovoAbbonamento.BIMESTRALE, Abbonamento.FrequenzaAbbonamento.SETTIMANALE,
+        20f);
+<span class="fc" id="L40">    Abbonamento abbonamento3 =</span>
+        new Abbonamento(Abbonamento.TipoAbbonamento.GOLD, Abbonamento.RinnovoAbbonamento.MENSILE,
+            Abbonamento.FrequenzaAbbonamento.GIORNALIERO, 5f);
+<span class="fc" id="L43">    abbonamentoDao.save(abbonamento1);</span>
+<span class="fc" id="L44">    abbonamentoDao.save(abbonamento2);</span>
+<span class="fc" id="L45">    abbonamentoDao.save(abbonamento3);</span>
+
+<span class="fc" id="L47">    Categoria categoriaDefault = new Categoria(&quot;Bevande gassate&quot;);</span>
+<span class="fc" id="L48">    categoriaDao.save(categoriaDefault);</span>
+<span class="fc" id="L49">    Prodotto prodotto1 = new Prodotto(&quot;Fanta&quot;, &quot;Bevanda&quot;, null, 2.5f, 100, null);</span>
+<span class="fc" id="L50">    Prodotto prodotto2 = new Prodotto(&quot;Coca Cola&quot;, &quot;Bevanda&quot;, null, 1.5f, 100, null);</span>
+<span class="fc" id="L51">    Prodotto prodotto3 = new Prodotto(&quot;Sprite&quot;, &quot;Bevanda&quot;, null, 2.0f, 100, categoriaDefault);</span>
+<span class="fc" id="L52">    prodottoDao.save(prodotto1);</span>
+<span class="fc" id="L53">    prodottoDao.save(prodotto2);</span>
+<span class="fc" id="L54">    prodottoDao.save(prodotto3);</span>
+
+<span class="fc" id="L56">    disposizioneDao.save(new Disposizione(1, prodotto1, abbonamento1));</span>
+<span class="fc" id="L57">    disposizioneDao.save(new Disposizione(2, prodotto2, abbonamento1));</span>
+<span class="fc" id="L58">    disposizioneDao.save(new Disposizione(3, prodotto3, abbonamento1));</span>
+<span class="fc" id="L59">    disposizioneDao.save(new Disposizione(2, prodotto1, abbonamento2));</span>
+
+
+<span class="fc" id="L62">    List&lt;Abbonamento&gt; abbonamenti = abbonamentoDao.findAbbonamentoByTipo(</span>
+        Abbonamento.TipoAbbonamento.BRONZE);
+<span class="fc" id="L64">    HashMap&lt;Abbonamento, List&lt;Disposizione&gt;&gt; disposizione =</span>
+        new HashMap&lt;Abbonamento, List&lt;Disposizione&gt;&gt;();
+<span class="fc bfc" id="L66" title="All 2 branches covered.">    for (Abbonamento abbonamento : abbonamenti) {</span>
+<span class="fc" id="L67">      disposizione.put(abbonamento, disposizioneDao.findDisposizioneByAbbonamento(abbonamento));</span>
+<span class="fc" id="L68">    }</span>
+
+<span class="fc" id="L70">    System.out.println(disposizione);</span>
+    assert true;
+<span class="fc" id="L72">  }</span>
+}
+</pre>
+<div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span>
+</div>
+</body>
+</html>

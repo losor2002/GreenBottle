@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/>
+    <title>CatalogoTest.java</title>
+    <link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../jacoco-resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">All in greenbottle Coverage Results</a> &gt; <a href="index.source.html"
+                                                                                               class="el_package">it.unisa.greenbottle.dataJPATests</a>
+    &gt; <span class="el_source">CatalogoTest.java</span></div>
+<h1>CatalogoTest.java</h1>
+<pre class="source lang-java linenums">package it.unisa.greenbottle.dataJPATests;
+
+
+import it.unisa.greenbottle.controller.catalogoControl.form.FiltroForm;
+import it.unisa.greenbottle.storage.catalogoStorage.dao.CategoriaDao;
+import it.unisa.greenbottle.storage.catalogoStorage.dao.ProdottoDao;
+import it.unisa.greenbottle.storage.catalogoStorage.dao.RecensioneDao;
+import it.unisa.greenbottle.storage.catalogoStorage.entity.Categoria;
+import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
+import java.util.List;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.jpa.domain.Specification;
+
+/**
+ * Testa la funzionalità di filtraggio dei prodotti.
+ */
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+<span class="fc" id="L22">public class CatalogoTest {</span>
+
+  @Autowired
+  private ProdottoDao prodottoDao;
+
+  @Autowired
+  private CategoriaDao categoriaDao;
+  @Autowired
+  private RecensioneDao recensioneDao;
+
+  @Test
+  public void filtraProdotti() {
+<span class="fc" id="L34">    Categoria categoriaDefault = new Categoria(&quot;Bevande gassate&quot;);</span>
+<span class="fc" id="L35">    categoriaDao.save(categoriaDefault);</span>
+<span class="fc" id="L36">    Prodotto prodotto1 = new Prodotto(&quot;Fanta&quot;, &quot;Bevanda&quot;, null, 2.5f, 100, null);</span>
+<span class="fc" id="L37">    Prodotto prodotto2 = new Prodotto(&quot;Coca Cola&quot;, &quot;Bevanda&quot;, null, 1.5f, 100, null);</span>
+<span class="fc" id="L38">    Prodotto prodotto3 = new Prodotto(&quot;Sprite&quot;, &quot;Bevanda&quot;, null, 2.0f, 100, categoriaDefault);</span>
+<span class="fc" id="L39">    prodottoDao.save(prodotto1);</span>
+<span class="fc" id="L40">    prodottoDao.save(prodotto2);</span>
+<span class="fc" id="L41">    prodottoDao.save(prodotto3);</span>
+
+<span class="fc" id="L43">    FiltroForm filterForm = new FiltroForm(categoriaDefault.getId(), null, null, null);</span>
+<span class="fc" id="L44">    Specification&lt;Prodotto&gt; spec = Specification.where(null);</span>
+
+<span class="pc bpc" id="L46" title="2 of 4 branches missed.">    if (filterForm.getIdCategoria() != null &amp;&amp; filterForm.getIdCategoria() &gt; 0) {</span>
+<span class="fc" id="L47">      spec = spec.and((root, query, criteriaBuilder) -&gt;</span>
+<span class="fc" id="L48">          criteriaBuilder.equal(root.get(&quot;categoria&quot;).get(&quot;nome&quot;), filterForm.getIdCategoria()));</span>
+    }
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">    if (filterForm.getPrezzoMin() != null) {</span>
+<span class="nc" id="L51">      spec = spec.and((root, query, criteriaBuilder) -&gt;</span>
+<span class="nc" id="L52">          criteriaBuilder.greaterThanOrEqualTo(root.get(&quot;prezzo&quot;), filterForm.getPrezzoMin()));</span>
+    }
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">    if (filterForm.getPrezzoMax() != null) {</span>
+<span class="nc" id="L55">      spec = spec.and((root, query, criteriaBuilder) -&gt;</span>
+<span class="nc" id="L56">          criteriaBuilder.lessThanOrEqualTo(root.get(&quot;prezzo&quot;), filterForm.getPrezzoMax()));</span>
+    }
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">    if (filterForm.getMedia() != null) {</span>
+<span class="nc" id="L59">      spec = spec.and((root, query, criteriaBuilder) -&gt;</span>
+<span class="nc" id="L60">          criteriaBuilder.greaterThanOrEqualTo(root.get(&quot;votoMedio&quot;), filterForm.getMedia()));</span>
+    }
+
+
+<span class="fc" id="L64">    List&lt;Prodotto&gt; recuperato = prodottoDao.findAll(spec);</span>
+<span class="fc" id="L65">    System.out.println(recuperato);</span>
+<span class="fc" id="L66">  }</span>
+}
+</pre>
+<div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span>
+</div>
+</body>
+</html>

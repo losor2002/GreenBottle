@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/>
+    <title>CreazioneOrdineTest.java</title>
+    <link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../jacoco-resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">All in greenbottle Coverage Results</a> &gt; <a href="index.source.html"
+                                                                                               class="el_package">it.unisa.greenbottle.ordineTest</a>
+    &gt; <span class="el_source">CreazioneOrdineTest.java</span></div>
+<h1>CreazioneOrdineTest.java</h1>
+<pre class="source lang-java linenums">package it.unisa.greenbottle.ordineTest;
+
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import it.unisa.greenbottle.controller.accessoControl.util.SessionCliente;
+import it.unisa.greenbottle.controller.ordineControl.form.OrdineForm;
+import it.unisa.greenbottle.controller.ordineControl.util.SessionCarrello;
+import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
+import it.unisa.greenbottle.storage.areaPersonaleStorage.dao.IndirizzoDao;
+import it.unisa.greenbottle.storage.areaPersonaleStorage.entity.Indirizzo;
+import it.unisa.greenbottle.storage.catalogoStorage.dao.ProdottoDao;
+import it.unisa.greenbottle.storage.catalogoStorage.entity.Categoria;
+import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
+import it.unisa.greenbottle.storage.ordineStorage.dao.OrdineDao;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
+
+/**
+ * Testa la funzionalità di creazione di un ordine.
+ */
+@AutoConfigureMockMvc
+@SpringBootTest
+<span class="fc" id="L33">public class CreazioneOrdineTest {</span>
+
+  @Autowired
+  private MockMvc mockMvc;
+
+  @MockitoBean
+  private OrdineForm ordineForm;
+
+  @MockitoBean
+  private OrdineDao ordineDao;
+
+  @MockitoBean
+  private SessionCarrello sessionCarrello;
+
+  @MockitoBean
+  private ProdottoDao prodottoDao;
+
+  @MockitoBean
+  private SessionCliente sessionCliente;
+
+  @MockitoBean
+  private IndirizzoDao indirizzoDao;
+
+  @Test
+  public void nomeNonValido() throws Exception {
+<span class="fc" id="L58">    testCreazioneOrdine(&quot;A1&quot;, &quot;0000000000000000&quot;, &quot;99/99&quot;, &quot;ABC&quot;, 55L, null, Optional.of(&quot;asd&quot;),</span>
+<span class="fc" id="L59">        status().isBadRequest());</span>
+<span class="fc" id="L60">  }</span>
+
+  @Test
+  public void numeroNonValido() throws Exception {
+<span class="fc" id="L64">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;0000000000000000&quot;, &quot;99/99&quot;, &quot;ABC&quot;, 55L, null,</span>
+<span class="fc" id="L65">        Optional.of(&quot;asd&quot;), status().isBadRequest());</span>
+<span class="fc" id="L66">  }</span>
+
+  @Test
+  public void dataNonValido() throws Exception {
+<span class="fc" id="L70">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;5032123166322313&quot;, &quot;99/99&quot;, &quot;ABC&quot;, 55L, null,</span>
+<span class="fc" id="L71">        Optional.of(&quot;asd&quot;), status().isBadRequest());</span>
+<span class="fc" id="L72">  }</span>
+
+  @Test
+  public void cvvNonValido() throws Exception {
+<span class="fc" id="L76">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;5032123166322313&quot;, &quot;02/26&quot;, &quot;ABC&quot;, 55L, null,</span>
+<span class="fc" id="L77">        Optional.of(&quot;asd&quot;), status().isBadRequest());</span>
+<span class="fc" id="L78">  }</span>
+
+  @Test
+  public void indirizzoNonValido() throws Exception {
+<span class="fc" id="L82">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;5032123166322313&quot;, &quot;02/26&quot;, &quot;123&quot;, -12L, null,</span>
+<span class="fc" id="L83">        Optional.of(&quot;asd&quot;), status().isBadRequest());</span>
+<span class="fc" id="L84">  }</span>
+
+  @Test
+  public void indirizzoNonPresente() throws Exception {
+<span class="fc" id="L88">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;5032123166322313&quot;, &quot;02/26&quot;, &quot;123&quot;, 7355608L, null,</span>
+<span class="fc" id="L89">        Optional.of(&quot;asd&quot;), status().is3xxRedirection());</span>
+<span class="fc" id="L90">  }</span>
+
+  @Test
+  public void isSupportoNonValido() throws Exception {
+<span class="fc" id="L94">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;5032123166322313&quot;, &quot;02/26&quot;, &quot;123&quot;, 1L, null,</span>
+<span class="fc" id="L95">        Optional.of(&quot;asd&quot;), status().is3xxRedirection());</span>
+<span class="fc" id="L96">  }</span>
+
+  @Test
+  public void descrizioneNonValida() throws Exception {
+<span class="fc" id="L100">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;5032123166322313&quot;, &quot;02/26&quot;, &quot;123&quot;, 1L, true,</span>
+<span class="fc" id="L101">        Optional.of((&quot;a&quot;).repeat(320)), status().isBadRequest());</span>
+<span class="fc" id="L102">  }</span>
+
+  @Test
+  public void descrizioneNonPresente() throws Exception {
+<span class="fc" id="L106">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;5032123166322313&quot;, &quot;02/26&quot;, &quot;123&quot;, 1L, true,</span>
+<span class="fc" id="L107">        Optional.of(&quot;&quot;), status().isBadRequest());</span>
+<span class="fc" id="L108">  }</span>
+
+  @Test
+  public void ordineSupportoValido() throws Exception {
+<span class="fc" id="L112">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;5032123166322313&quot;, &quot;02/26&quot;, &quot;123&quot;, 1L, true,</span>
+<span class="fc"
+      id="L113">        Optional.of(&quot;Consegna al primo piano&quot;), status().is3xxRedirection());</span>
+<span class="fc" id="L114">  }</span>
+
+  @Test
+  public void ordineValido() throws Exception {
+<span class="fc" id="L118">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;5032123166322313&quot;, &quot;02/26&quot;, &quot;123&quot;, 1L, false,</span>
+<span class="fc" id="L119">        Optional.of(&quot;&quot;), status().is3xxRedirection());</span>
+<span class="fc" id="L120">  }</span>
+
+  @SuppressWarnings(&quot;OptionalUsedAsFieldOrParameterType&quot;)
+  private void testCreazioneOrdine(String nomeTitolare, String numeroCarta, String dataScadenza,
+                                   String cvv, Long idIndirizzo, Boolean isSupporto,
+                                   Optional&lt;String&gt; descrizioneSupporto,
+                                   ResultMatcher resultmatcher)
+      throws Exception {
+<span class="fc" id="L128">    Cliente cliente = new Cliente();</span>
+<span class="fc" id="L129">    cliente.setId(1L);</span>
+<span class="fc" id="L130">    Indirizzo indirizzo = new Indirizzo();</span>
+<span class="fc" id="L131">    Map&lt;Long, Integer&gt; carrello = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L132">    Categoria categoria = new Categoria(&quot;Bevande&quot;);</span>
+<span class="fc" id="L133">    Prodotto prodotto1 = new Prodotto(</span>
+        &quot;Prodotto1&quot;, &quot;Prodotto 1&quot;, null, 10.0f, 1000, categoria
+    );
+<span class="fc" id="L136">    Prodotto prodotto2 = new Prodotto(</span>
+        &quot;Prodotto2&quot;, &quot;Prodotto 2&quot;, null, 5.0f, 1000, categoria
+    );
+
+<span class="fc" id="L140">    carrello.put(prodotto1.getId(), 10);</span>
+<span class="fc" id="L141">    carrello.put(prodotto2.getId(), 50);</span>
+<span class="fc" id="L142">    indirizzo.setId(idIndirizzo);</span>
+<span class="fc" id="L143">    ordineForm =</span>
+        new OrdineForm(numeroCarta, dataScadenza, cvv, nomeTitolare, idIndirizzo, isSupporto,
+<span class="fc" id="L145">            true, descrizioneSupporto.orElse(&quot;&quot;));</span>
+
+<span class="fc" id="L147">    when(sessionCliente.getCliente()).thenReturn(Optional.of(cliente));</span>
+<span class="fc" id="L148">    when(sessionCarrello.getCarrello()).thenReturn(carrello);</span>
+<span class="fc" id="L149">    when(indirizzoDao.findIndirizzoById(idIndirizzo)).thenReturn(</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">        idIndirizzo &gt; 0 ? Optional.of(indirizzo) : Optional.empty());</span>
+<span class="fc"
+      id="L151">    when(prodottoDao.findProdottoById(prodotto1.getId())).thenReturn(Optional.of(prodotto1));</span>
+<span class="fc"
+      id="L152">    when(prodottoDao.findProdottoById(prodotto2.getId())).thenReturn(Optional.of(prodotto2));</span>
+
+<span class="fc" id="L154">    mockMvc.perform(post(&quot;/ordina&quot;)</span>
+<span class="fc" id="L155">        .param(&quot;nomeTitolare&quot;, ordineForm.getNomeTitolare())</span>
+<span class="fc" id="L156">        .param(&quot;numeroCarta&quot;, ordineForm.getNumeroCarta())</span>
+<span class="fc" id="L157">        .param(&quot;dataScadenza&quot;, ordineForm.getDataScadenza())</span>
+<span class="fc" id="L158">        .param(&quot;cvv&quot;, ordineForm.getCvv())</span>
+<span class="fc" id="L159">        .param(&quot;indirizzo&quot;, ordineForm.getIndirizzo().toString())</span>
+<span class="fc" id="L160">        .param(&quot;isSupporto&quot;,</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">            ordineForm.getIsSupporto() == null ? null : ordineForm.getIsSupporto().toString())</span>
+<span class="fc" id="L162">        .param(&quot;isRitiro&quot;, &quot;false&quot;)</span>
+<span class="fc"
+      id="L163">        .param(&quot;descrizioneSupporto&quot;, descrizioneSupporto.orElse(&quot;&quot;))</span>
+<span class="fc" id="L164">    ).andExpect(resultmatcher);</span>
+<span class="fc" id="L165">  }</span>
+}
+</pre>
+<div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span>
+</div>
+</body>
+</html>

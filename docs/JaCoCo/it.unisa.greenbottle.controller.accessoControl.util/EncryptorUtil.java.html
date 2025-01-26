@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/>
+    <link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/>
+    <title>EncryptorUtil.java</title>
+    <link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/>
+    <script type="text/javascript" src="../jacoco-resources/prettify.js"></script>
+</head>
+<body onload="window['PR_TAB_WIDTH']=4;prettyPrint()">
+<div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html"
+                                                              class="el_session">Sessions</a></span><a
+        href="../index.html" class="el_report">All in greenbottle Coverage Results</a> &gt; <a href="index.source.html"
+                                                                                               class="el_package">it.unisa.greenbottle.controller.accessoControl.util</a>
+    &gt; <span class="el_source">EncryptorUtil.java</span></div>
+<h1>EncryptorUtil.java</h1>
+<pre class="source lang-java linenums">package it.unisa.greenbottle.controller.accessoControl.util;
+
+import java.util.Base64;
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+
+/**
+ * Classe EncryptorUtil, utilizzata per la cifratura e decifratura di stringhe.
+ */
+<span class="nc" id="L11">public class EncryptorUtil {</span>
+  private static final String ALGORITHM = &quot;AES&quot;;
+  private static final String ENCRYPTION_KEY = &quot;1234567890123456&quot;; // solo per scopo di test
+
+  /**
+   * Metodo per cifrare una stringa.
+   *
+   * @param text stringa da cifrare
+   * @return stringa cifrata
+   */
+  public static String encrypt(String text) {
+    try {
+<span class="fc" id="L23">      SecretKey secretKey = new SecretKeySpec(ENCRYPTION_KEY.getBytes(), ALGORITHM);</span>
+<span class="fc" id="L24">      Cipher cipher = Cipher.getInstance(ALGORITHM);</span>
+<span class="fc" id="L25">      cipher.init(Cipher.ENCRYPT_MODE, secretKey);</span>
+<span class="fc" id="L26">      byte[] encryptedBytes = cipher.doFinal(text.getBytes());</span>
+<span class="fc" id="L27">      return Base64.getEncoder().encodeToString(encryptedBytes);</span>
+<span class="nc" id="L28">    } catch (Exception e) {</span>
+<span class="nc" id="L29">      throw new RuntimeException(&quot;Errore durante la crittografia&quot;, e);</span>
+    }
+  }
+
+  /**
+   * Metodo per decifrare una stringa.
+   *
+   * @param encryptedText stringa cifrata
+   * @return stringa decifrata
+   */
+  public static String decrypt(String encryptedText) {
+    try {
+<span class="nc" id="L41">      SecretKey secretKey = new SecretKeySpec(ENCRYPTION_KEY.getBytes(), ALGORITHM);</span>
+<span class="nc" id="L42">      Cipher cipher = Cipher.getInstance(ALGORITHM);</span>
+<span class="nc" id="L43">      cipher.init(Cipher.DECRYPT_MODE, secretKey);</span>
+<span class="nc"
+      id="L44">      byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedText));</span>
+<span class="nc" id="L45">      return new String(decryptedBytes);</span>
+<span class="nc" id="L46">    } catch (Exception e) {</span>
+<span class="nc" id="L47">      throw new RuntimeException(&quot;Errore durante la decrittografia&quot;, e);</span>
+    }
+  }
+}
+</pre>
+<div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span>
+</div>
+</body>
+</html>
