@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * Controller per l'accettazione di un ordine da parte dell'admin.
+ */
 @Controller
 @RequestMapping("/admin/accettazioneOrdine")
 public class AccettazioneOrdineAdminController {
@@ -27,6 +30,13 @@ public class AccettazioneOrdineAdminController {
   @Autowired
   private SessionAdmin sessionAdmin;
 
+  /**
+   * Metodo per l'accettazione di un ordine da parte dell'admin.
+   *
+   * @param id              id dell'ordine da accettare
+   * @param statoSpedizione stato di spedizione dell'ordine
+   * @return ResponseEntity con messaggio di successo o errore
+   */
   @PostMapping
   public ResponseEntity<?> post(@RequestParam("ordineId") String id,
                                 @RequestParam("newState") String statoSpedizione) {

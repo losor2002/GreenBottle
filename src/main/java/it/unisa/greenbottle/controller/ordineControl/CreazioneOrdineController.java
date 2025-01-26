@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,16 +33,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * Controller per la creazione di un ordine.
+ */
 @Controller
 @RequestMapping("/ordina")
 public class CreazioneOrdineController {
 
   private static final String ordineView = "OrdineView/Checkout";
-
   private static final String fallbackView = "redirect:/";
-
   private static final String successView = "redirect:/areaPersonale/visualizzaStoricoOrdini";
-
 
   @Autowired
   private OrdineDao ordineDao;
@@ -60,6 +59,14 @@ public class CreazioneOrdineController {
   @Autowired
   private SessionCarrello sessionCarrello;
 
+  /**
+   * Metodo per la visualizzazione della pagina di checkout.
+   *
+   * @param model               modello per la vista
+   * @param httpServletResponse response http
+   * @return la vista di checkout
+   * @throws IOException eccezione di I/O
+   */
   @GetMapping
   public String get(Model model, HttpServletResponse httpServletResponse) throws IOException {
     Optional<Cliente> clienteOptional = sessionCliente.getCliente();
@@ -79,6 +86,16 @@ public class CreazioneOrdineController {
     return ordineView;
   }
 
+  /**
+   * Metodo per la creazione di un ordine.
+   *
+   * @param ordineForm          form per la creazione dell'ordine
+   * @param model               modello per la vista
+   * @param bindingResult       risultato del binding
+   * @param httpServletResponse response http
+   * @return la vista di errore o di successo
+   * @throws IOException eccezione di I/O
+   */
   @PostMapping
   @Transactional
   public String post(@ModelAttribute @Valid OrdineForm ordineForm, Model model,
@@ -98,7 +115,7 @@ public class CreazioneOrdineController {
       model.addAttribute("message", fieldError.getDefaultMessage());
       model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
       httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, fieldError.getField());
-      return "error";// Visualizza la vista con il messaggio di errore
+      return "error"; // Visualizza la vista con il messaggio di errore
     }
 
     Map<Long, Integer> prodottiUnparsed = sessionCarrello.getCarrello();
@@ -140,11 +157,12 @@ public class CreazioneOrdineController {
 
     if (isSupporto && descrizioneSupporto.isBlank()) {
       model.addAttribute("errore", "Descrizione supporto non inserita.");
-      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Descrizione supporto non inserita");
+      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,
+          "Descrizione supporto non inserita");
       return null;
     } else if (!(isSupporto || descrizioneSupporto.isBlank())) { // De Morgan
       model.addAttribute("warning",
-              "Errata selezione dell’opzione di richiesta supporto aggiuntivo");
+          "Errata selezione dell’opzione di richiesta supporto aggiuntivo");
     }
 
     Long idIndirizzo = ordineForm.getIndirizzo();

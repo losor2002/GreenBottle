@@ -10,70 +10,84 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Classe che rappresenta un wrapper per l'oggetto Ordine, che contiene anche la lista delle
+ * composizioni di un ordine.
+ */
 public class OrdineWrapper implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  private Ordine o;
-  private List<Composizione> c;
+  private Ordine ord;
+  private List<Composizione> comp;
 
-  public OrdineWrapper(Ordine o, List<Composizione> c) {
-    this.o = o;
-    this.c = c;
+  public OrdineWrapper(Ordine ord, List<Composizione> comp) {
+    this.ord = ord;
+    this.comp = comp;
   }
 
   public Long getId() {
-    return o.getId();
+    return ord.getId();
   }
 
   public String getDescrizione() {
-    return o.getDescrizione();
+    return ord.getDescrizione();
   }
 
   public float getPrezzo() {
-    return o.getPrezzo();
+    return ord.getPrezzo();
   }
 
   public Ordine.StatoSpedizione getStato() {
-    return o.getStato();
+    return ord.getStato();
   }
 
   public boolean isRitiro() {
-    return o.isRitiro();
+    return ord.isRitiro();
   }
 
   public boolean isSupporto() {
-    return o.isSupporto();
+    return ord.isSupporto();
   }
 
   public String getNomeCliente() {
-    return o.getCliente().getNome();
+    return ord.getCliente().getNome();
   }
 
   public String getCognomeCliente() {
-    return o.getCliente().getCognome();
+    return ord.getCliente().getCognome();
   }
 
   public String getEmailCliente() {
-    return o.getCliente().getEmail();
+    return ord.getCliente().getEmail();
   }
 
   public Timestamp getData() {
-    return o.getData();
+    return ord.getData();
   }
 
   public Admin getAdmin() {
-    return o.getAdmin();
+    return ord.getAdmin();
   }
 
+  /**
+   * Metodo che restituisce l'indirizzo dell'ordine.
+   *
+   * @return Stringa contenente l'indirizzo dell'ordine.
+   */
   public String getIndirizzo() {
-    Indirizzo i = o.getIndirizzo();
+    Indirizzo i = ord.getIndirizzo();
     return i.getVia() + " " + i.getCivico() + " " + i.getCap() + " " + i.getCitta() + " "
         + i.getProvincia();
   }
 
+  /**
+   * Metodo che restituisce una mappa contenente i prodotti dell'ordine e le relative quantità.
+   *
+   * @return Mappa contenente i prodotti dell'ordine e le relative quantità.
+   */
   public HashMap<Prodotto, Integer> getProdottiOrdine() {
     HashMap<Prodotto, Integer> mappa = new HashMap<>();
-    for (Composizione composizione : c) {
+    for (Composizione composizione : comp) {
       Prodotto chiave = composizione.getProdotto();
       Integer valore = composizione.getQuantita();
       mappa.put(chiave, valore);
@@ -98,5 +112,4 @@ public class OrdineWrapper implements Serializable {
         + ", prodottiOrdine=" + getProdottiOrdine()
         + '}';
   }
-
 }

@@ -1,10 +1,16 @@
 package it.unisa.greenbottle.controller.ordineControl.form;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import jdk.jfr.BooleanFlag;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+/**
+ * Classe che rappresenta il form per la creazione di un ordine.
+ */
 @AllArgsConstructor
 @Data
 public class OrdineForm {
@@ -25,9 +31,9 @@ public class OrdineForm {
   @NotNull
   @Pattern(
       regexp = "^\\d{3,4}$",
-      message = "CVV non valido."
+      message = "cvv non valido."
   )
-  private String CVV;
+  private String cvv;
 
   @NotNull
   @Pattern(
@@ -60,7 +66,6 @@ public class OrdineForm {
   }
 
   public boolean isSupportoDescrizioneValid() {
-      return getIsSupporto() && !getDescrizioneSupporto().isBlank();
+    return getIsSupporto() && !getDescrizioneSupporto().isBlank();
   }
-
 }

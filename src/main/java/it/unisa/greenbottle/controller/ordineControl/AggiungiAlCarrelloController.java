@@ -6,13 +6,13 @@ import it.unisa.greenbottle.storage.catalogoStorage.dao.ProdottoDao;
 import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-
+/**
+ * Questa classe gestisce la richiesta di aggiungere un prodotto al carrello.
+ */
 @Controller
 public class AggiungiAlCarrelloController {
 
@@ -22,6 +22,12 @@ public class AggiungiAlCarrelloController {
   @Autowired
   private SessionCarrello sessionCarrello;
 
+  /**
+   * Questo metodo gestisce la richiesta POST di aggiungere un prodotto al carrello.
+   *
+   * @param prodottoForm il form del prodotto da aggiungere al carrello
+   * @return una stringa che rappresenta la pagina a cui reindirizzare
+   */
   @PostMapping("/aggiungi-al-carrello")
   public String post(@ModelAttribute @Valid ProdottoForm prodottoForm) {
 
@@ -36,7 +42,5 @@ public class AggiungiAlCarrelloController {
 
     sessionCarrello.addToCarrello(prod.getId(), prodottoForm.getQuantita());
     return "redirect:/catalogo";
-
   }
 }
-

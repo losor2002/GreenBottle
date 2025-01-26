@@ -14,6 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * Questa classe si occupa di gestire la visualizzazione degli ordini da parte dell'admin.
+ */
 @Controller
 @RequestMapping("/admin/visualizzaOrdini")
 public class VisualizzaOrdiniAdminController {
@@ -30,6 +33,12 @@ public class VisualizzaOrdiniAdminController {
   private SessionAdmin sessionAdmin;
 
 
+  /**
+   * Questo metodo si occupa di visualizzare gli ordini da parte dell'admin.
+   *
+   * @param model modello che contiene i dati da visualizzare
+   * @return la view da visualizzare
+   */
   @GetMapping
   public String get(Model model) {
     List<OrdineWrapper> ordiniFinale = new LinkedList<>();
@@ -42,9 +51,6 @@ public class VisualizzaOrdiniAdminController {
 
     model.addAttribute("ordini", ordiniFinale);
     model.addAttribute("StatoSpedizione", Ordine.StatoSpedizione.class);
-
     return visualizzaOrdiniView;
   }
-
-
 }

@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Classe che rappresenta il form per un prodotto.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,8 +21,4 @@ public class ProdottoForm {
   @Positive(message = "Quantità non valida.")
   private Integer quantita;
 
-
-  public Long getIdProdotto() {
-    return idProdotto;
-  }
 }

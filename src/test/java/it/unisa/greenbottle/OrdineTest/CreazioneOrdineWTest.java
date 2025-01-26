@@ -10,7 +10,6 @@ import it.unisa.greenbottle.controller.ordineControl.util.SessionCarrello;
 import it.unisa.greenbottle.storage.accessoStorage.entity.Cliente;
 import it.unisa.greenbottle.storage.areaPersonaleStorage.dao.IndirizzoDao;
 import it.unisa.greenbottle.storage.areaPersonaleStorage.entity.Indirizzo;
-import it.unisa.greenbottle.storage.catalogoStorage.dao.CategoriaDao;
 import it.unisa.greenbottle.storage.catalogoStorage.dao.ProdottoDao;
 import it.unisa.greenbottle.storage.catalogoStorage.entity.Categoria;
 import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
@@ -153,7 +152,7 @@ public class CreazioneOrdineWTest {
         .param("nomeTitolare", ordineForm.getNomeTitolare())
         .param("numeroCarta", ordineForm.getNumeroCarta())
         .param("dataScadenza", ordineForm.getDataScadenza())
-        .param("CVV", ordineForm.getCVV())
+        .param("cvv", ordineForm.getCvv())
         .param("indirizzo", ordineForm.getIndirizzo().toString())
         .param("isSupporto",
             ordineForm.getIsSupporto() == null ? null : ordineForm.getIsSupporto().toString())

@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
+/**
+ * Classe che rappresenta il carrello dell'utente in sessione.
+ */
 @Component
 @SessionScope
 @Setter
@@ -23,6 +26,11 @@ public class SessionCarrello {
   private ProdottoDao prodottoDao;
 
 
+  /**
+   * Restituisce il carrello filtrato.
+   *
+   * @return il carrello filtrato
+   */
   public Map<Prodotto, Integer> getRealCarrello() {
     if (carrello == null || carrello.isEmpty()) {
       return new HashMap<>();
@@ -41,6 +49,13 @@ public class SessionCarrello {
     return filteredCarrello;
   }
 
+  /**
+   * Aggiunge un prodotto al carrello.
+   *
+   * @param prodotto id del prodotto
+   * @param quantita quantità del prodotto
+   * @return true se l'operazione è andata a buon fine, false altrimenti
+   */
   public boolean addToCarrello(Long prodotto, Integer quantita) {
     if (prodotto == null || quantita == null || quantita <= 0) {
       return false;
@@ -49,6 +64,12 @@ public class SessionCarrello {
     return true;
   }
 
+  /**
+   * Rimuove un prodotto dal carrello.
+   *
+   * @param prodotto id del prodotto
+   * @return true se l'operazione è andata a buon fine, false altrimenti
+   */
   public boolean removeFromCarrello(Long prodotto) {
     if (prodotto == null || !carrello.containsKey(prodotto)) {
       return false;
@@ -57,6 +78,11 @@ public class SessionCarrello {
     return true;
   }
 
+  /**
+   * Svuota il carrello.
+   *
+   * @return true se l'operazione è andata a buon fine, false altrimenti
+   */
   public boolean clearCarrello() {
     if (!carrello.isEmpty()) {
       carrello.clear();

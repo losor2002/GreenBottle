@@ -19,6 +19,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * Questa classe è un controller che si occupa
+ * di gestire la visualizzazione dello stato di un ordine.
+ */
 @Controller
 @RequestMapping("/areaPersonale/visualizzaStatoOrdine")
 public class VisualizzaStatoOrdineController {
@@ -36,6 +40,15 @@ public class VisualizzaStatoOrdineController {
   private SessionCliente sessionCliente;
 
 
+  /**
+   * Questo metodo si occupa di gestire la richiesta GET per visualizzare lo stato di un ordine.
+   *
+   * @param id                  id dell'ordine da visualizzare
+   * @param model               modello dati
+   * @param httpServletResponse risposta http
+   * @return stringa che rappresenta la view da visualizzare
+   * @throws IOException eccezione di input/output
+   */
   @GetMapping
   public String get(@RequestParam Long id, Model model, HttpServletResponse httpServletResponse)
       throws IOException {
@@ -76,8 +89,14 @@ public class VisualizzaStatoOrdineController {
     return visualizzaStatoOrdineView;
   }
 
+  /**
+   * Questo metodo si occupa di gestire la richiesta POST per eliminare un ordine.
+   *
+   * @param id id dell'ordine da eliminare
+   * @return stringa che rappresenta la view da visualizzare
+   */
   @PostMapping
-  public String post(@RequestParam Long id, Model model) {
+  public String post(@RequestParam Long id) {
     Cliente cliente = sessionCliente.getCliente().get();
 
     Optional<Ordine> optOrdine = ordineDao.findOrdineById(id);
@@ -94,5 +113,4 @@ public class VisualizzaStatoOrdineController {
 
     return "redirect:" + "/areaPersonale/visualizzaStoricoOrdini";
   }
-
 }
