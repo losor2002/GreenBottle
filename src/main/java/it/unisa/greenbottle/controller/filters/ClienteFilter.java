@@ -11,6 +11,9 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Filtro per i clienti.
+ */
 @Component
 public class ClienteFilter implements Filter {
 

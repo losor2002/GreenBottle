@@ -11,6 +11,9 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Filtro per la gestione dell'accesso alle pagine riservate agli admin.
+ */
 @Component
 public class AdminFilter
     implements Filter {

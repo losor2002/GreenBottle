@@ -5,6 +5,9 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Classe di configurazione del filtro per l'amministratore.
+ */
 @Configuration
 public class AdminConfigFilter {
 
@@ -12,6 +15,11 @@ public class AdminConfigFilter {
   private AdminFilter adminFilter;
 
 
+  /**
+   * Metodo per la creazione del filtro per l'amministratore.
+   *
+   * @return il filtro per l'amministratore.
+   */
   @Bean
   public FilterRegistrationBean<AdminFilter> filterBeanAdmin() {
     FilterRegistrationBean<AdminFilter> registrationBean
