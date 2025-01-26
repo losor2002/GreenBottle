@@ -1,5 +1,6 @@
 package it.unisa.greenbottle.catalogoTest;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -34,13 +35,13 @@ public class FiltraProdottiTest {
 
   @Test
   public void idCategoriaNonValido() throws Exception {
-    testFiltraProdotti("-1", null, null, null, status().isBadRequest());
+    testFiltraProdotti("-1", null, null, null, status().isBadRequest(), "IdCategoria deve essere maggiore o uguale a 1.");
   }
 
   @Test
   public void idCategoriaNonEsiste() throws Exception {
     when(categoriaDao.existsById(3L)).thenReturn(false);
-    testFiltraProdotti("10", null, null, null, status().isNotFound());
+    testFiltraProdotti("10", null, null, null, status().isNotFound(), "Categoria non presente.");
   }
 
   @Test
@@ -51,42 +52,43 @@ public class FiltraProdottiTest {
     categoria.setId(3L);
     when(categoriaDao.findCategoriaById(3L)).thenReturn(Optional.of(categoria));
 
-    testFiltraProdotti("3", null, null, null, status().isOk());
+    testFiltraProdotti("3", null, null, null, status().isOk(), null);
   }
 
   @Test
   public void prezzoMinimoNonValido() throws Exception {
-    testFiltraProdotti(null, "-5", null, null, status().isBadRequest());
+    testFiltraProdotti(null, "-5", null, null, status().isBadRequest(), "Prezzo minimo deve essere maggiore o uguale a 1.");
   }
 
   @Test
   public void prezzoMinimoValido() throws Exception {
-    testFiltraProdotti(null, "8.5", null, null, status().isOk());
+    testFiltraProdotti(null, "8.5", null, null, status().isOk(), null);
   }
 
   @Test
   public void prezzoMassimoMinoreDiPrezzoMinimo() throws Exception {
-    testFiltraProdotti(null, "10", "8.5", null, status().isBadRequest());
+    testFiltraProdotti(null, "10", "8.5", null, status().isBadRequest(), "Prezzo minimo non può essere maggiore del prezzo massimo.");
   }
 
   @Test
   public void prezzoMassimoValido() throws Exception {
-    testFiltraProdotti(null, "10", "40.25", null, status().isOk());
+    testFiltraProdotti(null, "10", "40.25", null, status().isOk(), null);
   }
 
   @Test
   public void mediaNonValida() throws Exception {
-    testFiltraProdotti(null, null, null, "-3", status().isBadRequest());
+    testFiltraProdotti(null, null, null, "-3", status().isBadRequest(), "Media deve essere almeno 1.0");
   }
 
   @Test
   public void mediaValida() throws Exception {
-    testFiltraProdotti(null, null, null, "4", status().isOk());
+    testFiltraProdotti(null, null, null, "4", status().isOk(), null);
   }
 
   private void testFiltraProdotti(String idCategoria, String prezzoMin, String prezzoMax,
                                   String media,
-                                  ResultMatcher resultMatcher)
+                                  ResultMatcher resultMatcher,
+                                  String expectedMessage)
       throws Exception {
 
     filtroForm = new FiltroForm(
@@ -104,6 +106,13 @@ public class FiltraProdottiTest {
                 filtroForm.getPrezzoMax() == null ? null : filtroForm.getPrezzoMax().toString())
             .param("media",
                 filtroForm.getMedia() == null ? null : filtroForm.getMedia().toString()))
-        .andExpect(resultMatcher);
+        .andExpect(resultMatcher)
+            .andExpect(result -> {
+              if (expectedMessage != null) {
+                String errorMessage = result.getResponse().getErrorMessage();
+                assertTrue(errorMessage.contains(expectedMessage),
+                        "La risposta non contiene il messaggio atteso: " + expectedMessage);
+              }
+            });
   }
 }

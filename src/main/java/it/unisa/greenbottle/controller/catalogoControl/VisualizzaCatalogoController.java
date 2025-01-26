@@ -6,7 +6,6 @@ import it.unisa.greenbottle.storage.catalogoStorage.dao.CategoriaDao;
 import it.unisa.greenbottle.storage.catalogoStorage.dao.ProdottoDao;
 import it.unisa.greenbottle.storage.catalogoStorage.dao.RecensioneDao;
 import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import java.io.IOException;
@@ -46,14 +45,13 @@ public class VisualizzaCatalogoController {
    * @param bindingResult       binding result
    * @param model               model
    * @param httpServletResponse httpServletResponse
-   * @param httpServletRequest  httpServletRequest
    * @return catalogoView
    * @throws IOException IOException
    */
   @GetMapping
   public String get(@ModelAttribute @Valid FiltroForm filtroForm, BindingResult bindingResult,
                     Model model,
-                    HttpServletResponse httpServletResponse, HttpServletRequest httpServletRequest
+                    HttpServletResponse httpServletResponse
   )
       throws IOException {
 
@@ -62,7 +60,7 @@ public class VisualizzaCatalogoController {
       FieldError fieldError = bindingResult.getFieldErrors().getFirst();
       model.addAttribute("message", fieldError.getDefaultMessage());
       model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
-      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, fieldError.getField());
+      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, fieldError.getDefaultMessage());
       return "error"; // Visualizza la vista con il messaggio di errore
     }
 
