@@ -53,7 +53,7 @@ public class Ordine {
   @Column(nullable = false)
   private boolean isSupporto; // Indica se l'ordine è supportato da un servizio
 
-  @Column(nullable = true, length = 300)
+  @Column(length = 300)
   private String descrizione = ""; // Descrizione dell'ordine
 
   @Column(nullable = false)
