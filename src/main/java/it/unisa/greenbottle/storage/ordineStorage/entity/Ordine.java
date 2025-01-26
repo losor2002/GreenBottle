@@ -47,7 +47,7 @@ public class Ordine {
   @Column(nullable = false)
   private boolean isRitiro; // Indica se l'ordine è per il ritiro o la spedizione
 
-  @Column(nullable = false, length = 19)
+  @Column(nullable = false, length = 39)
   private String carta; // Numero della carta di pagamento
 
   @Column(nullable = false)

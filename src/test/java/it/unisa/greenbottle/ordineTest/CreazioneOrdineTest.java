@@ -119,6 +119,7 @@ public class CreazioneOrdineTest {
         Optional.of(""), status().is3xxRedirection());
   }
 
+  @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   private void testCreazioneOrdine(String nomeTitolare, String numeroCarta, String dataScadenza,
                                    String cvv, Long idIndirizzo, Boolean isSupporto,
                                    Optional<String> descrizioneSupporto,
@@ -149,7 +150,6 @@ public class CreazioneOrdineTest {
         idIndirizzo > 0 ? Optional.of(indirizzo) : Optional.empty());
     when(prodottoDao.findProdottoById(prodotto1.getId())).thenReturn(Optional.of(prodotto1));
     when(prodottoDao.findProdottoById(prodotto2.getId())).thenReturn(Optional.of(prodotto2));
-    //isRitiro non va testato secondo il TCS.
 
     mockMvc.perform(post("/ordina")
         .param("nomeTitolare", ordineForm.getNomeTitolare())
