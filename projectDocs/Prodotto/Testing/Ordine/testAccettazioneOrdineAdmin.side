@@ -1,0 +1,58 @@
+{
+  "id": "0f2a7f7f-33dc-4e9a-a33a-010efcd0df46",
+  "version": "2.0",
+  "name": "testAccettazioneOrdineAdmin",
+  "url": "http://localhost:8080",
+  "tests": [{
+    "id": "69454d85-649f-4853-b776-4afdac20de45",
+    "name": "Untitled",
+    "commands": [{
+      "id": "419625d3-8841-458b-81f8-a8d593773886",
+      "comment": "",
+      "command": "open",
+      "target": "/admin/visualizzaOrdini",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b41fb254-45a8-4ec8-94b3-fd6b95662d79",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x832",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4507ef7c-69bb-4f49-b223-193a7d1cd6b9",
+      "comment": "",
+      "command": "click",
+      "target": "css=.row:nth-child(1) .btn-primary",
+      "targets": [
+        ["css=.row:nth-child(1) .btn-primary", "css:finder"],
+        ["xpath=(//button[@type='button'])[2]", "xpath:attributes"],
+        ["xpath=//div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Accetta')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e013df62-b62c-4b55-b3e2-2986310a53c7",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.text-success",
+      "targets": [
+        ["css=.text-success", "css:finder"],
+        ["xpath=//div[2]/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Ordine Accettato')]", "xpath:innerText"]
+      ],
+      "value": "Ordine Accettato"
+    }]
+  }],
+  "suites": [{
+    "id": "8189d935-0897-4d36-b44f-80834439f984",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["69454d85-649f-4853-b776-4afdac20de45"]
+  }],
+  "urls": ["http://localhost:8080/"],
+  "plugins": []
+}
