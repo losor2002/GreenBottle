@@ -51,25 +51,13 @@
                         <small th:text="${entry.key.getDescrizione()}">Descrizione prodotto</small>
                     </td>
                     <td class="actions">
-                        <!-- Form per aggiungere uno alla quantità -->
-                        <form action="/aggiungi-al-carrello" method="post" class="d-inline">
-                            <input type="hidden" name="id" th:value="${entry.key.getId()}">
-                            <button type="submit" class="btn btn-sm btn-success">+</button>
-                        </form>
+                        <button class="btn btn-sm btn-success">+</button>
                         <span th:text="${entry.value}">1</span>
-                        <!-- Form per togliere uno alla quantità -->
-                        <form action="" method="post" class="d-inline">
-                            <input type="hidden" name="id" th:value="${entry.key.getId()}">
-                            <button type="submit" class="btn btn-sm btn-danger">-</button>
-                        </form>
+                        <button class="btn btn-sm btn-danger">-</button>
                     </td>
                     <td id="price" th:text="${entry.key.prezzo * entry.value}">€0.00</td>
                     <td>
-                        <!-- Form per rimuovere il prodotto dal carrello -->
-                        <form action="" method="post" class="d-inline">
-                            <input type="hidden" name="id" th:value="${entry.key.getId()}">
-                            <button type="submit" class="btn btn-sm btn-outline-danger">X</button>
-                        </form>
+                        <button class="btn btn-sm btn-outline-danger">X</button>
                     </td>
                 </tr>
                 </tbody>
@@ -86,7 +74,6 @@
 </main>
 <footer th:replace="~{fragments/fragments :: footer}"></footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Ricalcolo del totale dinamico -->
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         function calculateSubtotal() {
@@ -103,38 +90,7 @@
             }
         }
 
-        function attachButtonListeners() {
-            const addButtons = document.querySelectorAll('.btn-success');
-            const removeButtons = document.querySelectorAll('.btn-danger');
-            addButtons.forEach(button => {
-                button.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    const quantityElement = button.nextElementSibling;
-                    const priceElement = button.closest('tr').querySelector('#price');
-                    const unitPrice = parseFloat(priceElement.textContent.replace('€', '').trim()) / parseInt(quantityElement.textContent.trim());
-                    const newQuantity = parseInt(quantityElement.textContent.trim()) + 1;
-                    quantityElement.textContent = newQuantity;
-                    priceElement.textContent = `€${(unitPrice * newQuantity).toFixed(2)}`;
-                    calculateSubtotal();
-                });
-            });
-            removeButtons.forEach(button => {
-                button.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    const quantityElement = button.previousElementSibling;
-                    const priceElement = button.closest('tr').querySelector('#price');
-                    const unitPrice = parseFloat(priceElement.textContent.replace('€', '').trim()) / parseInt(quantityElement.textContent.trim());
-                    // Decremento con controllo che non diventi minore di 1
-                    const newQuantity = Math.max(parseInt(quantityElement.textContent.trim()) - 1, 1);
-                    quantityElement.textContent = newQuantity;
-                    priceElement.textContent = `€${(unitPrice * newQuantity).toFixed(2)}`;
-                    calculateSubtotal();
-                });
-            });
-        }
-
         calculateSubtotal();
-        attachButtonListeners();
     });
 </script>
 </body>
