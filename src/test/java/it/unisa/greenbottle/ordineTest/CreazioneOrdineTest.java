@@ -1,5 +1,6 @@
 package it.unisa.greenbottle.ordineTest;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -13,7 +14,6 @@ import it.unisa.greenbottle.storage.areaPersonaleStorage.entity.Indirizzo;
 import it.unisa.greenbottle.storage.catalogoStorage.dao.ProdottoDao;
 import it.unisa.greenbottle.storage.catalogoStorage.entity.Categoria;
 import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
-import it.unisa.greenbottle.storage.ordineStorage.dao.OrdineDao;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -39,9 +39,6 @@ public class CreazioneOrdineTest {
   private OrdineForm ordineForm;
 
   @MockitoBean
-  private OrdineDao ordineDao;
-
-  @MockitoBean
   private SessionCarrello sessionCarrello;
 
   @MockitoBean
@@ -55,75 +52,70 @@ public class CreazioneOrdineTest {
 
   @Test
   public void nomeNonValido() throws Exception {
-    testCreazioneOrdine("A1", "0000000000000000", "99/99", "ABC", 55L, null, Optional.of("asd"),
-        status().isBadRequest());
+    testCreazioneOrdine("A1", "5032123166322313", "02/26", "123", "1", "false", Optional.of("asd"),
+        status().isBadRequest(), "Nome del titolare della carta non valido.");
   }
 
   @Test
   public void numeroNonValido() throws Exception {
-    testCreazioneOrdine("Luigi Rossi", "0000000000000000", "99/99", "ABC", 55L, null,
-        Optional.of("asd"), status().isBadRequest());
+    testCreazioneOrdine("Luigi Rossi", "00000000000000000", "02/26", "123", "1", "false",
+        Optional.of("asd"), status().isBadRequest(), "Numero di carta non valido.");
   }
 
   @Test
   public void dataNonValido() throws Exception {
-    testCreazioneOrdine("Luigi Rossi", "5032123166322313", "99/99", "ABC", 55L, null,
-        Optional.of("asd"), status().isBadRequest());
+    testCreazioneOrdine("Luigi Rossi", "5032123166322313", "99/99", "123", "1", "false",
+        Optional.of("asd"), status().isBadRequest(), "Data di scadenza della carta non valida.");
   }
 
   @Test
   public void cvvNonValido() throws Exception {
-    testCreazioneOrdine("Luigi Rossi", "5032123166322313", "02/26", "ABC", 55L, null,
-        Optional.of("asd"), status().isBadRequest());
+    testCreazioneOrdine("Luigi Rossi", "5032123166322313", "02/26", "ABC", "1", "false",
+        Optional.of(""), status().isBadRequest(), "cvv non valido.");
   }
 
   @Test
   public void indirizzoNonValido() throws Exception {
-    testCreazioneOrdine("Luigi Rossi", "5032123166322313", "02/26", "123", -12L, null,
-        Optional.of("asd"), status().isBadRequest());
+    testCreazioneOrdine("Luigi Rossi", "5032123166322313", "02/26", "123", "-12", "false",
+        Optional.of("asd"), status().isBadRequest(), "Indirizzo non valido.");
   }
 
   @Test
   public void indirizzoNonPresente() throws Exception {
-    testCreazioneOrdine("Luigi Rossi", "5032123166322313", "02/26", "123", 7355608L, null,
-        Optional.of("asd"), status().is3xxRedirection());
-  }
-
-  @Test
-  public void isSupportoNonValido() throws Exception {
-    testCreazioneOrdine("Luigi Rossi", "5032123166322313", "02/26", "123", 1L, null,
-        Optional.of("asd"), status().is3xxRedirection());
+    testCreazioneOrdine("Luigi Rossi", "5032123166322313", "02/26", "123", "7355608", "false",
+        Optional.of(""), status().isNotFound(), "Indirizzo non trovato.");
   }
 
   @Test
   public void descrizioneNonValida() throws Exception {
-    testCreazioneOrdine("Luigi Rossi", "5032123166322313", "02/26", "123", 1L, true,
-        Optional.of(("a").repeat(320)), status().isBadRequest());
+    testCreazioneOrdine("Luigi Rossi", "5032123166322313", "02/26", "123", "1", "true",
+        Optional.of(("a").repeat(320)), status().isBadRequest(), "Descrizione supporto troppo lunga.");
   }
 
   @Test
   public void descrizioneNonPresente() throws Exception {
-    testCreazioneOrdine("Luigi Rossi", "5032123166322313", "02/26", "123", 1L, true,
-        Optional.of(""), status().isBadRequest());
+    testCreazioneOrdine("Luigi Rossi", "5032123166322313", "02/26", "123", "1", "true",
+        Optional.of(""), status().isBadRequest(), "Descrizione supporto non inserita.");
   }
 
   @Test
   public void ordineSupportoValido() throws Exception {
-    testCreazioneOrdine("Luigi Rossi", "5032123166322313", "02/26", "123", 1L, true,
-        Optional.of("Consegna al primo piano"), status().is3xxRedirection());
+    testCreazioneOrdine("Luigi Rossi", "5032123166322313", "02/26", "123", "1", "true",
+        Optional.of("Consegna al primo piano"), status().is3xxRedirection(), null);
   }
 
   @Test
   public void ordineValido() throws Exception {
-    testCreazioneOrdine("Luigi Rossi", "5032123166322313", "02/26", "123", 1L, false,
-        Optional.of(""), status().is3xxRedirection());
+    testCreazioneOrdine("Luigi Rossi", "5032123166322313", "02/26", "123", "1", "false",
+        Optional.of(""), status().is3xxRedirection(), null);
   }
 
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   private void testCreazioneOrdine(String nomeTitolare, String numeroCarta, String dataScadenza,
-                                   String cvv, Long idIndirizzo, Boolean isSupporto,
+                                   String cvv, String Indirizzo, String isSupporto,
                                    Optional<String> descrizioneSupporto,
-                                   ResultMatcher resultmatcher)
+                                   ResultMatcher resultmatcher,
+                                   String expectedMessage)
       throws Exception {
     Cliente cliente = new Cliente();
     cliente.setId(1L);
@@ -136,18 +128,17 @@ public class CreazioneOrdineTest {
     Prodotto prodotto2 = new Prodotto(
         "Prodotto2", "Prodotto 2", null, 5.0f, 1000, categoria
     );
-
+    Long idIndirizzo = Long.valueOf(Indirizzo);
     carrello.put(prodotto1.getId(), 10);
     carrello.put(prodotto2.getId(), 50);
     indirizzo.setId(idIndirizzo);
     ordineForm =
-        new OrdineForm(numeroCarta, dataScadenza, cvv, nomeTitolare, idIndirizzo, isSupporto,
-            true, descrizioneSupporto.orElse(""));
-
+        new OrdineForm(numeroCarta, dataScadenza, cvv, nomeTitolare, idIndirizzo, Boolean.valueOf(isSupporto),
+            true, descrizioneSupporto.get());
     when(sessionCliente.getCliente()).thenReturn(Optional.of(cliente));
     when(sessionCarrello.getCarrello()).thenReturn(carrello);
     when(indirizzoDao.findIndirizzoById(idIndirizzo)).thenReturn(
-        idIndirizzo > 0 ? Optional.of(indirizzo) : Optional.empty());
+        idIndirizzo > 0 && idIndirizzo != 7355608 ? Optional.of(indirizzo) : Optional.empty());
     when(prodottoDao.findProdottoById(prodotto1.getId())).thenReturn(Optional.of(prodotto1));
     when(prodottoDao.findProdottoById(prodotto2.getId())).thenReturn(Optional.of(prodotto2));
 
@@ -156,11 +147,18 @@ public class CreazioneOrdineTest {
         .param("numeroCarta", ordineForm.getNumeroCarta())
         .param("dataScadenza", ordineForm.getDataScadenza())
         .param("cvv", ordineForm.getCvv())
-        .param("indirizzo", ordineForm.getIndirizzo().toString())
+        .param("indirizzo", ordineForm.getIndirizzo() == null ? null : ordineForm.getIndirizzo().toString())
         .param("isSupporto",
             ordineForm.getIsSupporto() == null ? null : ordineForm.getIsSupporto().toString())
         .param("isRitiro", "false")
         .param("descrizioneSupporto", descrizioneSupporto.orElse(""))
-    ).andExpect(resultmatcher);
+    ).andExpect(resultmatcher)
+            .andExpect(result -> {
+              if (expectedMessage != null) {
+                String errorMessage = result.getResponse().getErrorMessage();
+                assertTrue(errorMessage.contains(expectedMessage),
+                        "La risposta non contiene il messaggio atteso: " + expectedMessage);
+              }
+            });
   }
 }

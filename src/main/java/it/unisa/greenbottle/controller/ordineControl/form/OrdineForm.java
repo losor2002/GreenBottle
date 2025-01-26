@@ -54,7 +54,7 @@ public class OrdineForm {
   @BooleanFlag
   private Boolean isRitiro;
 
-  @Size(max = 300, message = "descrizioneSupporto troppo lunga.")
+  @Size(max = 300, message = "Descrizione supporto troppo lunga.")
   private String descrizioneSupporto;
 
   public Boolean getIsSupporto() {
@@ -63,9 +63,5 @@ public class OrdineForm {
 
   public String getDescrizioneSupporto() {
     return descrizioneSupporto == null ? "" : descrizioneSupporto;
-  }
-
-  public boolean isSupportoDescrizioneValid() {
-    return getIsSupporto() && !getDescrizioneSupporto().isBlank();
   }
 }

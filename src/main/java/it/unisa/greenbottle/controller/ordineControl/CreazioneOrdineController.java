@@ -98,8 +98,8 @@ public class CreazioneOrdineController {
    */
   @PostMapping
   @Transactional
-  public String post(@ModelAttribute @Valid OrdineForm ordineForm, Model model,
-                     BindingResult bindingResult, HttpServletResponse httpServletResponse) throws
+  public String post(@ModelAttribute @Valid OrdineForm ordineForm, BindingResult bindingResult, Model model,
+                      HttpServletResponse httpServletResponse) throws
       IOException {
     Optional<Cliente> clienteOptional = sessionCliente.getCliente();
 
@@ -114,7 +114,7 @@ public class CreazioneOrdineController {
       FieldError fieldError = bindingResult.getFieldErrors().getFirst();
       model.addAttribute("message", fieldError.getDefaultMessage());
       model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
-      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, fieldError.getField());
+      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, fieldError.getDefaultMessage());
       return "error"; // Visualizza la vista con il messaggio di errore
     }
 
@@ -158,7 +158,7 @@ public class CreazioneOrdineController {
     if (isSupporto && descrizioneSupporto.isBlank()) {
       model.addAttribute("errore", "Descrizione supporto non inserita.");
       httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,
-          "Descrizione supporto non inserita");
+          "Descrizione supporto non inserita.");
       return null;
     } else if (!(isSupporto || descrizioneSupporto.isBlank())) { // De Morgan
       model.addAttribute("warning",
@@ -169,9 +169,9 @@ public class CreazioneOrdineController {
     Optional<Indirizzo> indirizzoOpt = indirizzoDao.findIndirizzoById(idIndirizzo);
 
     if (indirizzoOpt.isEmpty()) {
-      model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
+      model.addAttribute("status", HttpServletResponse.SC_NOT_FOUND);
       model.addAttribute("message", "Indirizzo non trovato.");
-      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Indirizzo non trovato");
+      httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND, "Indirizzo non trovato.");
       return "error";
     }
     Indirizzo indirizzo = indirizzoOpt.get();
