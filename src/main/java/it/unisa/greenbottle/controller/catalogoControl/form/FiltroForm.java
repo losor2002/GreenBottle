@@ -7,6 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Classe che rappresenta il form per la ricerca di prodotti.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,6 +28,11 @@ public class FiltroForm {
   @Max(value = 5, message = "Media deve essere al massimo 5.0")
   private Float media;
 
+  /**
+   * Metodo che controlla se il prezzo minimo è minore o uguale.
+   *
+   * @return true se il prezzo minimo è minore o uguale al prezzo massimo, false altrimenti.
+   */
   @AssertTrue(message = "Prezzo minimo non può essere maggiore del prezzo massimo.")
   public boolean isPrezzoMinMaxValid() {
     if (prezzoMin != null && prezzoMax != null) {

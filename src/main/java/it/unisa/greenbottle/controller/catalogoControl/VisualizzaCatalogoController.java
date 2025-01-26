@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * Controller che si occupa di visualizzare il catalogo dei prodotti.
+ */
 @Controller
 @RequestMapping("/catalogo")
 public class VisualizzaCatalogoController {
@@ -36,27 +39,39 @@ public class VisualizzaCatalogoController {
   @Autowired
   private RecensioneDao recensioneDao;
 
+  /**
+   * Metodo che si occupa di visualizzare il catalogo dei prodotti.
+   *
+   * @param filtroForm          filtro per la ricerca dei prodotti
+   * @param bindingResult       binding result
+   * @param model               model
+   * @param httpServletResponse httpServletResponse
+   * @param httpServletRequest  httpServletRequest
+   * @return catalogoView
+   * @throws IOException IOException
+   */
   @GetMapping
   public String get(@ModelAttribute @Valid FiltroForm filtroForm, BindingResult bindingResult,
                     Model model,
                     HttpServletResponse httpServletResponse, HttpServletRequest httpServletRequest
-                    )
+  )
       throws IOException {
 
-  if (bindingResult.hasErrors()) {
-    // Se c'è un errore specifico per un campo, gestisci il messaggio
-    FieldError fieldError = bindingResult.getFieldErrors().getFirst();
-    model.addAttribute("message", fieldError.getDefaultMessage());
-    model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
-    httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, fieldError.getField());
-    return "error";// Visualizza la vista con il messaggio di errore
+    if (bindingResult.hasErrors()) {
+      // Se c'è un errore specifico per un campo, gestisci il messaggio
+      FieldError fieldError = bindingResult.getFieldErrors().getFirst();
+      model.addAttribute("message", fieldError.getDefaultMessage());
+      model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
+      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, fieldError.getField());
+      return "error"; // Visualizza la vista con il messaggio di errore
     }
 
     if (!filtroForm.isPrezzoMinMaxValid()) {
       model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
       model.addAttribute("message", "Prezzo minimo non può essere maggiore del prezzo massimo.");
-      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Prezzo minimo non può essere maggiore del prezzo massimo.");
-      return "error";// Visualizza la vista con il messaggio di errore
+      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,
+          "Prezzo minimo non può essere maggiore del prezzo massimo.");
+      return "error"; // Visualizza la vista con il messaggio di errore
     }
 
     Specification<Prodotto> spec = Specification.where(null);
@@ -73,10 +88,10 @@ public class VisualizzaCatalogoController {
         return "error";
       }
 
-      if(categoriaDao.findCategoriaById(filtroForm.getIdCategoria()).isPresent()) {
+      if (categoriaDao.findCategoriaById(filtroForm.getIdCategoria()).isPresent()) {
         spec = spec.and((root, query, criteriaBuilder) ->
-                criteriaBuilder.equal(root.get("categoria"),
-                        categoriaDao.findCategoriaById(filtroForm.getIdCategoria()).get()));
+            criteriaBuilder.equal(root.get("categoria"),
+                categoriaDao.findCategoriaById(filtroForm.getIdCategoria()).get()));
       }
     }
 
@@ -108,5 +123,4 @@ public class VisualizzaCatalogoController {
     model.addAttribute("prodottoForm", prodottoForm);
     return catalogoView;
   }
-
 }

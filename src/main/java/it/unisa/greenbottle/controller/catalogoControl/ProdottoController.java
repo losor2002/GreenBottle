@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * Controller per la gestione delle richieste relative ai prodotti.
+ */
 @Controller
 @RequestMapping("/prodotto")
 public class ProdottoController {
@@ -18,6 +21,12 @@ public class ProdottoController {
   @Autowired
   private ProdottoDao prodottoDao;
 
+  /**
+   * Metodo per ottenere un prodotto dal catalogo.
+   *
+   * @param id id del prodotto da cercare
+   * @return ResponseEntity contenente il prodotto cercato
+   */
   @GetMapping
   public ResponseEntity<?> get(@RequestParam Long id) {
     Optional<Prodotto> prodotto = prodottoDao.findProdottoById(id);

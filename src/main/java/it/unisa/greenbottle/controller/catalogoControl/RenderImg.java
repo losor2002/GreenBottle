@@ -11,13 +11,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
+/**
+ * Classe che si occupa di restituire l'immagine di un prodotto.
+ */
 @RestController
 public class RenderImg {
 
   @Autowired
   private ProdottoDao prodottoDao;
 
+  /**
+   * Metodo che restituisce l'immagine di un prodotto.
+   *
+   * @param id id del prodotto
+   * @return ResponseEntity (arr byt) immagine del prodotto
+   */
   @GetMapping("/productImg")
   public ResponseEntity<byte[]> getImage(@RequestParam("id") Long id) {
     Optional<Prodotto> opPro = prodottoDao.findProdottoById(id);
