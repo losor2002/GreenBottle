@@ -32,7 +32,7 @@
     <!--/*@thymesVar id="StatoSpedizione" type="it.unisa.greenbottle.storage.ordineStorage.entity.Ordine.StatoSpedizione"*/-->
     <div class="row" th:each="ordine : ${ordini}">
         <div class="card shadow-lg p-3 mb-3" th:data-ordine-id="${ordine.getId()}">
-            <h3 class="text" th:text="${'Id:' + ordine.getId()}"></h3>
+            <h3 class="text" th:text="${'Id: ' + ordine.getId()}"></h3>
             <h5 class="text" th:text="${ordine.getData()}"></h5>
             <p><strong>Prezzo:</strong> <span th:text="${ordine.getPrezzo()}"></span>€</p>
             <p><strong>Cliente:</strong> <span
