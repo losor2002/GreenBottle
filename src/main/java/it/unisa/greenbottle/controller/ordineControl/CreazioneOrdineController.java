@@ -20,10 +20,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,7 +44,8 @@ public class CreazioneOrdineController {
 
   private static final String ordineView = "OrdineView/Checkout";
   private static final String fallbackView = "redirect:/";
-  private static final String successView = "redirect:/areaPersonale/visualizzaStoricoOrdini";
+  private static final String successView =
+      "redirect:/areaPersonale/visualizzaStoricoOrdini";
 
   @Autowired
   private OrdineDao ordineDao;
@@ -58,6 +61,10 @@ public class CreazioneOrdineController {
 
   @Autowired
   private SessionCarrello sessionCarrello;
+
+  @Autowired
+  private MessageSource messageSource;
+
 
   /**
    * Metodo per la visualizzazione della pagina di checkout.
@@ -98,8 +105,8 @@ public class CreazioneOrdineController {
    */
   @PostMapping
   @Transactional
-  public String post(@ModelAttribute @Valid OrdineForm ordineForm, BindingResult bindingResult, Model model,
-                      HttpServletResponse httpServletResponse) throws
+  public String post(@ModelAttribute @Valid OrdineForm ordineForm, BindingResult bindingResult,
+                     Model model, HttpServletResponse httpServletResponse) throws
       IOException {
     Optional<Cliente> clienteOptional = sessionCliente.getCliente();
 
@@ -112,9 +119,33 @@ public class CreazioneOrdineController {
     if (bindingResult.hasErrors()) {
       // Se c'è un errore specifico per un campo, gestisci il messaggio
       FieldError fieldError = bindingResult.getFieldErrors().getFirst();
-      model.addAttribute("message", fieldError.getDefaultMessage());
-      model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
-      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, fieldError.getDefaultMessage());
+      String errorCode = fieldError.getCode();
+      String field = fieldError.getField();
+      if (errorCode.startsWith("typeMismatch")) {
+        String customMessage;
+        if ("isSupporto".equals(field)) {
+          customMessage =
+              messageSource.getMessage(errorCode + ".ordineForm.isSupporto", null,
+                  "Default error message", Locale.getDefault());
+        } else if ("isRitiro".equals(field)) {
+          customMessage =
+              messageSource.getMessage(errorCode + ".ordineForm.isRitiro", null,
+                  "Default error message", Locale.getDefault());
+        } else {
+          customMessage = messageSource.getMessage("typeMismatch", null, "Default error message",
+              Locale.getDefault());
+        }
+
+        model.addAttribute("message", customMessage);
+        model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
+        httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, customMessage);
+      } else {
+        model.addAttribute("message", fieldError.getDefaultMessage());
+        model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
+        httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,
+            fieldError.getDefaultMessage());
+      }
+
       return "error"; // Visualizza la vista con il messaggio di errore
     }
 
@@ -193,7 +224,6 @@ public class CreazioneOrdineController {
     }
 
     ordineDao.save(ordine);
-    model.addAttribute("successo", "Ordine inserito con successo.");
     sessionCarrello.clearCarrello();
     return successView;
   }

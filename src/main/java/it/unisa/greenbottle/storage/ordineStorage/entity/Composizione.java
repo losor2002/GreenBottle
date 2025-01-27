@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import lombok.AllArgsConstructor;
@@ -31,9 +32,11 @@ public class Composizione {
 
   @ManyToOne
   @JsonIgnore
+  @JoinColumn(name = "ordine_id", nullable = false)
   private Ordine ordine; // Ordine a cui è associata questa composizione
 
   @ManyToOne
+  @JoinColumn(name = "prodotto_id", nullable = false)
   private Prodotto prodotto; // Prodotto associato alla composizione
 
   @Column(nullable = false)

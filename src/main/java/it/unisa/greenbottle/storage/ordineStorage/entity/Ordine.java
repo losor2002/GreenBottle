@@ -12,6 +12,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.sql.Timestamp;
@@ -65,9 +66,11 @@ public class Ordine {
   private Set<Composizione> composizioni = new HashSet<>();
 
   @ManyToOne(optional = false)
+  @JoinColumn(name = "cliente_id", nullable = false)
   private Cliente cliente; // Cliente che ha effettuato l'ordine
 
   @ManyToOne
+  @JoinColumn(name = "indirizzo_id", nullable = false)
   private Indirizzo indirizzo; // Indirizzo di spedizione (se applicabile)
 
   @ManyToOne
