@@ -12,6 +12,17 @@
     align-items: center;
 }
 
+#btn {
+    background-color: #859F3D;
+    color: #F6FCDF;
+    border-color: #859F3D;
+    opacity: 0.7;
+}
+
+#btn:hover {
+    opacity: 1;
+}
+
 .order-card .order-details {
     display: flex;
     flex-direction: column;

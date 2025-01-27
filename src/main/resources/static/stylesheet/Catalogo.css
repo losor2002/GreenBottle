@@ -1,6 +1,6 @@
 body {
     color: #1A1A19;
-    background: url("/img/Banner.png") no-repeat center center / cover;
+    background: url("/img/Banner.png") repeat-y center center / cover;
 }
 
 @media (max-width: 991px) {

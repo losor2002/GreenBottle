@@ -13,9 +13,9 @@
 </head>
 <body th:with="cliente=${@sessionCliente.getCliente().get()}">
 <div th:replace="~{fragments/fragments :: header}"></div>
-<div class="container my-4">
-    <div class="card">
-        <div class="card-header bg-primary text-white text-center">
+<div class="container my-4 vh-100">
+    <div class="card shadow-lg">
+        <div class="card-header text-center">
             <h3>Area Personale</h3>
         </div>
         <div class="card-body">
@@ -46,7 +46,8 @@
                 </div>
             </div>
             <div class="text-center mt-4">
-                <a href="areaPersonale/visualizzaStoricoOrdini" class="btn btn-primary w-50 w-sm-100">Visualizza Storico
+                <a href="areaPersonale/visualizzaStoricoOrdini" class="btn btn-primary w-50 w-sm-100" id="btn">Visualizza
+                    Storico
                     Ordini</a>
             </div>
             <!-- <div class="text-center mt-4">
