@@ -14,6 +14,7 @@ import it.unisa.greenbottle.storage.areaPersonaleStorage.entity.Indirizzo;
 import it.unisa.greenbottle.storage.catalogoStorage.dao.ProdottoDao;
 import it.unisa.greenbottle.storage.catalogoStorage.entity.Categoria;
 import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
+import it.unisa.greenbottle.storage.ordineStorage.dao.OrdineDao;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -40,6 +41,9 @@ public class CreazioneOrdineTest {
 
   @MockitoBean
   private SessionCarrello sessionCarrello;
+
+  @MockitoBean
+  private OrdineDao ordineDao;
 
   @MockitoBean
   private ProdottoDao prodottoDao;
@@ -89,7 +93,8 @@ public class CreazioneOrdineTest {
   @Test
   public void descrizioneNonValida() throws Exception {
     testCreazioneOrdine("Luigi Rossi", "5032123166322313", "02/26", "123", "1", "true",
-        Optional.of(("a").repeat(320)), status().isBadRequest(), "Descrizione supporto troppo lunga.");
+        Optional.of(("a").repeat(320)), status().isBadRequest(),
+        "Descrizione supporto troppo lunga.");
   }
 
   @Test
@@ -112,7 +117,7 @@ public class CreazioneOrdineTest {
 
   @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
   private void testCreazioneOrdine(String nomeTitolare, String numeroCarta, String dataScadenza,
-                                   String cvv, String Indirizzo, String isSupporto,
+                                   String cvv, String address, String isSupporto,
                                    Optional<String> descrizioneSupporto,
                                    ResultMatcher resultmatcher,
                                    String expectedMessage)
@@ -128,12 +133,13 @@ public class CreazioneOrdineTest {
     Prodotto prodotto2 = new Prodotto(
         "Prodotto2", "Prodotto 2", null, 5.0f, 1000, categoria
     );
-    Long idIndirizzo = Long.valueOf(Indirizzo);
+    Long idIndirizzo = Long.valueOf(address);
     carrello.put(prodotto1.getId(), 10);
     carrello.put(prodotto2.getId(), 50);
     indirizzo.setId(idIndirizzo);
     ordineForm =
-        new OrdineForm(numeroCarta, dataScadenza, cvv, nomeTitolare, idIndirizzo, Boolean.valueOf(isSupporto),
+        new OrdineForm(numeroCarta, dataScadenza, cvv, nomeTitolare, idIndirizzo,
+            Boolean.valueOf(isSupporto),
             true, descrizioneSupporto.get());
     when(sessionCliente.getCliente()).thenReturn(Optional.of(cliente));
     when(sessionCarrello.getCarrello()).thenReturn(carrello);
@@ -143,22 +149,23 @@ public class CreazioneOrdineTest {
     when(prodottoDao.findProdottoById(prodotto2.getId())).thenReturn(Optional.of(prodotto2));
 
     mockMvc.perform(post("/ordina")
-        .param("nomeTitolare", ordineForm.getNomeTitolare())
-        .param("numeroCarta", ordineForm.getNumeroCarta())
-        .param("dataScadenza", ordineForm.getDataScadenza())
-        .param("cvv", ordineForm.getCvv())
-        .param("indirizzo", ordineForm.getIndirizzo() == null ? null : ordineForm.getIndirizzo().toString())
-        .param("isSupporto",
-            ordineForm.getIsSupporto() == null ? null : ordineForm.getIsSupporto().toString())
-        .param("isRitiro", "false")
-        .param("descrizioneSupporto", descrizioneSupporto.orElse(""))
-    ).andExpect(resultmatcher)
-            .andExpect(result -> {
-              if (expectedMessage != null) {
-                String errorMessage = result.getResponse().getErrorMessage();
-                assertTrue(errorMessage.contains(expectedMessage),
-                        "La risposta non contiene il messaggio atteso: " + expectedMessage);
-              }
-            });
+            .param("nomeTitolare", ordineForm.getNomeTitolare())
+            .param("numeroCarta", ordineForm.getNumeroCarta())
+            .param("dataScadenza", ordineForm.getDataScadenza())
+            .param("cvv", ordineForm.getCvv())
+            .param("indirizzo",
+                ordineForm.getIndirizzo() == null ? null : ordineForm.getIndirizzo().toString())
+            .param("isSupporto",
+                ordineForm.getIsSupporto() == null ? null : ordineForm.getIsSupporto().toString())
+            .param("isRitiro", "false")
+            .param("descrizioneSupporto", descrizioneSupporto.orElse(""))
+        ).andExpect(resultmatcher)
+        .andExpect(result -> {
+          if (expectedMessage != null) {
+            String errorMessage = result.getResponse().getErrorMessage();
+            assertTrue(errorMessage.contains(expectedMessage),
+                "La risposta non contiene il messaggio atteso: " + expectedMessage);
+          }
+        });
   }
 }

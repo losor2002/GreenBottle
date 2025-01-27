@@ -98,8 +98,9 @@ public class CreazioneOrdineController {
    */
   @PostMapping
   @Transactional
-  public String post(@ModelAttribute @Valid OrdineForm ordineForm, BindingResult bindingResult, Model model,
-                      HttpServletResponse httpServletResponse) throws
+  public String post(@ModelAttribute @Valid OrdineForm ordineForm, BindingResult bindingResult,
+                     Model model,
+                     HttpServletResponse httpServletResponse) throws
       IOException {
     Optional<Cliente> clienteOptional = sessionCliente.getCliente();
 
@@ -114,7 +115,8 @@ public class CreazioneOrdineController {
       FieldError fieldError = bindingResult.getFieldErrors().getFirst();
       model.addAttribute("message", fieldError.getDefaultMessage());
       model.addAttribute("status", HttpServletResponse.SC_BAD_REQUEST);
-      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, fieldError.getDefaultMessage());
+      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,
+          fieldError.getDefaultMessage());
       return "error"; // Visualizza la vista con il messaggio di errore
     }
 
