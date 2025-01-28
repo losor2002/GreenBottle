@@ -120,6 +120,7 @@ public class VisualizzaCatalogoController {
     model.addAttribute("prodotti", prodotti);
     model.addAttribute("filterForm", filtroForm);
     model.addAttribute("prodottoForm", prodottoForm);
+    model.addAttribute("categorie", categoriaDao.findAll());
     return catalogoView;
   }
 }
