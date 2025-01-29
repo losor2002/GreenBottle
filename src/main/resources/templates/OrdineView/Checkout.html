@@ -13,105 +13,100 @@
 </head>
 <body>
 <div th:replace="~{fragments/fragments.html :: header}"></div>
-<div class="container vh-100">
-    <h1 class="text-center my-3">Riepilogo Ordine</h1>
-    <main class="container my-4">
-        <div class="row">
-            <div class="col-md-8">
-                <section>
-                    <!--/*@thymesVar id="ordineForm" type="it.unisa.greenbottle.controller.ordineControl.form.OrdineForm"*/-->
-                    <form th:action="@{/ordina}" th:object="${ordineForm}" method="post"
-                          class="container rounded bg-light shadow">
-                        <!-- Scelta dell'indirizzo -->
-                        <h2 class="text-center my-3">Indirizzo di spedizione</h2>
-                        <div class="address-wrapper">
-                            <div class="no-addresses" th:if="${#lists.isEmpty(indirizzi)}">
-                                <h5 class="d-flex align-items-center justify-content-center text-center">Non sono
-                                    presenti
-                                    indirizzi,&nbsp<a style="text-decoration: none;" href="/areaPersonale">inseriscine
-                                        uno!
-                                    </a>
-                                </h5>
-                            </div>
-                            <div class="addresses" th:each="addr : ${indirizzi}">
-                                <ul>
-                                    <li>
-                                        <input type="radio" id="indirizzo" name="indirizzo" th:value="${addr.getId()}">
-                                        <label for="indirizzo"
-                                               th:text="${'Via ' + addr.getVia() + ' ' + addr.getCivico() + ' ' + addr.getCitta() + ' ' + addr.getProvincia() + ' ' + addr.getCap()}"></label>
-                                    </li>
-                                </ul>
-                            </div>
-                            <button class="add-address btn btn-primary btn-sm w-100 my-3"
-                                    th:onclick="|location.href='/areaPersonale/areaPersonale'|">
-                                Aggiungi un indirizzo
-                            </button>
+<h1 class="text-center my-3">Riepilogo Ordine</h1>
+<main class="container my-4">
+    <div class="row">
+        <div class="col-md-8">
+            <section>
+                <!--/*@thymesVar id="ordineForm" type="it.unisa.greenbottle.controller.ordineControl.form.OrdineForm"*/-->
+                <form th:action="@{/ordina}" th:object="${ordineForm}" method="post"
+                      class="container rounded bg-light shadow">
+                    <!-- Scelta dell'indirizzo -->
+                    <h2 class="text-center my-3">Indirizzo di spedizione</h2>
+                    <div class="address-wrapper">
+                        <div class="no-addresses" th:if="${#lists.isEmpty(indirizzi)}">
+                            <h5 class="d-flex align-items-center justify-content-center text-center">Non sono presenti
+                                indirizzi,&nbsp<a style="text-decoration: none;" href="/areaPersonale">inseriscine uno!
+                                </a>
+                            </h5>
                         </div>
-                        <!-- Dati di pagamento -->
-                        <div class="payment-details">
-                            <h2 class="text-center">Dati di pagamento</h2>
-                            <!-- Titolare -->
-                            <div class="mb-3">
-                                <label class="form-label" for="nome">Nome del titolare della carta</label>
-                                <input type="text" id="nome" name="nome" class="form-control">
+                        <div class="addresses" th:each="addr : ${indirizzi}">
+                            <ul>
+                                <li>
+                                    <input type="radio" id="indirizzo" name="indirizzo" th:value="${addr.getId()}">
+                                    <label for="indirizzo"
+                                           th:text="${'Via ' + addr.getVia() + ' ' + addr.getCivico() + ' ' + addr.getCitta() + ' ' + addr.getProvincia() + ' ' + addr.getCap()}"></label>
+                                </li>
+                            </ul>
+                        </div>
+                        <button class="add-address btn btn-primary btn-sm w-100 my-3"
+                                th:onclick="|location.href='/areaPersonale/areaPersonale'|">
+                            Aggiungi un indirizzo
+                        </button>
+                    </div>
+                    <!-- Dati di pagamento -->
+                    <div class="payment-details">
+                        <h2 class="text-center">Dati di pagamento</h2>
+                        <!-- Titolare -->
+                        <div class="mb-3">
+                            <label class="form-label" for="nome">Nome del titolare della carta</label>
+                            <input type="text" id="nome" name="nome" class="form-control">
+                        </div>
+                        <!-- Numero -->
+                        <div class="mb-3">
+                            <label class="form-label" for="numero">Numero della carta</label>
+                            <input type="text" id="numero" name="numero" class="form-control">
+                        </div>
+                        <!-- Wrap per mostrarli uno accanto all'altro -->
+                        <div class="row">
+                            <!-- Scadenza -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="data">Data di scadenza</label>
+                                <input type="text" id="data" name="data" class="form-control">
                             </div>
-                            <!-- Numero -->
-                            <div class="mb-3">
-                                <label class="form-label" for="numero">Numero della carta</label>
-                                <input type="text" id="numero" name="numero" class="form-control">
+                            <!-- CVV -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="cvv">CVV</label>
+                                <input type="text" id="cvv" name="cvv" class="form-control">
                             </div>
-                            <!-- Wrap per mostrarli uno accanto all'altro -->
-                            <div class="row">
-                                <!-- Scadenza -->
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label" for="data">Data di scadenza</label>
-                                    <input type="text" id="data" name="data" class="form-control">
-                                </div>
-                                <!-- CVV -->
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label" for="cvv">CVV</label>
-                                    <input type="text" id="cvv" name="cvv" class="form-control">
-                                </div>
-                            </div>
-                            <!-- Opzioni aggiuntive -->
-                            <div class="order-checkboxes">
-                                <input type="checkbox" id="ritiro-service" name="ritiro-service">
-                                <label for="ritiro-service">Desidero usufruire del servizio di ritiro bottiglie.</label>
-                            </div>
-                            <div class="order-checkboxes">
-                                <input type="checkbox" id="supporto-service" name="supporto-service">
-                                <label for="supporto-service">Desidero usufruire del servizio di supporto aggiuntivo
-                                    alla
-                                    consegna di questo ordine.</label>
-                            </div>
-                            <!-- Descrizione -->
-                            <label class="form-label" for="order-description">Note:</label>
-                            <textarea class="mb-4" id="order-description"
-                                      placeholder="Disponibile solo per il servizio di supporto aggiuntivo" disabled>
+                        </div>
+                        <!-- Opzioni aggiuntive -->
+                        <div class="order-checkboxes">
+                            <input type="checkbox" id="ritiro-service" name="ritiro-service">
+                            <label for="ritiro-service">Desidero usufruire del servizio di ritiro bottiglie.</label>
+                        </div>
+                        <div class="order-checkboxes">
+                            <input type="checkbox" id="supporto-service" name="supporto-service">
+                            <label for="supporto-service">Desidero usufruire del servizio di supporto aggiuntivo alla
+                                consegna di questo ordine.</label>
+                        </div>
+                        <!-- Descrizione -->
+                        <label class="form-label" for="order-description">Note:</label>
+                        <textarea class="mb-4" id="order-description"
+                                  placeholder="Disponibile solo per il servizio di supporto aggiuntivo" disabled>
                         </textarea>
-                        </div>
-                    </form>
-                </section>
-            </div>
-            <aside class="col-md-4 col-lg-3">
-                <section class="bg-light p-4 rounded shadow">
-                    <h2 class="text-center my-4">Sommario</h2>
-                    <p th:each="prodotto : ${prodotti}">
+                    </div>
+                </form>
+            </section>
+        </div>
+        <aside class="col-md-4 col-lg-3">
+            <section class="bg-light p-4 rounded shadow">
+                <h2 class="text-center my-4">Sommario</h2>
+                <p th:each="prodotto : ${prodotti}">
                     <span class="d-flex align-items-center justify-content-center text-center"
                           th:text="${prodotto.nome + 'x ' + prodotto.quantita}"></span>
-                    </p>
-                    <p>Importo Totale:</p>
-                    <div class="summary-buttons">
-                        <button class="btn btn-outline-primary" th:onclick="|location.href='carrello'|">
-                            Torna Indietro
-                        </button>
-                        <button class="btn btn-primary" th:onclick="confirmOrder()">Conferma</button>
-                    </div>
-                </section>
-            </aside>
-        </div>
-    </main>
-</div>
+                </p>
+                <p>Importo Totale:</p>
+                <div class="summary-buttons">
+                    <button class="btn btn-outline-primary" th:onclick="|location.href='carrello'|">
+                        Torna Indietro
+                    </button>
+                    <button class="btn btn-primary" th:onclick="confirmOrder()">Conferma</button>
+                </div>
+            </section>
+        </aside>
+    </div>
+</main>
 <footer th:replace="~{fragments/fragments :: footer}"></footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>

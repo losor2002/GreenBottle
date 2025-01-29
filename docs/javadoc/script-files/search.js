@@ -27,12 +27,15 @@ const MAX_RESULTS = 300;
 const UNICODE_LETTER = 0;
 const UNICODE_DIGIT = 1;
 const UNICODE_OTHER = 2;
+
 function checkUnnamed(name, separator) {
     return name === "<Unnamed>" || !name ? "" : name + separator;
 }
+
 function escapeHtml(str) {
     return str.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
+
 function getHighlightedText(str, boundaries, from, to) {
     var start = from;
     var text = "";
@@ -51,6 +54,7 @@ function getHighlightedText(str, boundaries, from, to) {
     text += escapeHtml(str.slice(start, to));
     return text;
 }
+
 function getURLPrefix(item, category) {
     var urlPrefix = "";
     var slash = "/";
@@ -71,6 +75,7 @@ function getURLPrefix(item, category) {
     }
     return urlPrefix;
 }
+
 function getURL(item, category) {
     if (item.url) {
         return item.url;
@@ -103,6 +108,7 @@ function getURL(item, category) {
     item.url = url;
     return url;
 }
+
 function createMatcher(term, camelCase) {
     if (camelCase && !isUpperCase(term)) {
         return null;  // no need for camel-case matcher for lower case query
@@ -140,10 +146,12 @@ function createMatcher(term, camelCase) {
     re.upperCase = upperCase;
     return re;
 }
+
 // Unicode regular expressions do not allow certain characters to be escaped
 function escapeUnicodeRegex(pattern) {
     return pattern.replace(/[\[\]{}()*+?.\\^$|\s]/g, '\\$&');
 }
+
 function findMatch(matcher, input, startOfName, endOfName) {
     var from = startOfName;
     matcher.lastIndex = from;
@@ -206,18 +214,23 @@ function findMatch(matcher, input, startOfName, endOfName) {
         boundaries: boundaries
     };
 }
+
 function isLetter(s) {
     return /\p{L}/u.test(s);
 }
+
 function isUpperCase(s) {
     return /\p{Lu}/u.test(s);
 }
+
 function isLowerCase(s) {
     return /\p{Ll}/u.test(s);
 }
+
 function isDigit(s) {
     return /\p{Nd}/u.test(s);
 }
+
 function getCharType(s) {
     if (isLetter(s)) {
         return UNICODE_LETTER;
@@ -227,11 +240,13 @@ function getCharType(s) {
         return UNICODE_OTHER;
     }
 }
+
 function rateNoise(str) {
     return (str.match(/([.(])/g) || []).length / 5
         + (str.match(/(\p{Lu}+)/gu) || []).length / 10
         + str.length / 20;
 }
+
 function doSearch(request, response) {
     var term = request.term.trim();
     var maxResults = request.maxResults || MAX_RESULTS;
@@ -253,6 +268,7 @@ function doSearch(request, response) {
                 return "";
         }
     }
+
     function useQualifiedName(category) {
         switch (category) {
             case "packages":
@@ -264,6 +280,7 @@ function doSearch(request, response) {
                 return false;
         }
     }
+
     function searchIndex(indexArray, category) {
         var matches = [];
         if (!indexArray) {
@@ -320,6 +337,7 @@ function doSearch(request, response) {
     }
     response(result);
 }
+
 // JQuery search menu implementation
 $.widget("custom.catcomplete", $.ui.autocomplete, {
     _create: function () {

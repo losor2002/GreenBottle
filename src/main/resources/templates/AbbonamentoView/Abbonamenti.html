@@ -13,102 +13,101 @@
 </head>
 <body>
 <div th:replace="~{fragments/fragments.html :: header}"></div>
-<div class="container vh-100">
-    <h1 class="display-5 fw-bold m-5 text-center">I nostri abbonamenti</h1>
-    <div class="container mt-5">
-        <!--/*@thymesVar id="abbonamentoForm" type="it.unisa.greenbottle.controller.abbonamentoControl.form.AbbonamentoForm"*/-->
-        <form class="filter-section p-4" id="tier-card" method="get">
-            <div class="row justify-content-center">
-                <!-- Bronze Card -->
-                <div class="col-md-4">
-                    <div class="card text-center">
-                        <div class="card-header bg-bronze text-white">
-                            Bronze
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">Bronze Plan</h5>
-                            <p class="card-text">Scopri i nostri piani base.</p>
-                            <button type="submit" class="btn btn-primary" name="abbonamento" value="Bronze"
-                                    onclick="showSection()">Mostra
-                            </button>
-                        </div>
+<h1 style="text-align: center;">I nostri abbonamenti</h1>
+<div class="container mt-5">
+    <!--/*@thymesVar id="abbonamentoForm" type="it.unisa.greenbottle.controller.abbonamentoControl.form.AbbonamentoForm"*/-->
+    <form class="filter-section p-4 sticky-top" id="tier-card" method="get">
+        <div class="row justify-content-center">
+            <!-- Bronze Card -->
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-header bg-bronze text-white">
+                        Bronze
                     </div>
-                </div>
-                <!-- Silver Card -->
-                <div class="col-md-4">
-                    <div class="card text-center">
-                        <div class="card-header bg-silver text-white">
-                            Silver
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">Silver Plan</h5>
-                            <p class="card-text">Ottieni di più con i nostri piani silver.</p>
-                            <button type="submit" class="btn btn-primary" name="abbonamento" value="Silver"
-                                    onclick="
-                                showSection()">Mostra
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Gold Card -->
-                <div class="col-md-4">
-                    <div class="card text-center">
-                        <div class="card-header bg-gold text-white">
-                            Gold
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">Gold Plan</h5>
-                            <p class="card-text">Ottieni il meglio con i nostri piani gold.</p>
-                            <button type="submit" class="btn btn-primary" name="abbonamento" value="Gold"
-                                    onclick="showSection()">Mostra
-                            </button>
-                        </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Bronze Plan</h5>
+                        <p class="card-text">Scopri i nostri piani base.</p>
+                        <button type="submit" class="btn btn-primary" name="abbonamento" value="Bronze"
+                                onclick="showSection()">Mostra
+                        </button>
                     </div>
                 </div>
             </div>
-        </form>
-    </div>
-    <section class="row justify-content-center mx-0" id="subSection">
-        <h2 class="text-center mb-4">La nostra selezione:</h2>
-        <div class="col-md-10 col-lg-8"> <!-- Stesso contenitore centrato -->
-            <table class="table table-bordered text-center custom-table">
-                <thead class="thead-dark table-light">
-                <tr>
-                    <th>I prodotti</th>
-                    <th>La frequenza</th>
-                    <th>Il rinnovo</th>
-                    <th>Il costo</th>
-                    <th>Azioni</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="sub : ${abbonamenti}">
-                    <td>
-                        <ul th:each="prodotto : ${sub.getProdottiAbbonamento()}" class="list-unstyled">
-                            <li th:text="${prodotto.key.getNome() + ' x' + prodotto.value}"></li>
-                        </ul>
-                    </td>
-                    <td th:text="${sub.getFrequenza()}"></td>
-                    <td th:text="${sub.getRinnovo()}"></td>
-                    <td th:width="200px" th:text="${sub.getPrezzo()}"></td>
-                    <td>
-                        <button th:if="${session.sessionCliente != null and session.sessionCliente.getCliente().isPresent()}"
-                                th:onclick="|location.href='abbonamento?sottoscrivi=${sub.getId()}'|"
-                                class="btn btn-primary btn-sm w-100">Sottoscrivi
+            <!-- Silver Card -->
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-header bg-silver text-white">
+                        Silver
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Silver Plan</h5>
+                        <p class="card-text">Ottieni di più con i nostri piani silver.</p>
+                        <button type="submit" class="btn btn-primary" name="abbonamento" value="Silver"
+                                onclick="
+                                showSection()">Mostra
                         </button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                    </div>
+                </div>
+            </div>
+            <!-- Gold Card -->
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-header bg-gold text-white">
+                        Gold
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Gold Plan</h5>
+                        <p class="card-text">Ottieni il meglio con i nostri piani gold.</p>
+                        <button type="submit" class="btn btn-primary" name="abbonamento" value="Gold"
+                                onclick="showSection()">Mostra
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </section>
-    <div class="text-center text-muted" th:if="${#lists.isEmpty(abbonamenti)}" style="margin-top: 8px">
-        <p>Nessun abbonamento appartenente al tier selezionato.</p>
+    </form>
+</div>
+<section class="row justify-content-center mx-0" id="subSection">
+    <h2 class="text-center mb-4">La nostra selezione:</h2>
+    <div class="col-md-10 col-lg-8"> <!-- Stesso contenitore centrato -->
+        <table class="table table-bordered text-center custom-table">
+            <thead class="thead-dark table-light">
+            <tr>
+                <th>I prodotti</th>
+                <th>La frequenza</th>
+                <th>Il rinnovo</th>
+                <th>Il costo</th>
+                <th>Azioni</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="sub : ${abbonamenti}">
+                <td>
+                    <ul th:each="prodotto : ${sub.getProdottiAbbonamento()}" class="list-unstyled">
+                        <li th:text="${prodotto.key.getNome() + ' x' + prodotto.value}"></li>
+                    </ul>
+                </td>
+                <td th:text="${sub.getFrequenza()}"></td>
+                <td th:text="${sub.getRinnovo()}"></td>
+                <td th:width="200px" th:text="${sub.getPrezzo()}"></td>
+                <td>
+                    <button th:if="${session.sessionCliente != null and session.sessionCliente.getCliente().isPresent()}"
+                            th:onclick="|location.href='abbonamento?sottoscrivi=${sub.getId()}'|"
+                            class="btn btn-primary btn-sm w-100">Sottoscrivi
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
-    <div class="text-center text-muted" style="margin-top: 8px"
-         th:if="${session.sessionCliente == null}">
-        <p>Effettua l'accesso per acquistare un abbonamento</p>
-    </div>
+</section>
+
+<div class="text-center text-muted" th:if="${#lists.isEmpty(abbonamenti)}" style="margin-top: 8px">
+    <p>Nessun abbonamento appartenente al tier selezionato.</p>
+</div>
+<div class="text-center text-muted" style="margin-top: 8px"
+     th:if="${session.sessionCliente == null}">
+    <p>Effettua l'accesso per acquistare un abbonamento</p>
 </div>
 <div th:replace="~{fragments/fragments :: footer}"></div>
 <script>

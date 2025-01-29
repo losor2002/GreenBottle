@@ -188,11 +188,13 @@ function indexFilesLoaded() {
         && memberSearchIndex
         && tagSearchIndex;
 }
+
 // Copy the contents of the local snippet to the clipboard
 function copySnippet(button) {
     copyToClipboard(button.nextElementSibling.innerText);
     switchCopyLabel(button, button.firstElementChild);
 }
+
 function copyToClipboard(content) {
     var textarea = document.createElement("textarea");
     textarea.style.height = 0;
@@ -202,6 +204,7 @@ function copyToClipboard(content) {
     document.execCommand("copy");
     document.body.removeChild(textarea);
 }
+
 function switchCopyLabel(button, span) {
     var copied = span.getAttribute("data-copied");
     button.classList.add("visible");
@@ -216,12 +219,14 @@ function switchCopyLabel(button, span) {
         }, 100);
     }, 1900);
 }
+
 function setTopMargin() {
     // Dynamically set scroll margin to accomodate for draft header
     var headerHeight = Math.ceil(document.querySelector("header").offsetHeight);
     document.querySelector(":root")
         .style.setProperty("--nav-height", headerHeight + "px");
 }
+
 document.addEventListener("readystatechange", (e) => {
     if (document.readyState === "interactive") {
         setTopMargin();
@@ -287,6 +292,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     });
     var expanded = false;
     var windowWidth;
+
     function collapse() {
         if (expanded) {
             mainnav.removeAttribute("style");
@@ -298,6 +304,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
             expanded = false;
         }
     }
+
     function expand() {
         expanded = true;
         mainnav.style.display = "block";
@@ -316,6 +323,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
         toggleButton.setAttribute("aria-expanded", "true");
         windowWidth = window.innerWidth;
     }
+
     toggleButton.addEventListener("click", (e) => {
         if (expanded) {
             collapse();
@@ -351,6 +359,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     var scrollTimeout;
     var scrollTimeoutNeeded;
     var prevHash;
+
     function initSectionData() {
         sections = [{id: "", top: 0}].concat(Array.from(main.querySelectorAll("section[id], h2[id], h2 a[id], div[id]"))
             .filter((e) => {
@@ -362,6 +371,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
                 };
             }));
     }
+
     function setScrollTimeout() {
         clearTimeout(scrollTimeout);
         scrollTimeoutNeeded = false;
@@ -370,6 +380,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
             handleScroll();
         }, 100);
     }
+
     function handleScroll() {
         if (!sidebar || !sidebar.offsetParent || sidebar.classList.contains("hide-sidebar")) {
             return;
@@ -398,6 +409,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
             setSelected(currHash);
         }
     }
+
     function setSelected(hash) {
         var prev = sidebar.querySelector("a.current-selection");
         if (prev)
@@ -411,6 +423,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
             }
         }
     }
+
     if (sidebar) {
         initSectionData();
         document.querySelectorAll("a[href^='#']").forEach((link) => {
@@ -447,6 +460,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
             }
         })
     }
+
     // Resize handler
     function handleResize(e) {
         if (expanded) {
@@ -463,6 +477,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
         }
         setTopMargin();
     }
+
     window.addEventListener("orientationchange", handleResize);
     window.addEventListener("resize", handleResize);
 });

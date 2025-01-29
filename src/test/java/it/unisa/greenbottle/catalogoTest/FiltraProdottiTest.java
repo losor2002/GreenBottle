@@ -35,9 +35,7 @@ public class FiltraProdottiTest {
 
   @Test
   public void idCategoriaNonValido() throws Exception {
-    testFiltraProdotti(
-        "-1", null, null, null, status().isBadRequest(),
-        "IdCategoria deve essere maggiore o uguale a 1.");
+    testFiltraProdotti("-1", null, null, null, status().isBadRequest(), "IdCategoria deve essere maggiore o uguale a 1.");
   }
 
   @Test
@@ -59,8 +57,7 @@ public class FiltraProdottiTest {
 
   @Test
   public void prezzoMinimoNonValido() throws Exception {
-    testFiltraProdotti(null, "-5", null, null, status().isBadRequest(),
-        "Prezzo minimo deve essere maggiore o uguale a 1.");
+    testFiltraProdotti(null, "-5", null, null, status().isBadRequest(), "Prezzo minimo deve essere maggiore o uguale a 1.");
   }
 
   @Test
@@ -70,8 +67,7 @@ public class FiltraProdottiTest {
 
   @Test
   public void prezzoMassimoMinoreDiPrezzoMinimo() throws Exception {
-    testFiltraProdotti(null, "10", "8.5", null, status().isBadRequest(),
-        "Prezzo minimo non può essere maggiore del prezzo massimo.");
+    testFiltraProdotti(null, "10", "8.5", null, status().isBadRequest(), "Prezzo minimo non può essere maggiore del prezzo massimo.");
   }
 
   @Test
@@ -81,8 +77,7 @@ public class FiltraProdottiTest {
 
   @Test
   public void mediaNonValida() throws Exception {
-    testFiltraProdotti(null, null, null, "-3", status().isBadRequest(),
-        "Media deve essere almeno 1.0");
+    testFiltraProdotti(null, null, null, "-3", status().isBadRequest(), "Media deve essere almeno 1.0");
   }
 
   @Test
@@ -112,12 +107,12 @@ public class FiltraProdottiTest {
             .param("media",
                 filtroForm.getMedia() == null ? null : filtroForm.getMedia().toString()))
         .andExpect(resultMatcher)
-        .andExpect(result -> {
-          if (expectedMessage != null) {
-            String errorMessage = result.getResponse().getErrorMessage();
-            assertTrue(errorMessage.contains(expectedMessage),
-                "La risposta non contiene il messaggio atteso: " + expectedMessage);
-          }
-        });
+            .andExpect(result -> {
+              if (expectedMessage != null) {
+                String errorMessage = result.getResponse().getErrorMessage();
+                assertTrue(errorMessage.contains(expectedMessage),
+                        "La risposta non contiene il messaggio atteso: " + expectedMessage);
+              }
+            });
   }
 }

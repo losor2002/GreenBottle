@@ -13,14 +13,14 @@
 </head>
 <body>
 <div th:replace="~{fragments/fragments :: header}"></div>
-<main class="container-fluid my-4 wh-100">
+<main class="container-fluid my-4">
     <div th:if="${ordineCancellato}" class="alert alert-success text-center" role="alert">
         Ordine cancellato con successo
     </div>
     <div class="row justify-content-center">
         <!-- Filtro -->
         <aside class="col-md-6">
-            <div class="card shadow-lg">
+            <div class="card shadow">
                 <div class="card-header text-center" id="card-header">
                     <h3>Filtra per data</h3>
                 </div>
@@ -55,7 +55,7 @@
             </div>
         </aside>
         <!-- Ordini -->
-        <section class="col-md-8 m-4">
+        <section class="col-md-8">
             <div class="row">
                 <div class="d-flex justify-content-center align-items-center my-4" th:each="ordine : ${ordini}">
                     <div class="order-card bg-light rounded shadow p-4 w-75">

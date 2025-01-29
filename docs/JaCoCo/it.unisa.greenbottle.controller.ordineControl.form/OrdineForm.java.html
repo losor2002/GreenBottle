@@ -72,15 +72,19 @@ public class OrdineForm {
   @BooleanFlag
   private Boolean isRitiro;
 
-  @Size(max = 300, message = &quot;Descrizione supporto troppo lunga.&quot;)
+  @Size(max = 300, message = &quot;descrizioneSupporto troppo lunga.&quot;)
   private String descrizioneSupporto;
 
   public Boolean getIsSupporto() {
-<span class="pc bpc" id="L61" title="1 of 2 branches missed.">    return isSupporto == null ? Boolean.FALSE : isSupporto;</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">    return isSupporto == null ? Boolean.FALSE : isSupporto;</span>
   }
 
   public String getDescrizioneSupporto() {
 <span class="pc bpc" id="L65" title="1 of 2 branches missed.">    return descrizioneSupporto == null ? &quot;&quot; : descrizioneSupporto;</span>
+  }
+
+  public boolean isSupportoDescrizioneValid() {
+<span class="nc bnc" id="L69" title="All 4 branches missed.">    return getIsSupporto() &amp;&amp; !getDescrizioneSupporto().isBlank();</span>
   }
 }
 </pre>
