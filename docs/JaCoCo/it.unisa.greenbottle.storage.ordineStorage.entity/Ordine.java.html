@@ -30,6 +30,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.sql.Timestamp;
@@ -71,22 +72,24 @@ public class Ordine {
   @Column(nullable = false)
   private boolean isSupporto; // Indica se l'ordine è supportato da un servizio
 
-<span class="fc" id="L56">  @Column(length = 300)</span>
+<span class="fc" id="L57">  @Column(length = 300)</span>
   private String descrizione = &quot;&quot;; // Descrizione dell'ordine
 
   @Column(nullable = false)
   private Timestamp data; // Data e ora di creazione dell'ordine
 
 <span class="fc"
-      id="L62">  @OneToMany(mappedBy = &quot;ordine&quot;, cascade = CascadeType.ALL, orphanRemoval = true)</span>
+      id="L63">  @OneToMany(mappedBy = &quot;ordine&quot;, cascade = CascadeType.ALL, orphanRemoval = true)</span>
   @JsonIgnore
   // Lista di composizioni (prodotti) nell'ordine
   private Set&lt;Composizione&gt; composizioni = new HashSet&lt;&gt;();
 
   @ManyToOne(optional = false)
+  @JoinColumn(name = &quot;cliente_id&quot;, nullable = false)
   private Cliente cliente; // Cliente che ha effettuato l'ordine
 
   @ManyToOne
+  @JoinColumn(name = &quot;indirizzo_id&quot;, nullable = false)
   private Indirizzo indirizzo; // Indirizzo di spedizione (se applicabile)
 
   @ManyToOne
@@ -107,33 +110,33 @@ public class Ordine {
    */
   public Ordine(float prezzo, StatoSpedizione stato, boolean isRitiro, String carta,
                 boolean isSupporto, String descrizione, Timestamp data,
-<span class="fc" id="L91">                Cliente cliente, Admin admin) {</span>
-<span class="fc" id="L92">    this.prezzo = prezzo;</span>
-<span class="fc" id="L93">    this.stato = stato;</span>
-<span class="fc" id="L94">    this.isRitiro = isRitiro;</span>
-<span class="fc" id="L95">    this.carta = carta;</span>
-<span class="fc" id="L96">    this.isSupporto = isSupporto;</span>
-<span class="fc" id="L97">    this.descrizione = descrizione;</span>
-<span class="fc" id="L98">    this.data = data;</span>
-<span class="fc" id="L99">    this.cliente = cliente;</span>
-<span class="fc" id="L100">    this.admin = admin;</span>
-<span class="fc" id="L101">  }</span>
+<span class="fc" id="L94">                Cliente cliente, Admin admin) {</span>
+<span class="fc" id="L95">    this.prezzo = prezzo;</span>
+<span class="fc" id="L96">    this.stato = stato;</span>
+<span class="fc" id="L97">    this.isRitiro = isRitiro;</span>
+<span class="fc" id="L98">    this.carta = carta;</span>
+<span class="fc" id="L99">    this.isSupporto = isSupporto;</span>
+<span class="fc" id="L100">    this.descrizione = descrizione;</span>
+<span class="fc" id="L101">    this.data = data;</span>
+<span class="fc" id="L102">    this.cliente = cliente;</span>
+<span class="fc" id="L103">    this.admin = admin;</span>
+<span class="fc" id="L104">  }</span>
 
   @Override
   public boolean equals(Object o) {
-<span class="pc bpc" id="L105" title="1 of 2 branches missed.">    if (this == o) {</span>
-<span class="fc" id="L106">      return true;</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">    if (this == o) {</span>
+<span class="fc" id="L109">      return true;</span>
     }
-<span class="nc bnc" id="L108" title="All 4 branches missed.">    if (o == null || getClass() != o.getClass()) {</span>
-<span class="nc" id="L109">      return false;</span>
+<span class="pc bpc" id="L111" title="2 of 4 branches missed.">    if (o == null || getClass() != o.getClass()) {</span>
+<span class="nc" id="L112">      return false;</span>
     }
-<span class="nc" id="L111">    Ordine ordine = (Ordine) o;</span>
-<span class="nc bnc" id="L112" title="All 4 branches missed.">    return id != null &amp;&amp; id.equals(ordine.id); // Confronta per ID</span>
+<span class="fc" id="L114">    Ordine ordine = (Ordine) o;</span>
+<span class="pc bpc" id="L115" title="3 of 4 branches missed.">    return id != null &amp;&amp; id.equals(ordine.id); // Confronta per ID</span>
   }
 
   @Override
   public int hashCode() {
-<span class="nc bnc" id="L117" title="All 2 branches missed.">    return id != null ? id.hashCode() : 0; // Usa l'ID come base per hashCode</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">    return id != null ? id.hashCode() : 0; // Usa l'ID come base per hashCode</span>
   }
 
   /**
@@ -145,12 +148,12 @@ public class Ordine {
    * - SPEDITO
    * - CONSEGNATO
    */
-<span class="fc" id="L129">  public enum StatoSpedizione {</span>
-<span class="fc" id="L130">    ELABORAZIONE, // Ordine in fase di elaborazione</span>
-<span class="fc" id="L131">    ACCETTATO,    // Ordine accettato</span>
-<span class="fc" id="L132">    RIFIUTATO,    // Ordine rifiutato</span>
-<span class="fc" id="L133">    SPEDITO,      // Ordine spedito</span>
-<span class="fc" id="L134">    CONSEGNATO    // Ordine consegnato</span>
+<span class="fc" id="L132">  public enum StatoSpedizione {</span>
+<span class="fc" id="L133">    ELABORAZIONE, // Ordine in fase di elaborazione</span>
+<span class="fc" id="L134">    ACCETTATO,    // Ordine accettato</span>
+<span class="fc" id="L135">    RIFIUTATO,    // Ordine rifiutato</span>
+<span class="fc" id="L136">    SPEDITO,      // Ordine spedito</span>
+<span class="fc" id="L137">    CONSEGNATO    // Ordine consegnato</span>
   }
 }
 </pre>

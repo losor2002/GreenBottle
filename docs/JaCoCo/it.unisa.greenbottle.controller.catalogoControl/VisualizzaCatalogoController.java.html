@@ -24,7 +24,6 @@ import it.unisa.greenbottle.storage.catalogoStorage.dao.CategoriaDao;
 import it.unisa.greenbottle.storage.catalogoStorage.dao.ProdottoDao;
 import it.unisa.greenbottle.storage.catalogoStorage.dao.RecensioneDao;
 import it.unisa.greenbottle.storage.catalogoStorage.entity.Prodotto;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import java.io.IOException;
@@ -44,9 +43,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(&quot;/catalogo&quot;)
-<span class="fc" id="L29">public class VisualizzaCatalogoController {</span>
+<span class="fc" id="L28">public class VisualizzaCatalogoController {</span>
 
-<span class="fc" id="L31">  private final String catalogoView = &quot;/CatalogoView/Catalogo&quot;;</span>
+<span class="fc" id="L30">  private final String catalogoView = &quot;/CatalogoView/Catalogo&quot;;</span>
 
   @Autowired
   private ProdottoDao prodottoDao;
@@ -64,82 +63,81 @@ import org.springframework.web.bind.annotation.RequestMapping;
    * @param bindingResult       binding result
    * @param model               model
    * @param httpServletResponse httpServletResponse
-   * @param httpServletRequest  httpServletRequest
    * @return catalogoView
    * @throws IOException IOException
    */
   @GetMapping
   public String get(@ModelAttribute @Valid FiltroForm filtroForm, BindingResult bindingResult,
                     Model model,
-                    HttpServletResponse httpServletResponse, HttpServletRequest httpServletRequest
+                    HttpServletResponse httpServletResponse
   )
       throws IOException {
 
-<span class="fc bfc" id="L60" title="All 2 branches covered.">    if (bindingResult.hasErrors()) {</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">    if (bindingResult.hasErrors()) {</span>
       // Se c'è un errore specifico per un campo, gestisci il messaggio
-<span class="fc" id="L62">      FieldError fieldError = bindingResult.getFieldErrors().getFirst();</span>
-<span class="fc" id="L63">      model.addAttribute(&quot;message&quot;, fieldError.getDefaultMessage());</span>
-<span class="fc" id="L64">      model.addAttribute(&quot;status&quot;, HttpServletResponse.SC_BAD_REQUEST);</span>
-<span class="fc" id="L65">      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, fieldError.getField());</span>
-<span class="fc" id="L66">      return &quot;error&quot;; // Visualizza la vista con il messaggio di errore</span>
+<span class="fc" id="L60">      FieldError fieldError = bindingResult.getFieldErrors().getFirst();</span>
+<span class="fc" id="L61">      model.addAttribute(&quot;message&quot;, fieldError.getDefaultMessage());</span>
+<span class="fc" id="L62">      model.addAttribute(&quot;status&quot;, HttpServletResponse.SC_BAD_REQUEST);</span>
+<span class="fc" id="L63">      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, fieldError.getDefaultMessage());</span>
+<span class="fc" id="L64">      return &quot;error&quot;; // Visualizza la vista con il messaggio di errore</span>
     }
 
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">    if (!filtroForm.isPrezzoMinMaxValid()) {</span>
-<span class="nc" id="L70">      model.addAttribute(&quot;status&quot;, HttpServletResponse.SC_BAD_REQUEST);</span>
-<span class="nc" id="L71">      model.addAttribute(&quot;message&quot;, &quot;Prezzo minimo non può essere maggiore del prezzo massimo.&quot;);</span>
-<span class="nc" id="L72">      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">    if (!filtroForm.isPrezzoMinMaxValid()) {</span>
+<span class="nc" id="L68">      model.addAttribute(&quot;status&quot;, HttpServletResponse.SC_BAD_REQUEST);</span>
+<span class="nc" id="L69">      model.addAttribute(&quot;message&quot;, &quot;Prezzo minimo non può essere maggiore del prezzo massimo.&quot;);</span>
+<span class="nc" id="L70">      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,</span>
           &quot;Prezzo minimo non può essere maggiore del prezzo massimo.&quot;);
-<span class="nc" id="L74">      return &quot;error&quot;; // Visualizza la vista con il messaggio di errore</span>
+<span class="nc" id="L72">      return &quot;error&quot;; // Visualizza la vista con il messaggio di errore</span>
     }
 
-<span class="fc" id="L77">    Specification&lt;Prodotto&gt; spec = Specification.where(null);</span>
+<span class="fc" id="L75">    Specification&lt;Prodotto&gt; spec = Specification.where(null);</span>
 
     //CONTROLLO CATEGORIA
-<span class="fc bfc" id="L80" title="All 2 branches covered.">    if (filtroForm.getIdCategoria() != null) {</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">    if (filtroForm.getIdCategoria() != null) {</span>
 
-<span class="fc bfc" id="L82" title="All 2 branches covered.">      if (categoriaDao.findCategoriaById(filtroForm.getIdCategoria()).isEmpty()) {</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">      if (categoriaDao.findCategoriaById(filtroForm.getIdCategoria()).isEmpty()) {</span>
 
-<span class="fc" id="L84">        model.addAttribute(&quot;status&quot;, HttpServletResponse.SC_BAD_REQUEST);</span>
-<span class="fc" id="L85">        model.addAttribute(&quot;message&quot;, &quot;Categoria non presente.&quot;);</span>
+<span class="fc" id="L82">        model.addAttribute(&quot;status&quot;, HttpServletResponse.SC_BAD_REQUEST);</span>
+<span class="fc" id="L83">        model.addAttribute(&quot;message&quot;, &quot;Categoria non presente.&quot;);</span>
 
-<span class="fc" id="L87">        httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND, &quot;Categoria non presente.&quot;);</span>
-<span class="fc" id="L88">        return &quot;error&quot;;</span>
+<span class="fc" id="L85">        httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND, &quot;Categoria non presente.&quot;);</span>
+<span class="fc" id="L86">        return &quot;error&quot;;</span>
       }
 
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">      if (categoriaDao.findCategoriaById(filtroForm.getIdCategoria()).isPresent()) {</span>
-<span class="fc" id="L92">        spec = spec.and((root, query, criteriaBuilder) -&gt;</span>
-<span class="fc" id="L93">            criteriaBuilder.equal(root.get(&quot;categoria&quot;),</span>
-<span class="fc" id="L94">                categoriaDao.findCategoriaById(filtroForm.getIdCategoria()).get()));</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">      if (categoriaDao.findCategoriaById(filtroForm.getIdCategoria()).isPresent()) {</span>
+<span class="fc" id="L90">        spec = spec.and((root, query, criteriaBuilder) -&gt;</span>
+<span class="fc" id="L91">            criteriaBuilder.equal(root.get(&quot;categoria&quot;),</span>
+<span class="fc" id="L92">                categoriaDao.findCategoriaById(filtroForm.getIdCategoria()).get()));</span>
       }
     }
 
     //CONTROLLO PREZZOMIN
-<span class="fc bfc" id="L99" title="All 2 branches covered.">    if (filtroForm.getPrezzoMin() != null) {</span>
-<span class="fc" id="L100">      spec = spec.and((root, query, criteriaBuilder) -&gt;</span>
-<span class="fc" id="L101">          criteriaBuilder.greaterThanOrEqualTo(root.get(&quot;prezzo&quot;), filtroForm.getPrezzoMin())</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">    if (filtroForm.getPrezzoMin() != null) {</span>
+<span class="fc" id="L98">      spec = spec.and((root, query, criteriaBuilder) -&gt;</span>
+<span class="fc" id="L99">          criteriaBuilder.greaterThanOrEqualTo(root.get(&quot;prezzo&quot;), filtroForm.getPrezzoMin())</span>
       );
     }
 
     //CONTROLLO PREZZOMAX
-<span class="fc bfc" id="L106" title="All 2 branches covered.">    if (filtroForm.getPrezzoMax() != null) {</span>
-<span class="fc" id="L107">      spec = spec.and((root, query, criteriaBuilder) -&gt;</span>
-<span class="fc" id="L108">          criteriaBuilder.lessThanOrEqualTo(root.get(&quot;prezzo&quot;), filtroForm.getPrezzoMax())</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">    if (filtroForm.getPrezzoMax() != null) {</span>
+<span class="fc" id="L105">      spec = spec.and((root, query, criteriaBuilder) -&gt;</span>
+<span class="fc" id="L106">          criteriaBuilder.lessThanOrEqualTo(root.get(&quot;prezzo&quot;), filtroForm.getPrezzoMax())</span>
       );
     }
 
     //CONTROLLO MEDIA
-<span class="fc bfc" id="L113" title="All 2 branches covered.">    if (filtroForm.getMedia() != null) {</span>
-<span class="fc" id="L114">      spec = spec.and((root, query, criteriaBuilder) -&gt;</span>
-<span class="fc" id="L115">          criteriaBuilder.greaterThanOrEqualTo(root.get(&quot;mediaVoti&quot;), filtroForm.getMedia())</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">    if (filtroForm.getMedia() != null) {</span>
+<span class="fc" id="L112">      spec = spec.and((root, query, criteriaBuilder) -&gt;</span>
+<span class="fc" id="L113">          criteriaBuilder.greaterThanOrEqualTo(root.get(&quot;mediaVoti&quot;), filtroForm.getMedia())</span>
       );
     }
 
-<span class="fc" id="L119">    List&lt;Prodotto&gt; prodotti = prodottoDao.findAll(spec);</span>
-<span class="fc" id="L120">    ProdottoForm prodottoForm = new ProdottoForm();</span>
-<span class="fc" id="L121">    model.addAttribute(&quot;prodotti&quot;, prodotti);</span>
-<span class="fc" id="L122">    model.addAttribute(&quot;filterForm&quot;, filtroForm);</span>
-<span class="fc" id="L123">    model.addAttribute(&quot;prodottoForm&quot;, prodottoForm);</span>
-<span class="fc" id="L124">    return catalogoView;</span>
+<span class="fc" id="L117">    List&lt;Prodotto&gt; prodotti = prodottoDao.findAll(spec);</span>
+<span class="fc" id="L118">    ProdottoForm prodottoForm = new ProdottoForm();</span>
+<span class="fc" id="L119">    model.addAttribute(&quot;prodotti&quot;, prodotti);</span>
+<span class="fc" id="L120">    model.addAttribute(&quot;filterForm&quot;, filtroForm);</span>
+<span class="fc" id="L121">    model.addAttribute(&quot;prodottoForm&quot;, prodottoForm);</span>
+<span class="fc" id="L122">    return catalogoView;</span>
   }
 }
 </pre>

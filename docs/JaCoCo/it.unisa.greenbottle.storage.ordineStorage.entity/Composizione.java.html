@@ -25,6 +25,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import lombok.AllArgsConstructor;
@@ -49,9 +50,11 @@ public class Composizione {
 
   @ManyToOne
   @JsonIgnore
+  @JoinColumn(name = &quot;ordine_id&quot;, nullable = false)
   private Ordine ordine; // Ordine a cui è associata questa composizione
 
   @ManyToOne
+  @JoinColumn(name = &quot;prodotto_id&quot;, nullable = false)
   private Prodotto prodotto; // Prodotto associato alla composizione
 
   @Column(nullable = false)
@@ -64,15 +67,15 @@ public class Composizione {
    */
   @PrePersist
   public void updateQuantitaProdotto() {
-<span class="pc bpc" id="L49" title="1 of 2 branches missed.">    if (prodotto.getQuantita() &lt; quantita) {</span>
-<span class="nc" id="L50">      throw new IllegalArgumentException(</span>
-<span class="nc" id="L51">          &quot;Quantità richiesta per &quot; + prodotto.getNome() + &quot; non disponibile.&quot;</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">    if (prodotto.getQuantita() &lt; quantita) {</span>
+<span class="nc" id="L53">      throw new IllegalArgumentException(</span>
+<span class="nc" id="L54">          &quot;Quantità richiesta per &quot; + prodotto.getNome() + &quot; non disponibile.&quot;</span>
       );
     }
-<span class="fc" id="L54">    prodotto.setQuantita(</span>
+<span class="fc" id="L57">    prodotto.setQuantita(</span>
 <span class="fc"
-      id="L55">        prodotto.getQuantita() - quantita); // Decrementa la quantità disponibile del prodotto</span>
-<span class="fc" id="L56">  }</span>
+      id="L58">        prodotto.getQuantita() - quantita); // Decrementa la quantità disponibile del prodotto</span>
+<span class="fc" id="L59">  }</span>
 
   /**
    * Costruttore per creare una composizione con il prodotto e la quantità.
@@ -80,10 +83,10 @@ public class Composizione {
    * @param prodotto Prodotto associato alla composizione
    * @param quantita Quantità del prodotto
    */
-<span class="fc" id="L64">  public Composizione(Prodotto prodotto, int quantita) {</span>
-<span class="fc" id="L65">    this.prodotto = prodotto;</span>
-<span class="fc" id="L66">    this.quantita = quantita;</span>
-<span class="fc" id="L67">  }</span>
+<span class="fc" id="L67">  public Composizione(Prodotto prodotto, int quantita) {</span>
+<span class="fc" id="L68">    this.prodotto = prodotto;</span>
+<span class="fc" id="L69">    this.quantita = quantita;</span>
+<span class="fc" id="L70">  }</span>
 
   /**
    * Costruttore per creare una composizione con il prodotto, la quantità e l'ordine associato.
@@ -92,27 +95,27 @@ public class Composizione {
    * @param quantita Quantità del prodotto
    * @param ordine   Ordine a cui appartiene questa composizione
    */
-<span class="nc" id="L76">  public Composizione(Prodotto prodotto, int quantita, Ordine ordine) {</span>
-<span class="nc" id="L77">    this.prodotto = prodotto;</span>
-<span class="nc" id="L78">    this.quantita = quantita;</span>
-<span class="nc" id="L79">    this.ordine = ordine;</span>
-<span class="nc" id="L80">  }</span>
+<span class="nc" id="L79">  public Composizione(Prodotto prodotto, int quantita, Ordine ordine) {</span>
+<span class="nc" id="L80">    this.prodotto = prodotto;</span>
+<span class="nc" id="L81">    this.quantita = quantita;</span>
+<span class="nc" id="L82">    this.ordine = ordine;</span>
+<span class="nc" id="L83">  }</span>
 
   @Override
   public boolean equals(Object o) {
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">    if (this == o) {</span>
-<span class="nc" id="L85">      return true;</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">    if (this == o) {</span>
+<span class="nc" id="L88">      return true;</span>
     }
-<span class="pc bpc" id="L87" title="2 of 4 branches missed.">    if (o == null || getClass() != o.getClass()) {</span>
-<span class="nc" id="L88">      return false;</span>
+<span class="pc bpc" id="L90" title="2 of 4 branches missed.">    if (o == null || getClass() != o.getClass()) {</span>
+<span class="nc" id="L91">      return false;</span>
     }
-<span class="fc" id="L90">    Composizione that = (Composizione) o;</span>
-<span class="pc bpc" id="L91" title="3 of 4 branches missed.">    return id != null &amp;&amp; id.equals(that.id); // Confronta per ID</span>
+<span class="fc" id="L93">    Composizione that = (Composizione) o;</span>
+<span class="pc bpc" id="L94" title="3 of 4 branches missed.">    return id != null &amp;&amp; id.equals(that.id); // Confronta per ID</span>
   }
 
   @Override
   public int hashCode() {
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">    return id != null ? id.hashCode() : 0; // Usa l'ID come base per hashCode</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">    return id != null ? id.hashCode() : 0; // Usa l'ID come base per hashCode</span>
   }
 }
 </pre>

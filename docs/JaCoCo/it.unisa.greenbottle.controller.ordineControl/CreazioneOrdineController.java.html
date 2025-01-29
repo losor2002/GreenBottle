@@ -38,10 +38,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -56,11 +58,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(&quot;/ordina&quot;)
-<span class="fc" id="L41">public class CreazioneOrdineController {</span>
+<span class="fc" id="L43">public class CreazioneOrdineController {</span>
 
   private static final String ordineView = &quot;OrdineView/Checkout&quot;;
   private static final String fallbackView = &quot;redirect:/&quot;;
-  private static final String successView = &quot;redirect:/areaPersonale/visualizzaStoricoOrdini&quot;;
+  private static final String successView =
+      &quot;redirect:/areaPersonale/visualizzaStatoOrdine&quot;;
 
   @Autowired
   private OrdineDao ordineDao;
@@ -77,6 +80,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
   @Autowired
   private SessionCarrello sessionCarrello;
 
+  @Autowired
+  private MessageSource messageSource;
+
+
   /**
    * Metodo per la visualizzazione della pagina di checkout.
    *
@@ -87,21 +94,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
    */
   @GetMapping
   public String get(Model model, HttpServletResponse httpServletResponse) throws IOException {
-<span class="nc" id="L72">    Optional&lt;Cliente&gt; clienteOptional = sessionCliente.getCliente();</span>
-<span class="nc" id="L73">    Map&lt;Prodotto, Integer&gt; carrello = sessionCarrello.getRealCarrello();</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">    if (clienteOptional.isEmpty()) {</span>
-<span class="nc" id="L75">      return &quot;redirect:/login&quot;;</span>
+<span class="nc" id="L79">    Optional&lt;Cliente&gt; clienteOptional = sessionCliente.getCliente();</span>
+<span class="nc" id="L80">    Map&lt;Prodotto, Integer&gt; carrello = sessionCarrello.getRealCarrello();</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">    if (clienteOptional.isEmpty()) {</span>
+<span class="nc" id="L82">      return &quot;redirect:/login&quot;;</span>
     }
-<span class="nc bnc" id="L77" title="All 4 branches missed.">    if (carrello == null || carrello.isEmpty()) {</span>
-<span class="nc" id="L78">      model.addAttribute(&quot;errore&quot;, &quot;Il carrello è vuoto.&quot;);</span>
-<span class="nc" id="L79">      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, &quot;Il carrello è vuoto&quot;);</span>
-<span class="nc" id="L80">      return fallbackView;</span>
+<span class="nc bnc" id="L84" title="All 4 branches missed.">    if (carrello == null || carrello.isEmpty()) {</span>
+<span class="nc" id="L85">      model.addAttribute(&quot;errore&quot;, &quot;Il carrello è vuoto.&quot;);</span>
+<span class="nc" id="L86">      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, &quot;Il carrello è vuoto&quot;);</span>
+<span class="nc" id="L87">      return fallbackView;</span>
     }
-    // return a model attribute of List&lt;Indirizzo&gt; grabbing all Indirizzo by Cliente in the session:
-<span class="nc" id="L83">    Cliente cliente = clienteOptional.get();</span>
-<span class="nc" id="L84">    List&lt;Indirizzo&gt; indirizzi = indirizzoDao.findAllByCliente(cliente).orElse(new ArrayList&lt;&gt;());</span>
-<span class="nc" id="L85">    model.addAttribute(&quot;indirizzi&quot;, indirizzi);</span>
-<span class="nc" id="L86">    return ordineView;</span>
+
+<span class="nc" id="L90">    Cliente cliente = clienteOptional.get();</span>
+<span class="nc" id="L91">    List&lt;Indirizzo&gt; indirizzi = indirizzoDao.findAllByCliente(cliente).orElse(new ArrayList&lt;&gt;());</span>
+<span class="nc" id="L92">    model.addAttribute(&quot;indirizzi&quot;, indirizzi);</span>
+<span class="nc" id="L93">    return ordineView;</span>
   }
 
   /**
@@ -116,110 +123,138 @@ import org.springframework.web.bind.annotation.RequestMapping;
    */
   @PostMapping
   @Transactional
-  public String post(@ModelAttribute @Valid OrdineForm ordineForm, Model model,
-                     BindingResult bindingResult, HttpServletResponse httpServletResponse) throws
+  public String post(@ModelAttribute @Valid OrdineForm ordineForm, BindingResult bindingResult,
+                     Model model, HttpServletResponse httpServletResponse) throws
       IOException {
-<span class="fc" id="L104">    Optional&lt;Cliente&gt; clienteOptional = sessionCliente.getCliente();</span>
+<span class="fc" id="L111">    Optional&lt;Cliente&gt; clienteOptional = sessionCliente.getCliente();</span>
 
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">    if (clienteOptional.isEmpty()) {</span>
-<span class="nc" id="L107">      return &quot;redirect:/login&quot;;</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">    if (clienteOptional.isEmpty()) {</span>
+<span class="nc" id="L114">      return &quot;redirect:/login&quot;;</span>
     }
 
-<span class="fc" id="L110">    final Cliente cliente = clienteOptional.get();</span>
+<span class="fc" id="L117">    final Cliente cliente = clienteOptional.get();</span>
 
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">    if (bindingResult.hasErrors()) {</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">    if (bindingResult.hasErrors()) {</span>
       // Se c'è un errore specifico per un campo, gestisci il messaggio
-<span class="nc" id="L114">      FieldError fieldError = bindingResult.getFieldErrors().getFirst();</span>
-<span class="nc" id="L115">      model.addAttribute(&quot;message&quot;, fieldError.getDefaultMessage());</span>
-<span class="nc" id="L116">      model.addAttribute(&quot;status&quot;, HttpServletResponse.SC_BAD_REQUEST);</span>
-<span class="nc" id="L117">      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, fieldError.getField());</span>
-<span class="nc" id="L118">      return &quot;error&quot;; // Visualizza la vista con il messaggio di errore</span>
-    }
-
-<span class="fc" id="L121">    Map&lt;Long, Integer&gt; prodottiUnparsed = sessionCarrello.getCarrello();</span>
-
-<span class="pc bpc" id="L123" title="2 of 4 branches missed.">    if (prodottiUnparsed == null || prodottiUnparsed.isEmpty()) {</span>
-<span class="nc" id="L124">      model.addAttribute(&quot;errore&quot;, &quot;Il carrello è vuoto&quot;);</span>
-<span class="nc" id="L125">      return fallbackView;</span>
-    }
-
-<span class="fc" id="L128">    Map&lt;Prodotto, Integer&gt; prodotti = new HashMap&lt;&gt;();</span>
-<span class="fc bfc" id="L129" title="All 2 branches covered.">    for (Map.Entry&lt;Long, Integer&gt; entry : prodottiUnparsed.entrySet()) {</span>
+<span class="fc" id="L121">      FieldError fieldError = bindingResult.getFieldErrors().getFirst();</span>
+<span class="fc" id="L122">      String errorCode = fieldError.getCode();</span>
+<span class="fc" id="L123">      String field = fieldError.getField();</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">      if (errorCode.startsWith(&quot;typeMismatch&quot;)) {</span>
+        String customMessage;
+<span class="fc bfc" id="L126"
+      title="All 2 branches covered.">        if (&quot;isSupporto&quot;.equals(field)) {</span>
+<span class="fc" id="L127">          customMessage =</span>
 <span class="fc"
-      id="L130">      Optional&lt;Prodotto&gt; prodottoOpt = prodottoDao.findProdottoById(entry.getKey());</span>
-<span class="pc bpc" id="L131" title="1 of 2 branches missed.">      if (prodottoOpt.isPresent()) {</span>
-<span class="fc" id="L132">        Prodotto p = prodottoOpt.get();</span>
-<span class="fc" id="L133">        int quantita = entry.getValue();</span>
-
-<span class="pc bpc" id="L135" title="1 of 2 branches missed.">        if (quantita &gt; p.getQuantita()) {</span>
-<span class="nc" id="L136">          model.addAttribute(&quot;errore&quot;,</span>
-<span class="nc" id="L137">              &quot;Prodotto: &quot; + p.getNome() + &quot; non disponibile in quantità richiesta.&quot;);</span>
-<span class="nc" id="L138">          httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,</span>
-<span class="nc" id="L139">              &quot;Prodotto&quot; + p.getNome() + &quot; non disponibile in quantità richiesta&quot;);</span>
-<span class="nc" id="L140">          return fallbackView;</span>
+      id="L128">              messageSource.getMessage(errorCode + &quot;.ordineForm.isSupporto&quot;, null,</span>
+<span class="fc" id="L129">                  &quot;Default error message&quot;, Locale.getDefault());</span>
+<span class="pc bpc" id="L130"
+      title="1 of 2 branches missed.">        } else if (&quot;isRitiro&quot;.equals(field)) {</span>
+<span class="fc" id="L131">          customMessage =</span>
+<span class="fc"
+      id="L132">              messageSource.getMessage(errorCode + &quot;.ordineForm.isRitiro&quot;, null,</span>
+<span class="fc" id="L133">                  &quot;Default error message&quot;, Locale.getDefault());</span>
+        } else {
+<span class="nc" id="L135">          customMessage = messageSource.getMessage(&quot;typeMismatch&quot;, null, &quot;Default error message&quot;,</span>
+<span class="nc" id="L136">              Locale.getDefault());</span>
         }
-<span class="fc" id="L142">        prodotti.put(p, quantita);</span>
-      }
-<span class="fc" id="L144">    }</span>
 
-<span class="fc" id="L146">    final float prezzoTotale = (float) prodotti.entrySet().stream()</span>
-<span class="fc" id="L147">        .mapToDouble(entry -&gt; entry.getKey().getPrezzo() * entry.getValue())</span>
-<span class="fc" id="L148">        .sum();</span>
-<span class="fc" id="L149">    String numeroCarta = ordineForm.getNumeroCarta();</span>
-<span class="fc" id="L150">    String dataScadenza = ordineForm.getDataScadenza();</span>
-<span class="fc" id="L151">    String nomeTitolare = ordineForm.getNomeTitolare();</span>
-<span class="fc" id="L152">    final String riassuntoCarta = nomeTitolare + &quot;/&quot; + dataScadenza + &quot;/&quot; + numeroCarta.substring(</span>
-<span class="fc" id="L153">        numeroCarta.length() - 4);</span>
-<span class="fc" id="L154">    Boolean isSupporto = ordineForm.getIsSupporto();</span>
-<span class="fc" id="L155">    String descrizioneSupporto = ordineForm.getDescrizioneSupporto();</span>
-<span class="fc" id="L156">    final Boolean isRitiro = ordineForm.getIsRitiro();</span>
-
-<span class="fc bfc" id="L158" title="All 4 branches covered.">    if (isSupporto &amp;&amp; descrizioneSupporto.isBlank()) {</span>
+<span class="fc" id="L139">        model.addAttribute(&quot;message&quot;, customMessage);</span>
+<span class="fc" id="L140">        model.addAttribute(&quot;status&quot;, HttpServletResponse.SC_BAD_REQUEST);</span>
 <span class="fc"
-      id="L159">      model.addAttribute(&quot;errore&quot;, &quot;Descrizione supporto non inserita.&quot;);</span>
-<span class="fc" id="L160">      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,</span>
-          &quot;Descrizione supporto non inserita&quot;);
-<span class="fc" id="L162">      return null;</span>
-<span class="fc bfc" id="L163" title="All 4 branches covered.">    } else if (!(isSupporto || descrizioneSupporto.isBlank())) { // De Morgan</span>
-<span class="fc" id="L164">      model.addAttribute(&quot;warning&quot;,</span>
+      id="L141">        httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, customMessage);</span>
+<span class="fc" id="L142">      } else {</span>
+<span class="fc" id="L143">        model.addAttribute(&quot;message&quot;, fieldError.getDefaultMessage());</span>
+<span class="fc" id="L144">        model.addAttribute(&quot;status&quot;, HttpServletResponse.SC_BAD_REQUEST);</span>
+<span class="fc" id="L145">        httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,</span>
+<span class="fc" id="L146">            fieldError.getDefaultMessage());</span>
+      }
+
+<span class="fc" id="L149">      return &quot;error&quot;; // Visualizza la vista con il messaggio di errore</span>
+    }
+
+<span class="fc" id="L152">    Map&lt;Long, Integer&gt; prodottiUnparsed = sessionCarrello.getCarrello();</span>
+
+<span class="pc bpc" id="L154" title="2 of 4 branches missed.">    if (prodottiUnparsed == null || prodottiUnparsed.isEmpty()) {</span>
+<span class="nc" id="L155">      model.addAttribute(&quot;errore&quot;, &quot;Il carrello è vuoto&quot;);</span>
+<span class="nc" id="L156">      return fallbackView;</span>
+    }
+
+<span class="fc" id="L159">    Map&lt;Prodotto, Integer&gt; prodotti = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">    for (Map.Entry&lt;Long, Integer&gt; entry : prodottiUnparsed.entrySet()) {</span>
+<span class="fc"
+      id="L161">      Optional&lt;Prodotto&gt; prodottoOpt = prodottoDao.findProdottoById(entry.getKey());</span>
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">      if (prodottoOpt.isPresent()) {</span>
+<span class="fc" id="L163">        Prodotto p = prodottoOpt.get();</span>
+<span class="fc" id="L164">        int quantita = entry.getValue();</span>
+
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">        if (quantita &gt; p.getQuantita()) {</span>
+<span class="nc" id="L167">          model.addAttribute(&quot;errore&quot;,</span>
+<span class="nc" id="L168">              &quot;Prodotto: &quot; + p.getNome() + &quot; non disponibile in quantità richiesta.&quot;);</span>
+<span class="nc" id="L169">          httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,</span>
+<span class="nc" id="L170">              &quot;Prodotto&quot; + p.getNome() + &quot; non disponibile in quantità richiesta&quot;);</span>
+<span class="nc" id="L171">          return fallbackView;</span>
+        }
+<span class="fc" id="L173">        prodotti.put(p, quantita);</span>
+      }
+<span class="fc" id="L175">    }</span>
+
+<span class="fc" id="L177">    final float prezzoTotale = (float) prodotti.entrySet().stream()</span>
+<span class="fc" id="L178">        .mapToDouble(entry -&gt; entry.getKey().getPrezzo() * entry.getValue())</span>
+<span class="fc" id="L179">        .sum();</span>
+<span class="fc" id="L180">    String numeroCarta = ordineForm.getNumeroCarta();</span>
+<span class="fc" id="L181">    String dataScadenza = ordineForm.getDataScadenza();</span>
+<span class="fc" id="L182">    String nomeTitolare = ordineForm.getNomeTitolare();</span>
+<span class="fc" id="L183">    final String riassuntoCarta = nomeTitolare + &quot;/&quot; + dataScadenza + &quot;/&quot; + numeroCarta.substring(</span>
+<span class="fc" id="L184">        numeroCarta.length() - 4);</span>
+<span class="fc" id="L185">    Boolean isSupporto = ordineForm.getIsSupporto();</span>
+<span class="fc" id="L186">    String descrizioneSupporto = ordineForm.getDescrizioneSupporto();</span>
+<span class="fc" id="L187">    final Boolean isRitiro = ordineForm.getIsRitiro();</span>
+
+<span class="fc bfc" id="L189" title="All 4 branches covered.">    if (isSupporto &amp;&amp; descrizioneSupporto.isBlank()) {</span>
+<span class="fc"
+      id="L190">      model.addAttribute(&quot;errore&quot;, &quot;Descrizione supporto non inserita.&quot;);</span>
+<span class="fc" id="L191">      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,</span>
+          &quot;Descrizione supporto non inserita.&quot;);
+<span class="fc" id="L193">      return null;</span>
+<span class="pc bpc" id="L194" title="1 of 4 branches missed.">    } else if (!(isSupporto || descrizioneSupporto.isBlank())) { // De Morgan</span>
+<span class="nc" id="L195">      model.addAttribute(&quot;warning&quot;,</span>
           &quot;Errata selezione dell’opzione di richiesta supporto aggiuntivo&quot;);
     }
 
-<span class="fc" id="L168">    Long idIndirizzo = ordineForm.getIndirizzo();</span>
+<span class="fc" id="L199">    Long idIndirizzo = ordineForm.getIndirizzo();</span>
 <span class="fc"
-      id="L169">    Optional&lt;Indirizzo&gt; indirizzoOpt = indirizzoDao.findIndirizzoById(idIndirizzo);</span>
+      id="L200">    Optional&lt;Indirizzo&gt; indirizzoOpt = indirizzoDao.findIndirizzoById(idIndirizzo);</span>
 
-<span class="pc bpc" id="L171" title="1 of 2 branches missed.">    if (indirizzoOpt.isEmpty()) {</span>
-<span class="nc" id="L172">      model.addAttribute(&quot;status&quot;, HttpServletResponse.SC_BAD_REQUEST);</span>
-<span class="nc" id="L173">      model.addAttribute(&quot;message&quot;, &quot;Indirizzo non trovato.&quot;);</span>
-<span class="nc" id="L174">      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, &quot;Indirizzo non trovato&quot;);</span>
-<span class="nc" id="L175">      return &quot;error&quot;;</span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">    if (indirizzoOpt.isEmpty()) {</span>
+<span class="fc" id="L203">      model.addAttribute(&quot;status&quot;, HttpServletResponse.SC_NOT_FOUND);</span>
+<span class="fc" id="L204">      model.addAttribute(&quot;message&quot;, &quot;Indirizzo non trovato.&quot;);</span>
+<span class="fc" id="L205">      httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND, &quot;Indirizzo non trovato.&quot;);</span>
+<span class="fc" id="L206">      return &quot;error&quot;;</span>
     }
-<span class="fc" id="L177">    Indirizzo indirizzo = indirizzoOpt.get();</span>
+<span class="fc" id="L208">    Indirizzo indirizzo = indirizzoOpt.get();</span>
 
-<span class="fc" id="L179">    Set&lt;Composizione&gt; composizioni = new HashSet&lt;&gt;();</span>
-<span class="fc bfc" id="L180" title="All 2 branches covered.">    for (Map.Entry&lt;Prodotto, Integer&gt; entry : prodotti.entrySet()) {</span>
-<span class="fc" id="L181">      Prodotto prod = entry.getKey();</span>
-<span class="fc" id="L182">      int quantita = entry.getValue();</span>
-<span class="fc" id="L183">      composizioni.add(new Composizione(prod, quantita));</span>
-<span class="fc" id="L184">    }</span>
+<span class="fc" id="L210">    Set&lt;Composizione&gt; composizioni = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">    for (Map.Entry&lt;Prodotto, Integer&gt; entry : prodotti.entrySet()) {</span>
+<span class="fc" id="L212">      Prodotto prod = entry.getKey();</span>
+<span class="fc" id="L213">      int quantita = entry.getValue();</span>
+<span class="fc" id="L214">      composizioni.add(new Composizione(prod, quantita));</span>
+<span class="fc" id="L215">    }</span>
 
     Ordine ordine;
-<span class="fc bfc" id="L187" title="All 2 branches covered.">    if (isSupporto) {</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">    if (isSupporto) {</span>
 <span class="fc"
-      id="L188">      ordine = OrdineDirector.createOrdineConSupporto(prezzoTotale, isRitiro, riassuntoCarta,</span>
+      id="L219">      ordine = OrdineDirector.createOrdineConSupporto(prezzoTotale, isRitiro, riassuntoCarta,</span>
           descrizioneSupporto, indirizzo, cliente, composizioni);
     } else {
 <span class="fc"
-      id="L191">      ordine = OrdineDirector.createOrdine(prezzoTotale, isRitiro, riassuntoCarta, indirizzo,</span>
+      id="L222">      ordine = OrdineDirector.createOrdine(prezzoTotale, isRitiro, riassuntoCarta, indirizzo,</span>
           cliente, composizioni);
     }
 
-<span class="fc" id="L195">    ordineDao.save(ordine);</span>
-<span class="fc"
-      id="L196">    model.addAttribute(&quot;successo&quot;, &quot;Ordine inserito con successo.&quot;);</span>
-<span class="fc" id="L197">    sessionCarrello.clearCarrello();</span>
-<span class="fc" id="L198">    return successView;</span>
+<span class="fc" id="L226">    ordineDao.save(ordine);</span>
+<span class="fc" id="L227">    Long idOrdine = ordine.getId();</span>
+<span class="fc" id="L228">    sessionCarrello.clearCarrello();</span>
+<span class="fc" id="L229">    return successView + &quot;?id=&quot; + idOrdine;</span>
   }
 }
 </pre>
