@@ -45,7 +45,7 @@ public class CreazioneOrdineController {
   private static final String ordineView = "OrdineView/Checkout";
   private static final String fallbackView = "redirect:/";
   private static final String successView =
-      "redirect:/areaPersonale/visualizzaStoricoOrdini";
+      "redirect:/areaPersonale/visualizzaStatoOrdine";
 
   @Autowired
   private OrdineDao ordineDao;
@@ -86,7 +86,7 @@ public class CreazioneOrdineController {
       httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "Il carrello è vuoto");
       return fallbackView;
     }
-    // return a model attribute of List<Indirizzo> grabbing all Indirizzo by Cliente in the session:
+
     Cliente cliente = clienteOptional.get();
     List<Indirizzo> indirizzi = indirizzoDao.findAllByCliente(cliente).orElse(new ArrayList<>());
     model.addAttribute("indirizzi", indirizzi);
@@ -224,7 +224,8 @@ public class CreazioneOrdineController {
     }
 
     ordineDao.save(ordine);
+    Long idOrdine = ordine.getId();
     sessionCarrello.clearCarrello();
-    return successView;
+    return successView + "?id=" + idOrdine;
   }
 }

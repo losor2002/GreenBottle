@@ -167,14 +167,15 @@
       "id": "981bbddb-8bae-4772-8f83-1811f42d6e82",
       "comment": "",
       "command": "assertText",
-      "target": "css=#card-header > h3",
+      "target": "id=stato_ordine",
       "targets": [
-        ["css=#card-header > h3", "css:finder"],
-        ["xpath=//div[@id='card-header']/h3", "xpath:idRelative"],
-        ["xpath=//h3", "xpath:position"],
-        ["xpath=//h3[contains(.,'Filtra per data')]", "xpath:innerText"]
+        ["id=stato_ordine", "id"],
+        ["css=#stato_ordine", "css:finder"],
+        ["xpath=//h2[@id='stato_ordine']", "xpath:attributes"],
+        ["xpath=//h2", "xpath:position"],
+        ["xpath=//h2[contains(.,'Stato Ordine: ELABORAZIONE')]", "xpath:innerText"]
       ],
-      "value": "Filtra per data"
+      "value": "Stato Ordine: ELABORAZIONE"
     }]
   }, {
     "id": "32cd905c-688b-4eff-b98e-73aac7876d25",
@@ -351,27 +352,18 @@
       ],
       "value": ""
     }, {
-      "id": "4c8c981e-b9d9-4edd-abb4-e2134ca7a7df",
-      "comment": "",
-      "command": "waitForElementPresent",
-      "target": "css=.justify-content-center > .col-md-6",
-      "targets": [
-        ["css=.justify-content-center > .col-md-6", "css:finder"],
-        ["xpath=//aside", "xpath:position"]
-      ],
-      "value": "30000"
-    }, {
       "id": "44a76ea2-9717-4be5-a422-ca0a6b2f8cb1",
       "comment": "",
       "command": "assertText",
-      "target": "css=#card-header > h3",
+      "target": "id=stato_ordine",
       "targets": [
-        ["css=#card-header > h3", "css:finder"],
-        ["xpath=//div[@id='card-header']/h3", "xpath:idRelative"],
-        ["xpath=//h3", "xpath:position"],
-        ["xpath=//h3[contains(.,'Filtra per data')]", "xpath:innerText"]
+        ["id=stato_ordine", "id"],
+        ["css=#stato_ordine", "css:finder"],
+        ["xpath=//h2[@id='stato_ordine']", "xpath:attributes"],
+        ["xpath=//h2", "xpath:position"],
+        ["xpath=//h2[contains(.,'Stato Ordine: ELABORAZIONE')]", "xpath:innerText"]
       ],
-      "value": "Filtra per data"
+      "value": "Stato Ordine: ELABORAZIONE"
     }]
   }, {
     "id": "5ce29bdd-78e5-463a-acda-6217af3e5312",
