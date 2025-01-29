@@ -470,8 +470,8 @@ memberSearchIndex = [{
 }, {
     "p": "it.unisa.greenbottle.controller.catalogoControl",
     "c": "VisualizzaCatalogoController",
-    "l": "get(FiltroForm, BindingResult, Model, HttpServletResponse, HttpServletRequest)",
-    "u": "get(it.unisa.greenbottle.controller.catalogoControl.form.FiltroForm,org.springframework.validation.BindingResult,org.springframework.ui.Model,jakarta.servlet.http.HttpServletResponse,jakarta.servlet.http.HttpServletRequest)"
+    "l": "get(FiltroForm, BindingResult, Model, HttpServletResponse)",
+    "u": "get(it.unisa.greenbottle.controller.catalogoControl.form.FiltroForm,org.springframework.validation.BindingResult,org.springframework.ui.Model,jakarta.servlet.http.HttpServletResponse)"
 }, {
     "p": "it.unisa.greenbottle.controller.accessoControl",
     "c": "LogoutController",
@@ -738,14 +738,6 @@ memberSearchIndex = [{
     "c": "OrdineBuilder",
     "l": "isSupporto(boolean)"
 }, {
-    "p": "it.unisa.greenbottle.controller.ordineControl.form",
-    "c": "OrdineForm",
-    "l": "isSupportoDescrizioneValid()"
-}, {
-    "p": "it.unisa.greenbottle.ordineTest",
-    "c": "CreazioneOrdineTest",
-    "l": "isSupportoNonValido()"
-}, {
     "p": "it.unisa.greenbottle.controller.accessoControl",
     "c": "LoginAdminController",
     "l": "LoginAdminController()",
@@ -863,8 +855,8 @@ memberSearchIndex = [{
 }, {
     "p": "it.unisa.greenbottle.controller.ordineControl",
     "c": "CreazioneOrdineController",
-    "l": "post(OrdineForm, Model, BindingResult, HttpServletResponse)",
-    "u": "post(it.unisa.greenbottle.controller.ordineControl.form.OrdineForm,org.springframework.ui.Model,org.springframework.validation.BindingResult,jakarta.servlet.http.HttpServletResponse)"
+    "l": "post(OrdineForm, BindingResult, Model, HttpServletResponse)",
+    "u": "post(it.unisa.greenbottle.controller.ordineControl.form.OrdineForm,org.springframework.validation.BindingResult,org.springframework.ui.Model,jakarta.servlet.http.HttpServletResponse)"
 }, {
     "p": "it.unisa.greenbottle.controller.ordineControl",
     "c": "AggiungiAlCarrelloController",

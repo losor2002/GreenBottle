@@ -13,7 +13,7 @@
 </head>
 <body>
 <div th:replace="~{fragments/fragments :: header}"></div>
-<main class="container-fluid my-4">
+<main class="container-fluid my-4 vh-100">
     <div class="row">
         <!-- Filtro -->
         <aside class="col-md-6 col-lg-3">
@@ -26,14 +26,12 @@
                 <div class="mb-4">
                     <h6 class="text">Categoria</h6>
                     <div class="d-flex flex-column">
-                        <input type="radio" class="btn-check" name="idCategoria" id="acqua" value="1">
-                        <label class="btn my-1" for="acqua">Acqua</label>
-
-                        <input type="radio" class="btn-check" name="idCategoria" id="succo" value="2">
-                        <label class="btn my-1" for="succo">Succo di frutta</label>
-
-                        <input type="radio" class="btn-check" name="idCategoria" id="bevanda" value="3">
-                        <label class="btn my-1" for="bevanda">Bevanda gassata</label>
+                        <div th:each="categoria : ${categorie}">
+                            <input type="radio" class="btn-check" name="idCategoria" th:id="${categoria.getNome()}"
+                                   th:value="${categoria.getId()}">
+                            <label class="btn my-1 w-100" th:for="${categoria.getNome()}"
+                                   th:text="${categoria.getNome()}"></label>
+                        </div>
                     </div>
                 </div>
 

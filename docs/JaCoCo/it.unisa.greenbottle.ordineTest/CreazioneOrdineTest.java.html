@@ -18,6 +18,7 @@
 <h1>CreazioneOrdineTest.java</h1>
 <pre class="source lang-java linenums">package it.unisa.greenbottle.ordineTest;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -48,7 +49,7 @@ import org.springframework.test.web.servlet.ResultMatcher;
  */
 @AutoConfigureMockMvc
 @SpringBootTest
-<span class="fc" id="L33">public class CreazioneOrdineTest {</span>
+<span class="fc" id="L34">public class CreazioneOrdineTest {</span>
 
   @Autowired
   private MockMvc mockMvc;
@@ -57,10 +58,10 @@ import org.springframework.test.web.servlet.ResultMatcher;
   private OrdineForm ordineForm;
 
   @MockitoBean
-  private OrdineDao ordineDao;
+  private SessionCarrello sessionCarrello;
 
   @MockitoBean
-  private SessionCarrello sessionCarrello;
+  private OrdineDao ordineDao;
 
   @MockitoBean
   private ProdottoDao prodottoDao;
@@ -73,118 +74,125 @@ import org.springframework.test.web.servlet.ResultMatcher;
 
   @Test
   public void nomeNonValido() throws Exception {
-<span class="fc" id="L58">    testCreazioneOrdine(&quot;A1&quot;, &quot;0000000000000000&quot;, &quot;99/99&quot;, &quot;ABC&quot;, 55L, null, Optional.of(&quot;asd&quot;),</span>
-<span class="fc" id="L59">        status().isBadRequest());</span>
-<span class="fc" id="L60">  }</span>
+<span class="fc" id="L59">    testCreazioneOrdine(&quot;A1&quot;, &quot;5032123166322313&quot;, &quot;02/26&quot;, &quot;123&quot;, &quot;1&quot;, &quot;false&quot;, Optional.of(&quot;asd&quot;),</span>
+<span class="fc"
+      id="L60">        status().isBadRequest(), &quot;Nome del titolare della carta non valido.&quot;);</span>
+<span class="fc" id="L61">  }</span>
 
   @Test
   public void numeroNonValido() throws Exception {
-<span class="fc" id="L64">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;0000000000000000&quot;, &quot;99/99&quot;, &quot;ABC&quot;, 55L, null,</span>
-<span class="fc" id="L65">        Optional.of(&quot;asd&quot;), status().isBadRequest());</span>
-<span class="fc" id="L66">  }</span>
+<span class="fc" id="L65">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;00000000000000000&quot;, &quot;02/26&quot;, &quot;123&quot;, &quot;1&quot;, &quot;false&quot;,</span>
+<span class="fc" id="L66">        Optional.of(&quot;asd&quot;), status().isBadRequest(), &quot;Numero di carta non valido.&quot;);</span>
+<span class="fc" id="L67">  }</span>
 
   @Test
   public void dataNonValido() throws Exception {
-<span class="fc" id="L70">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;5032123166322313&quot;, &quot;99/99&quot;, &quot;ABC&quot;, 55L, null,</span>
-<span class="fc" id="L71">        Optional.of(&quot;asd&quot;), status().isBadRequest());</span>
-<span class="fc" id="L72">  }</span>
+<span class="fc" id="L71">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;5032123166322313&quot;, &quot;99/99&quot;, &quot;123&quot;, &quot;1&quot;, &quot;false&quot;,</span>
+<span class="fc" id="L72">        Optional.of(&quot;asd&quot;), status().isBadRequest(), &quot;Data di scadenza della carta non valida.&quot;);</span>
+<span class="fc" id="L73">  }</span>
 
   @Test
   public void cvvNonValido() throws Exception {
-<span class="fc" id="L76">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;5032123166322313&quot;, &quot;02/26&quot;, &quot;ABC&quot;, 55L, null,</span>
-<span class="fc" id="L77">        Optional.of(&quot;asd&quot;), status().isBadRequest());</span>
-<span class="fc" id="L78">  }</span>
+<span class="fc" id="L77">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;5032123166322313&quot;, &quot;02/26&quot;, &quot;ABC&quot;, &quot;1&quot;, &quot;false&quot;,</span>
+<span class="fc"
+      id="L78">        Optional.of(&quot;&quot;), status().isBadRequest(), &quot;cvv non valido.&quot;);</span>
+<span class="fc" id="L79">  }</span>
 
   @Test
   public void indirizzoNonValido() throws Exception {
-<span class="fc" id="L82">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;5032123166322313&quot;, &quot;02/26&quot;, &quot;123&quot;, -12L, null,</span>
-<span class="fc" id="L83">        Optional.of(&quot;asd&quot;), status().isBadRequest());</span>
-<span class="fc" id="L84">  }</span>
+<span class="fc" id="L83">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;5032123166322313&quot;, &quot;02/26&quot;, &quot;123&quot;, &quot;-12&quot;, &quot;false&quot;,</span>
+<span class="fc" id="L84">        Optional.of(&quot;asd&quot;), status().isBadRequest(), &quot;Indirizzo non valido.&quot;);</span>
+<span class="fc" id="L85">  }</span>
 
   @Test
   public void indirizzoNonPresente() throws Exception {
-<span class="fc" id="L88">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;5032123166322313&quot;, &quot;02/26&quot;, &quot;123&quot;, 7355608L, null,</span>
-<span class="fc" id="L89">        Optional.of(&quot;asd&quot;), status().is3xxRedirection());</span>
-<span class="fc" id="L90">  }</span>
-
-  @Test
-  public void isSupportoNonValido() throws Exception {
-<span class="fc" id="L94">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;5032123166322313&quot;, &quot;02/26&quot;, &quot;123&quot;, 1L, null,</span>
-<span class="fc" id="L95">        Optional.of(&quot;asd&quot;), status().is3xxRedirection());</span>
-<span class="fc" id="L96">  }</span>
+<span class="fc" id="L89">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;5032123166322313&quot;, &quot;02/26&quot;, &quot;123&quot;, &quot;7355608&quot;, &quot;false&quot;,</span>
+<span class="fc"
+      id="L90">        Optional.of(&quot;&quot;), status().isNotFound(), &quot;Indirizzo non trovato.&quot;);</span>
+<span class="fc" id="L91">  }</span>
 
   @Test
   public void descrizioneNonValida() throws Exception {
-<span class="fc" id="L100">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;5032123166322313&quot;, &quot;02/26&quot;, &quot;123&quot;, 1L, true,</span>
-<span class="fc" id="L101">        Optional.of((&quot;a&quot;).repeat(320)), status().isBadRequest());</span>
-<span class="fc" id="L102">  }</span>
+<span class="fc" id="L95">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;5032123166322313&quot;, &quot;02/26&quot;, &quot;123&quot;, &quot;1&quot;, &quot;true&quot;,</span>
+<span class="fc" id="L96">        Optional.of((&quot;a&quot;).repeat(320)), status().isBadRequest(),</span>
+        &quot;Descrizione supporto troppo lunga.&quot;);
+<span class="fc" id="L98">  }</span>
 
   @Test
   public void descrizioneNonPresente() throws Exception {
-<span class="fc" id="L106">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;5032123166322313&quot;, &quot;02/26&quot;, &quot;123&quot;, 1L, true,</span>
-<span class="fc" id="L107">        Optional.of(&quot;&quot;), status().isBadRequest());</span>
-<span class="fc" id="L108">  }</span>
+<span class="fc" id="L102">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;5032123166322313&quot;, &quot;02/26&quot;, &quot;123&quot;, &quot;1&quot;, &quot;true&quot;,</span>
+<span class="fc" id="L103">        Optional.of(&quot;&quot;), status().isBadRequest(), &quot;Descrizione supporto non inserita.&quot;);</span>
+<span class="fc" id="L104">  }</span>
 
   @Test
   public void ordineSupportoValido() throws Exception {
-<span class="fc" id="L112">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;5032123166322313&quot;, &quot;02/26&quot;, &quot;123&quot;, 1L, true,</span>
+<span class="fc" id="L108">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;5032123166322313&quot;, &quot;02/26&quot;, &quot;123&quot;, &quot;1&quot;, &quot;true&quot;,</span>
 <span class="fc"
-      id="L113">        Optional.of(&quot;Consegna al primo piano&quot;), status().is3xxRedirection());</span>
-<span class="fc" id="L114">  }</span>
+      id="L109">        Optional.of(&quot;Consegna al primo piano&quot;), status().is3xxRedirection(), null);</span>
+<span class="fc" id="L110">  }</span>
 
   @Test
   public void ordineValido() throws Exception {
-<span class="fc" id="L118">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;5032123166322313&quot;, &quot;02/26&quot;, &quot;123&quot;, 1L, false,</span>
-<span class="fc" id="L119">        Optional.of(&quot;&quot;), status().is3xxRedirection());</span>
-<span class="fc" id="L120">  }</span>
+<span class="fc" id="L114">    testCreazioneOrdine(&quot;Luigi Rossi&quot;, &quot;5032123166322313&quot;, &quot;02/26&quot;, &quot;123&quot;, &quot;1&quot;, &quot;false&quot;,</span>
+<span class="fc" id="L115">        Optional.of(&quot;&quot;), status().is3xxRedirection(), null);</span>
+<span class="fc" id="L116">  }</span>
 
   @SuppressWarnings(&quot;OptionalUsedAsFieldOrParameterType&quot;)
   private void testCreazioneOrdine(String nomeTitolare, String numeroCarta, String dataScadenza,
-                                   String cvv, Long idIndirizzo, Boolean isSupporto,
+                                   String cvv, String address, String isSupporto,
                                    Optional&lt;String&gt; descrizioneSupporto,
-                                   ResultMatcher resultmatcher)
+                                   ResultMatcher resultmatcher,
+                                   String expectedMessage)
       throws Exception {
-<span class="fc" id="L128">    Cliente cliente = new Cliente();</span>
-<span class="fc" id="L129">    cliente.setId(1L);</span>
-<span class="fc" id="L130">    Indirizzo indirizzo = new Indirizzo();</span>
-<span class="fc" id="L131">    Map&lt;Long, Integer&gt; carrello = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L132">    Categoria categoria = new Categoria(&quot;Bevande&quot;);</span>
-<span class="fc" id="L133">    Prodotto prodotto1 = new Prodotto(</span>
+<span class="fc" id="L125">    Cliente cliente = new Cliente();</span>
+<span class="fc" id="L126">    cliente.setId(1L);</span>
+<span class="fc" id="L127">    Indirizzo indirizzo = new Indirizzo();</span>
+<span class="fc" id="L128">    Map&lt;Long, Integer&gt; carrello = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L129">    Categoria categoria = new Categoria(&quot;Bevande&quot;);</span>
+<span class="fc" id="L130">    Prodotto prodotto1 = new Prodotto(</span>
         &quot;Prodotto1&quot;, &quot;Prodotto 1&quot;, null, 10.0f, 1000, categoria
     );
-<span class="fc" id="L136">    Prodotto prodotto2 = new Prodotto(</span>
+<span class="fc" id="L133">    Prodotto prodotto2 = new Prodotto(</span>
         &quot;Prodotto2&quot;, &quot;Prodotto 2&quot;, null, 5.0f, 1000, categoria
     );
-
-<span class="fc" id="L140">    carrello.put(prodotto1.getId(), 10);</span>
-<span class="fc" id="L141">    carrello.put(prodotto2.getId(), 50);</span>
-<span class="fc" id="L142">    indirizzo.setId(idIndirizzo);</span>
-<span class="fc" id="L143">    ordineForm =</span>
-        new OrdineForm(numeroCarta, dataScadenza, cvv, nomeTitolare, idIndirizzo, isSupporto,
-<span class="fc" id="L145">            true, descrizioneSupporto.orElse(&quot;&quot;));</span>
-
-<span class="fc" id="L147">    when(sessionCliente.getCliente()).thenReturn(Optional.of(cliente));</span>
-<span class="fc" id="L148">    when(sessionCarrello.getCarrello()).thenReturn(carrello);</span>
-<span class="fc" id="L149">    when(indirizzoDao.findIndirizzoById(idIndirizzo)).thenReturn(</span>
-<span class="fc bfc" id="L150" title="All 2 branches covered.">        idIndirizzo &gt; 0 ? Optional.of(indirizzo) : Optional.empty());</span>
+<span class="fc" id="L136">    Long idIndirizzo = Long.valueOf(address);</span>
+<span class="fc" id="L137">    carrello.put(prodotto1.getId(), 10);</span>
+<span class="fc" id="L138">    carrello.put(prodotto2.getId(), 50);</span>
+<span class="fc" id="L139">    indirizzo.setId(idIndirizzo);</span>
+<span class="fc" id="L140">    ordineForm =</span>
+        new OrdineForm(numeroCarta, dataScadenza, cvv, nomeTitolare, idIndirizzo,
+<span class="fc" id="L142">            Boolean.valueOf(isSupporto),</span>
+<span class="fc" id="L143">            true, descrizioneSupporto.get());</span>
+<span class="fc" id="L144">    when(sessionCliente.getCliente()).thenReturn(Optional.of(cliente));</span>
+<span class="fc" id="L145">    when(sessionCarrello.getCarrello()).thenReturn(carrello);</span>
+<span class="fc" id="L146">    when(indirizzoDao.findIndirizzoById(idIndirizzo)).thenReturn(</span>
+<span class="fc bfc" id="L147" title="All 4 branches covered.">        idIndirizzo &gt; 0 &amp;&amp; idIndirizzo != 7355608 ? Optional.of(indirizzo) : Optional.empty());</span>
 <span class="fc"
-      id="L151">    when(prodottoDao.findProdottoById(prodotto1.getId())).thenReturn(Optional.of(prodotto1));</span>
+      id="L148">    when(prodottoDao.findProdottoById(prodotto1.getId())).thenReturn(Optional.of(prodotto1));</span>
 <span class="fc"
-      id="L152">    when(prodottoDao.findProdottoById(prodotto2.getId())).thenReturn(Optional.of(prodotto2));</span>
+      id="L149">    when(prodottoDao.findProdottoById(prodotto2.getId())).thenReturn(Optional.of(prodotto2));</span>
 
-<span class="fc" id="L154">    mockMvc.perform(post(&quot;/ordina&quot;)</span>
-<span class="fc" id="L155">        .param(&quot;nomeTitolare&quot;, ordineForm.getNomeTitolare())</span>
-<span class="fc" id="L156">        .param(&quot;numeroCarta&quot;, ordineForm.getNumeroCarta())</span>
-<span class="fc" id="L157">        .param(&quot;dataScadenza&quot;, ordineForm.getDataScadenza())</span>
-<span class="fc" id="L158">        .param(&quot;cvv&quot;, ordineForm.getCvv())</span>
-<span class="fc" id="L159">        .param(&quot;indirizzo&quot;, ordineForm.getIndirizzo().toString())</span>
-<span class="fc" id="L160">        .param(&quot;isSupporto&quot;,</span>
-<span class="pc bpc" id="L161" title="1 of 2 branches missed.">            ordineForm.getIsSupporto() == null ? null : ordineForm.getIsSupporto().toString())</span>
-<span class="fc" id="L162">        .param(&quot;isRitiro&quot;, &quot;false&quot;)</span>
+<span class="fc" id="L151">    mockMvc.perform(post(&quot;/ordina&quot;)</span>
+<span class="fc" id="L152">            .param(&quot;nomeTitolare&quot;, ordineForm.getNomeTitolare())</span>
+<span class="fc" id="L153">            .param(&quot;numeroCarta&quot;, ordineForm.getNumeroCarta())</span>
+<span class="fc" id="L154">            .param(&quot;dataScadenza&quot;, ordineForm.getDataScadenza())</span>
+<span class="fc" id="L155">            .param(&quot;cvv&quot;, ordineForm.getCvv())</span>
+<span class="fc" id="L156">            .param(&quot;indirizzo&quot;,</span>
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">                ordineForm.getIndirizzo() == null ? null : ordineForm.getIndirizzo().toString())</span>
+<span class="fc" id="L158">            .param(&quot;isSupporto&quot;,</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">                ordineForm.getIsSupporto() == null ? null : ordineForm.getIsSupporto().toString())</span>
+<span class="fc" id="L160">            .param(&quot;isRitiro&quot;, &quot;false&quot;)</span>
 <span class="fc"
-      id="L163">        .param(&quot;descrizioneSupporto&quot;, descrizioneSupporto.orElse(&quot;&quot;))</span>
-<span class="fc" id="L164">    ).andExpect(resultmatcher);</span>
-<span class="fc" id="L165">  }</span>
+      id="L161">            .param(&quot;descrizioneSupporto&quot;, descrizioneSupporto.orElse(&quot;&quot;))</span>
+<span class="fc" id="L162">        ).andExpect(resultmatcher)</span>
+<span class="fc" id="L163">        .andExpect(result -&gt; {</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">          if (expectedMessage != null) {</span>
+<span class="fc" id="L165">            String errorMessage = result.getResponse().getErrorMessage();</span>
+<span class="fc" id="L166">            assertTrue(errorMessage.contains(expectedMessage),</span>
+                &quot;La risposta non contiene il messaggio atteso: &quot; + expectedMessage);
+          }
+<span class="fc" id="L169">        });</span>
+<span class="fc" id="L170">  }</span>
 }
 </pre>
 <div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span>
