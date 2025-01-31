@@ -1,7 +1,7 @@
 {
   "id": "508ccd27-cd08-4ab6-b313-10f8a6296378",
   "version": "2.0",
-  "name": "CreazioneOrdineTest",
+  "name": "testCreazioneOrdine",
   "url": "http://localhost:8080/carrello",
   "tests": [{
     "id": "3c2cfae8-9221-4112-a091-64ef614edd71",
