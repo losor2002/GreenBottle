@@ -35,15 +35,6 @@ INSERT INTO `abbonamento_seq` VALUES (1);
 /*!40000 ALTER TABLE `abbonamento_seq` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Dumping data for table `admin`
---
-
-LOCK TABLES `admin` WRITE;
-/*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES (1,'admin@greenbottle.it','1FU7WYQZftZbHQuBb3M5Tw==');
-/*!40000 ALTER TABLE `admin` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Dumping data for table `categoria`
