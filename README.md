@@ -57,7 +57,7 @@ Follow these steps:
 6. Open and run configurationFiles/databaseInit.sql on MySQL workbench;
 7. Run `java -jar target/GreenBottle-1.0.jar –spring.datasource.password="<password_database>"
    –spring.datasource.username="<username_database>"`;
-8. Open and run configurationFiles/defaultadmin.sql on MySQL workbench;
+8. Optionally, you can run configurationFiles/databasePopulator.sql to populate the Database with default entities;
 9. Open your browser at `localhost:8080`.
 
 ## Built With
