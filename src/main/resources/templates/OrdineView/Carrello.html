@@ -55,7 +55,8 @@
                         <span th:text="${entry.value}">1</span>
                         <button class="btn btn-sm btn-danger">-</button>
                     </td>
-                    <td id="price" th:text="${#numbers.formatDecimal(entry.key.prezzo * entry.value, 1, 2) + ' €'}">
+                    <td id="price"
+                        th:text="${#numbers.formatDecimal(entry.key.prezzo * entry.value, 1, 2, 'POINT') + ' €'}">
                         €0.00
                     </td>
                     <td>
@@ -79,7 +80,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         function calculateSubtotal() {
-            let subtotal = 0;
+            let subtotal = 0.00;
             document.querySelectorAll('#price').forEach(priceElement => {
                 const price = parseFloat(priceElement.textContent.replace('€', '').trim());
                 if (!isNaN(price)) {

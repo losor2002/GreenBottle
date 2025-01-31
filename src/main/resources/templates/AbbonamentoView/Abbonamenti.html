@@ -89,7 +89,7 @@
                 </td>
                 <td th:text="${sub.getFrequenza()}"></td>
                 <td th:text="${sub.getRinnovo()}"></td>
-                <td th:width="200px" th:text="${#numbers.formatDecimal(sub.getPrezzo(), 1, 2) + ' €'}"></td>
+                <td th:width="200px" th:text="${#numbers.formatDecimal(sub.getPrezzo(), 1, 2, 'POINT') + ' €'}"></td>
                 <td>
                     <button th:if="${session.sessionCliente != null and session.sessionCliente.getCliente().isPresent()}"
                             th:onclick="|location.href='abbonamento?sottoscrivi=${sub.getId()}'|"
