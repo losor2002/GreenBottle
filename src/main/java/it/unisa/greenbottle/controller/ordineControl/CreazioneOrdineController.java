@@ -90,6 +90,7 @@ public class CreazioneOrdineController {
     Cliente cliente = clienteOptional.get();
     List<Indirizzo> indirizzi = indirizzoDao.findAllByCliente(cliente).orElse(new ArrayList<>());
     model.addAttribute("indirizzi", indirizzi);
+    model.addAttribute("carrello", sessionCarrello.getRealCarrello());
     return ordineView;
   }
 

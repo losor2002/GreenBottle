@@ -90,18 +90,24 @@
             </section>
         </div>
         <aside class="col-md-4 col-lg-3">
-            <section class="bg-light p-4 rounded shadow">
+            <section class="bg-light p-6 mb-1 rounded shadow">
                 <h2 class="text-center my-4">Sommario</h2>
-                <p th:each="prodotto : ${prodotti}">
-                    <span class="d-flex align-items-center justify-content-center text-center"
-                          th:text="${prodotto.nome + 'x ' + prodotto.quantita}"></span>
-                </p>
-                <p>Importo Totale:</p>
-                <div class="summary-buttons">
-                    <button class="btn btn-outline-primary" th:onclick="|location.href='carrello'|">
+                <div id="products">
+                    <p th:each="entry : ${carrello}">
+                    <span id="price" class="d-flex align-items-center justify-content-center text-center"
+                          th:text="${entry.key.nome + ' X ' + entry.value + ' = ' + (entry.key.prezzo * entry.value)}"></span>
+                    </p>
+                </div>
+                <div>
+                    <span class="d-flex align-items-center justify-content-center text-center">Importo Totale: </span>
+                    <span class="d-flex align-items-center justify-content-center text-center my-1" id="totalPrice">€0.00</span>
+                </div>
+                <div class="buttons d-flex align-items-center justify-content-center text-center">
+                    <button class="btn btn-outline-primary btn-sm mx-2 mb-4" th:onclick="|location.href='carrello'|">
                         Torna Indietro
                     </button>
-                    <button class="btn btn-primary" th:onclick="confirmOrder()">Conferma</button>
+                    <button class="btn btn-outline-primary btn-sm mx-2 mb-4" th:onclick="confirmOrder()">Conferma
+                    </button>
                 </div>
             </section>
         </aside>
@@ -109,6 +115,45 @@
 </main>
 <footer th:replace="~{fragments/fragments :: footer}"></footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Variabile per mantenere il totale
+    let totalPrice = 0;
+
+    // Recupera tutte le voci di prodotto
+    document.querySelectorAll('#products .d-flex').forEach(function (entry) {
+        // Estrai il valore da visualizzare
+        let productText = entry.innerText;
+        // Trova il risultato della moltiplicazione nell'array
+        let match = productText.match(/=\s*(\d+(\.\d+)?)/);
+
+        if (match) {
+            // Aggiungi al totale
+            totalPrice += parseFloat(match[1]);
+        }
+    });
+
+    // Aggiorna il totale nel frontend
+    document.getElementById('totalPrice').innerText = '€' + totalPrice.toFixed(2);
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        function calculateSubtotal() {
+            let subtotal = 0;
+            document.querySelectorAll('#price').forEach(priceElement => {
+                const price = parseFloat(priceElement.textContent.replace('€', '').trim());
+                if (!isNaN(price)) {
+                    subtotal += price;
+                }
+            });
+            const subtotalElement = document.querySelector('.total p span');
+            if (subtotalElement) {
+                subtotalElement.textContent = `€${subtotal.toFixed(2)}`;
+            }
+        }
+
+        calculateSubtotal();
+    });
+</script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const supportButton = document.getElementById('supporto-service');
