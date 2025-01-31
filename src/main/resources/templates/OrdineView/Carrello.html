@@ -55,7 +55,9 @@
                         <span th:text="${entry.value}">1</span>
                         <button class="btn btn-sm btn-danger">-</button>
                     </td>
-                    <td id="price" th:text="${entry.key.prezzo * entry.value}">€0.00</td>
+                    <td id="price" th:text="${#numbers.formatDecimal(entry.key.prezzo * entry.value, 1, 2) + ' €'}">
+                        €0.00
+                    </td>
                     <td>
                         <button class="btn btn-sm btn-outline-danger">X</button>
                     </td>

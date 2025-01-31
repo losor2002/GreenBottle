@@ -79,7 +79,7 @@
                 </div>
                 <div class="text-center mb-3">
                     <p><strong>Prezzo:</strong></p>
-                    <p th:text="${abbonamento.prezzo + ' €'}"></p>
+                    <p th:text="${#numbers.formatDecimal(abbonamento.prezzo, 1, 2) + ' €'}"></p>
                 </div>
             </section>
         </aside>

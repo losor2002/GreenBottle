@@ -41,13 +41,13 @@
                     <a th:text="${entry.getKey().getNome()}"></a>
                 </td>
                 <td th:text="${entry.getKey().getDescrizione()}"></td>
-                <td th:text="${'€' + entry.getKey().getPrezzo()}"></td>
+                <td th:text="${'€' + #numbers.formatDecimal(entry.getKey().getPrezzo(), 1, 2)}"></td>
                 <td th:text="${entry.getValue()}"></td>
             </tr>
             </tbody>
         </table>
         <div class="d-flex justify-content-between mt-3">
-            <span th:text="${'Totale: €' + ordine.getPrezzo()}" class="fw-bold"></span>
+            <span th:text="${'Totale: €' + #numbers.formatDecimal(ordine.getPrezzo(), 1, 2)}" class="fw-bold"></span>
         </div>
     </div>
     <div class="d-grid">

@@ -93,7 +93,8 @@
                             <h5 class="card-title text-center" th:text="${prodotto.nome}"></h5>
                             <!-- th:onclick="|location.href='catalogo/prodotto?id=${prodotto.id}'|" -->
                             <!-- Prezzo del prodotto -->
-                            <p class="card-text text-muted text-center my-3" th:text="${prodotto.prezzo + ' €'}"></p>
+                            <p class="card-text text-muted text-center my-3"
+                               th:text="${#numbers.formatDecimal(prodotto.prezzo, 1, 2) + ' €'}"></p>
                             <!--/*@thymesVar id="prodottoForm" type="it.unisa.greenbottle.controller.ordineControl.form.ProdottoForm"*/-->
                             <!-- Bottone Informazioni -->
                             <button class="btn btn-info btn-sm mb-3"
