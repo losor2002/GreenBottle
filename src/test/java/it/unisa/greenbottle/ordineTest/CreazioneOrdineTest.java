@@ -128,6 +128,13 @@ public class CreazioneOrdineTest {
   }
 
   @Test
+  public void descrizionePresenteIsSupportoFalso() throws Exception {
+    testCreazioneOrdine("Luigi Rossi", "5032123166322313", "02/26", "123", "1", "false", "false",
+        Optional.of("Consegna al primo piano"), status().isBadRequest(),
+        "Descrizione presente, ma non si desidera richiedere supporto aggiuntivo.");
+  }
+
+  @Test
   public void ordineSupportoValido() throws Exception {
     testCreazioneOrdine("Luigi Rossi", "5032123166322313", "02/26", "123", "1", "false", "true",
         Optional.of("Consegna al primo piano"), status().is3xxRedirection(), null);

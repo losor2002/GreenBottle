@@ -191,10 +191,14 @@ public class CreazioneOrdineController {
       model.addAttribute("errore", "Descrizione supporto non inserita.");
       httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,
           "Descrizione supporto non inserita.");
-      return null;
-    } else if (!(isSupporto || descrizioneSupporto.isBlank())) { // De Morgan
-      model.addAttribute("warning",
-          "Errata selezione dell’opzione di richiesta supporto aggiuntivo");
+      return "error";
+    } else if (!isSupporto &&
+        !descrizioneSupporto.isBlank()) {
+      model.addAttribute("errore",
+          "Descrizione presente, ma non si desidera richiedere supporto aggiuntivo.");
+      httpServletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST,
+          "Descrizione presente, ma non si desidera richiedere supporto aggiuntivo.");
+      return "error";
     }
 
     Long idIndirizzo = ordineForm.getIndirizzo();

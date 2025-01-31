@@ -155,9 +155,9 @@
       "id": "ac4ada26-476c-4084-8402-3f0ef5bab926",
       "comment": "",
       "command": "click",
-      "target": "css=.summary-buttons > .btn-primary",
+      "target": "css=.btn-outline-primary:nth-child(2)",
       "targets": [
-        ["css=.summary-buttons > .btn-primary", "css:finder"],
+        ["css=.btn-outline-primary:nth-child(2)", "css:finder"],
         ["xpath=//button[@onclick='confirmOrder()']", "xpath:attributes"],
         ["xpath=//button[2]", "xpath:position"],
         ["xpath=//button[contains(.,'Conferma')]", "xpath:innerText"]
@@ -343,9 +343,9 @@
       "id": "2887a1af-5c48-41bf-a895-65e3b863cb64",
       "comment": "",
       "command": "click",
-      "target": "css=.summary-buttons > .btn-primary",
+      "target": "css=.btn-outline-primary:nth-child(2)",
       "targets": [
-        ["css=.summary-buttons > .btn-primary", "css:finder"],
+        ["css=.btn-outline-primary:nth-child(2)", "css:finder"],
         ["xpath=//button[@onclick='confirmOrder()']", "xpath:attributes"],
         ["xpath=//button[2]", "xpath:position"],
         ["xpath=//button[contains(.,'Conferma')]", "xpath:innerText"]
@@ -517,9 +517,9 @@
       "id": "ab66e2da-399b-4113-ab6d-3129042e8e2c",
       "comment": "",
       "command": "click",
-      "target": "css=.summary-buttons > .btn-primary",
+      "target": "css=.btn-outline-primary:nth-child(2)",
       "targets": [
-        ["css=.summary-buttons > .btn-primary", "css:finder"],
+        ["css=.btn-outline-primary:nth-child(2)", "css:finder"],
         ["xpath=//button[@onclick='confirmOrder()']", "xpath:attributes"],
         ["xpath=//button[2]", "xpath:position"],
         ["xpath=//button[contains(.,'Conferma')]", "xpath:innerText"]
@@ -689,9 +689,9 @@
       "id": "a79ff674-e498-4755-84cf-5fcaa45eb389",
       "comment": "",
       "command": "click",
-      "target": "css=.summary-buttons > .btn-primary",
+      "target": "css=.btn-outline-primary:nth-child(2)",
       "targets": [
-        ["css=.summary-buttons > .btn-primary", "css:finder"],
+        ["css=.btn-outline-primary:nth-child(2)", "css:finder"],
         ["xpath=//button[@onclick='confirmOrder()']", "xpath:attributes"],
         ["xpath=//button[2]", "xpath:position"],
         ["xpath=//button[contains(.,'Conferma')]", "xpath:innerText"]
@@ -861,9 +861,9 @@
       "id": "21fce798-69a8-4ea9-ab43-3deb2acc9b50",
       "comment": "",
       "command": "click",
-      "target": "css=.summary-buttons > .btn-primary",
+      "target": "css=.btn-outline-primary:nth-child(2)",
       "targets": [
-        ["css=.summary-buttons > .btn-primary", "css:finder"],
+        ["css=.btn-outline-primary:nth-child(2)", "css:finder"],
         ["xpath=//button[@onclick='confirmOrder()']", "xpath:attributes"],
         ["xpath=//button[2]", "xpath:position"],
         ["xpath=//button[contains(.,'Conferma')]", "xpath:innerText"]
@@ -1033,9 +1033,9 @@
       "id": "d319c3c0-7c42-4ac1-9342-7746b8869235",
       "comment": "",
       "command": "click",
-      "target": "css=.summary-buttons > .btn-primary",
+      "target": "css=.btn-outline-primary:nth-child(2)",
       "targets": [
-        ["css=.summary-buttons > .btn-primary", "css:finder"],
+        ["css=.btn-outline-primary:nth-child(2)", "css:finder"],
         ["xpath=//button[@onclick='confirmOrder()']", "xpath:attributes"],
         ["xpath=//button[2]", "xpath:position"],
         ["xpath=//button[contains(.,'Conferma')]", "xpath:innerText"]
@@ -1212,9 +1212,9 @@
       "id": "2196ae9f-4020-4464-9ffe-99e1865be2ec",
       "comment": "",
       "command": "click",
-      "target": "css=.summary-buttons > .btn-primary",
+      "target": "css=.btn-outline-primary:nth-child(2)",
       "targets": [
-        ["css=.summary-buttons > .btn-primary", "css:finder"],
+        ["css=.btn-outline-primary:nth-child(2)", "css:finder"],
         ["xpath=//button[@onclick='confirmOrder()']", "xpath:attributes"],
         ["xpath=//button[2]", "xpath:position"],
         ["xpath=//button[contains(.,'Conferma')]", "xpath:innerText"]
@@ -1391,9 +1391,9 @@
       "id": "491a06e4-a351-4200-b2fe-1049b238fb46",
       "comment": "",
       "command": "doubleClick",
-      "target": "css=.summary-buttons > .btn-primary",
+      "target": "css=.btn-outline-primary:nth-child(2)",
       "targets": [
-        ["css=.summary-buttons > .btn-primary", "css:finder"],
+        ["css=.btn-outline-primary:nth-child(2)", "css:finder"],
         ["xpath=//button[@onclick='confirmOrder()']", "xpath:attributes"],
         ["xpath=//button[2]", "xpath:position"],
         ["xpath=//button[contains(.,'Conferma')]", "xpath:innerText"]
@@ -1566,9 +1566,9 @@
       "id": "4b0bbfca-b066-443b-8348-b139c613cacf",
       "comment": "",
       "command": "click",
-      "target": "css=.summary-buttons > .btn-primary",
+      "target": "css=.btn-outline-primary:nth-child(2)",
       "targets": [
-        ["css=.summary-buttons > .btn-primary", "css:finder"],
+        ["css=.btn-outline-primary:nth-child(2)", "css:finder"],
         ["xpath=//button[@onclick='confirmOrder()']", "xpath:attributes"],
         ["xpath=//button[2]", "xpath:position"],
         ["xpath=//button[contains(.,'Conferma')]", "xpath:innerText"]
@@ -1752,9 +1752,9 @@
       "id": "fe93b6e0-a214-440a-b57e-1f34021d366f",
       "comment": "",
       "command": "click",
-      "target": "css=.summary-buttons > .btn-primary",
+      "target": "css=.btn-outline-primary:nth-child(2)",
       "targets": [
-        ["css=.summary-buttons > .btn-primary", "css:finder"],
+        ["css=.btn-outline-primary:nth-child(2)", "css:finder"],
         ["xpath=//button[@onclick='confirmOrder()']", "xpath:attributes"],
         ["xpath=//button[2]", "xpath:position"],
         ["xpath=//button[contains(.,'Conferma')]", "xpath:innerText"]
