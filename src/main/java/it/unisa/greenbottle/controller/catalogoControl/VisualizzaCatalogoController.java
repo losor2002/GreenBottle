@@ -117,6 +117,7 @@ public class VisualizzaCatalogoController {
 
     List<Prodotto> prodotti = prodottoDao.findAll(spec);
     ProdottoForm prodottoForm = new ProdottoForm();
+    model.addAttribute("categorie", categoriaDao.findAll());
     model.addAttribute("prodotti", prodotti);
     model.addAttribute("filterForm", filtroForm);
     model.addAttribute("prodottoForm", prodottoForm);
