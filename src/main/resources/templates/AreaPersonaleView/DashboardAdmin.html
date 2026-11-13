@@ -9,6 +9,7 @@
     <link th:href="@{/stylesheet/Head.css}" rel="stylesheet">
     <link th:href="@{/stylesheet/Footer.css}" rel="stylesheet">
     <link th:href="@{/stylesheet/DashboardAdmin.css}" rel="stylesheet">
+    <link th:href="@{/stylesheet/Print.css}" rel="stylesheet" media="print">
 </head>
 <div th:replace="~{fragments/adminFragments :: header}"></div>
 <body th:with="admin=${@sessionAdmin.getAdmin().get()}">

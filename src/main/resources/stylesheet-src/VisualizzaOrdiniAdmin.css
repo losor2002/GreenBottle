@@ -1,0 +1,16 @@
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    min-height: 200px;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.card-buttons {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+}

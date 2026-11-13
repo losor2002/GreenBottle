@@ -10,6 +10,7 @@
     <link th:href="@{/stylesheet/Head.css}" rel="stylesheet">
     <link th:href="@{/stylesheet/Footer.css}" rel="stylesheet">
     <link th:href="@{/stylesheet/AreaPersonale.css}" rel="stylesheet">
+    <link th:href="@{/stylesheet/Print.css}" rel="stylesheet" media="print">
 </head>
 <body th:with="cliente=${@sessionCliente.getCliente().get()}">
 <div th:replace="~{fragments/fragments :: header}"></div>

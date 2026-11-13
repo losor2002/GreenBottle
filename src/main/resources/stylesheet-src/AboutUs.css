@@ -1,0 +1,16 @@
+.card-img-small {
+    width: 50px; /* Dimensione dell'immagine */
+    height: 50px;
+    object-fit: cover;
+}
+.card-img-logo {
+    background: url("/img/Logo.png") no-repeat center / cover;
+}
+
+.card-img-marino {
+    background: url("https://avatars.githubusercontent.com/u/193624341?v=4") no-repeat center / cover;
+}
+
+.card-img-ponticelli {
+    background: url("https://avatars.githubusercontent.com/u/86723294?v=4") no-repeat center / cover;
+}

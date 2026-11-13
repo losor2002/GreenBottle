@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",function(){var c=document.getElementById("carouselBackground");if(!c){return;}c.addEventListener("slide.bs.carousel",function(e){var i=e.relatedTarget.querySelector("img[data-src]");if(i){i.src=i.dataset.src;i.removeAttribute("data-src");}});});
